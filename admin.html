@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <title>Gestione Tabellone</title>
+        <script src="data.json"></script>
+        <link rel="stylesheet" href="style.css" type="text/CSS">
+        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name=viewport content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div class="header"><h1 style="text-align: center;">Pannello di controllo Tabellone</h1></div>
+        <br>
+        <table class="mainA">
+            <tr>
+                <td colspan="3" class="Bright" id="intball"><b>BALL</b></td>
+                <td colspan="3" class="B-all"><b>STRIKE</b></td>
+                <td colspan="3" class="Bleft"><b>OUT</b></td>
+            </tr>
+            <tr>
+                <td class="Bleft"><button class="buttonminus" onclick='ball("-")'>-</button></td>
+                <td><button onclick="ball('0')">Reset</button></td>
+                <td class="Bright"><button class="buttonplus" onclick='ball("+")'>+</button></td>
+                <td class="Bleft"><button class="buttonminus" onclick="strike('-')">-</button></td>
+                <td><button onclick="strike('0')">Reset</button></td>
+                <td class="Bright"><button class="buttonplus" onclick="strike('+')">+</button></td>
+                <td class="Bleft"><button class="buttonminus" onclick="out('-')">-</button></td>
+                <td><button onclick="out('0')">Reset</button></td>
+                <td class="Bright"><button class="buttonplus" onclick="out('+')">+</button></td>
+            </tr>
+            <tr>
+                <td colspan="6" style="border-top: 2px solid white; border-right: 2px solid white;"><button id="cia" onclick="resetc()">Nuovo Battitore</button></td>
+                <td colspan="3" style="border-top: 2px solid white;"></td>
+            </tr>
+        </table>
+        <br>
+        <table class="mainA">
+            <tr>
+                <td colspan="3" class="Bright" id="intining"><b>INING</b></td>
+                <td colspan="3" class="B-all"><b>TOP/BOT</b></td>
+                <td colspan="3" class="Bleft"><b>BASI</b></td>
+            </tr>
+            <tr>
+                <td class="Bleft"><button class="buttonminus" onclick='ining("-")'>-</button></td>
+                <td><button onclick="ining('0')">Reset</button></td>
+                <td class="Bright"><button class="buttonplus" onclick='ining("+")'>+</button></td>
+                <td class="Bleft"><button onclick="top1()">TOP</button></td>
+                <td><button onclick="nul()">--</button></td>
+                <td class="Bright"><button onclick="bot()">BOT</button></td>
+                <td class="Bleft"><button onclick='b1()'>1° base</button></td>
+                <td><button onclick="b2()">2° base</button></td>
+                <td class="Bright"><button onclick='b3()'>3° base</button></td>
+            </tr>
+            <tr>
+                <td colspan="9" style="border-top: 2px solid white;"><button onclick="reseti()" id="CIA">Cambio Ining Automatico</button></td>
+            </tr>
+        </table>
+        <br>
+        <table class="mainA">
+            <tr>
+                <td colspan="3"><b>LOCALI</b></td>
+                <td colspan="3"><b>OSPITI</b></td>
+            </tr>
+            <tr>
+                <td colspan="6">SCORE<br></td>
+            </tr>
+            <tr>
+                <td class="Bleft"><button class="buttonminus" onclick='sHome("-")'>-</button></td>
+                <td><button onclick="sHome('0')">Reset</button></td>
+                <td class="Bright"><button class="buttonplus" onclick='sHome("+")'>+</button></td>
+                <td class="Bleft"><button class="buttonminus" onclick="sAway('-')">-</button></td>
+                <td><button onclick="sAway('0')">Reset</button></td>
+                <td class="Bright"><button class="buttonplus" onclick="sAway('+')">+</button></td>
+            </tr>
+            <tr>
+                <td colspan="6">NAME<br></td>
+            </tr>
+            <tr>
+                <td class="Bright" colspan="3"><input type="text" size="6" name="nameH" id="nameH"></td>
+                <td class="Bleft" colspan="3"><input type="text" size="6" name="nameA" id="nameA"></td>
+            </tr>
+            <tr>
+                <td colspan="6">COLOR<br></td>
+            </tr>
+            <tr>
+                <td class="Bright" colspan="3"><input type="color" name="colorH" id="colorH"></td>
+                <td class="Bleft" colspan="3"><input type="color" name="colorA" id="colorA"></td>
+            </tr>
+            <tr>
+                <td style="padding: 5px;" colspan="6"><input type="submit" value="Aggiorna" onclick="update()"></td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <iframe src="./scoreboard.html" width="480px" height="102px" id="scoreboard"></iframe>
+        <br>
+        <br>
+        <table class="mainA2">
+            <tr>
+                <td><button onclick="reseta()" class="buttonr">RESET COMPLETO</button></td>
+            </tr>
+        </table>
+        <br>
+        <script src="./data.json"></script>
+        <script src="./script.js"></script>
+    </body>
+</html>

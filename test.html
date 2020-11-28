@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Redirect to a Webpage</h2>
+<p>The replace() method replaces the current document with a new one:</p>
+
+<button onclick="myFunction()">Replace document</button>
+
+<script>
+console.log('1')
+let json = document.createElement('script');
+json.src = './data.json?'+ Math.random();
+json.async = false;
+json.defer = false;
+document.body.appendChild(json);
+
+setTimeout(function afterTwoSeconds() {
+  console.log('2')
+  console.log(data);
+}, 2000)
+
+console.log('3')
+</script>
+
+</body>
+</html> 

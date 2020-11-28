@@ -1,0 +1,2 @@
+    DOC format:
+    var data = '{"Away":"Pesaro","ScoreA":5,"ColorA":"#ff0000","Home":"Test","ScoreH":"3","ColorH":"#ffff00", "Ball":3,"Strike":0,"Out":0, "Ining":2, "bot": false, "b1":true, "b2":true, "b3":true}';

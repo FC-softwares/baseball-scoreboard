@@ -1,0 +1,204 @@
+/* inizio definizione Categorie*/
+
+.main{ /*tabella principale*/
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px;
+    border-collapse: collapse;
+    width: 470px;
+    font-family: 'Heebo', sans-serif;
+    color: white;
+}
+
+/*Colonna Bordata*/
+td.b{
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px;
+    border-collapse: collapse;
+}
+
+/*solo Bordo sinistra*/
+td.l{ 
+    border-collapse: collapse;
+    border-left: 1px solid #000000;
+}
+/*Solo Bordo Destra*/
+td.r{
+    border-collapse: collapse;
+    border-right: 1px solid #000000;
+}
+tr.main{
+    height: 50px;
+}
+/*Rombi*/
+.list-item li{
+    width: 10px;
+    height: 10px;
+    position: relative;
+}
+.list-item li{
+    overflow: hidden;
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width: 25px;
+    height: 25px;
+    position: relative;
+}
+li.item-1{top: 46px;left: 41px; background-color: rgba(0,0,0,0); border: 1px solid rgb(255, 115, 0);}
+li.item-2{top: -2px;left: 20px; background-color: rgba(0,0,0,0); border: 1px solid rgb(255, 115, 0);}
+li.item-3{top: -8px;left: -1px; background-color: rgba(0,0,0,0); border: 1px solid rgb(255, 115, 0)}
+
+
+.rotate{
+    transform: rotate(270deg);
+    display: inline-block;
+    }
+/* inizio definizione Singoli Elementi*/
+
+#colbasi{
+    align-items: center;
+}
+#ScoreA{
+    text-align: center;
+}
+#ScoreH{
+    text-align: center;
+}
+#ining{
+    text-align: center;
+    border-bottom-width: 0px;
+}
+#conto{
+    text-align: center;
+    border-top-width: 0px;
+}
+
+/* sfondo celle diverse dal nome squadra */
+#ScoreA, #ScoreH, #Ining, #conto, #colbasi {
+    background: linear-gradient(to top left, rgb(41,41,41) 0%,rgb(86,86,86) 75%,rgb(142,142,142) 100%);
+    /*background-color: rgb(41, 41, 41);*/
+}
+
+/* gestione del font */
+#Home, #Away {
+    font-size: 30px;
+    height: 50%;
+    padding-left: 10px;
+}
+
+#colA, #colB {
+    width: 175px;
+}
+
+/*------------------- AMMINISTRAZIONE ---------------------*/
+html, body {
+    margin: 0px;
+    background-color: rgb(41,41,41);
+}
+
+
+.header {
+    background-color: #d00000;
+    color: white;
+    border: 0px none rgba(0,0,0,0);
+    /*border-radius: 0px 0px 20px 20px;*/
+}
+
+h1 {
+    font-family: 'Heebo', sans-serif;
+    margin: 0px;
+    font-size: 24px;
+    padding: 10px;
+}
+
+.mainA, .mainA2{
+    align-content: center;
+    align-self: center;
+    align-items: center;
+    text-align: center;
+    border: 3px solid red;
+    margin-left:auto; 
+    margin-right:auto;
+    border-collapse: collapse;
+    font-family: 'Heebo', sans-serif;
+    font-weight: normal;
+    background-color: black;
+    color: white;
+    font-size: large;
+}
+.buttonplus, .buttonminus{
+    height: 31px;
+    width: 31px;
+    text-align: center;
+    padding: 0px;
+}
+button{
+    border-radius: 50px;
+    border: 1px solid red;
+    margin: 1px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: rgba(0,0,0,0);
+    color: white;
+    font-size: medium;
+}
+
+input[type=submit]{
+    border-radius: 50px;
+    border: 1px solid red;
+    margin: 1px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: rgba(0,0,0,0);
+    color: white;
+    font-size: medium;
+}
+iframe{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border: none;
+}
+.Bright{
+    border-right: 2px solid white;
+    /*padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;*/
+    padding: 5px;
+}
+.Bleft{
+    border-left: 2px solid white;
+    /*padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;*/
+    padding: 5px;
+}
+.B-all{
+    border-right: 2px solid white;
+    border-left: 2px solid white;
+    /*padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;*/
+}
+.mainA2{
+    border: 0px solid red;
+    background-color: rgba(0,0,0,0);
+}
+.buttonr{
+    background-color: black;
+}
+#CIA{
+    margin: 10px;
+}
+/*ciao*/
