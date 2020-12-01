@@ -1,27 +1,26 @@
 <html>
 <head>
     <title>Baseball Scoreboard</title>
-    <link rel="stylesheet" href="style.css" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name=viewport content="width=device-width, initial-scale=1">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 </head>
-<body style="background-color: rgba(255,255,255,255);">
+<body style="background-color: rgba(0, 0, 0, 0);">
     <table class="main">
         <tr class="main">
             <table>
                 <tr>
                     <td>
                         <svg xmlns="http://www.w3.org/2000/svg" width="250" height="100">
-                            <polygon fill="#F3BC23" stroke="#F3BC23" stroke-width="1" points="0,0 250,0 200,50 0,50"/>
-                            <text x="32" y="50" text-anchor="middle" fill="white" font-size="30">X</text>
+                            <polygon fill="#F3BC23" stroke="#F3BC23" stroke-width="1" points="0,0 250,0 200,50 0,50" id="labelA"/>
+                            <text id="nameA" x="25" y="37.5" text-anchor="start" fill="white" font-size="30">X</text>
                         </svg>
                     </td>
                 <td>
                     <svg xmlns="http://www.w3.org/2000/svg" width="250" height="100">
-                        <polygon fill="#F3BC23" stroke="#F3BC23" stroke-width="1" points="50,0 0,50 250,50 250,0"/>
-                        <text x="32" y="50" text-anchor="middle" fill="white" font-size="30">X</text>
+                        <polygon fill="#F3BC23" stroke="#F3BC23" stroke-width="1" points="50,0 0,50 250,50 250,0" id="labelH"/>
+                        <text id="nameH" x="225" y="37.5" text-anchor="end" fill="white" font-size="30">X</text>
                     </svg>
                 </td>
             </tr>
@@ -44,14 +43,14 @@
     function update(){
         console.log("update start")
         obj=JSON.parse(data)
-        document.getElementById("Away").innerHTML= obj.Away;
-        document.getElementById("ScoreA").innerHTML=obj.ScoreA;
-        document.getElementById("Away").style="background-color: "+obj.ColorA+"; ";
-        document.getElementById("colA").style="background-color: "+obj.ColorA+"; ";
-        document.getElementById("Home").innerHTML= obj.Home;
-        document.getElementById("ScoreH").innerHTML=obj.ScoreH;
-        document.getElementById("Home").style="background-color: "+obj.ColorH+"; ";
-        document.getElementById("colH").style="background-color: "+obj.ColorH+"; ";
+        nameA.innerHTML=obj.Away;
+        labelA.style.fill=obj.ColorA;
+        labelA.style.stroke=obj.ColorA;
+        
+        nameH.innerHTML= obj.Home;
+        labelH.style.fill=obj.ColorH;
+        labelH.style.stroke=obj.ColorH;
+        
         console.log("update end")
     }
     window.setInterval(function(){
