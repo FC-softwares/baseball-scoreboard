@@ -1,1 +1,1 @@
-var data='{"Away":"PESARO","ScoreA":0,"ColorA":"#ff0000","Home":"FANO","ScoreH":0,"ColorH":"#ff8800","Ball":0,"Strike":0,"Out":0,"Ining":1,"bot":null,"b1":false,"b2":false,"b3":false}'
+var data='{"Away":"PESARO","ScoreA":0,"ColorA":"#ff0000","Home":"FANO","ScoreH":0,"ColorH":"#ff8800","Ball":0,"Strike":0,"Out":0,"Ining":1,"bot":0,"b1":false,"b2":false,"b3":false}'
