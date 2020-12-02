@@ -108,11 +108,11 @@ function reseti(){
     obj.b1 = false;
     obj.b2 = false;
     obj.b3 = false;
-    if(obj.bot){
+    if(obj.bot==1){
         nIning = obj.Ining + 1;
-        nBot = false;
+        nBot = 2;
     }else{
-        nBot = true;
+        nBot = 1;
     }
     update()
 }
