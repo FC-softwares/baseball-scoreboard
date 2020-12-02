@@ -65,14 +65,14 @@
         document.getElementById("Ball").innerHTML= obj.Ball;
         document.getElementById("Out").innerHTML= obj.Out;
         document.getElementById("Num").innerHTML= obj.Ining;
-        if (obj.bot == true) {
-            document.getElementById("Arrow").style="transform: rotate(90deg);";
-        }else if(obj.bot == false){
-            document.getElementById("Arrow").style="transform: rotate(270deg);";
-        }else if(obj.bot == null){
+        if(obj.bot == 0){
             document.getElementById("Arrow").style="transform: rotate(0deg);";
             document.getElementById("Arrow").innerHTML="&mdash;";
             document.getElementById("Num").innerHTML="&mdash;";
+        }else if (obj.bot == 1) {
+            document.getElementById("Arrow").style="transform: rotate(90deg);";
+        }else if(obj.bot == 2){
+            document.getElementById("Arrow").style="transform: rotate(270deg);";
         }
         if (obj.b1) {
             document.getElementById("b1").style="background-color: rgb(255, 115, 0);";

@@ -21,10 +21,6 @@ function ball(op){
     }
     update()
 }
-function nul(){
-    obj.bot = null;
-    update()
-}
 function strike(op){
     if(obj.Strike<2&&op == "+"){
         nStrike = obj.Strike + 1;
@@ -65,11 +61,15 @@ function ining(op){
     update()
 }
 function top1(){
-    nBot = false
+    obj.bot = 2
     update()
 }
 function bot(){
-    nBot = true
+    obj.bot = 1
+    update()
+}
+function nul(){
+    obj.bot = 0;
     update()
 }
 function b1(){
