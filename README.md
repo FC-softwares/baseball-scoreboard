@@ -2,6 +2,14 @@
 This is a HTML and JS baseted scoreboard for basball live.
 
 # UPDATE LOG (English)
+## V1.0.1
+### New Features:
+* LIVE scoreboard: Now scorebord updates live
+* Pre-game and Post-game overlays used for not leaving blank the camera, them will adjust whit name, color and score (Post-game only)
+* Fixed cache whith all files now the browser will not cache files
+* Ining arrow more reactive (before dash had problem)
+### Know Bugs:
+* we don't find any other bug if you find please advise me
 ## V1.0.0
 ### Features:
 * Adding, Removing score
