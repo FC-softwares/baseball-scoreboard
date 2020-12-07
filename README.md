@@ -13,10 +13,10 @@ controlla che il file data.json abbia i permessi di lettura e scrittura (fornisc
 # UPDATE LOG (English)
 ## V1.0.1
 ### New Features:
-* LIVE scoreboard: Now scorebord updates live
-* Pre-game and Post-game overlays used for not leaving blank the camera, them will adjust whit name, color and score (Post-game only)
-* Fixed cache whith all files now the browser will not cache files
-* Ining arrow more reactive (before dash had problem)
+* LIVE scoreboard: Now scoreboard updates live
+* Pre-game and Post-game overlays used for not leaving blank the camera, them will adjust whit name, colour and score (Post-game only)
+* Fixed cache with all files now the browser will not cache files
+* Ining arrow more reactive (before dash had a problem)
 * Removed debug log on console
 ### Know Bugs:
 * we don't find any other bug if you find please advise me
