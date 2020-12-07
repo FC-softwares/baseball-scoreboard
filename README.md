@@ -20,6 +20,8 @@ controlla che il file data.json abbia i permessi di lettura e scrittura (fornisc
 * Removed debug log on console
 ### Know Bugs:
 * we don't find any other bug if you find please advise me
+=======
+# UPDATE LOG (English)
 ## V1.0.0
 ### Features:
 * Adding, Removing score
@@ -34,7 +36,6 @@ controlla che il file data.json abbia i permessi di lettura e scrittura (fornisc
 * initial cache about ALL BROWSERS (Just repeat the action for 3/4 times and it's gone)
 * Scoreboard don't update live yo have to wait minus then 5s
 * we don't find any other bug if you find please advise me
-
 # Update Log (Italiano)
 ## V1.0.1
 ### Nuove Funzioni:
@@ -64,3 +65,4 @@ controlla che il file data.json abbia i permessi di lettura e scrittura (fornisc
 [![Licenza Creative Commons](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)  
 <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Baseball-Scoreboard</span> di [Luca Facchini e Kristian Ceribashi](https://github.com/luca-ceri/) è distribuito con Licenza [Creative Commons Attribuzione - Non commerciale - Non opere derivate 4.0 Internazionale](http://creativecommons.org/licenses/by-nc-nd/4.0/).  
 Permessi ulteriori rispetto alle finalità della presente licenza possono essere disponibili presso [https://github.com/lucafano04](https://github.com/lucafano04).
+=======
