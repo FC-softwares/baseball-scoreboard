@@ -1,0 +1,71 @@
+<html>
+<head>
+    <title>Baseball Scoreboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+</head>
+<body style="background-color: rgba(0, 0, 0, 0);">
+    <table class="main">
+        <tr class="main">
+            <table>
+                <tr>
+                    <td>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="310" height="100">
+                            <polygon fill="#F3BC23" stroke="#F3BC23" stroke-width="1" points="0,0 250,0 200,50 0,50" id="labelA"/>
+                            <text id="nameA" x="25" y="37.5" text-anchor="start" fill="white" font-size="30">X</text>
+                            <polygon fill="rgb(41,41,41);" stroke="rgb(41,41,41);" stroke-width="1" points="250,0 200,50 260,50 310,0"/>
+                            <text id="scoreA" x="250" y="37.5" text-anchor="middle" fill="white" font-size="30" font-style="italic">10</text>
+                        </svg>
+                    </td>
+                <td>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="310" height="100">
+                        <polygon fill="rgb(41,41,41);" stroke="rgb(41,41,41);" stroke-width="1" points="50,0 0,50 60,50 110,0"/>
+                        <text id="scoreH" x="50" y="37.5" text-anchor="middle" fill="white" font-size="30" font-style="italic">10</text>
+                        <polygon fill="#F3BC23" stroke="#F3BC23" stroke-width="1" points="110,0 60,50 310,50 310,0" id="labelH"/>
+                        <text id="nameH" x="285" y="37.5" text-anchor="end" fill="white" font-size="30">X</text>
+                    </svg>
+                </td>
+            </tr>
+            </table>
+        </tr>
+    </table>
+    <!-- SCRIPT VARI-->
+    <script src="data.json"></script>
+<script async=false defer=false>
+    update()
+    function load(){
+        console.log("load start")
+        let json = document.createElement('script');
+        json.src = './data.json?'+ Math.random();
+        json.async = false;
+        json.defer = false;
+        document.body.appendChild(json);
+        console.log("Caricamento terminato")
+    }
+    function update(){
+        console.log("update start")
+        obj=JSON.parse(data)
+        nameA.innerHTML=obj.Away;
+        labelA.style.fill=obj.ColorA;
+        labelA.style.stroke=obj.ColorA;
+        scoreA.innerHTML=obj.ScoreA;
+        
+        nameH.innerHTML= obj.Home;
+        labelH.style.fill=obj.ColorH;
+        labelH.style.stroke=obj.ColorH;
+        scoreH.innerHTML=obj.ScoreH;
+        
+        console.log("update end")
+    }
+    window.setInterval(function(){
+        load();
+        setTimeout(function afterTwoSeconds() 
+        {
+            update()
+        },500)
+    }, 10000);
+</script>
+</body>
+</html>
