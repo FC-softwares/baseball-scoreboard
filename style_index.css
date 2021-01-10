@@ -1,0 +1,30 @@
+#title{
+    text-align: center;
+    font-family: 'Acme', sans-serif;
+    color: whitesmoke;
+}
+#sub-title{
+    text-align: center;
+    font-family: 'Acme', sans-serif;
+    color: whitesmoke;
+}
+#link-index{
+    text-align: center;
+    font-family: 'Acme',sans-serif;
+    color: whitesmoke;
+}
+.link{
+    text-align: center;
+    font-family: 'Acme',sans-serif;
+    font-size: large;
+    color: whitesmoke;
+}
+.link a:link{
+    color: rgb(252, 186, 3);
+}
+.link a:visited{
+    color: pink;
+}
+html, body{
+    background-color: rgb(41,41,41);
+}
