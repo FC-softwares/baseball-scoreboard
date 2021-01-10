@@ -1,7 +1,6 @@
 <html>
     <head>
         <title>Gestione Tabellone</title>
-        <script src="data.json"></script>
         <link rel="stylesheet" href="style.css" type="text/CSS">
         <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap" rel="stylesheet">
         <meta charset="UTF-8">
@@ -86,7 +85,7 @@
                 <td class="Bleft" colspan="3"><input type="color" name="colorA" id="colorA"></td>
             </tr>
             <tr>
-                <td style="padding: 5px;" colspan="6"><input type="submit" value="Aggiorna" onclick="update()"></td>
+                <td style="padding: 5px;" colspan="6"><input type="submit" value="Aggiorna" onclick="parm()"></td>
             </tr>
         </table>
         <br>
@@ -99,8 +98,6 @@
                 <td><button onclick="reseta()" class="buttonr">RESET COMPLETO</button></td>
             </tr>
         </table>
-        <br>
-        <script src="./data.json"></script>
         <script src="./script.js"></script>
     </body>
 </html>
