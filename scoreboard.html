@@ -37,19 +37,17 @@
         </tr>
     </table>
     <!-- SCRIPT VARI-->
-    <script src="data.json"></script>
 <script async=false defer=false>
     load()
-    update()
     function load(){
-        let json = document.createElement('script');
-        json.src = './data.json?'+ Math.random();
-        json.async = false;
-        json.defer = false;
-        document.body.appendChild(json);
+        fetch("data.json",{cache: "no-cache"})
+        .then(response => response.json())
+        .then(data =>{
+            update(data);
+            console.log(data)
+        })
     }
-    function update(){
-        obj=JSON.parse(data)
+    function update(obj){
         document.getElementById("Away").innerHTML= obj.Away;
         document.getElementById("ScoreA").innerHTML=obj.ScoreA;
         document.getElementById("Away").style="background-color: "+obj.ColorA+"; ";
@@ -88,10 +86,6 @@
     }
     window.setInterval(function(){
         load();
-        setTimeout(function afterTwoSeconds() 
-        {
-            update()
-        },100)
     }, 1500);
 </script>
 </body>
