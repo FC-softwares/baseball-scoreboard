@@ -101,14 +101,6 @@ function bot(){
             update(null,obj)
         })
 }
-function nul(){
-    fetch("data.json",{cache: "no-cache"})
-        .then(response => response.json())
-        .then(obj =>{
-            obj.bot = 0;
-            update(null,obj)
-        })
-}
 function b1(){
     fetch("data.json",{cache: "no-cache"})
         .then(response => response.json())
@@ -183,7 +175,7 @@ function reseta(){
             obj.b2 = false;
             obj.b3 = false;
             nIning = 1;
-            obj.bot = null;
+            obj.bot = 2;
             obj.ScoreH = 0;
             obj.ScoreA = 0;
             update("all",obj);
