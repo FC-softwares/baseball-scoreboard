@@ -9,11 +9,9 @@ function load(){
     .then(response => response.json())
     .then(data =>{
         aggiorna(data);
-        console.log(data)
     })
 }
 function aggiorna(obj){
-    console.log(obj)
     document.getElementById("nameH").value = obj.Home;
     document.getElementById("nameA").value = obj.Away;
     document.getElementById("colorH").value = obj.ColorH;
@@ -255,13 +253,12 @@ function update(par,obj){
         obj.ColorH = "#000000";
     }
     ndata = '{\n\t"Away":"' + obj.Away + '",\n\t"ScoreA":'+obj.ScoreA+',\n\t"ColorA":"'+obj.ColorA+'",\n\t"Home":"'+obj.Home+'",\n\t"ScoreH":'+obj.ScoreH+',\n\t"ColorH":"'+obj.ColorH+'",\n\t"Ball":'+obj.Ball+',\n\t"Strike":'+obj.Strike+',\n\t"Out":'+obj.Out+',\n\t"Ining":'+obj.Ining+',\n\t"bot":'+obj.bot+',\n\t"b1":'+obj.b1+',\n\t"b2":'+obj.b2+',\n\t"b3":'+obj.b3+'\n}'
-    console.log(ndata)
     nData=encodeURI(ndata);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", './update.php', true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() { // Call a function when the state changes.
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {console.log("200 ok")}
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {}
     }
     xhr.send("d="+ndata);
 }
