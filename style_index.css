@@ -2,6 +2,9 @@
     text-align: center;
     font-family: 'Acme', sans-serif;
     color: whitesmoke;
+    background-color: #d00000;
+    border: 0px none rgba(0,0,0,0);
+    padding: 10px;
 }
 #sub-title{
     text-align: center;
@@ -27,4 +30,18 @@
 }
 html, body{
     background-color: rgb(41,41,41);
+    margin: 0px;
+}
+div.footer {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    background-color: rgb(71, 71, 71);
+    text-align: center;
+}
+.footer {
+    padding: 1em;
+    color: white;
+    font-family: Arial;
 }
