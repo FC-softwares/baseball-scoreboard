@@ -6,11 +6,28 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             echo('{"ok":false,"code":500,"result":"Unable to open file"}');
             http_response_code(500);
         }else{
-            $txt = $_POST['d'];
-            fwrite($file, $txt);
+            $old=file_get_contents("./data.json");
+            $old=json_decode($old, true);
+            $new=json_decode($_POST['d'],true);
+            //comparing difference
+            $diff=array_diff_assoc($new,$old);
+            $diff=json_encode($diff);
+            //Saving JSON
+            fwrite($file, $_POST['d']);
             fclose($file);
-            echo('{"ok":true,"code":200,"result":"changes done"}');
-            http_response_code(200);
+            //oppening LOG
+            $log=fopen("changes.log",'a');
+            if($log==false){
+                echo('{"ok":true,"code":200,"result":"changes done","log":false}');
+                http_response_code(200);
+            }else{
+                //Saving log
+                $txt_log="[INFO] ".date("d-m-Y H:i:s")." chages done: ".$diff."\n";
+                fwrite($log,$txt_log);
+                fclose($log);
+                echo('{"ok":true,"code":200,"result":"changes done","changes":,"log":true}');
+                http_response_code(200);
+            }
         }
     }else{
         echo('{"ok":false,"code":400,"result":"d for data set is not set"}');
