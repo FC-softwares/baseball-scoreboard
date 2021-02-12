@@ -89,7 +89,7 @@ function top1(){
     fetch("data.json",{cache: "no-cache"})
         .then(response => response.json())
         .then(obj =>{
-            obj.bot = 2
+            nBot = 2
             update(null,obj)
         })
 }
@@ -97,7 +97,7 @@ function bot(){
     fetch("data.json",{cache: "no-cache"})
         .then(response => response.json())
         .then(obj =>{
-            obj.bot = 1
+            nBot = 1
             update(null,obj)
         })
 }
@@ -175,7 +175,7 @@ function reseta(){
             obj.b2 = false;
             obj.b3 = false;
             nIning = 1;
-            obj.bot = 2;
+            nBot = 2;
             obj.ScoreH = 0;
             obj.ScoreA = 0;
             update("all",obj);
