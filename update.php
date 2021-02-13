@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: application/json');
 if($_SERVER['REQUEST_METHOD']==='POST'){
     if(isset($_POST['d'])){
         $old1=file_get_contents("./data.json");
@@ -32,21 +33,21 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             if($i==14){
                 //comparing difference
                 $diff=array_diff_assoc($new,$old);
-                $diff=json_encode($diff);
+                $diff=json_encode($diff,true);
                 //Saving JSON
                 fwrite($file, $_POST['d']);
                 fclose($file);
                 //oppening LOG
                 $log=fopen("changes.log",'a');
                 if($log==false){
-                    echo('{"ok":true,"code":200,"result":"changes done","log":false}');
+                    echo('{"ok":true,"code":200,"result":"changes done","changes":'.$diff.',"log":false}');
                     http_response_code(200);
                 }else{
                     //Saving log
                     $txt_log="[INFO] ".date("d-m-Y H:i:s")." chages done: ".$diff."\n";
                     fwrite($log,$txt_log);
                     fclose($log);
-                    echo('{"ok":true,"code":200,"result":"changes done","changes":,"log":true}');
+                    echo('{"ok":true,"code":200,"result":"changes done","changes":'.$diff.',"log":true}');
                     http_response_code(200);
                 }
             }else{
