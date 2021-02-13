@@ -8,8 +8,8 @@
 	"Ball":0,
 	"Strike":0,
 	"Out":0,
-	"Ining":0,
-	"bot":0,
+	"Ining":1,
+	"bot":2,
 	"b1":false,
 	"b2":false,
 	"b3":false

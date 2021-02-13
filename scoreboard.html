@@ -59,11 +59,7 @@
         document.getElementById("Ball").innerHTML= obj.Ball;
         document.getElementById("Out").innerHTML= obj.Out;
         document.getElementById("Num").innerHTML= obj.Ining;
-        if(obj.bot == 0){
-            document.getElementById("Arrow").style="transform: rotate(0deg);";
-            document.getElementById("Arrow").innerHTML="&mdash;";
-            document.getElementById("Num").innerHTML="&mdash;";
-        }else if (obj.bot == 1) {
+        if (obj.bot == 1) {
             document.getElementById("Arrow").style="transform: rotate(90deg);";
             document.getElementById("Arrow").innerHTML="&#10148;";
         }else if(obj.bot == 2){
@@ -83,9 +79,7 @@
         else
             document.getElementById("b3").style="background-color: rgba(0,0,0,0);";
     }
-    window.setInterval(function(){
-        load();
-    }, 1500);
+    window.setInterval(function(){load();}, 500);
 </script>
 </body>
 </html>

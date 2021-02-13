@@ -58,3 +58,8 @@ controlla che il file data.json abbia i permessi di lettura e scrittura (fornisc
 * icache iniziale su TUTTI I BROWSER (Ripeti l'azione per 3/4 volte e non c'è più)
 * Il tabellone non si aggiorna dal vivo, devi aspettare meno di 5 secondi
 * non troviamo nessun altro bug se trovi per favore avvisami
+# LICENCE
+[![Licenza Creative Commons](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)  
+<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Baseball-Scoreboard</span> di [Luca Facchini e Kristian Ceribashi](https://github.com/luca-ceri/) è distribuito con Licenza [Creative Commons Attribuzione - Non commerciale - Non opere derivate 4.0 Internazionale](http://creativecommons.org/licenses/by-nc-nd/4.0/).  
+Permessi ulteriori rispetto alle finalità della presente licenza possono essere disponibili presso [https://github.com/lucafano04](https://github.com/lucafano04).
+=======
