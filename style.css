@@ -201,4 +201,28 @@ iframe{
 #CIA{
     margin: 10px;
 }
+.link{
+    text-align: center;
+    font-family: 'Heebo',sans-serif;
+    font-size: large;
+    color: whitesmoke;
+}
+.link a:link{
+    color: rgb(252, 186, 3);
+}
+.link a:visited{
+    color: pink;
+}
+.footer {
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgb(71, 71, 71);
+    text-align: center;
+    padding: 1em;
+    color: white;
+    font-family: Arial;
+    font-weight: normal;
+}
 /*ciao*/

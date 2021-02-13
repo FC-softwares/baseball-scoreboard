@@ -1,25 +1,26 @@
 #title{
     text-align: center;
-    font-family: 'Acme', sans-serif;
+    font-family: 'Heebo', sans-serif;
     color: whitesmoke;
     background-color: #d00000;
     border: 0px none rgba(0,0,0,0);
     padding: 10px;
     margin: 0px;
+    font-size: 24px;
 }
 #sub-title{
     text-align: center;
-    font-family: 'Acme', sans-serif;
+    font-family: 'Heebo', sans-serif;
     color: whitesmoke;
 }
 #link-index{
     text-align: center;
-    font-family: 'Acme',sans-serif;
+    font-family: 'Heebo',sans-serif;
     color: whitesmoke;
 }
 .link{
     text-align: center;
-    font-family: 'Acme',sans-serif;
+    font-family: 'Heebo',sans-serif;
     font-size: large;
     color: whitesmoke;
 }
@@ -35,7 +36,7 @@ html, body{
 }
 .footer {
     position: fixed;
-    width: 100%;
+    right: 0;
     left: 0;
     bottom: 0;
     background-color: rgb(71, 71, 71);
@@ -53,4 +54,7 @@ html, body{
     max-width: 25em;
     margin: auto;
     margin-top: 5em;
+}
+.separator {
+    border-bottom: 1px solid rgb(105, 105, 105);
 }
