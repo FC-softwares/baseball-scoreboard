@@ -7,6 +7,7 @@
         <title>Baseball Scoreboard</title>
         <link rel="stylesheet" href="style_index.css">
         <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap" rel="stylesheet">
+        <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
         <script>
             /* document.URL.substr(0,document.URL.lastIndexOf('/')) */
         </script>
@@ -28,8 +29,56 @@
         </div>
         <div class="footer link">
             <div class="footer-text">
-                <a href="./LICENSE">License</a> - <a href="./README.md">Readme</a>
+                <a id="LICENSE_link" href="#1">License</a> - <a id="README_link" href="#2">Readme</a>
             </div>
         </div>
+        <div id="LICENSE" class="modal">
+          <div class="modal-content">
+            <div class="modal-body">
+              <span class="close">&times;</span>
+              <zero-md src="./LICENSE"></zero-md>
+            </div>
+          </div>
+        </div>
+
+        <div id="README" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+            <div class="modal-body">
+              <span class="close1">&times;</span>
+              <zero-md src="./README.md"></zero-md>
+            </div>
+          </div>
+        </div>
     </body>
+    <script>
+        var modal = document.getElementById("LICENSE");
+        var btn = document.getElementById("LICENSE_link");
+        var span = document.getElementsByClassName("close")[0];
+        btn.onclick = function() {
+          modal.style.display = "block";
+        }
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+        var modal1 = document.getElementById("README");
+        var btn1 = document.getElementById("README_link");
+        var span1 = document.getElementsByClassName("close1")[0];
+        btn1.onclick = function() {
+          modal1.style.display = "block";
+        }
+        span1.onclick = function() {
+          modal1.style.display = "none";
+        }
+        window.onclick = function(event) {
+          if (event.target == modal1) {
+            modal1.style.display = "none";
+          }
+        }
+        </script>
 </html>
