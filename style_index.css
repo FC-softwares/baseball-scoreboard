@@ -1,11 +1,10 @@
-#title{
+#title {
     text-align: center;
     font-family: 'Heebo', sans-serif;
     color: whitesmoke;
-    background-color: #d00000;
-    border: 0px none rgba(0,0,0,0);
     padding: 10px;
-    margin: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
     font-size: 24px;
 }
 #sub-title{
@@ -34,16 +33,22 @@ html, body{
     background-color: rgb(41,41,41);
     margin: 0px;
 }
+.header {
+  background-color: #d00000;
+  color: white;
+}
 .footer {
     position: fixed;
-    right: 0;
     left: 0;
     bottom: 0;
+    width: 100%;
     background-color: rgb(71, 71, 71);
     text-align: center;
-    padding: 1em;
     color: white;
     font-family: Arial;
+}
+.footer-text {
+  padding: 1em;
 }
 .container {
     background-color: none;
@@ -53,12 +58,40 @@ html, body{
     padding: 1em;
     max-width: 25em;
     margin: auto;
-    margin-top: 5em;
+    margin-top: 4em;
+    margin-bottom: 4em;
 }
 .separator {
     border-bottom: 1px solid rgb(105, 105, 105);
 }
 
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+li {
+  float: left;
+}
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+li a:hover {
+  background-color: #9D0000;
+}
+.active {
+  background-color: #9D0000;
+}
+@media screen and (max-width: 600px) {
+  li {
+      float: none;
+  }
+}
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */

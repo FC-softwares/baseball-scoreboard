@@ -100,6 +100,9 @@ html, body {
     background-color: rgb(41,41,41);
 }
 
+.content{
+    margin-bottom: 5em;
+}
 
 .header {
     background-color: #d00000;
@@ -213,19 +216,55 @@ iframe{
 .link a:visited{
     color: pink;
 }
+#title {
+    text-align: center;
+    font-family: 'Heebo', sans-serif;
+    color: whitesmoke;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 24px;
+}
+.ul-navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.li-navbar {
+    float: left;
+}
+.a-navbar {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.a-navbar:hover {
+    background-color: #9D0000;
+}
+.active {
+    background-color: #9D0000;
+}
+@media screen and (max-width: 600px) {
+    .li-navbar {
+        float: none;
+    }
+}
 .footer {
     position: fixed;
-    right: 0;
     left: 0;
     bottom: 0;
+    width: 100%;
     background-color: rgb(71, 71, 71);
     text-align: center;
-    padding: 1em;
     color: white;
     font-family: Arial;
-    font-weight: normal;
 }
-
+.footer-text {
+    padding: 1em;
+}
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -241,8 +280,7 @@ iframe{
     -webkit-animation-duration: 0.4s;
     animation-name: fadeIn;
     animation-duration: 0.4s
-  }
-  
+}
   /* Modal Content */
 .modal-content {
     position: fixed;
@@ -253,8 +291,7 @@ iframe{
     -webkit-animation-duration: 0.4s;
     animation-name: slideIn;
     animation-duration: 0.4s
-  }
-  
+}
   /* The Close Button */
 .close, .close1{
     color: black;

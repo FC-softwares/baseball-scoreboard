@@ -3,13 +3,23 @@
         <title>Gestione Tabellone</title>
         <link rel="stylesheet" href="style.css" type="text/CSS">
         <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
         <meta charset="UTF-8">
         <meta name=viewport content="width=device-width, initial-scale=1">
     </head>
-    <body>
-        <div class="header"><h1 style="text-align: center;">Scoreboard Control Panel</h1></div>
-        <br>
+    <body class="content">
+      <div>
+        <ul class="header ul-navbar">
+          <li id="title" class="li-navbar">Baseball Scoreboard</li>
+          <li class="li-navbar"><a href="./index.html" class="link a-navbar">Home</a></li>
+          <li class="li-navbar"><a href="./admin.html" class="link active a-navbar">Admin</a></li>
+          <li class="li-navbar"><a href="./scoreboard.html" class="link a-navbar" target="_blank">Scoreboard <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
+          <li class="li-navbar"><a href="./pregame.html" class="link a-navbar" target="_blank">Pre game <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
+          <li class="li-navbar"><a href="./postgame.html" class="link a-navbar" target="_blank">Post game <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
+        </ul>
+      </div>
+      <br>
         <table class="mainA">
             <tr>
                 <td colspan="3" class="Bright" id="intball"><b>BALL</b></td>
