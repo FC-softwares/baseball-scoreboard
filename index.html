@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="style_index.css">
         <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap" rel="stylesheet">
         <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     </head>
     <body>
         <div>
@@ -26,10 +28,13 @@
                 <h2 id="link-index">Here are the links to manage the overlay:</h2>
             </div>
             <br>
-            <h3 class="link">Main scoreboard: <a href="./scoreboard.html">./scoreboard.html</a></h3>
             <h3 class="link">Administration access: <a href="./admin.html">./admin.html</a></h3>
-            <h3 class="link">Pre game overlay: <a href="./pregame.html">./pregame.html</a></h3>
-            <h3 class="link">Post game overlay: <a href="./postgame.html">./postgame.html</a></h3>
+            <div class="ct-title separator">
+              <h2 id="link-index">Here are the links to your overlay:</h2>
+            </div>
+            <h3 class="link">Main scoreboard: <a href="./scoreboard.html">./scoreboard.html</a> <a onclick="copy1()" href="#"><i class="fa">&#xf0c5;</i></a></h3>
+            <h3 class="link">Pre game overlay: <a href="./pregame.html">./pregame.html</a> <a onclick="copy2()" href="#"><i class="fa">&#xf0c5;</i></a></h3>
+            <h3 class="link">Post game overlay: <a href="./postgame.html">./postgame.html</a> <a onclick="copy3()" href="#"><i class="fa">&#xf0c5;</i></a></h3>
         </div>
         <div class="footer link">
             <div class="footer-text">
@@ -84,5 +89,21 @@
             modal1.style.display = "none";
           }
         }
+        // TODO
+        function copy1(){
+          var link="TODO"
+          copyToClipboard="scoreboard.html";
+        }
+        const copyToClipboard = str => {
+          const el = document.createElement('textarea');
+          el.value = str;
+          el.setAttribute('readonly', '');
+          el.style.position = 'absolute';
+          el.style.left = '-9999px';
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          document.body.removeChild(el);
+        };
         </script>
 </html>
