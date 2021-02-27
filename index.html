@@ -32,9 +32,9 @@
             <div class="ct-title separator">
               <h2 id="link-index">Here are the links to your overlay:</h2>
             </div>
-            <h3 class="link">Main scoreboard: <a href="./scoreboard.html">./scoreboard.html</a> <a onclick="copy1()" href="#"><i class="fa">&#xf0c5;</i></a></h3>
-            <h3 class="link">Pre game overlay: <a href="./pregame.html">./pregame.html</a> <a onclick="copy2()" href="#"><i class="fa">&#xf0c5;</i></a></h3>
-            <h3 class="link">Post game overlay: <a href="./postgame.html">./postgame.html</a> <a onclick="copy3()" href="#"><i class="fa">&#xf0c5;</i></a></h3>
+            <h3 class="link">Main scoreboard: <a href="./scoreboard.html" target="_blank">./scoreboard.html</a> <button title="Copy to clipboard" id='copy_1' onmouseout="outFunc('copy_1')" onclick="copy(1);" class="copy_button"><i class="fa">&#xf0c5;</i></button></h3>
+            <h3 class="link">Pre game overlay: <a href="./pregame.html" target="_blank">./pregame.html</a> <button title="Copy to clipboard" id='copy_2' onmouseout="outFunc('copy_2')" onclick="copy(2);" class="copy_button"><i class="fa">&#xf0c5;</i></button></h3>
+            <h3 class="link">Post game overlay: <a href="./postgame.html" target="_blank">./postgame.html</a> <button title="Copy to clipboard" id='copy_3' onmouseout="outFunc('copy_3')" onclick="copy(3);" class="copy_button"><i class="fa">&#xf0c5;</i></button></h3>
         </div>
         <div class="footer link">
             <div class="footer-text">
@@ -94,21 +94,36 @@
             modal1.style.display = "none";
           }
         }
-        // TODO
-        function copy1(){
-          var link="TODO"
-          copyToClipboard="scoreboard.html";
+        
+        function copy(sel){
+			var href = window.location.href;
+			var dir = href.substring(0, href.lastIndexOf('/')) + "/";
+        	switch(sel){
+        		case 1:
+					var copy_text=dir+"scoreboard.html";
+					var tooltip = document.getElementById('copy_1');
+              		break;
+            	case 2:
+					var copy_text=dir+"pregame.html";
+					var tooltip = document.getElementById('copy_2');
+              		break;
+            	case 3:
+					var copy_text=dir+"postgame.html";
+					var tooltip = document.getElementById('copy_3');
+              		break;
+          	}
+			var tempInput = document.createElement("input");
+  			tempInput.value = copy_text;
+  			document.body.appendChild(tempInput);
+  			tempInput.select();
+  			document.execCommand("copy");
+  			document.body.removeChild(tempInput);
+  			tooltip.title = "Copied: " + copy_text;
+			tooltip.style="color:#FFC0CB"
         }
-        const copyToClipboard = str => {
-          const el = document.createElement('textarea');
-          el.value = str;
-          el.setAttribute('readonly', '');
-          el.style.position = 'absolute';
-          el.style.left = '-9999px';
-          document.body.appendChild(el);
-          el.select();
-          document.execCommand('copy');
-          document.body.removeChild(el);
-        };
+		function outFunc(id) {
+  			var tooltip = document.getElementById(id);
+  			tooltip.title = "Copy to clipboard";
+		}
         </script>
 </html>
