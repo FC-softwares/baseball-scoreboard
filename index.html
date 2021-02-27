@@ -56,6 +56,7 @@
             <div class="modal-body">
               <span class="close1">&times;</span>
               <zero-md src="./README.md"></zero-md>
+			  <span class="close1">&times;</span>
             </div>
           </div>
         </div>
@@ -77,11 +78,15 @@
         }
         var modal1 = document.getElementById("README");
         var btn1 = document.getElementById("README_link");
-        var span1 = document.getElementsByClassName("close1")[0];
+        var span2 = document.getElementsByClassName("close1")[0];
         btn1.onclick = function() {
           modal1.style.display = "block";
         }
-        span1.onclick = function() {
+		var span3 = document.getElementsByClassName("close1")[1];
+        span3.onclick = function() {
+          modal1.style.display = "none";
+        }
+        span2.onclick = function() {
           modal1.style.display = "none";
         }
         window.onclick = function(event) {
