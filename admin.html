@@ -3,12 +3,23 @@
         <title>Gestione Tabellone</title>
         <link rel="stylesheet" href="style.css" type="text/CSS">
         <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
         <meta charset="UTF-8">
         <meta name=viewport content="width=device-width, initial-scale=1">
     </head>
-    <body>
-        <div class="header"><h1 style="text-align: center;">Pannello di controllo Tabellone</h1></div>
-        <br>
+    <body class="content">
+      <div>
+        <ul class="header ul-navbar">
+          <li id="title" class="li-navbar">Baseball Scoreboard</li>
+          <li class="li-navbar"><a href="./index.html" class="link a-navbar">Home</a></li>
+          <li class="li-navbar"><a href="./admin.html" class="link active a-navbar">Admin</a></li>
+          <li class="li-navbar"><a href="./scoreboard.html" class="link a-navbar" target="_blank">Scoreboard <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
+          <li class="li-navbar"><a href="./pregame.html" class="link a-navbar" target="_blank">Pre game <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
+          <li class="li-navbar"><a href="./postgame.html" class="link a-navbar" target="_blank">Post game <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
+        </ul>
+      </div>
+      <br>
         <table class="mainA">
             <tr>
                 <td colspan="3" class="Bright" id="intball"><b>BALL</b></td>
@@ -27,36 +38,36 @@
                 <td class="Bright"><button class="buttonplus" onclick="out('+')">+</button></td>
             </tr>
             <tr>
-                <td colspan="6" style="border-top: 2px solid white; border-right: 2px solid white;"><button id="cia" onclick="resetc()">Nuovo Battitore</button></td>
+                <td colspan="6" style="border-top: 2px solid white; border-right: 2px solid white;"><button id="cia" onclick="resetc()">New Batter</button></td>
                 <td colspan="3" style="border-top: 2px solid white;"></td>
             </tr>
         </table>
         <br>
         <table class="mainA">
             <tr>
-                <td colspan="3" class="Bright" id="intining"><b>INING</b></td>
+                <td colspan="3" class="Bright" id="intining"><b>INNING</b></td>
                 <td colspan="2" class="B-all"><b>TOP/BOT</b></td>
-                <td colspan="3" class="Bleft"><b>BASI</b></td>
+                <td colspan="3" class="Bleft"><b>BASES</b></td>
             </tr>
             <tr>
                 <td class="Bleft"><button class="buttonminus" onclick='ining("-")'>-</button></td>
                 <td><button onclick="ining('0')">Reset</button></td>
                 <td class="Bright"><button class="buttonplus" onclick='ining("+")'>+</button></td>
                 <td class="Bleft"><button onclick="top1()">TOP</button></td>
-                <td class="Bright"><button onclick="bot()">BOT</button></td>
+                <td class="Bright" style="padding-left: 0px;"><button onclick="bot()">BOT</button></td>
                 <td class="Bleft"><button onclick='b1()'>1° base</button></td>
                 <td><button onclick="b2()">2° base</button></td>
                 <td class="Bright"><button onclick='b3()'>3° base</button></td>
             </tr>
             <tr>
-                <td colspan="8" style="border-top: 2px solid white;"><button onclick="reseti()" id="CIA">Cambio Ining Automatico</button></td>
+                <td colspan="9" style="border-top: 2px solid white;"><button onclick="reseti()" id="CIA">Auto Change Inning</button></td>
             </tr>
         </table>
         <br>
         <table class="mainA">
             <tr>
-                <td colspan="3"><b>LOCALI</b></td>
-                <td colspan="3"><b>OSPITI</b></td>
+                <td colspan="3"><b>HOME</b></td>
+                <td colspan="3"><b>AWAY</b></td>
             </tr>
             <tr>
                 <td colspan="6">SCORE<br></td>
@@ -84,7 +95,7 @@
                 <td class="Bleft" colspan="3"><input type="color" name="colorA" id="colorA"></td>
             </tr>
             <tr>
-                <td style="padding: 5px;" colspan="6"><input type="submit" value="Aggiorna" onclick="parm()"></td>
+                <td style="padding: 5px;" colspan="6"><input type="submit" value="Update" onclick="parm()"></td>
             </tr>
         </table>
         <br>
@@ -94,9 +105,63 @@
         <br>
         <table class="mainA2">
             <tr>
-                <td><button onclick="reseta()" class="buttonr">RESET COMPLETO</button></td>
+                <td><button onclick="reseta()" class="buttonr">FULL RESET</button></td>
             </tr>
         </table>
         <script src="./script.js"></script>
+        <div class="footer link">
+            <div class="footer-text">
+                <a id="LICENSE_link" href="#1">License</a> - <a id="README_link" href="#2">Readme</a>
+            </div>
+        </div>
+        <div id="LICENSE" class="modal">
+            <div class="modal-content">
+              <div class="modal-body">
+                <span class="close">&times;</span>
+                <zero-md src="./LICENSE"></zero-md>
+              </div>
+            </div>
+          </div>
+  
+          <div id="README" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-body">
+                <span class="close1">&times;</span>
+                <zero-md src="./README.md"></zero-md>
+              </div>
+            </div>
+          </div>
+      </body>
+      <script>
+          var modal = document.getElementById("LICENSE");
+          var btn = document.getElementById("LICENSE_link");
+          var span = document.getElementsByClassName("close")[0];
+          btn.onclick = function() {
+            modal.style.display = "block";
+          }
+          span.onclick = function() {
+            modal.style.display = "none";
+          }
+          window.onclick = function(event) {
+            if (event.target == modal) {
+              modal.style.display = "none";
+            }
+          }
+          var modal1 = document.getElementById("README");
+          var btn1 = document.getElementById("README_link");
+          var span1 = document.getElementsByClassName("close1")[0];
+          btn1.onclick = function() {
+            modal1.style.display = "block";
+          }
+          span1.onclick = function() {
+            modal1.style.display = "none";
+          }
+          window.onclick = function(event) {
+            if (event.target == modal1) {
+              modal1.style.display = "none";
+            }
+          }
+          </script>
     </body>
 </html>
