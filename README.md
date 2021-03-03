@@ -2,12 +2,12 @@
 This is a HTML and JS baseted scoreboard for basball live.
 
 # Installation (English)
-Download and unzip the compressed folder
+Download and unzip the compressed folder then go to the installation address from a browser and use the software
 ## IMPORTANT
 check the file data.json have read and write permission (give it via `chmod 666 data.json`) and make sure update.php have execution rights (Again give it via: `chmod 711 update.php`)
 
 # Installation (Italiano)
-Scarica e decomprimi la cartella compressa
+Scarica e decomprimi la cartella compressa poi vai all'indirizzo di installazione da un browser e usa il software
 ## IMPORTANTE
 controlla che il file data.json abbia i permessi di lettura e scrittura (forniscilo tramite `chmod 666 data.json`) e assicurati che update.php abbia i diritti di esecuzione (di nuovo dallo:` chmod 711 update.php`)
 # LICENCE
