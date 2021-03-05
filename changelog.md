@@ -12,10 +12,11 @@
   * The API only accepts a valid data format
   * Generates a log where all changes are saved
   * Returns a standard response indicating the changes made
-* Style update:
-    * We have updated the style given the introduction of the index.html page by fixing some bugs in the CSS
-    * Added box for README and LICENSE in the index and administration page
-    * Added a menu for page navigation
+* We've updated the style with:
+    * A new look for index.html
+    * A navbar for both admin and index pages
+    * Fixes for the CSS bugs
+    * Popups for README and LICENSE in both admin and index pages
 ### Known bugs:
 * We haven't found any bugs yet. If you find any, please notify us!
 ## V1.0.1
@@ -55,10 +56,11 @@
   * La API accetta solo un formato valido di dati
   * Genera un Log dove vengono salvati tutti i cambiamenti
   * Restituisce una risposta standard indicando i cambiamenti effettuati
-* Aggiornamento dello stile:
-    * Abbiamo aggiornato lo stile data l'introduzione della pagina index.html aggiustando dei bug presenti nel CSS
-    * Aggiunti box per README e LICENCE nella pagina di index e di amministrazione
-    * Aggiunto un menu per la navigazione tra le pagine
+* Abbiamo aggiornato lo stile con:
+    * Un nuovo look della pagina index.html
+    * L'aggiunta di un navbar in admin e index
+    * Fix di alcuni bug nel CSS
+    * Aggiunti box per README e LICENSE nella pagina di index e di amministrazione
 ### Bug conosciuti:
 * Non abbiamo trovato nessun bug per ora. Se ne trovi qualcuno, per favore avvisaci!
 ## V1.0.1
