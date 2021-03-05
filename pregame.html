@@ -30,19 +30,15 @@
     <!-- SCRIPT VARI-->
     <script src="data.json"></script>
 <script async=false defer=false>
-    update()
+    load()
     function load(){
-        console.log("load start")
-        let json = document.createElement('script');
-        json.src = './data.json?'+ Math.random();
-        json.async = false;
-        json.defer = false;
-        document.body.appendChild(json);
-        console.log("Caricamento terminato")
+        fetch("data.json",{cache: "no-cache"})
+        .then(response => response.json())
+        .then(data =>{
+            update(data);
+        })
     }
-    function update(){
-        console.log("update start")
-        obj=JSON.parse(data)
+    function update(obj){
         nameA.innerHTML=obj.Away;
         labelA.style.fill=obj.ColorA;
         labelA.style.stroke=obj.ColorA;
@@ -50,8 +46,6 @@
         nameH.innerHTML= obj.Home;
         labelH.style.fill=obj.ColorH;
         labelH.style.stroke=obj.ColorH;
-        
-        console.log("update end")
     }
     window.setInterval(function(){
         load();
