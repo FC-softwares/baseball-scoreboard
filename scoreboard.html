@@ -37,19 +37,16 @@
         </tr>
     </table>
     <!-- SCRIPT VARI-->
-    <script src="data.json"></script>
 <script async=false defer=false>
     load()
-    update()
     function load(){
-        let json = document.createElement('script');
-        json.src = './data.json?'+ Math.random();
-        json.async = false;
-        json.defer = false;
-        document.body.appendChild(json);
+        fetch("data.json",{cache: "no-cache"})
+        .then(response => response.json())
+        .then(data =>{
+            update(data);
+        })
     }
-    function update(){
-        obj=JSON.parse(data)
+    function update(obj){
         document.getElementById("Away").innerHTML= obj.Away;
         document.getElementById("ScoreA").innerHTML=obj.ScoreA;
         document.getElementById("Away").style="background-color: "+obj.ColorA+"; ";
@@ -62,11 +59,7 @@
         document.getElementById("Ball").innerHTML= obj.Ball;
         document.getElementById("Out").innerHTML= obj.Out;
         document.getElementById("Num").innerHTML= obj.Ining;
-        if(obj.bot == 0){
-            document.getElementById("Arrow").style="transform: rotate(0deg);";
-            document.getElementById("Arrow").innerHTML="&mdash;";
-            document.getElementById("Num").innerHTML="&mdash;";
-        }else if (obj.bot == 1) {
+        if (obj.bot == 1) {
             document.getElementById("Arrow").style="transform: rotate(90deg);";
             document.getElementById("Arrow").innerHTML="&#10148;";
         }else if(obj.bot == 2){
@@ -86,13 +79,7 @@
         else
             document.getElementById("b3").style="background-color: rgba(0,0,0,0);";
     }
-    window.setInterval(function(){
-        load();
-        setTimeout(function afterTwoSeconds() 
-        {
-            update()
-        },100)
-    }, 1500);
+    window.setInterval(function(){load();}, 500);
 </script>
 </body>
 </html>
