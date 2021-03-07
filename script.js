@@ -74,10 +74,16 @@ function ining(op){
         .then(obj =>{
             if(op == "+")
                 nIning = obj.Ining + 1;
-            else if(op == "-"&&obj.Ining > 0)
-                nIning = obj.Ining - 1;
-            else if(op == "0")
-                nIning = 0;
+            else if(op == "-"&&obj.Ining > 1){
+                if(confirm("Attenzione Cancellerai il punteggio di questo ining\nSei Sicuro?"))
+                    nIning = obj.Ining - 1;
+                else
+                    return;
+            }else if(op == "0")
+                if(confirm("Attenzione Cancellerai il punteggio di tutti i parziali\nSei Sicuro?"))
+                    nIning = 1;
+                else
+                    return;
             else{
                 alert("Non puoi eseguire questa operazione");
                 return;
@@ -244,13 +250,12 @@ function update(par,obj){
         obj.ColorA = "#000000";
         obj.ColorH = "#000000";
     }
-    ndata = '{\n\t"Away":"' + obj.Away + '",\n\t"ScoreA":'+obj.ScoreA+',\n\t"ColorA":"'+obj.ColorA+'",\n\t"Home":"'+obj.Home+'",\n\t"ScoreH":'+obj.ScoreH+',\n\t"ColorH":"'+obj.ColorH+'",\n\t"Ball":'+obj.Ball+',\n\t"Strike":'+obj.Strike+',\n\t"Out":'+obj.Out+',\n\t"Ining":'+obj.Ining+',\n\t"bot":'+obj.bot+',\n\t"b1":'+obj.b1+',\n\t"b2":'+obj.b2+',\n\t"b3":'+obj.b3+'\n}'
-    nData=encodeURI(ndata);
+    ndata = "Away="+obj.Away+"&ScoreA="+obj.ScoreA+"&ColorA="+obj.ColorA+"&Home="+obj.Home+"&ScoreH="+obj.ScoreH+"&ColorH="+obj.ColorH+"&Ball="+obj.Ball+"&Strike="+obj.Strike+"&Out="+obj.Out+"&Ining="+obj.Ining+"&bot="+obj.bot+"&b1="+obj.b1+"&b2="+obj.b2+"&b3="+obj.b3;
     var xhr = new XMLHttpRequest();
     xhr.open("POST", './update.php', true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() { // Call a function when the state changes.
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {}
     }
-    xhr.send("d="+ndata);
+    xhr.send(ndata);
 }
