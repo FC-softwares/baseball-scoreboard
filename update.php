@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: application/json');
+error_reporting(0);
 if($_SERVER['REQUEST_METHOD']==='POST'){
     $old1=file_get_contents("./data.json");
         $old=json_decode($old1, true);
@@ -46,6 +47,9 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             case 'b3':
                 $new[$key]=filter_var($value, FILTER_VALIDATE_BOOLEAN);
                 break;
+            case 'int':
+                $new[$key]=json_decode($value,true);
+                break;
             default:
                 $new[$key]=$value;
                 break;
@@ -58,7 +62,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             $missing[]=$value;
         }
     }
-    if($i==14){
+    if($i==15){
         $file = fopen("data.json", "w");
         if($file==false){
             echo('{"ok":false,"code":500,"result":"Unable to open file"}');
