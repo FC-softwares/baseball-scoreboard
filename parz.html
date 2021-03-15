@@ -11,7 +11,7 @@
     <table class="main">
         <tr class="main" id="numbers">
             <td class="void"></td>
-            
+
         </tr>
         <tr class="main" id="rowA">
             <td class="b" id="colA"><span id="Away">*Away*</span></td>
@@ -95,6 +95,9 @@
     }
     window.setInterval(function(){load();}, 500);
     function init(){
+        document.getElementById("numbers").innerHTML='<td class="void"></td>';
+        document.getElementById("rowA").innerHTML='<td class="b" id="colA"><span id="Away">*Away*</span></td>';
+        document.getElementById("rowH").innerHTML='<td class="b" id="colH"><span id="Home">*Home*</span></td>';
         fetch("data.json",{cache:"no-cache"})
         .then(response => response.json())
         .then(data=>{
