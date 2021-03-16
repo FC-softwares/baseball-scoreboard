@@ -9,7 +9,10 @@ function update(){
         xhr.open("POST", './settings.php', true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() { // Call a function when the state changes.
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {}
+            if (this.readyState === XMLHttpRequest.DONE && this.status != 200) {
+                window.alert("An error occurred while updating score\nSee console for more information\nERROR code: "+this.status);
+                console.debug("Error while sending request\nCODE:"+this.status+"\nRECIVED: '"+this.response+"'");
+            }
         }
         xhr.send(ndata);
     });
