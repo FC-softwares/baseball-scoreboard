@@ -116,7 +116,7 @@
                     else
                         document.getElementById("rowH").innerHTML+='<td class="inactive" id="'+i+'H"></td>'
                 }
-                if((data.Ining>set.max_inning&&data.bot==1)||data.Ining>set.max_inning+1){
+                if((data.Ining>set.max_inning&&(data.bot==1||data.ScoreA>0))||data.Ining>set.max_inning+1){
                     var sA=0,sH=0;
                     for(i=set.max_inning;i<=data.Ining;i++){
                         sA+=data.int[i].A;
