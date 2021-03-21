@@ -1,6 +1,6 @@
 /* inizio definizione Categorie*/
 .active {
-    background: linear-gradient(to top left, rgb(41,41,41) 0%,rgb(86,86,86) 75%,rgb(142,142,142) 100%);
+    background: linear-gradient(to top left, rgb(105, 105, 105) 30%, rgb(128, 128, 128) 70%);
     text-align: center;
     border-color: black;
     border-style: solid;
@@ -86,5 +86,5 @@ tr.main{
 
 html, body {
     margin: 0px;
-    background-color: rgba(41,41,41,0);
+    background-color: rgb(41,41,41);
 }
