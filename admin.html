@@ -108,6 +108,25 @@
                 <td><button onclick="reseta()" class="buttonr">FULL RESET</button></td>
             </tr>
         </table>
+        <br>
+        <h2 class="title">SETTINGS</h2>
+        <table class="tablesetmain">
+          <tr>
+            <td><table class="mainA tableset"><tr class="tablesetprop"><td  class="tablesetprop">MAX INNING</td></tr><td></td><tr class="tablesetprop"><td class="tablesetprop"><input type="number" min="1" id="max_ing"></td></tr></table></td>
+            <td><div style="width: 200px;"></div></td>
+            <td><table class="mainA tableset"><tr class="tablesetprop"><td class="tablesetprop">Blacken the last inning</td></tr><tr class="tablesetprop"><td class="tablesetprop"><select id="dark_current"><option value="true">ON</option><option value="false">OFF</option></select></td></tr></table></td>
+          </tr>    
+        </table>
+        <br>
+        <br>
+        <br>
+        <br>
+        <table class="mainA2">
+            <tr>
+                <td><input type="submit" value="Update Settings" class="buttonr" onclick="update()" style="background-color: black;"></td>
+            </tr>
+        </table>
+        <script src="./set_script.js"></script>
         <script src="./script.js"></script>
         <div class="footer link">
             <div class="footer-text">

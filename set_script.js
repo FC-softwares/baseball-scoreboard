@@ -1,4 +1,4 @@
-function update(){
+function update2(){
     fetch("settings.json",{"cache":"no-cache"})
     .then(response => response.json())
     .then(set=>{
