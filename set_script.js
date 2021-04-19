@@ -12,6 +12,8 @@ function update2(){
             if (this.readyState === XMLHttpRequest.DONE && this.status != 200) {
                 window.alert("An error occurred while updating score\nSee console for more information\nERROR code: "+this.status);
                 console.debug("Error while sending request\nCODE:"+this.status+"\nRECIVED: '"+this.response+"'");
+            }else{
+                location.reload();
             }
         }
         xhr.send(ndata);
