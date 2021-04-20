@@ -17,6 +17,7 @@
           <li class="li-navbar"><a href="./scoreboard.html" class="link a-navbar" target="_blank">Scoreboard <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
           <li class="li-navbar"><a href="./pregame.html" class="link a-navbar" target="_blank">Pre game <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
           <li class="li-navbar"><a href="./postgame.html" class="link a-navbar" target="_blank">Post game <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
+          <li class="li-navbar"><a href="./parz.html" class="link a-navbar" target="_blank">Partials <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
         </ul>
       </div>
       <br>
@@ -47,7 +48,7 @@
             <tr>
                 <td colspan="3" class="Bright" id="intining"><b>INNING</b></td>
                 <td colspan="2" class="B-all"><b>TOP/BOT</b></td>
-                <td colspan="3" class="Bleft"><b>BASES</b></td>
+                <td colspan="3" class="Bright" style="border-right: 3px solid red;"><b>BASES</b></td>
             </tr>
             <tr>
                 <td class="Bleft"><button class="buttonminus" onclick='ining("-")'>-</button></td>
@@ -57,7 +58,7 @@
                 <td class="Bright" style="padding-left: 0px;"><button onclick="bot()">BOT</button></td>
                 <td class="Bleft"><button onclick='b1()'>1° base</button></td>
                 <td><button onclick="b2()">2° base</button></td>
-                <td class="Bright"><button onclick='b3()'>3° base</button></td>
+                <td class="Bright" style="border-right: 3px solid red;"><button onclick='b3()'>3° base</button></td>
             </tr>
             <tr>
                 <td colspan="9" style="border-top: 2px solid white;"><button onclick="reseti()" id="CIA">Auto Change Inning</button></td>
@@ -103,11 +104,33 @@
         <iframe src="./scoreboard.html" width="480px" height="102px" id="scoreboard"></iframe>
         <br>
         <br>
+        <iframe src="./parz.html" width="550px" height="152px" id="scoreboard"></iframe>
+        <br>
+        <br>
         <table class="mainA2">
             <tr>
                 <td><button onclick="reseta()" class="buttonr">FULL RESET</button></td>
             </tr>
         </table>
+        <br>
+        <h2 class="title">SETTINGS</h2>
+        <table class="tablesetmain">
+          <tr>
+            <td><table class="mainA tableset"><tr class="tablesetprop"><td  class="tablesetprop">MAX INNING</td></tr><td></td><tr class="tablesetprop"><td class="tablesetprop"><input type="number" min="1" id="max_ing"></td></tr></table></td>
+            <td><div style="width: 1em;"></div></td>
+            <td><table class="mainA tableset"><tr class="tablesetprop"><td class="tablesetprop">Blacken the last inning</td></tr><tr class="tablesetprop"><td class="tablesetprop"><select id="dark_current"><option value="true">ON</option><option value="false">OFF</option></select></td></tr></table></td>
+          </tr>    
+        </table>
+        <br>
+        <br>
+        <br>
+        <br>
+        <table class="mainA2">
+            <tr>
+                <td><input type="submit" value="Update Settings" class="buttonr" onclick="update2()" style="background-color: black;"></td>
+            </tr>
+        </table>
+        <script src="./set_script.js"></script>
         <script src="./script.js"></script>
         <div class="footer link">
             <div class="footer-text">

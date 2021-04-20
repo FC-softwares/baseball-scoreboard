@@ -1,0 +1,90 @@
+/* inizio definizione Categorie*/
+.active {
+    background: linear-gradient(to top left, rgb(105, 105, 105) 30%, rgb(128, 128, 128) 70%);
+    text-align: center;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    border-collapse: collapse;
+}
+.inactive{
+    background-color: #212121;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    border-collapse: collapse;
+}
+.numbers{
+    background: linear-gradient(to top left, rgb(41,41,41) 0%,rgb(86,86,86) 75%,rgb(142,142,142) 100%);
+    text-align: center;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    border-collapse: collapse;
+}
+.void{
+    border-top: 0px solid rgba(0,0,0,0);
+    border-left: 0px solid rgba(0,0,0,0);
+}
+.main{ /*tabella principale*/
+    border-color: #000000;
+    border-style: solid;
+    border-width: 0px;
+    border-collapse: collapse;
+    width: 550px;
+    font-family: 'Heebo', sans-serif;
+    color: white;
+}
+
+/*Colonna Bordata*/
+td.b{
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px;
+    border-collapse: collapse;
+}
+
+/*solo Bordo sinistra*/
+td.l{ 
+    border-collapse: collapse;
+    border-left: 1px solid #000000;
+}
+/*Solo Bordo Destra*/
+td.r{
+    border-collapse: collapse;
+    border-right: 1px solid #000000;
+}
+tr.main{
+    height: 50px;
+}
+
+/* inizio definizione Singoli Elementi*/
+
+#ScoreA{
+    text-align: center;
+}
+#ScoreH{
+    text-align: center;
+}
+
+/* sfondo celle diverse dal nome squadra */
+#ScoreA, #ScoreH{
+    background: linear-gradient(to top left, rgb(41,41,41) 0%,rgb(86,86,86) 75%,rgb(142,142,142) 100%);
+    /*background-color: rgb(41, 41, 41);*/
+}
+
+/* gestione del font */
+#Home, #Away {
+    font-size: 30px;
+    height: 50%;
+    padding-left: 10px;
+}
+
+#colA, #colB {
+    width: 175px;
+}
+
+html, body {
+    margin: 0px;
+    background-color: rgb(41,41,41);
+}

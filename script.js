@@ -72,12 +72,21 @@ function ining(op){
     fetch("data.json",{cache: "no-cache"})
         .then(response => response.json())
         .then(obj =>{
-            if(op == "+")
+            if(op == "+"){
                 nIning = obj.Ining + 1;
-            else if(op == "-"&&obj.Ining > 0)
-                nIning = obj.Ining - 1;
-            else if(op == "0")
-                nIning = 0;
+                obj.int[nIning]={"A":0,"H":0};
+            }else if(op == "-"&&obj.Ining > 1){
+                if(confirm("Attenzione Cancellerai il punteggio di questo ining\nSei Sicuro?"))
+                    nIning = obj.Ining - 1;
+                else
+                    return;
+            }else if(op == "0")
+                if(confirm("Attenzione Cancellerai il punteggio di tutti i parziali\nSei Sicuro?")){
+                    nIning = 1;
+                    obj.int[1].H=0;
+                    obj.int[1].A=0;
+                }else
+                    return;
             else{
                 alert("Non puoi eseguire questa operazione");
                 return;
@@ -153,7 +162,7 @@ function reseti(){
             obj.b2 = false;
             obj.b3 = false;
             if(obj.bot==1){
-                nIning = obj.Ining + 1;
+                ining('+');
                 nBot = 2;
             }else{
                 nBot = 1;
@@ -175,6 +184,8 @@ function reseta(){
             obj.b2 = false;
             obj.b3 = false;
             nIning = 1;
+            obj.int[1].H=0;
+            obj.int[1].A=0;
             nBot = 2;
             obj.ScoreH = 0;
             obj.ScoreA = 0;
@@ -187,11 +198,12 @@ function sHome(op){
         .then(response => response.json())
         .then(obj =>{
             if(op == "+")
-                obj.ScoreH = obj.ScoreH + 1;
-            else if(op == "-"&&obj.ScoreH > 0)
-                obj.ScoreH = obj.ScoreH - 1;
+                obj.int[obj.Ining].H=obj.int[obj.Ining].H+1;
+            else if(op == "-"&&obj.ScoreH > 0&&obj.int[obj.Ining].H>0)
+                obj.int[obj.Ining].H=obj.int[obj.Ining].H-1;
             else if(op == "0")
-                obj.ScoreH = 0
+                for(var i=1;i<=obj.Ining;i++)
+                    obj.int[i].H=0;
             else{
                 alert("Non puoi eseguire questa operazione")
                 return;
@@ -204,11 +216,12 @@ function sAway(op){
         .then(response => response.json())
         .then(obj =>{
             if(op == "+")
-                obj.ScoreA = obj.ScoreA + 1;
-            else if(op == "-"&&obj.ScoreA > 0)
-                obj.ScoreA = obj.ScoreA - 1;
+                obj.int[obj.Ining].A=obj.int[obj.Ining].A+1;
+            else if(op == "-"&&obj.ScoreA > 0&&obj.int[obj.Ining].A>0)
+                obj.int[obj.Ining].A=obj.int[obj.Ining].A-1;
             else if(op == "0")
-                obj.ScoreA = 0;
+                for(var i=1;i<=obj.Ining;i++)
+                    obj.int[i].A=0;
             else{
                 alert("Non puoi eseguire questa operazione")
                 return;
@@ -244,13 +257,28 @@ function update(par,obj){
         obj.ColorA = "#000000";
         obj.ColorH = "#000000";
     }
-    ndata = '{\n\t"Away":"' + obj.Away + '",\n\t"ScoreA":'+obj.ScoreA+',\n\t"ColorA":"'+obj.ColorA+'",\n\t"Home":"'+obj.Home+'",\n\t"ScoreH":'+obj.ScoreH+',\n\t"ColorH":"'+obj.ColorH+'",\n\t"Ball":'+obj.Ball+',\n\t"Strike":'+obj.Strike+',\n\t"Out":'+obj.Out+',\n\t"Ining":'+obj.Ining+',\n\t"bot":'+obj.bot+',\n\t"b1":'+obj.b1+',\n\t"b2":'+obj.b2+',\n\t"b3":'+obj.b3+'\n}'
-    nData=encodeURI(ndata);
+    obj.ScoreH=0;
+    obj.ScoreA=0;
+    for(var i=1;i<=obj.Ining;i++){
+        obj.ScoreA=obj.ScoreA+obj.int[i].A;
+        obj.ScoreH=obj.ScoreH+obj.int[i].H;
+    }
+    ndata = "Away="+obj.Away+"&ScoreA="+obj.ScoreA+"&ColorA="+obj.ColorA+"&Home="+obj.Home+"&ScoreH="+obj.ScoreH+"&ColorH="+obj.ColorH+"&Ball="+obj.Ball+"&Strike="+obj.Strike+"&Out="+obj.Out+"&Ining="+obj.Ining+"&bot="+obj.bot+"&b1="+obj.b1+"&b2="+obj.b2+"&b3="+obj.b3+"&int={";
+    for(var i=1;i<obj.Ining;i++){
+        tmp=obj.int[i];
+        ndata=ndata+'"'+i+'"'+':{"A":'+tmp.A+',"H":'+tmp.H+'},';
+    }
+    tmp=obj.int[obj.Ining];
+    ndata=ndata+'"'+i+'"'+':{"A":'+tmp.A+',"H":'+tmp.H+'}';
+    ndata=ndata+"}"
     var xhr = new XMLHttpRequest();
     xhr.open("POST", './update.php', true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() { // Call a function when the state changes.
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {}
+        if (this.readyState === XMLHttpRequest.DONE && this.status != 200) {
+            window.alert("An error occurred while updating score\nSee console for more information\nERROR code: "+this.status);
+            console.debug("Error while sending request\nCODE:"+this.status+"\nRECIVED: '"+this.response+"'");
+        }
     }
-    xhr.send("d="+ndata);
+    xhr.send(ndata);
 }
