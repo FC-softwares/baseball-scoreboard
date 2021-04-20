@@ -1,4 +1,18 @@
 # UPDATE LOG (English)
+## V1.2.0
+### New Features:
+* Added Partials:
+  * Dedicated Page `parz.html`
+  * Dedicated style `style_parz.css`
+  * Variable Inning displayed
+  * Visible on `admin.html`
+* Added Settings
+  * Maximum ining for `parz.html`
+* Updated navbar and index
+* Converted Data passing
+* Fixed Visual Bug
+### Known Bugs:
+* We haven't found any bugs yet. If you find any, please notify us!
 ## V1.1.0
 ### New Features:
 * Now we use `fetch()` to get the JSON from the file
@@ -18,7 +32,8 @@
     * Fixes for the CSS bugs
     * Popups for README and LICENSE in both admin and index pages
 ### Known bugs:
-* We haven't found any bugs yet. If you find any, please notify us!
+* Visual Bugs into `admin.html`
+* we haven't find any other bug if you find please advise me
 ## V1.0.1
 ### New Features:
 * LIVE scoreboard: Now scoreboard updates live
@@ -43,6 +58,20 @@
 * Scoreboard don't update live yo have to wait minus then 5s
 * we don't find any other bug if you find please advise me
 # Update Log (Italiano)
+## V1.2.0
+### Nuove caratteristiche:
+* Parziali aggiunti:
+   * Pagina dedicata `parz.html`
+   * Stile dedicato `style_parz.css`
+   * Inning variabile visualizzato
+   * Visibile su `admin.html`
+* Aggiunte impostazioni
+   * Massimo ining per `parz.html`
+* Barra di navigazione e indice aggiornati
+* Passaggio di dati convertiti
+* Risolto bug visivo
+### Bug noti:
+* Non abbiamo ancora trovato alcun bug. Se ne trovi, avvisaci!
 ## V1.1.0
 ### Nuove Funzioni:
 * Ora usiamo `fetch()` per prendere il JSON dal file
@@ -62,7 +91,8 @@
     * Fix di alcuni bug nel CSS
     * Aggiunti box per README e LICENSE nella pagina di index e di amministrazione
 ### Bug conosciuti:
-* Non abbiamo trovato nessun bug per ora. Se ne trovi qualcuno, per favore avvisaci!
+* Bug visivi in `admin.html`
+* non abbiamo trovato nessun altro bug se trovi per favore avvisami
 ## V1.0.1
 ### Nuove Funzioni:
 * SEGNAPUNTI LIVE: ora il segnapunti si aggiorna in live
