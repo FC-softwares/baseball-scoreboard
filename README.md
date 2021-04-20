@@ -2,14 +2,14 @@
 This is a HTML and JS based scoreboard for baseball live.
 
 # Installation (English)
-- Download and unzip the compressed folder
+- Download and unzip the compressed folder into webserver directory
 - Go to the installation address from a browser 
 - Use the software
 ## IMPORTANT
 Check the file `data.json` in order to have read and write permissions (you can give them via `chmod 666 data.json`) and make sure `update.php` has execution rights (you can give them via: `chmod 755 update.php`)
 
 # Installazione (Italiano)
-- Scarica e decomprimi la cartella compressa
+- Scarica e decomprimi la cartella compressa nella cartella del webserver
 - Vai all'indirizzo di installazione da un browser
 - Usa il software
 ## IMPORTANTE

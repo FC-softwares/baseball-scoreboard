@@ -324,3 +324,29 @@ iframe{
     from {opacity: 0} 
     to {opacity: 1}
 }
+.tableset{
+    /*float: left;*/
+    width: 200px;
+    height: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.title{
+    text-align: center;
+    color: white;
+    font-size: x-large;
+    font-weight: bold;
+    font-family: 'Heebo', sans-serif;
+}
+.tablesetprop{
+    padding: 5px;
+}
+.tablesetmain{
+    align-items: center;
+    height: 60px;
+    /*width: 700px;*/
+    align-self: center;
+    align-items: center;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+}
