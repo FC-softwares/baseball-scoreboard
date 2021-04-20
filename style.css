@@ -325,7 +325,7 @@ iframe{
     to {opacity: 1}
 }
 .tableset{
-    float: left;
+    /*float: left;*/
     width: 200px;
     height: 100%;
     margin-top: 5px;
@@ -344,10 +344,9 @@ iframe{
 .tablesetmain{
     align-items: center;
     height: 60px;
-    width: 700px;
+    /*width: 700px;*/
     align-self: center;
     align-items: center;
-    padding-left: 15px;
     margin-inline-start: auto;
     margin-inline-end: auto;
 }
