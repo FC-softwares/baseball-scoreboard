@@ -1,0 +1,20 @@
+html, body{
+    background-color: #363636;
+}
+#new_bat_button{
+	font-size: 11px;
+    
+}
+#ball_num,#strike_num,#out_num{
+    text-align: center;
+}
+#basi{
+    width: fit-content;
+    height: fit-content;
+}
+.void_basi{
+    width: 25px;
+    height: 25px;
+    border: 1px solid black;
+    text-align: center;
+}
