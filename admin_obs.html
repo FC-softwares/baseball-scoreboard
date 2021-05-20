@@ -2,9 +2,10 @@
     <head>
         <title>OBS admin page</title>
         <link rel="stylesheet" type="text/CSS" href="style_obs.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <table>
+        <table style="width: 200px; margin: 0%;">
             <tr>
                 <td>Ball</td>
                 <td>
@@ -53,8 +54,8 @@
             </tr>
             <tr>
                 <td>Bases</td>
-                <td>
-                    <table id="basi" style="border-collapse: collapse;border: 1px solid black;">
+                <td colspan="2">
+                    <table id="basi" style="border-collapse: collapse;border: 1px solid black;margin-inline-start: auto; margin-inline-end: auto;">
                         <tr>
                             <td class="void_basi"><button onclick="b1()">1</button></td>
                             <td class="void_basi"><button onclick="b2()">2</button></td>
@@ -68,8 +69,25 @@
                     </table>
                 </td>
             </tr>
-            <tr>
+            <tr style="text-align: center;">
                 <td colspan="4" style="align-items: center;"><button onclick="reseti()" style="align-self: center;">Auto Change Inning</button></td>
+            </tr>
+            <tr>
+                <td>Inning</td>
+                <td colspan="2">
+                    <table id="inning" style="border: 1px solid black; border-collapse: collapse;">
+                        <tr>
+                            <td rowspan="2"><button onclick="ining('-')">-</button></td>
+                            <td id="inning_container"><span id="inning_num">#</span> <span id="ining_arrow" class="rotate">&#10148;</span></td>
+                            <td rowspan="2"><button onclick="ining('+')">+</button></td>
+                            <td><button class="rotate" style="transform: rotate(270deg);" onclick="top1()">&#10148;</button></td>
+                        </tr>
+                        <tr>
+                            <td><button onclick="ining(0)">RESET</button></td>
+                            <td><button class="rotate" style="transform: rotate(90deg);" onclick="bot()">&#10148;</button></td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
         </table>
     </body>
@@ -362,15 +380,15 @@
             document.getElementById("strike_num").innerHTML= obj.Strike;
             document.getElementById("ball_num").innerHTML= obj.Ball;
             document.getElementById("out_num").innerHTML= obj.Out;
-            //document.getElementById("Num").innerHTML= obj.Ining;
-            /*if (obj.bot == 1) {
-                document.getElementById("Arrow").style="transform: rotate(90deg);";
-                document.getElementById("Arrow").innerHTML="&#10148;";
+            document.getElementById("inning_num").innerHTML= obj.Ining;
+            if (obj.bot == 1) {
+                document.getElementById("ining_arrow").style="transform: rotate(90deg);";
+                document.getElementById("ining_arrow").innerHTML="&#10148;";
             }else if(obj.bot == 2){
-                document.getElementById("Arrow").style="transform: rotate(270deg);";
-                document.getElementById("Arrow").innerHTML="&#10148;";
+                document.getElementById("ining_arrow").style="transform: rotate(270deg);";
+                document.getElementById("ining_arrow").innerHTML="&#10148;";
             }
-            */
+            
             
             if (obj.b1) 
                 document.getElementById("b1").style="background-color: rgb(255, 115, 0);";
