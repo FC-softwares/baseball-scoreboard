@@ -18,3 +18,10 @@ html, body{
     border: 1px solid black;
     text-align: center;
 }
+#inning_container{
+    text-align: center;
+}
+.rotate{
+    transform: rotate(270deg);
+    display: inline-block;
+}
