@@ -25,3 +25,7 @@ html, body{
     transform: rotate(270deg);
     display: inline-block;
 }
+
+#Away,#Home{
+    color: white;
+}

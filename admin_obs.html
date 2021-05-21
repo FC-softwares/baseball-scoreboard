@@ -75,7 +75,7 @@
             <tr>
                 <td>Inning</td>
                 <td colspan="2">
-                    <table id="inning" style="border: 1px solid black; border-collapse: collapse;">
+                    <table id="inning" style="border-collapse: collapse;">
                         <tr>
                             <td rowspan="2"><button onclick="ining('-')">-</button></td>
                             <td id="inning_container"><span id="inning_num">#</span> <span id="ining_arrow" class="rotate">&#10148;</span></td>
@@ -87,6 +87,32 @@
                             <td><button class="rotate" style="transform: rotate(90deg);" onclick="bot()">&#10148;</button></td>
                         </tr>
                     </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br>
+                </td>
+            </tr>
+            <tr rowspan="2">
+                <td colspan="5">
+                    <table style="border: 1px solid black; border-collapse: collapse;">
+                        <tr style="border: 1px solid black;">
+                            <td id="Away">AWAY</td>
+                            <td><button onclick="sAway('-')">-</button><button onclick="aAway('0')">RESET</button><button onclick="sAway('+')">+</button></td>
+                            <td id="scoreA" style="border: 1px solid black;">##</td>
+                        </tr>
+                        <tr style="border: 1px solid black;">
+                            <td id="Home">HOME</td>
+                            <td><button onclick="sHome('-')">-</button><button onclick="sHome('0')">RESET</button><button onclick="sHome('+')">+</button></td>
+                            <td id="scoreH" style="border: 1px solid black;">##</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr rowspan="2">
+                <td colspan="5" style="text-align: center;">
+                    <button onclick="reseta()">RESET</button>
                 </td>
             </tr>
         </table>
@@ -369,13 +395,13 @@
             })
         }
         function update2(obj){
-            //document.getElementById("Away").innerHTML= obj.Away;
-            //document.getElementById("ScoreA").innerHTML=obj.ScoreA;
-            //document.getElementById("Away").style="background-color: "+obj.ColorA+"; ";
+            document.getElementById("Away").innerHTML= obj.Away;
+            document.getElementById("scoreA").innerHTML=obj.ScoreA;
+            document.getElementById("Away").style="background-color: "+obj.ColorA+"; ";
             //document.getElementById("colA").style="background-color: "+obj.ColorA+"; ";
-            //document.getElementById("Home").innerHTML= obj.Home;
-            //document.getElementById("ScoreH").innerHTML=obj.ScoreH;
-            //document.getElementById("Home").style="background-color: "+obj.ColorH+"; ";
+            document.getElementById("Home").innerHTML= obj.Home;
+            document.getElementById("scoreH").innerHTML=obj.ScoreH;
+            document.getElementById("Home").style="background-color: "+obj.ColorH+"; ";
             //document.getElementById("colH").style="background-color: "+obj.ColorH+"; ";
             document.getElementById("strike_num").innerHTML= obj.Strike;
             document.getElementById("ball_num").innerHTML= obj.Ball;
