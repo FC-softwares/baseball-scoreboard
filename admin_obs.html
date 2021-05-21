@@ -23,8 +23,8 @@
                 <td rowspan="2" class=""><button id="new_bat_button" onclick="resetc()">N<br>E<br>W<br>B<br>A<br>T<br>T<br>E<br>R</button></td>
             </tr>
             <tr>
-                <td>Strike</td>
-                <td>
+                <td class="separator">Strike</td>
+                <td class="separator">
                     <table>
                         <tr>
                             <td rowspan="2"><button onclick="strike('-')">-</button></td>
@@ -38,8 +38,8 @@
                 </td>
             </tr>
             <tr>
-                <td>Out</td>
-                <td>
+                <td class="separator">Out</td>
+                <td class="separator">
                     <table>
                         <tr>
                             <td rowspan="2"><button onclick="out('-')">-</button></td>
@@ -53,8 +53,8 @@
                 </td>
             </tr>
             <tr>
-                <td>Bases</td>
-                <td colspan="2">
+                <td class="separator">Bases</td>
+                <td colspan="2" class="separator">
                     <table id="basi" style="border-collapse: collapse;border: 1px solid black;margin-inline-start: auto; margin-inline-end: auto;">
                         <tr>
                             <td class="void_basi"><button onclick="b1()">1</button></td>
@@ -73,8 +73,8 @@
                 <td colspan="4" style="align-items: center;"><button onclick="reseti()" style="align-self: center;">Auto Change Inning</button></td>
             </tr>
             <tr>
-                <td>Inning</td>
-                <td colspan="2">
+                <td class="separator">Inning</td>
+                <td colspan="2" class="separator">
                     <table id="inning" style="border-collapse: collapse;">
                         <tr>
                             <td rowspan="2"><button onclick="ining('-')">-</button></td>
@@ -94,17 +94,17 @@
                     <br>
                 </td>
             </tr>
-            <tr rowspan="2">
-                <td colspan="5">
-                    <table style="border: 1px solid black; border-collapse: collapse;">
+            <tr rowspan="2" class="separator">
+                <td colspan="5" class="separator">
+                    <table style="border: 1px solid black; border-collapse: collapse;" class="center">
                         <tr style="border: 1px solid black;">
                             <td id="Away">AWAY</td>
-                            <td><button onclick="sAway('-')" class="score_button">-</button><button onclick="aAway('0')" class="score_button">RESET</button><button onclick="sAway('+')" class="score_button">+</button></td>
+                            <td class="padding-border"><button onclick="sAway('-')" class="score_button">-</button><button onclick="aAway('0')" class="score_button">RESET</button><button onclick="sAway('+')" class="score_button">+</button></td>
                             <td id="scoreA" style="border: 1px solid black;">##</td>
                         </tr>
                         <tr style="border: 1px solid black;">
                             <td id="Home">HOME</td>
-                            <td><button onclick="sHome('-')" class="score_button">-</button><button onclick="sHome('0')" class="score_button">RESET</button><button onclick="sHome('+')" class="score_button">+</button></td>
+                            <td class="padding-border"><button onclick="sHome('-')" class="score_button">-</button><button onclick="sHome('0')" class="score_button">RESET</button><button onclick="sHome('+')" class="score_button">+</button></td>
                             <td id="scoreH" style="border: 1px solid black;">##</td>
                         </tr>
                     </table>
