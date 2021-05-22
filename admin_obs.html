@@ -53,18 +53,18 @@
                 </td>
             </tr>
             <tr>
-                <td class="separator">Bases</td>
+                <td class="separator" id="basi">Bases</td>
                 <td colspan="2" class="separator">
                     <table id="basi" style="border-collapse: collapse;border: 1px solid black;margin-inline-start: auto; margin-inline-end: auto;">
                         <tr>
-                            <td class="void_basi"><button onclick="b1()">1</button></td>
-                            <td class="void_basi"><button onclick="b2()">2</button></td>
-                            <td class="void_basi"><button onclick="b3()">3</button></td>
+                            <td class="void_basi"><div><button onclick="b1()">1</button></div></td>
+                            <td class="void_basi"><div><button onclick="b2()">2</button></div></td>
+                            <td class="void_basi"><div><button onclick="b3()">3</button></div></td>
                         </tr>
                         <tr>
-                            <td class="void_basi" id="b1"></td>
-                            <td class="void_basi" id="b2"></td>
-                            <td class="void_basi" id="b3"></td>
+                            <td class="void_basi void" id="b1"><div></div></td>
+                            <td class="void_basi void" id="b2"><div></div></td>
+                            <td class="void_basi void" id="b3"><div></div></td>
                         </tr>
                     </table>
                 </td>
@@ -99,7 +99,7 @@
                     <table style="border: 1px solid black; border-collapse: collapse;" class="center">
                         <tr style="border: 1px solid black;">
                             <td id="Away">AWAY</td>
-                            <td class="padding-border"><button onclick="sAway('-')" class="score_button">-</button><button onclick="aAway('0')" class="score_button">RESET</button><button onclick="sAway('+')" class="score_button">+</button></td>
+                            <td class="padding-border"><button onclick="sAway('-')" class="score_button">-</button><button onclick="sAway('0')" class="score_button">RESET</button><button onclick="sAway('+')" class="score_button">+</button></td>
                             <td id="scoreA" style="border: 1px solid black;">##</td>
                         </tr>
                         <tr style="border: 1px solid black;">
