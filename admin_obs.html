@@ -1,0 +1,430 @@
+<html lang="en">
+    <head>
+        <title>OBS admin page</title>
+        <link rel="stylesheet" type="text/CSS" href="style_obs.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+    </head>
+    <body>
+        <table id="main">
+            <tr>
+                <td>Ball</td>
+                <td>
+                    <table>
+                        <tr>
+                            <td rowspan="2"><button onclick="ball('-')">-</button></td>
+                            <td id="ball_num">#</td>
+                            <td rowspan="2"><button onclick="ball('+')">+</button></td>
+                        </tr>
+                        <tr>
+                            <td><button onclick="ball(0)">RESET</button></td>
+                        </tr>
+                    </table>
+                </td>
+                <td rowspan="2" class=""><button id="new_bat_button" onclick="resetc()">N<br>E<br>W<br>B<br>A<br>T<br>T<br>E<br>R</button></td>
+            </tr>
+            <tr>
+                <td class="separator">Strike</td>
+                <td class="separator">
+                    <table>
+                        <tr>
+                            <td rowspan="2"><button onclick="strike('-')">-</button></td>
+                            <td id="strike_num">#</td>
+                            <td rowspan="2"><button onclick="strike('+')">+</button></td>
+                        </tr>
+                        <tr>
+                            <td><button onclick="strike(0)">RESET</button></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="separator">Out</td>
+                <td class="separator">
+                    <table>
+                        <tr>
+                            <td rowspan="2"><button onclick="out('-')">-</button></td>
+                            <td id="out_num">#</td>
+                            <td rowspan="2"><button onclick="out('+')">+</button></td>
+                        </tr>
+                        <tr>
+                            <td><button onclick="out(0)">RESET</button></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="separator" id="basi">Bases</td>
+                <td colspan="2" class="separator">
+                    <table id="basi" style="border-collapse: collapse;border: 1px solid black;margin-inline-start: auto; margin-inline-end: auto;">
+                        <tr>
+                            <td class="void_basi"><div><button onclick="b1()">1</button></div></td>
+                            <td class="void_basi"><div><button onclick="b2()">2</button></div></td>
+                            <td class="void_basi"><div><button onclick="b3()">3</button></div></td>
+                        </tr>
+                        <tr>
+                            <td class="void_basi void" id="b1"><div></div></td>
+                            <td class="void_basi void" id="b2"><div></div></td>
+                            <td class="void_basi void" id="b3"><div></div></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="text-align: center;">
+                <td colspan="4" style="align-items: center;"><button onclick="reseti()" style="align-self: center;">Auto Change Inning</button></td>
+            </tr>
+            <tr>
+                <td class="separator">Inning</td>
+                <td colspan="2" class="separator">
+                    <table id="inning" style="border-collapse: collapse;">
+                        <tr>
+                            <td rowspan="2"><button onclick="ining('-')">-</button></td>
+                            <td id="inning_container"><span id="inning_num">#</span> <span id="ining_arrow" class="rotate">&#10148;</span></td>
+                            <td rowspan="2"><button onclick="ining('+')">+</button></td>
+                            <td><button class="rotate" style="transform: rotate(270deg);" onclick="top1()">&#10148;</button></td>
+                        </tr>
+                        <tr>
+                            <td><button onclick="ining(0)">RESET</button></td>
+                            <td><button class="rotate" style="transform: rotate(90deg);" onclick="bot()">&#10148;</button></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br>
+                </td>
+            </tr>
+            <tr rowspan="2" class="separator">
+                <td colspan="5" class="separator">
+                    <table style="border: 1px solid black; border-collapse: collapse;" class="center">
+                        <tr style="border: 1px solid black;">
+                            <td id="Away">AWAY</td>
+                            <td class="padding-border"><button onclick="sAway('-')" class="score_button">-</button><button onclick="sAway('0')" class="score_button">RESET</button><button onclick="sAway('+')" class="score_button">+</button></td>
+                            <td id="scoreA" style="border: 1px solid black;">##</td>
+                        </tr>
+                        <tr style="border: 1px solid black;">
+                            <td id="Home">HOME</td>
+                            <td class="padding-border"><button onclick="sHome('-')" class="score_button">-</button><button onclick="sHome('0')" class="score_button">RESET</button><button onclick="sHome('+')" class="score_button">+</button></td>
+                            <td id="scoreH" style="border: 1px solid black;">##</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr rowspan="2">
+                <td colspan="5" style="text-align: center;">
+                    <button onclick="reseta()">RESET</button>
+                </td>
+            </tr>
+        </table>
+    </body>
+    <script async=false defer=false>
+        var nball = null
+        var nStrike = null
+        var nOut = null
+        var nIning = null
+        var nBot = null;
+        function ball(op){
+            fetch("data.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj =>{
+                    if(obj.Ball<3&&op == "+")
+                        nball = obj.Ball + 1;
+                    else if(obj.Ball>0&&op == "-")
+                        nball = obj.Ball - 1;
+                    else if(op == "0")
+                        nball = 0;
+                    else{
+                        alert("Non puoi eseguire questa operazione");
+                        return;
+                    }
+                    update(null,obj)
+                })
+        }
+        function strike(op){
+            fetch("data.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj =>{
+                    if(obj.Strike<2&&op == "+")
+                        nStrike = obj.Strike + 1;
+                    else if(obj.Strike>0&&op == "-")
+                        nStrike = obj.Strike - 1;
+                    else if(op == "0")
+                        nStrike = 0;
+                    else{
+                        alert("Non puoi eseguire questa operazione");
+                        return;
+                    }
+                    update(null,obj)
+                })
+        }
+        function out(op){
+            fetch("data.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj =>{
+                    if(obj.Out<2&&op == "+")
+                        nOut = obj.Out + 1
+                    else if(obj.Out>0&&op=="-")
+                        nOut = obj.Out -1;
+                    else if(op == "0")
+                        nOut = 0;
+                    else{
+                        alert("Non puoi eseguire questa operazione");
+                        return;
+                    }
+                    update(null,obj)
+                })
+        }
+        function ining(op){
+            fetch("data.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj =>{
+                    if(op == "+"){
+                        nIning = obj.Ining + 1;
+                        obj.int[nIning]={"A":0,"H":0};
+                    }else if(op == "-"&&obj.Ining > 1){
+                        if(confirm("Attenzione Cancellerai il punteggio di questo ining\nSei Sicuro?"))
+                            nIning = obj.Ining - 1;
+                        else
+                            return;
+                    }else if(op == "0")
+                        if(confirm("Attenzione Cancellerai il punteggio di tutti i parziali\nSei Sicuro?")){
+                            nIning = 1;
+                            obj.int[1].H=0;
+                            obj.int[1].A=0;
+                        }else
+                            return;
+                    else{
+                        alert("Non puoi eseguire questa operazione");
+                        return;
+                    }
+                update(null,obj)
+            })
+        }
+        function top1(){
+            fetch("data.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj =>{
+                    nBot = 2
+                    update(null,obj)
+                })
+        }
+        function bot(){
+            fetch("data.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj =>{
+                    nBot = 1
+                    update(null,obj)
+                })
+        }
+        function b1(){
+            fetch("data.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj =>{
+                    if(obj.b1)
+                        obj.b1 = false;
+                    else
+                        obj.b1 = true;
+                    update(null,obj)
+                })
+        }
+        function b2(){
+            fetch("data.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj =>{
+                    if(obj.b2)
+                        obj.b2 = false;
+                    else
+                        obj.b2 = true;
+                    update(null,obj)
+                })
+        }
+        function b3(){
+            fetch("data.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj =>{
+                    if(obj.b3)
+                        obj.b3 = false;
+                    else
+                        obj.b3 = true
+                    update(null,obj)
+                })
+        }
+        function resetc(){
+            fetch("data.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj =>{
+                    nball = 0;
+                    nStrike = 0;
+                    update(null,obj)
+                })
+        }
+        function reseti(){
+            fetch("data.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj =>{nball = 0;
+                    nStrike = 0;
+                    nOut = 0;
+                    obj.b1 = false;
+                    obj.b2 = false;
+                    obj.b3 = false;
+                    if(obj.bot==1){
+                        ining('+');
+                        nBot = 2;
+                    }else{
+                        nBot = 1;
+                    }
+                    update(null,obj)
+                })
+        }
+        function reseta(){
+            fetch("data.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj =>{
+                    var c=confirm("Una volta eseguita questa operazione non potrai annullarla\nSei Sicuro?");
+                    if(c==false)
+                        return;
+                    nball = 0;
+                    nStrike = 0;
+                    nOut = 0;
+                    obj.b1 = false;
+                    obj.b2 = false;
+                    obj.b3 = false;
+                    nIning = 1;
+                    obj.int[1].H=0;
+                    obj.int[1].A=0;
+                    nBot = 2;
+                    obj.ScoreH = 0;
+                    obj.ScoreA = 0;
+                    update("all",obj);
+                    location.reload();
+                })
+        }
+        function sHome(op){
+            fetch("data.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj =>{
+                    if(op == "+")
+                        obj.int[obj.Ining].H=obj.int[obj.Ining].H+1;
+                    else if(op == "-"&&obj.ScoreH > 0&&obj.int[obj.Ining].H>0)
+                        obj.int[obj.Ining].H=obj.int[obj.Ining].H-1;
+                    else if(op == "0")
+                        for(var i=1;i<=obj.Ining;i++)
+                            obj.int[i].H=0;
+                    else{
+                        alert("Non puoi eseguire questa operazione")
+                        return;
+                    }
+                    update(null,obj)
+                })
+        }
+        function sAway(op){
+            fetch("data.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj =>{
+                    if(op == "+")
+                        obj.int[obj.Ining].A=obj.int[obj.Ining].A+1;
+                    else if(op == "-"&&obj.ScoreA > 0&&obj.int[obj.Ining].A>0)
+                        obj.int[obj.Ining].A=obj.int[obj.Ining].A-1;
+                    else if(op == "0")
+                        for(var i=1;i<=obj.Ining;i++)
+                            obj.int[i].A=0;
+                    else{
+                        alert("Non puoi eseguire questa operazione")
+                        return;
+                    }
+                    update(null,obj)
+                })
+        }
+        function parm(){
+            fetch("data.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj =>{
+                    update(null,obj)
+                })
+        }
+        function update(par,obj){
+            if(nball!=null)
+                obj.Ball = nball;
+            if(nStrike!=null)
+                obj.Strike = nStrike;
+            if(nOut!=null)
+                obj.Out = nOut;
+            if(nIning!=null)
+                obj.Ining = nIning
+            if(nBot!=null)
+                obj.bot = nBot
+            if(par == "all"){
+                obj.Away = "AWAY";
+                obj.Home = "HOME";
+                obj.ColorA = "#000000";
+                obj.ColorH = "#000000";
+            }
+            obj.ScoreH=0;
+            obj.ScoreA=0;
+            for(var i=1;i<=obj.Ining;i++){
+                obj.ScoreA=obj.ScoreA+obj.int[i].A;
+                obj.ScoreH=obj.ScoreH+obj.int[i].H;
+            }
+            ndata = "Away="+obj.Away+"&ScoreA="+obj.ScoreA+"&ColorA="+obj.ColorA+"&Home="+obj.Home+"&ScoreH="+obj.ScoreH+"&ColorH="+obj.ColorH+"&Ball="+obj.Ball+"&Strike="+obj.Strike+"&Out="+obj.Out+"&Ining="+obj.Ining+"&bot="+obj.bot+"&b1="+obj.b1+"&b2="+obj.b2+"&b3="+obj.b3+"&int={";
+            for(var i=1;i<obj.Ining;i++){
+                tmp=obj.int[i];
+                ndata=ndata+'"'+i+'"'+':{"A":'+tmp.A+',"H":'+tmp.H+'},';
+            }
+            tmp=obj.int[obj.Ining];
+            ndata=ndata+'"'+i+'"'+':{"A":'+tmp.A+',"H":'+tmp.H+'}';
+            ndata=ndata+"}"
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", './update.php', true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() { // Call a function when the state changes.
+                if (this.readyState === XMLHttpRequest.DONE && this.status != 200) {
+                    window.alert("An error occurred while updating score\nSee console for more information\nERROR code: "+this.status);
+                    console.debug("Error while sending request\nCODE:"+this.status+"\nRECIVED: '"+this.response+"'");
+                }
+            }
+            xhr.send(ndata);
+        }
+    </script>
+    <script async=false defer=false>
+        load()
+        function load(){
+            fetch("data.json",{cache: "no-cache"})
+            .then(response => response.json())
+            .then(data =>{
+                update2(data);
+            })
+        }
+        function update2(obj){
+            document.getElementById("Away").innerHTML= obj.Away;
+            document.getElementById("scoreA").innerHTML=obj.ScoreA;
+            document.getElementById("Away").style="background-color: "+obj.ColorA+"; ";
+            document.getElementById("Home").innerHTML= obj.Home;
+            document.getElementById("scoreH").innerHTML=obj.ScoreH;
+            document.getElementById("Home").style="background-color: "+obj.ColorH+"; ";
+            document.getElementById("strike_num").innerHTML= obj.Strike;
+            document.getElementById("ball_num").innerHTML= obj.Ball;
+            document.getElementById("out_num").innerHTML= obj.Out;
+            document.getElementById("inning_num").innerHTML= obj.Ining;
+            if (obj.bot == 1) {
+                document.getElementById("ining_arrow").style="transform: rotate(90deg);";
+                document.getElementById("ining_arrow").innerHTML="&#10148;";
+            }else if(obj.bot == 2){
+                document.getElementById("ining_arrow").style="transform: rotate(270deg);";
+                document.getElementById("ining_arrow").innerHTML="&#10148;";
+            }
+            if (obj.b1) 
+                document.getElementById("b1").style="background-color: rgb(255, 115, 0);";
+            else
+                document.getElementById("b1").style="background-color: rgba(0,0,0,0);";
+            if (obj.b2)
+                document.getElementById("b2").style="background-color: rgb(255, 115, 0);";
+            else
+                document.getElementById("b2").style="background-color: rgba(0,0,0,0);";
+            if (obj.b3) 
+                document.getElementById("b3").style="background-color: rgb(255, 115, 0);";
+            else
+                document.getElementById("b3").style="background-color: rgba(0,0,0,0);";
+        }
+        window.setInterval(function(){load();}, 500);
+    </script>
+</html>

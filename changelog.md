@@ -1,4 +1,12 @@
 # UPDATE LOG (English)
+## V1.2.1
+### New Features:
+* Added administration page
+   * Dedicated style `style_obs.css`
+   * `Admin_OBS.html` page
+### Known bugs:
+* Sometimes you don't "free" the bases with `Auto Change Inning`
+* We haven't found any bugs yet. If you find any, please notify us!
 ## V1.2.0
 ### New Features:
 * Added Partials:
@@ -58,6 +66,14 @@
 * Scoreboard don't update live yo have to wait minus then 5s
 * we don't find any other bug if you find please advise me
 # Update Log (Italiano)
+## V1.2.1
+### Nuove Funzioni:
+* Aggiunta pagina amministrazione
+   * Stile dedicato `style_obs.css`
+   * Pagina `admin_OBS.html`
+### Bug noti:
+* Alcune volte non si "liberano" le basi con `Auto Change Inning`
+* non abbiamo trovato nessun altro bug se trovi per favore avvisami
 ## V1.2.0
 ### Nuove caratteristiche:
 * Parziali aggiunti:
