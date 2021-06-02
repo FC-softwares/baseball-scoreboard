@@ -1,5 +1,31 @@
 <html lang="en">
     <head>
+        <script>
+            const digest = async ({ algorithm = "SHA-256", message }) =>
+              Array.prototype.map
+                .call(
+                  new Uint8Array(
+                    await crypto.subtle.digest(algorithm, new TextEncoder().encode(message))
+                  ),
+                  (x) => ("0" + x.toString(16)).slice(-2)
+                )
+                .join("");
+              digest({message: prompt("Enter Password:")})
+                .then(ins=>{
+                  fetch("./passwd.json")
+                  .then(response => response.json())
+                  .then(obj=>{
+                    if(obj.includes(ins)){
+                      console.log("password correct")
+                    }else{
+                        if(confirm("Password incorrect\nTry Again"))
+                            window.location.replace("./admin_OBS.html");
+                        else
+                        window.location.replace("./no_pass.html");
+                    }
+                  })
+                })
+          </script>
         <title>OBS admin page</title>
         <link rel="stylesheet" type="text/CSS" href="style_obs.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
