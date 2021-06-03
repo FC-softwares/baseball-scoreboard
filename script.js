@@ -263,7 +263,7 @@ function update(par,obj){
         obj.ScoreA=obj.ScoreA+obj.int[i].A;
         obj.ScoreH=obj.ScoreH+obj.int[i].H;
     }
-    ndata = "Away="+obj.Away+"&ScoreA="+obj.ScoreA+"&ColorA="+obj.ColorA+"&Home="+obj.Home+"&ScoreH="+obj.ScoreH+"&ColorH="+obj.ColorH+"&Ball="+obj.Ball+"&Strike="+obj.Strike+"&Out="+obj.Out+"&Ining="+obj.Ining+"&bot="+obj.bot+"&b1="+obj.b1+"&b2="+obj.b2+"&b3="+obj.b3+"&int={";
+    ndata = "pass="+document.getElementById('passwd').value+"&Away="+obj.Away+"&ScoreA="+obj.ScoreA+"&ColorA="+obj.ColorA+"&Home="+obj.Home+"&ScoreH="+obj.ScoreH+"&ColorH="+obj.ColorH+"&Ball="+obj.Ball+"&Strike="+obj.Strike+"&Out="+obj.Out+"&Ining="+obj.Ining+"&bot="+obj.bot+"&b1="+obj.b1+"&b2="+obj.b2+"&b3="+obj.b3+"&int={";
     for(var i=1;i<obj.Ining;i++){
         tmp=obj.int[i];
         ndata=ndata+'"'+i+'"'+':{"A":'+tmp.A+',"H":'+tmp.H+'},';

@@ -1,5 +1,6 @@
 <html lang="en">
     <head>
+        <input type="hidden" value="0" id="passwd">
         <script>
             const digest = async ({ algorithm = "SHA-256", message }) =>
               Array.prototype.map
@@ -16,7 +17,7 @@
                   .then(response => response.json())
                   .then(obj=>{
                     if(obj.includes(ins)){
-                      console.log("password correct")
+                        document.getElementById('passwd').value=ins;
                     }else{
                         if(confirm("Password incorrect\nTry Again"))
                             window.location.replace("./admin_OBS.html");
@@ -391,7 +392,7 @@
                 obj.ScoreA=obj.ScoreA+obj.int[i].A;
                 obj.ScoreH=obj.ScoreH+obj.int[i].H;
             }
-            ndata = "Away="+obj.Away+"&ScoreA="+obj.ScoreA+"&ColorA="+obj.ColorA+"&Home="+obj.Home+"&ScoreH="+obj.ScoreH+"&ColorH="+obj.ColorH+"&Ball="+obj.Ball+"&Strike="+obj.Strike+"&Out="+obj.Out+"&Ining="+obj.Ining+"&bot="+obj.bot+"&b1="+obj.b1+"&b2="+obj.b2+"&b3="+obj.b3+"&int={";
+            ndata = "pass="+document.getElementById('passwd').value+"&Away="+obj.Away+"&ScoreA="+obj.ScoreA+"&ColorA="+obj.ColorA+"&Home="+obj.Home+"&ScoreH="+obj.ScoreH+"&ColorH="+obj.ColorH+"&Ball="+obj.Ball+"&Strike="+obj.Strike+"&Out="+obj.Out+"&Ining="+obj.Ining+"&bot="+obj.bot+"&b1="+obj.b1+"&b2="+obj.b2+"&b3="+obj.b3+"&int={";
             for(var i=1;i<obj.Ining;i++){
                 tmp=obj.int[i];
                 ndata=ndata+'"'+i+'"'+':{"A":'+tmp.A+',"H":'+tmp.H+'},';
