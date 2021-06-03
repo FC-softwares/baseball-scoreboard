@@ -158,15 +158,15 @@ function reseti(){
         .then(obj =>{nball = 0;
             nStrike = 0;
             nOut = 0;
-            obj.b1 = false;
-            obj.b2 = false;
-            obj.b3 = false;
             if(obj.bot==1){
                 ining('+');
                 nBot = 2;
             }else{
                 nBot = 1;
             }
+            obj.b1 = false;
+            obj.b2 = false;
+            obj.b3 = false;
             update(null,obj)
         })
 }
