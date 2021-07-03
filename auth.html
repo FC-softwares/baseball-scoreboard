@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
+    <title>Gestione Autenticazione</title>
+</head>
+<body>
+    <div>
+        <ul class="header ul-navbar">
+            <li id="title" class="li-navbar">Baseball Scoreboard</li>
+            <li class="li-navbar"><a href="./index.html" class="link a-navbar">Home</a></li>
+            <li class="li-navbar"><a href="./admin.html" class="link active a-navbar">Admin</a></li>
+            <li class="li-navbar"><a href="./scoreboard.html" class="link a-navbar" target="_blank">Scoreboard <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
+            <li class="li-navbar"><a href="./pregame.html" class="link a-navbar" target="_blank">Pre game <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
+            <li class="li-navbar"><a href="./postgame.html" class="link a-navbar" target="_blank">Post game <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
+            <li class="li-navbar"><a href="./parz.html" class="link a-navbar" target="_blank">Partials <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
+        </ul>
+    </div>
+    <div class="div-psw">
+        <h1>Cambio password</h1>
+        <form class="form-psw">
+            <label for="oldpsw">Password vecchia:</label>
+            <input type="password" id="oldpsw" name="oldpsw">
+            <label for="newpsw">Password nuova:</label>
+            <input type="password" id="newpsw" name="newpsw">
+            <label for="repeatpsw">Ripeti password nuova:</label>
+            <input type="password" id="repeatpsw" name="repeatpsw">
+            <p>Seleziona un'opzione:</p>
+            <input type="radio" id="opt1" name="opt" value="add">
+            <label for="opt1">Aggiungi</label>
+            <input type="radio" id="opt2" name="opt" value="replace">
+            <label for="opt2">Sostituisci</label>
+            <input type="submit" value="Invia">
+        </form>
+    </div>
+    <div class="div-token">
+        <h1>Genera token</h1>
+    </div>
+</body>
+</html>
