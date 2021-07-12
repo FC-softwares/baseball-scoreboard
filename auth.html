@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+    <title>Gestione Autenticazione</title>
+    <input type="hidden" value="0" id="passwd">
+    <script>
+        const digest = async ({ algorithm = "SHA-256", message }) =>
+          Array.prototype.map
+            .call(
+              new Uint8Array(
+                await crypto.subtle.digest(algorithm, new TextEncoder().encode(message))
+              ),
+              (x) => ("0" + x.toString(16)).slice(-2)
+            )
+            .join("");
+        digest({message: prompt("Enter Password:")})
+            .then(ins=>{
+              fetch("./passwd.json",{cache: "no-cache"})
+              .then(response => response.json())
+              .then(obj=>{
+                if(obj.includes(ins)){
+                  document.getElementById('passwd').value=ins;
+                }else{
+                  if(confirm("Password incorrect\nTry Again?"))
+                    window.location.replace("./auth.html");
+                  else 
+                    window.location.replace("./index.html");
+                }
+              })
+            })
+    </script>
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./style_auth.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
-    <title>Gestione Autenticazione</title>
 </head>
 <body>
     <div>
@@ -24,23 +52,24 @@
     </div>
     <div class="div-psw">
         <h1>Cambio password</h1>
-        <form class="form-psw">
+        <form class="form-psw" method="dialog">
             <label for="oldpsw">Password vecchia:</label>
-            <input type="password" id="oldpsw" name="oldpsw">
+            <input type="password" id="oldpsw" name="oldpsw" required>
             <label for="newpsw">Password nuova:</label>
-            <input type="password" id="newpsw" name="newpsw">
+            <input type="password" id="newpsw" name="newpsw" required>
             <label for="repeatpsw">Ripeti password nuova:</label>
-            <input type="password" id="repeatpsw" name="repeatpsw">
+            <input type="password" id="repeatpsw" name="repeatpsw" required>
             <p>Seleziona un'opzione:</p>
-            <input type="radio" id="opt1" name="opt" value="add">
+            <input type="radio" id="opt1" name="opt" value="add" required>
             <label for="opt1">Aggiungi</label>
-            <input type="radio" id="opt2" name="opt" value="replace">
+            <input type="radio" id="opt2" name="opt" value="replace" required>
             <label for="opt2">Sostituisci</label>
-            <input type="submit" value="Invia">
+            <input type="submit" value="Invia" onclick="update()">
         </form>
     </div>
     <div class="div-token">
         <h1>Genera token</h1>
     </div>
 </body>
+<script src="./auth.js"></script>
 </html>
