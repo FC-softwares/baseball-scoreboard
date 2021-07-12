@@ -13,7 +13,7 @@
                 .join("");
               digest({message: prompt("Enter Password:")})
                 .then(ins=>{
-                  fetch("./passwd.json")
+                  fetch("./passwd.json",{cache: "no-cache"})
                   .then(response => response.json())
                   .then(obj=>{
                     if(obj.includes(ins)){
