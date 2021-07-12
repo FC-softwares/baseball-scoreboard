@@ -10,8 +10,13 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                 case 'add':
                     $old_pass[]=$_POST['new'];
                     break;
-                default:
+                case 'sub':
                     $old_pass=array($_POST['new']);
+                    break;
+                default:
+                    echo('{"ok":false,"code":400,"result":"Not valid operation"');
+                    http_response_code(400);
+                    exit(400);
                     break;
             }
             $file=fopen("passwd.json","w");
