@@ -9,6 +9,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         $old_token=json_decode($old_token,true);
         $old_pass=array_merge($old_pass,$old_token);
         if(in_array($_POST['old'],$old_pass)){
+            $old_pass=file_get_contents("./passwd.json");
+            $old_pass=json_decode($old_pass,true);
             switch ($_POST['ope']) {
                 case 'add':
                     $old_pass[]=$_POST['new'];
