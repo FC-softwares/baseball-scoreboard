@@ -5,6 +5,9 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     if($_POST['pass']){
         $pass=file_get_contents("./passwd.json");
         $pass=json_decode($pass,true);
+        $token=file_get_contents("./token.json");
+        $token=json_decode($token,true);
+        $pass=array_merge($pass,$token);
         if(in_array($_POST['pass'],$pass)){
             unset($_POST['pass']);
             $old1=file_get_contents("./data.json");
