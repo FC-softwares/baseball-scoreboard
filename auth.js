@@ -88,9 +88,6 @@ function submit2(new_p,old,opt){
             window.alert("An error occurred while updating score\nSee console for more information\nERROR code: "+this.status);
             console.debug("Error while sending request\nCODE:"+this.status+"\nRECIVED: '"+this.response+"'");
             
-        }else{
-            if(opt="sub"&&this.status==200&&this.readyState === XMLHttpRequest.DONE)
-                window.location.replace("./auth.html");
         }
     }
     xhr.send(ndata);
