@@ -18,9 +18,9 @@ function update(){
         return;
     }
     if(document.getElementById("opt1").checked)
-        opt="sub";
-    else if(document.getElementById("opt2").checked)
         opt="add";
+    else if(document.getElementById("opt2").checked)
+        opt="sub";
     else
         return;
     digest({message: new_p})
@@ -65,9 +65,9 @@ function update2(){
     new_t=Math.random().toString(16).substr(2, 8);;
 
     if(document.getElementById("opt1_2").checked)
-        opt="sub";
-    else if(document.getElementById("opt2_2").checked)
         opt="add";
+    else if(document.getElementById("opt2_2").checked)
+        opt="sub";
     else
         return;
     digest({message: new_t})
