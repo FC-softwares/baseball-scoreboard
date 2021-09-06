@@ -28,6 +28,15 @@
                 }
               })
             })
+        function generateToken() {
+          // PLACEHOLDER - FOR TESTING PURPOSES ONLY!
+          let token = Math.random().toString(36).slice(2);
+          document.getElementById("token").value = token;
+        }
+        function copyToken() {
+          let token = document.getElementById("token").value;
+          navigator.clipboard.writeText(token);
+        }
     </script>
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
@@ -35,7 +44,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./style_auth.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
     <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
 </head>
 <body>
@@ -43,7 +52,8 @@
         <ul class="header ul-navbar">
             <li id="title" class="li-navbar">Baseball Scoreboard</li>
             <li class="li-navbar"><a href="./index.html" class="link a-navbar">Home</a></li>
-            <li class="li-navbar"><a href="./admin.html" class="link active a-navbar">Admin</a></li>
+            <li class="li-navbar"><a href="./admin.html" class="link a-navbar">Admin</a></li>
+            <li class="li-navbar"><a href="./auth.html" class="link active a-navbar">Auth</a></li>
             <li class="li-navbar"><a href="./scoreboard.html" class="link a-navbar" target="_blank">Scoreboard <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
             <li class="li-navbar"><a href="./pregame.html" class="link a-navbar" target="_blank">Pre game <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
             <li class="li-navbar"><a href="./postgame.html" class="link a-navbar" target="_blank">Post game <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
@@ -69,6 +79,13 @@
     </div>
     <div class="div-token">
         <h1>Genera token</h1>
+        <input type="text" id="token" name="token" readonly>
+        <button onclick="generateToken()">Genera token</button>
+        <button id="copy" onclick="copyToken()">
+          <span class="material-icons-outlined">
+            file_copy
+            </span>
+        </button>
     </div>
 </body>
 <script src="./auth.js"></script>
