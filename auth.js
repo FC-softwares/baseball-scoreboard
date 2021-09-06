@@ -64,17 +64,12 @@ function update2(){
     old=document.getElementById("passwd").value;
     new_t=Math.random().toString(16).substr(2, 8);;
 
-    if(document.getElementById("opt1_2").checked)
-        opt="add";
-    else if(document.getElementById("opt2_2").checked)
-        opt="sub";
-    else
-        return;
+    opt="sub";
     digest({message: new_t})
           .then(ins=>{
                 new_t=ins;
                 if(submit2(new_t,old,opt))
-                    document.getElementById("token_psh").value=new_t;
+                    document.getElementById("token").value=new_t;
           })
 }
 
