@@ -28,11 +28,6 @@
                 }
               })
             })
-        function generateToken() {
-          // PLACEHOLDER - FOR TESTING PURPOSES ONLY!
-          let token = Math.random().toString(36).slice(2);
-          document.getElementById("token").value = token;
-        }
         function copyToken() {
           let token = document.getElementById("token").value;
           navigator.clipboard.writeText(token);
@@ -80,7 +75,7 @@
     <div class="div-token">
         <h1>Genera token</h1>
         <input type="text" id="token" name="token" readonly>
-        <button onclick="generateToken()">Genera token</button>
+        <button onclick="update2()">Genera token</button>
         <button id="copy" onclick="copyToken()">
           <span class="material-icons-outlined">
             file_copy
