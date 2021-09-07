@@ -24,7 +24,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                     exit(400);
                     break;
             }
-            $file=fopen("passwd.json","w");
+            $file=fopen("token.json","w");
             if($file==false){
                 echo('{"ok":false,"code":500,"result":"Unable to open file"}');
                 http_response_code(500);
