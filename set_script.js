@@ -4,7 +4,7 @@ function update2(){
     .then(set=>{
         set.max_inning=document.getElementById("max_ing").value;
         set.dark_current=document.getElementById("dark_current").value;
-        ndata="max_inning="+set.max_inning+"&dark_current="+set.dark_current;
+        ndata="pass="+document.getElementById('passwd').value+"max_inning="+set.max_inning+"&dark_current="+set.dark_current;
         var xhr = new XMLHttpRequest();
         xhr.open("POST", './settings.php', true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
