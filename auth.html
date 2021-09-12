@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <title>Gestione Autenticazione</title>
+    <title>Authentication management</title>
     <input type="hidden" value="0" id="passwd">
     <script>
         const digest = async ({ algorithm = "SHA-256", message }) =>
@@ -56,7 +56,7 @@
         </ul>
     </div>
     <div class="div-psw">
-        <h1>Cambio password</h1>
+        <h1>Change Password</h1>
         <form class="form-psw" method="dialog">
             <label for="oldpsw">Old password:</label>
             <input type="password" id="oldpsw" name="oldpsw" required>
@@ -74,10 +74,9 @@
     </div>
     <div class="div-token">
         <h1>Generate Token</h1>
-        <input type="text" id="token" name="token" readonly> <button id="copy" onclick="copyToken()">
-          <span class="material-icons-outlined">
+        <input type="text" id="token" name="token" readonly> 
+        <button id="copy" onclick="copyToken()" class="material-icons-outlined">
             file_copy
-            </span>
         </button>
         <button onclick="update2()">Generate Token</button>
     </div>
