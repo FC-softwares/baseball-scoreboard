@@ -58,29 +58,28 @@
     <div class="div-psw">
         <h1>Cambio password</h1>
         <form class="form-psw" method="dialog">
-            <label for="oldpsw">Password vecchia:</label>
+            <label for="oldpsw">Old password:</label>
             <input type="password" id="oldpsw" name="oldpsw" required>
-            <label for="newpsw">Password nuova:</label>
+            <label for="newpsw">New password:</label>
             <input type="password" id="newpsw" name="newpsw" required>
-            <label for="repeatpsw">Ripeti password nuova:</label>
+            <label for="repeatpsw">Repeat new password:</label>
             <input type="password" id="repeatpsw" name="repeatpsw" required>
-            <p>Seleziona un'opzione:</p>
+            <p>Select an option:</p>
             <input type="radio" id="opt1" name="opt" value="add" required>
-            <label for="opt1">Aggiungi</label>
+            <label for="opt1">Add password</label>
             <input type="radio" id="opt2" name="opt" value="replace" required>
-            <label for="opt2">Sostituisci</label>
+            <label for="opt2">Replace</label>
             <input type="submit" value="Invia" onclick="update()">
         </form>
     </div>
     <div class="div-token">
-        <h1>Genera token</h1>
-        <input type="text" id="token" name="token" readonly>
-        <button onclick="update2()">Genera token</button>
-        <button id="copy" onclick="copyToken()">
+        <h1>Generate Token</h1>
+        <input type="text" id="token" name="token" readonly> <button id="copy" onclick="copyToken()">
           <span class="material-icons-outlined">
             file_copy
             </span>
         </button>
+        <button onclick="update2()">Generate Token</button>
     </div>
 </body>
 <script src="./auth.js"></script>
