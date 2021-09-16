@@ -1,4 +1,15 @@
 # UPDATE LOG (English)
+## V1.3.0
+### New Features:
+* Added authentication to the site, the password/tokens can be managed by the page `auth.html.`
+  * Dedicated Style `style_auth.css` for `auth.html`
+  * The default password is "baseball", is recommended to change before using the software.
+  * The password is asked for access into: `auth.html` `admin.html` `admin_obs.html`.
+  * A valid token is required to use the API: `update.php` `update_pass.php` `update_token.php` `settings.php`.
+* Fixed the bug found on #8 
+* Some Bugfixes
+### Known bugs:
+* We haven't found any bugs yet. If you find any, please notify us!
 ## V1.2.1
 ### New Features:
 * Added administration page
@@ -66,6 +77,17 @@
 * Scoreboard don't update live yo have to wait minus then 5s
 * we don't find any other bug if you find please advise me
 # Update Log (Italiano)
+## V1.3.0
+### Nuove Funzioni:
+* Aggiunta l'autenticazione al sito, la password/token può essere gestita dalla pagina `auth.html.`
+   * Stile dedicato `style_auth.css` per `auth.html`
+   * La password predefinita é "baseball", si consiglia di modificarla prima di utilizzare il software.
+   * Viene richiesta la password per accedere a: `auth.html` `admin.html` `admin_obs.html`.
+   * Per utilizzare l'API è necessario un token valido: `update.php` `update_pass.php` `update_token.php` `settings.php`.
+* Risolto il bug trovato su #8
+* Alcuni bug risolti 
+### Bug noti:
+* non abbiamo trovato nessun altro bug se trovi per favore avvisami
 ## V1.2.1
 ### Nuove Funzioni:
 * Aggiunta pagina amministrazione
