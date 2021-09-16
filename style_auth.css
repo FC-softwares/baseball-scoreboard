@@ -11,15 +11,15 @@
     flex-direction: column;
     align-items: left;
 }
-input[type=button]{
-    border-radius: 50px;
-    border: 1px solid red;
-    margin: 1px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color: rgba(0,0,0,0);
-    color: white;
-    font-size: medium;
+
+label, p {
+    font-family: sans-serif;
+    margin: 10px 0px 5px;
+}
+
+button#copy {
+    border-radius: 100px;
+    padding: 5px;
+    font-size: 1em;
+    margin-left: 5px;
 }

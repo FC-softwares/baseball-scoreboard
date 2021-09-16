@@ -65,20 +65,26 @@
             <label for="repeatpsw">Repeat new password:</label>
             <input type="password" id="repeatpsw" name="repeatpsw" required>
             <p>Select an option:</p>
-            <input type="radio" id="opt1" name="opt" value="add" required>
-            <label for="opt1">Add password</label>
-            <input type="radio" id="opt2" name="opt" value="replace" required>
-            <label for="opt2">Replace</label>
-            <input type="submit" value="Invia" onclick="update()">
+            <span>
+              <input type="radio" id="opt1" name="opt" value="add" required>
+              <label for="opt1">Add password</label>
+            </span>
+            <span>
+              <input type="radio" id="opt2" name="opt" value="replace" required>
+              <label for="opt2">Replace</label>
+            </span>
+            <input type="submit" value="Invia" style="margin: 10px 0px 10px;" onclick="update()">
         </form>
     </div>
     <div class="div-token">
         <h1>Generate Token</h1>
-        <input type="text" id="token" name="token" readonly> 
-        <button id="copy" onclick="copyToken()" class="material-icons-outlined">
-            file_copy
-        </button>
-        <button onclick="update2()">Generate Token</button>
+        <div style="display: flex;">
+          <input type="text" id="token" name="token" readonly> 
+          <button id="copy" onclick="copyToken()" class="material-icons-outlined">
+              file_copy
+          </button>
+        </div>
+        <button style="margin: 10px" onclick="update2()">Generate Token</button>
     </div>
 </body>
 <script src="./auth.js"></script>
