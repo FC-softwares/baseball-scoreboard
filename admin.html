@@ -1,6 +1,33 @@
 <html>
     <head>
         <title>Gestione Tabellone</title>
+        <input type="hidden" value="0" id="passwd">
+        <script>
+          const digest = async ({ algorithm = "SHA-256", message }) =>
+            Array.prototype.map
+              .call(
+                new Uint8Array(
+                  await crypto.subtle.digest(algorithm, new TextEncoder().encode(message))
+                ),
+                (x) => ("0" + x.toString(16)).slice(-2)
+              )
+              .join("");
+            digest({message: prompt("Enter Password:")})
+              .then(ins=>{
+                fetch("./passwd.json",{cache: "no-cache"})
+                .then(response => response.json())
+                .then(obj=>{
+                  if(obj.includes(ins)){
+                    document.getElementById('passwd').value=ins;
+                  }else{
+                    if(confirm("Password incorrect\nTry Again?"))
+                      window.location.replace("./admin.html");
+                    else 
+                      window.location.replace("./index.html");
+                  }
+                })
+              })
+        </script>
         <link rel="stylesheet" href="style.css" type="text/CSS">
         <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -14,6 +41,7 @@
           <li id="title" class="li-navbar">Baseball Scoreboard</li>
           <li class="li-navbar"><a href="./index.html" class="link a-navbar">Home</a></li>
           <li class="li-navbar"><a href="./admin.html" class="link active a-navbar">Admin</a></li>
+          <li class="li-navbar"><a href="./auth.html" class="link a-navbar">Auth</a></li>
           <li class="li-navbar"><a href="./scoreboard.html" class="link a-navbar" target="_blank">Scoreboard <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
           <li class="li-navbar"><a href="./pregame.html" class="link a-navbar" target="_blank">Pre game <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
           <li class="li-navbar"><a href="./postgame.html" class="link a-navbar" target="_blank">Post game <span class="material-icons" style="font-size: 18px;">open_in_new</span></a></li>
