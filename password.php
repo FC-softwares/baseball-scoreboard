@@ -10,7 +10,8 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
             echo('{"ok":true,"code":200,"result":"Password Correct"}');
             http_response_code(200);
         }else{
-            
+            echo('{"ok":false,"code":400,"result":"Password Incorrect"}');
+            http_response_code(400);
         }
     }else{
         echo('{"ok":false,"code":400,"result":"password not passed"}');
