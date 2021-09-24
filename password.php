@@ -1,12 +1,12 @@
 <?php
 header("Content-Type: application/json");
 //error_reporting(0);
-if($_SERVER["REQUEST_METHOD"]==="POST"){
-    if(isset($_POST["passwd"])){
-        $file=fopen("password.json","r");
-        $json=fread($file);
+if($_SERVER["REQUEST_METHOD"]==="GET"){
+    if(isset($_GET["passwd"])){
+        $file=fopen("passwd.json","r");
+        $json=fread($file,filesize("passwd.json"));
         $ok=json_decode($json,true);
-        if(in_array($_POST["passwd"],$ok)){
+        if(in_array($_GET["passwd"],$ok)){
             echo('{"ok":true,"code":200,"result":"Password Correct"}');
             http_response_code(200);
         }else{
