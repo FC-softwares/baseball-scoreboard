@@ -1,4 +1,10 @@
 # UPDATE LOG (English)
+## V1.3.1
+### New Features:
+* Password auth in back-end
+* Added Security features and blocked access to private file
+### Known Bugs:
+* We haven't found any bugs yet. If you find any, please notify us!
 ## V1.3.0
 ### New Features:
 * Added authentication to the site, the password/tokens can be managed by the page `auth.html.`
@@ -77,6 +83,12 @@
 * Scoreboard don't update live yo have to wait minus then 5s
 * we don't find any other bug if you find please advise me
 # Update Log (Italiano)
+## V1.3.1
+### Nuove caratteristiche:
+* Autenticazione password nel back-end
+* Aggiunte funzionalità di sicurezza e accesso bloccato ai file privati
+### Bug conosciuti:
+* Non abbiamo ancora trovato alcun bug. Se ne trovi qualcuno, avvisaci!
 ## V1.3.0
 ### Nuove Funzioni:
 * Aggiunta l'autenticazione al sito, la password/token può essere gestita dalla pagina `auth.html.`
