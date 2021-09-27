@@ -13,10 +13,10 @@
                 .join("");
               digest({message: prompt("Enter Password:")})
                 .then(ins=>{
-                  fetch("./passwd.json",{cache: "no-cache"})
+                    fetch("./password.php?passwd="+ins,{cache: "no-cache"})
                   .then(response => response.json())
                   .then(obj=>{
-                    if(obj.includes(ins)){
+                    if(obj.code==200){
                         document.getElementById('passwd').value=ins;
                     }else{
                         if(confirm("Password incorrect\nTry Again"))
