@@ -45,155 +45,191 @@
             </div>
         </div>
     </nav>
-    <div class="container-md">
-        <h1 class="fw-bolder fs-1 text-black text-opacity-75 pt-3">Control Center</h1>
-        <div class="container-md bg-body mb-3 p-3 shadow rounded-3 border">
-            <div class="row row-cols-1 row-cols-sm-3 gap-3 gap-sm-0 justify-content-center">
-                <div class="col">
-                    <h4 class="text-center">Ball</h4>
-                    <div class="row">
-                        <div class="col d-flex justify-content-center">
-                            <div class="btn-group btn-group" role="group" aria-label="Controls">
-                                <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
-                                <button type="button" class="btn btn-outline-danger">Reset</button>
-                                <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+    <div class="container-md mb-3">
+        <div class="d-flex flex-row flex-wrap align-items-center py-2 gap-2">
+            <h1 class="fw-bolder fs-1 m-0 text-black text-opacity-75 me-auto">Control Center</h1>
+            <div class="hstack gap-3 flex-shrink-0">
+                <button class="btn btn-danger" type="button">Reset all data</button>
+                <div class="vr d-xl-none"></div>
+                <button class="btn btn-outline-info d-xl-none" type="button" onclick="Array.prototype.slice.call(document.querySelectorAll('input[type=checkbox]')).forEach(function (check) { check.click() } )">Toggle all</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="bg-body p-3 mb-3 shadow rounded-3 border">
+                    <div class="form-check d-xl-none">
+                        <input class="form-check-input" type="checkbox" value="" id="toggle-bso" data-bs-toggle="collapse" href="#collapse-bso" aria-expanded="true" aria-controls="#collapse-bso" checked>
+                        <label class="form-check-label" for="toggle-bso">
+                            Ball - Strike - Out
+                        </label>
+                    </div>
+                    <div class="collapse show" id="collapse-bso">
+                        <hr class="d-xl-none">
+                        <div class="row row-cols-1 row-cols-sm-3 gap-3 gap-sm-0 justify-content-center">
+                            <div class="col">
+                                <h4 class="text-center">Ball</h4>
+                                <div class="row">
+                                    <div class="col d-flex justify-content-center">
+                                        <div class="btn-group" role="group" aria-label="Controls">
+                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
+                                            <button type="button" class="btn btn-outline-danger">Reset</button>
+                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h4 class="text-center">Strike</h4>
+                                <div class="row">
+                                    <div class="col d-flex justify-content-center">
+                                        <div class="btn-group" role="group" aria-label="Controls">
+                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
+                                            <button type="button" class="btn btn-outline-danger">Reset</button>
+                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h4 class="text-center">Out</h4>
+                                <div class="row">
+                                    <div class="col d-flex justify-content-center">
+                                        <div class="btn-group" role="group" aria-label="Controls">
+                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
+                                            <button type="button" class="btn btn-outline-danger">Reset</button>
+                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row mt-3 justify-content-center">
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-outline-primary mx-auto">New batter</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <h4 class="text-center">Strike</h4>
-                    <div class="row">
-                        <div class="col d-flex justify-content-center">
-                            <div class="btn-group btn-group" role="group" aria-label="Controls">
-                                <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
-                                <button type="button" class="btn btn-outline-danger">Reset</button>
-                                <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+                <div class="bg-body p-3 mb-3 shadow rounded-3 border">
+                    <div class="form-check d-xl-none">
+                        <input class="form-check-input" type="checkbox" value="" id="toggle-itpb" data-bs-toggle="collapse" href="#collapse-itpb" aria-expanded="true" aria-controls="#collapse-itpb" checked>
+                        <label class="form-check-label" for="toggle-itpb">
+                            Inning - Top/Bottom - Bases
+                        </label>
+                    </div>
+                    <div class="collapse show" id="collapse-itpb">
+                        <hr class="d-xl-none">
+                        <div class="row row-cols-1 row-cols-sm-3 gap-3 gap-sm-0 justify-content-center">
+                            <div class="col">
+                                <h4 class="text-center">Inning</h4>
+                                <div class="row">
+                                    <div class="col d-flex justify-content-center">
+                                        <div class="btn-group" role="group" aria-label="Controls">
+                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
+                                            <button type="button" class="btn btn-outline-danger">Reset</button>
+                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h4 class="text-center">Top/Bottom</h4>
+                                <div class="row">
+                                    <div class="col d-flex justify-content-center">
+                                        <div class="btn-group" role="group" aria-label="Controls">
+                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
+                                            <button type="button" class="btn btn-outline-danger">Reset</button>
+                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h4 class="text-center">Bases</h4>
+                                <div class="row">
+                                    <div class="col d-flex justify-content-center">
+                                        <div class="btn-group" role="group" aria-label="Controls">
+                                            <button type="button" class="btn btn-outline-primary">1st base</button>
+                                            <button type="button" class="btn btn-outline-primary">2nd base</button>
+                                            <button type="button" class="btn btn-outline-primary">3rd base</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <h4 class="text-center">Out</h4>
-                    <div class="row">
-                        <div class="col d-flex justify-content-center">
-                            <div class="btn-group btn-group" role="group" aria-label="Controls">
-                                <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
-                                <button type="button" class="btn btn-outline-danger">Reset</button>
-                                <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+                        <hr>
+                        <div class="row mt-3 justify-content-center">
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-outline-primary mx-auto">Automatically change inning</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <hr>
-            <div class="row mt-3 justify-content-center">
-                <div class="col-auto">
-                    <button type="button" class="btn btn-outline-primary mx-auto">New batter</button>
+            <div class="col-xl-auto">
+                <div class="bg-body p-3 mb-3 shadow rounded-3 border">
+                    <div class="form-check d-xl-none">
+                        <input class="form-check-input" type="checkbox" value="" id="toggle-ha" data-bs-toggle="collapse" href="#collapse-ha" aria-expanded="true" aria-controls="#collapse-ha" checked>
+                        <label class="form-check-label" for="toggle-ha">
+                            Home - Away
+                        </label>
+                    </div>
+                    <div class="collapse show" id="collapse-ha">
+                        <hr class="d-xl-none">
+                        <div class="row gy-3 justify-content-center ">
+                            <div class="col">
+                                <h4 class="text-center">Home</h4>
+                                <div class="mb-2 d-flex flex-column align-items-center">
+                                    <h5 class="text-center fw-normal">Score</h5>
+                                    <div class="btn-group" role="group" aria-label="Controls">
+                                        <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
+                                        <button type="button" class="btn btn-outline-danger">Reset</button>
+                                        <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+                                    </div>
+                                </div>
+                                <div class="mb-2 d-flex flex-column align-items-center">
+                                    <label for="nameHome" class="form-label h5 fw-normal">Name</label>
+                                    <input type="text" class="form-control form-control-sm" id="nameHome">
+                                </div>
+                                <div class="d-flex flex-column align-items-center">
+                                    <label for="colorHome" class="form-label h5 fw-normal">Color</label>
+                                    <input type="color" class="form-control form-control-sm" id="colorHome">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h4 class="text-center">Away</h4>
+                                <div class="mb-2 d-flex flex-column align-items-center">
+                                    <h5 class="text-center fw-normal">Score</h5>
+                                    <div class="btn-group" role="group" aria-label="Controls">
+                                        <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
+                                        <button type="button" class="btn btn-outline-danger">Reset</button>
+                                        <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+                                    </div>
+                                </div>
+                                <div class="mb-2 d-flex flex-column align-items-center">
+                                    <label for="nameAway" class="form-label h5 fw-normal">Name</label>
+                                    <input type="text" class="form-control form-control-sm" id="nameAway">
+                                </div>
+                                <div class="d-flex flex-column align-items-center">
+                                    <label for="colorAway" class="form-label h5 fw-normal">Color</label>
+                                    <input type="color" class="form-control form-control-sm" id="colorAway">
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row mt-3 justify-content-center">
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-outline-primary mx-auto">Update</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="container-md bg-body mb-3 p-3 shadow rounded-3 border">
-            <div class="row row-cols-1 row-cols-sm-3 gap-3 gap-sm-0 justify-content-center">
-                <div class="col">
-                    <h4 class="text-center">Inning</h4>
-                    <div class="row">
-                        <div class="col d-flex justify-content-center">
-                            <div class="btn-group btn-group" role="group" aria-label="Controls">
-                                <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
-                                <button type="button" class="btn btn-outline-danger">Reset</button>
-                                <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <h4 class="text-center">Top/Bottom</h4>
-                    <div class="row">
-                        <div class="col d-flex justify-content-center">
-                            <div class="btn-group btn-group" role="group" aria-label="Controls">
-                                <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
-                                <button type="button" class="btn btn-outline-danger">Reset</button>
-                                <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <h4 class="text-center">Bases</h4>
-                    <div class="row">
-                        <div class="col d-flex justify-content-center">
-                            <div class="btn-group btn-group" role="group" aria-label="Controls">
-                                <button type="button" class="btn btn-outline-primary">1st base</button>
-                                <button type="button" class="btn btn-outline-primary">2nd base</button>
-                                <button type="button" class="btn btn-outline-primary">3rd base</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <div class="row mt-3 justify-content-center">
-                <div class="col-auto">
-                    <button type="button" class="btn btn-outline-primary mx-auto">Automatically change inning</button>
-                </div>
-            </div>
-        </div>
-        <div class="container-md bg-body mb-3 p-3 shadow rounded-3 border">
-            <div class="row row-cols-1 row-cols-sm-3 gap-3 gap-sm-0 justify-content-center">
-                <div class="col">
-                    <h4 class="text-center">Home</h4>
-                    <div class="row mb-2">
-                        <h5 class="text-center fw-normal">Score</h5>
-                        <div class="col d-flex justify-content-center">
-                            <div class="btn-group btn-group" role="group" aria-label="Controls">
-                                <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
-                                <button type="button" class="btn btn-outline-danger">Reset</button>
-                                <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col d-flex flex-column align-items-center">
-                            <label for="nameHome" class="form-label h5 fw-normal">Name</label>
-                            <input type="text" class="form-control form-control-sm" id="nameHome">
-                        </div>
-                        <div class="col d-flex flex-column align-items-center">
-                            <label for="colorHome" class="form-label h5 fw-normal">Color</label>
-                            <input type="color" class="form-control form-control-sm" id="colorHome">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <h4 class="text-center">Away</h4>
-                    <div class="row mb-2">
-                        <h5 class="text-center fw-normal">Score</h5>
-                        <div class="col d-flex justify-content-center">
-                            <div class="btn-group btn-group" role="group" aria-label="Controls">
-                                <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
-                                <button type="button" class="btn btn-outline-danger">Reset</button>
-                                <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col d-flex flex-column align-items-center">
-                            <label for="nameAway" class="form-label h5 fw-normal">Name</label>
-                            <input type="text" class="form-control form-control-sm" id="nameAway">
-                        </div>
-                        <div class="col d-flex flex-column align-items-center">
-                            <label for="colorAway" class="form-label h5 fw-normal">Color</label>
-                            <input type="color" class="form-control form-control-sm" id="colorAway">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <div class="row mt-3 justify-content-center">
-                <div class="col-auto">
-                    <button type="button" class="btn btn-outline-primary mx-auto">Update</button>
-                </div>
-            </div>
+        <div class="bg-light p-5 border border-info border-1" style="border-style: dashed!important;">
+            This will contain a live preview of the partials scoreboard. For now, though, here's a placeholder!
+            <strong>It'll be made without an iframe! 👀</strong>
         </div>
     </div>
     <div class="flex-grow-1"></div>
