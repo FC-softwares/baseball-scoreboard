@@ -1,0 +1,30 @@
+{
+    "Teams":{
+        "Away":{
+            "Name": "AWAY",
+            "Score": 0,
+            "Color": "#000000"
+        },
+        "Home":{
+            "Name": "HOME",
+            "Score": 0,
+            "Color": "#000000"
+        }
+    },
+    "Ball": 0,
+    "Strike": 0,
+    "Out": 0,
+    "Ining": 1,
+    "Arrow": 2,
+    "Bases":{
+        "1":false,
+        "2":false,
+        "3":false
+    },
+    "Int": {
+        "1": {
+            "A": 0,
+            "H": 0
+        }
+    }
+}
