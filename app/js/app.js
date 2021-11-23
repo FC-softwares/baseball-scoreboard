@@ -1,4 +1,4 @@
-var socket = io("https://"+window.location.hostname);
+var socket = io("http://"+window.location.hostname+":"+location.port);
 
 socket.on("update", update);
 

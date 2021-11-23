@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "description": "Baseball Scoreboard for youtube LIVE. You can use this tool as overlay for your baseball live-stream. In this tool you can find 4 differents overlay for 4 different baseball match phases: Pre-game, In-game, Between Innings and Post-Game.",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -29,6 +30,7 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "https": "^1.0.0",
     "socket.io": "^4.3.2"
   }
 }
