@@ -43,3 +43,65 @@ function Ball(opr){
 	socket.emit('update_data', `{"Ball":"${opr}"}`);
 	return true;
 }
+function Strike(opr){
+	if(opr!="+"&&opr!="-"&&opr!="0")
+		return NaN;
+	socket.emit('update_data', `{"Strike":"${opr}"}`);
+	return true;
+}
+function Out(opr){
+	if(opr!="+"&&opr!="-"&&opr!="0")
+		return NaN;
+	socket.emit('update_data', `{"Out":"${opr}"}`);
+	return true;
+}
+function Inning(opr){
+	if(opr!="+"&&opr!="-"&&opr!="0")
+		return NaN;
+	socket.emit('update_data', `{"Inning":"${opr}"}`);
+	return true;
+}
+function topbot(opr){
+	if(orp!="top"&&opr!="bot")
+		return NaN;
+	if(opr=="top")
+		socket.emit('update_data', `{"topbot":1}`);
+	else
+		socket.emit('update_data', `{"topbot":2}`);
+	return true;
+}
+function base(base){
+	if(base!="1"&&base!="2"&&base!="3")
+		return NaN;
+	socket.emit('update_data', `{"${base}":"toggle"}`);
+	return true;
+}
+function ScoreHome(opr){
+	if(opr!="+"&&opr!="-"&&opr!="0")
+		return NaN;
+	socket.emit('update_data', `{"Teams.Home.Score":"${opr}"}`);
+	return true;
+}
+function ScoreAway(opr){
+	if(opr!="+"&&opr!="-"&&opr!="0")
+		return NaN;
+	socket.emit('update_data', `{"Teams.Away.Score":"${opr}"}`);
+	return true;
+}
+function Update_Data(){
+	NameA = document.getElementById('NameAway').value;
+	NameH = document.getElementById('NameHome').value;
+	ColorA = document.getElementById('ColorAway').value;
+	ColorH = document.getElementById('ColorHome').value;
+
+	socket.emit('update_data',`{"Teams.Away.Name":"${NameA}","Teams.Home.Name":"${NameH}","Teams.Away.Color":"${ColorA}","Teams.Home.Color":"${ColorH}"}`);
+	return true;
+}
+function New_Batter(){
+	socket.emit('update_data',`{"Ball":0,"Strike":0}`);
+	return true;
+}
+function Auto_Change_Inning(){
+	socket.emit('update_data',`{"Auto_Change_Inning":"toggle"}`);
+	return true;
+}

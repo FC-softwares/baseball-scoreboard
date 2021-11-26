@@ -11,11 +11,11 @@
             "Color": "#000000"
         }
     },
-    "Ball": 1,
+    "Ball": 0,
     "Strike": 0,
     "Out": 0,
-    "Ining": 1,
-    "Arrow": 2,
+    "Inning": 1,
+    "Arrow": 1,
     "Bases": {
         "1": false,
         "2": false,

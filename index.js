@@ -9,7 +9,6 @@ const io = new Server(server);
 const fs = require('fs');
 
 const PORT = process.argv[2]|| process.env.PORT || 2095;
-console.log("PORT:", PORT);
 
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "https://api.facchini-pu.it");
@@ -70,29 +69,137 @@ io.on('connection', (socket) => {
 												if (data_old_obj[indx]<2)
 													data_old_obj[indx]++;
 												break;
+											case 'Teams.Away.Score':
+													data_old_obj.Teams.Away.Score++;
+													data_old_obj.Int[data_old_obj.Inning].A++;
+													break;
+											case 'Teams.Home.Score':
+													data_old_obj.Teams.Home.Score++;
+													data_old_obj.Int[data_old_obj.Inning].H++;
+													break;
+											case 'Inning':
+												data_old_obj.Inning++;
+												data_old_obj.Int[data_old_obj.Inning] = {A: 0,H: 0};
+												break;
 											default:
 												data_old_obj[indx]++;
 												break;
 										}
 										break;
 									case '-':
-										if(data_old_obj[indx]>0)
-											data_old_obj[indx]--;
+										switch(indx){
+											case 'Teams.Home.Score':
+												if(data_old_obj.Int[data_old_obj.Inning].H>0){
+													data_old_obj.Int[data_old_obj.Inning].H--;
+													data_old_obj.Teams.Home.Score--;
+												}
+												break;
+											case 'Teams.Away.Score':
+												if(data_old_obj.Int[data_old_obj.Inning].A>0){
+													data_old_obj.Int[data_old_obj.Inning].A--;
+													data_old_obj.Teams.Away.Score--;
+												}
+												break;
+											case 'Inning':
+												if(data_old_obj.Inning>1){
+													delete data_old_obj.Int[data_old_obj.Inning];
+													data_old_obj.Inning--;
+												}
+												break;
+											default:
+												if(data_old_obj[indx]>0)
+													data_old_obj[indx]--;
+												break;
+										}										
 										break;
 									case '0':
-										data_old_obj[indx]=0;
+										switch(indx) {	
+											case 'Ball':
+												data_old_obj[indx] = 0;
+												break;
+											case 'Strike':
+												data_old_obj[indx] = 0;
+												break;
+											case 'Out':
+												data_old_obj[indx] = 0;
+												break;
+											case 'Inning':
+												data_old_obj[indx] = 1;
+												data_old_obj.Int={1:{A:0,H:0}};
+												break;
+											case 'Teams.Away.Score':
+												data_old_obj.Teams.Away.Score = 0;
+												for (var i = 1; i <= data_old_obj.Inning; i++) {
+													data_old_obj.Int[i].A = 0;
+												}
+												break;
+											case 'Teams.Home.Score':
+												data_old_obj.Teams.Home.Score = 0;
+												for (var i = 1; i <= data_old_obj.Inning; i++) {
+													data_old_obj.Int[i].H = 0;
+												}
+												break;
+											default:
+												break;
+											
+										}
 										break;
-									case false:
-										data_old_obj[indx]=false;
+									case "toggle":
+										switch(indx){
+											case '1':
+												if(data_old_obj.Bases[1]==false)
+													data_old_obj.Bases[1]=true;
+												else
+													data_old_obj.Bases[1]=false;
+											break;
+											case '2':
+												if(data_old_obj.Bases[2]==false)
+													data_old_obj.Bases[2]=true;
+												else
+													data_old_obj.Bases[2]=false;
+											break;
+											case '3':
+												if(data_old_obj.Bases[3]==false)
+													data_old_obj.Bases[3]=true;
+												else
+													data_old_obj.Bases[3]=false;
+											break;
+											case 'Auto_Change_Inning':
+												if(data_old_obj.Arrow==1){
+													data_old_obj.Arrow=2;
+													data_old_obj.Bases[1]=false;
+													data_old_obj.Bases[2]=false;
+													data_old_obj.Bases[3]=false;
+												}else{
+													data_old_obj.Arrow=1;
+													data_old_obj.Inning++;
+													data_old_obj.Int[data_old_obj.Inning]={A:0,H:0};
+													data_old_obj.Bases[1]=false;
+													data_old_obj.Bases[2]=false;
+													data_old_obj.Bases[3]=false;
+												}
+										}
 										break;
-									case true:
-										data_old_obj[indx]=true;
-										break;
-									default:
-										data_old_obj[indx]=element;
-										break;
+										default:
+											switch(indx){
+												case 'Teams.Away.Name':
+													data_old_obj.Teams.Away.Name=element;
+													break;
+												case 'Teams.Home.Name':
+													data_old_obj.Teams.Home.Name=element;
+													break;
+												case 'Teams.Away.Color':
+													data_old_obj.Teams.Away.Color=element;
+													break;
+												case 'Teams.Home.Color':
+													data_old_obj.Teams.Home.Color=element;
+													break;
+												default:
+													break;
+											}
+											break;
 									}
-							});	
+							});
 							fs.writeFile(__dirname + '/app/json/data.json', JSON.stringify(data_old_obj, null, 4), (err) => {
 								if (err) throw err;
 							});
