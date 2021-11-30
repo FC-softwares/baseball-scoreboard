@@ -10,13 +10,6 @@ const fs = require('fs');
 
 const PORT = process.argv[2]|| process.env.PORT || 2095;
 
-app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "https://api.facchini-pu.it");
-	res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-  	res.header('Access-Control-Allow-Headers', 'Content-Type');
-	next();
-});
-
 app.use(express.static(__dirname + '/app'));
 app.use(express.json({
 	verify: (req, res, buf) => {
