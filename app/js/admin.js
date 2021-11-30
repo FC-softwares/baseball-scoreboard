@@ -36,6 +36,13 @@ const socket = io({
 	  token: token
   	}
 });
+
+socket.on('update', function(data){
+	document.getElementById('NameAway').value = data.Teams.Away.Name;
+	document.getElementById('NameHome').value = data.Teams.Home.Name;
+	document.getElementById('ColorAway').value = data.Teams.Away.Color;
+	document.getElementById('ColorHome').value = data.Teams.Home.Color;
+});
 //To add for all the variables
 function Ball(opr){
 	if(opr!="+"&&opr!="-"&&opr!="0")
@@ -62,12 +69,11 @@ function Inning(opr){
 	return true;
 }
 function TopBot(opr){
-	if(orp!="top"&&opr!="bot")
-		return NaN;
+	if(opr!="top"&&opr!="bot") return NaN;
 	if(opr=="top")
-		socket.emit('update_data', `{"topbot":1}`);
+		socket.emit('update_data', `{"Arrow":1}`);
 	else
-		socket.emit('update_data', `{"topbot":2}`);
+		socket.emit('update_data', `{"Arrow":2}`);
 	return true;
 }
 function Base(base){

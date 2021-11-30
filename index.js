@@ -193,6 +193,7 @@ io.on('connection', (socket) => {
 													data_old_obj.Teams.Home.Color=element;
 													break;
 												default:
+													data_old_obj[indx]=element;
 													break;
 											}
 											break;
@@ -201,7 +202,7 @@ io.on('connection', (socket) => {
 							fs.writeFile(__dirname + '/app/json/data.json', JSON.stringify(data_old_obj, null, 4), (err) => {
 								if (err) throw err;
 							});
-							socket.emit('update', data);
+							socket.emit('update', data_old_obj);
 						});
 					}else{
 						
