@@ -158,19 +158,24 @@ io.on('connection', (socket) => {
 													data_old_obj.Bases[3]=false;
 											break;
 											case 'Auto_Change_Inning':
+												data_old_obj.Bases[1]=false;
+												data_old_obj.Bases[2]=false;
+												data_old_obj.Bases[3]=false;
+												data_old_obj.Ball=0;
+												data_old_obj.Strike=0;
+												data_old_obj.Out=0;
 												if(data_old_obj.Arrow==1){
 													data_old_obj.Arrow=2;
-													data_old_obj.Bases[1]=false;
-													data_old_obj.Bases[2]=false;
-													data_old_obj.Bases[3]=false;
 												}else{
 													data_old_obj.Arrow=1;
 													data_old_obj.Inning++;
 													data_old_obj.Int[data_old_obj.Inning]={A:0,H:0};
-													data_old_obj.Bases[1]=false;
-													data_old_obj.Bases[2]=false;
-													data_old_obj.Bases[3]=false;
 												}
+											break;
+											case 'Reset_All':
+												data_old_obj={"Teams": {"Away": {"Name": "AWAY","Score": 0,"Color": "#000000"},"Home": {"Name": "HOME","Score": 0,"Color": "#000000"}},"Ball": 0,"Strike": 0,"Out": 0,"Inning": 1,"Arrow": 1,"Bases": {"1": false,"2": false,"3": false},"Int": {"1": {"A": 0,"H": 0}}};
+												
+											break;
 										}
 										break;
 										default:

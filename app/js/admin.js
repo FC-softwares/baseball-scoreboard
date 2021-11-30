@@ -61,7 +61,7 @@ function Inning(opr){
 	socket.emit('update_data', `{"Inning":"${opr}"}`);
 	return true;
 }
-function topbot(opr){
+function TopBot(opr){
 	if(orp!="top"&&opr!="bot")
 		return NaN;
 	if(opr=="top")
@@ -70,7 +70,7 @@ function topbot(opr){
 		socket.emit('update_data', `{"topbot":2}`);
 	return true;
 }
-function base(base){
+function Base(base){
 	if(base!="1"&&base!="2"&&base!="3")
 		return NaN;
 	socket.emit('update_data', `{"${base}":"toggle"}`);
@@ -98,10 +98,14 @@ function Update_Data(){
 	return true;
 }
 function New_Batter(){
-	socket.emit('update_data',`{"Ball":0,"Strike":0}`);
+	socket.emit('update_data',`{"Ball":"0","Strike":"0"}`);
 	return true;
 }
 function Auto_Change_Inning(){
 	socket.emit('update_data',`{"Auto_Change_Inning":"toggle"}`);
+	return true;
+}
+function Reset_All(){
+	socket.emit('update_data',`{"Reset_All":"toggle"}`);
 	return true;
 }

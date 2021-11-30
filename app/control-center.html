@@ -51,7 +51,7 @@
         <div class="d-flex flex-row flex-wrap align-items-center py-2 gap-2">
             <h1 class="fw-bolder fs-1 m-0 text-black text-opacity-75 me-auto">Control Center</h1>
             <div class="hstack gap-3 flex-shrink-0">
-                <button class="btn btn-danger" type="button">Reset all data</button>
+                <button class="btn btn-danger" type="button" onclick="Reset_All()">Reset all data</button>
                 <div class="vr d-xl-none"></div>
                 <button class="btn btn-outline-info d-xl-none" type="button" onclick="Array.prototype.slice.call(document.querySelectorAll('input[type=checkbox]')).forEach(function (check) { check.click() } )">Toggle all</button>
             </div>
@@ -73,9 +73,9 @@
                                 <div class="row">
                                     <div class="col d-flex justify-content-center">
                                         <div class="btn-group" role="group" aria-label="Controls">
-                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
-                                            <button type="button" class="btn btn-outline-danger">Reset</button>
-                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="Ball('-')"><i class="bi bi-dash-lg"></i></button>
+                                            <button type="button" class="btn btn-outline-danger" onclick="Ball('0')">Reset</button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="Ball('+')"><i class="bi bi-plus-lg"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -85,9 +85,9 @@
                                 <div class="row">
                                     <div class="col d-flex justify-content-center">
                                         <div class="btn-group" role="group" aria-label="Controls">
-                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
-                                            <button type="button" class="btn btn-outline-danger">Reset</button>
-                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="Strike('-')"><i class="bi bi-dash-lg"></i></button>
+                                            <button type="button" class="btn btn-outline-danger" onclick="Strike('0')">Reset</button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="Strike('+')"><i class="bi bi-plus-lg"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -97,9 +97,9 @@
                                 <div class="row">
                                     <div class="col d-flex justify-content-center">
                                         <div class="btn-group" role="group" aria-label="Controls">
-                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
-                                            <button type="button" class="btn btn-outline-danger">Reset</button>
-                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="Out('-')"><i class="bi bi-dash-lg"></i></button>
+                                            <button type="button" class="btn btn-outline-danger" onclick="Out('0')">Reset</button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="Out('+')"><i class="bi bi-plus-lg"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +108,7 @@
                         <hr>
                         <div class="row mt-3 justify-content-center">
                             <div class="col-auto">
-                                <button type="button" class="btn btn-outline-primary mx-auto">New batter</button>
+                                <button type="button" class="btn btn-outline-primary mx-auto" onclick="New_Batter()">New batter</button>
                             </div>
                         </div>
                     </div>
@@ -128,9 +128,9 @@
                                 <div class="row">
                                     <div class="col d-flex justify-content-center">
                                         <div class="btn-group" role="group" aria-label="Controls">
-                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
-                                            <button type="button" class="btn btn-outline-danger">Reset</button>
-                                            <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="Inning('-')"><i class="bi bi-dash-lg"></i></button>
+                                            <button type="button" class="btn btn-outline-danger" onclick="Inning('0')">Reset</button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="Inning('+')"><i class="bi bi-plus-lg"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -152,9 +152,9 @@
                                 <div class="row">
                                     <div class="col d-flex justify-content-center">
                                         <div class="btn-group" role="group" aria-label="Controls">
-                                            <button type="button" class="btn btn-outline-primary">1st base</button>
-                                            <button type="button" class="btn btn-outline-primary">2nd base</button>
-                                            <button type="button" class="btn btn-outline-primary">3rd base</button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="Base('1')">1st base</button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="Base('2')">2nd base</button>
+                                            <button type="button" class="btn btn-outline-primary" onclick="Base('3')">3rd base</button>
                                         </div>
                                     </div>
                                 </div>
@@ -163,7 +163,7 @@
                         <hr>
                         <div class="row mt-3 justify-content-center">
                             <div class="col-auto">
-                                <button type="button" class="btn btn-outline-primary mx-auto">Automatically change inning</button>
+                                <button type="button" class="btn btn-outline-primary mx-auto" onclick="Auto_Change_Inning()">Automatically change inning</button>
                             </div>
                         </div>
                     </div>
@@ -185,9 +185,9 @@
                                 <div class="mb-2 d-flex flex-column align-items-center">
                                     <h5 class="text-center fw-normal">Score</h5>
                                     <div class="btn-group" role="group" aria-label="Controls">
-                                        <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
-                                        <button type="button" class="btn btn-outline-danger">Reset</button>
-                                        <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+                                        <button type="button" class="btn btn-outline-primary" onclick="ScoreHome('-')"><i class="bi bi-dash-lg"></i></button>
+                                        <button type="button" class="btn btn-outline-danger" onclick="ScoreHome('0')">Reset</button>
+                                        <button type="button" class="btn btn-outline-primary" onclick="ScoreHome('+')"><i class="bi bi-plus-lg"></i></button>
                                     </div>
                                 </div>
                                 <div class="mb-2 d-flex flex-column align-items-center">
@@ -204,9 +204,9 @@
                                 <div class="mb-2 d-flex flex-column align-items-center">
                                     <h5 class="text-center fw-normal">Score</h5>
                                     <div class="btn-group" role="group" aria-label="Controls">
-                                        <button type="button" class="btn btn-outline-primary"><i class="bi bi-dash-lg"></i></button>
-                                        <button type="button" class="btn btn-outline-danger">Reset</button>
-                                        <button type="button" class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></button>
+                                        <button type="button" class="btn btn-outline-primary" onclick="ScoreAway('-')"><i class="bi bi-dash-lg"></i></button>
+                                        <button type="button" class="btn btn-outline-danger" onclick="ScoreAway('0')">Reset</button>
+                                        <button type="button" class="btn btn-outline-primary" onclick="ScoreAway('+')"><i class="bi bi-plus-lg"></i></button>
                                     </div>
                                 </div>
                                 <div class="mb-2 d-flex flex-column align-items-center">
@@ -222,7 +222,7 @@
                         <hr>
                         <div class="row mt-3 justify-content-center">
                             <div class="col-auto">
-                                <button type="button" class="btn btn-outline-primary mx-auto">Update</button>
+                                <button type="button" class="btn btn-outline-primary mx-auto" onclick="Update_Data()">Update</button>
                             </div>
                         </div>
                     </div>
