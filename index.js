@@ -254,7 +254,7 @@ app.post('/login', (req, res) => {
 			if(data_obj.ok === true){
 				res.status(200).send(data_obj);
 			}else{
-				res.status(400).send(data_obj);
+				res.status(res_post.statusCode).send(data_obj);
 			}
 		});
 	});
@@ -291,7 +291,7 @@ app.post('/checkstat', (req, res) => {
 			if(data_obj.ok === true){
 				res.status(200).send(data_obj);
 			}else{
-				res.status(400).send(data_obj);
+				res.status(res_post.statusCode).send(data_obj);
 			}
 		});
 	});
