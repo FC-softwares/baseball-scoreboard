@@ -18,7 +18,7 @@
 <body class="d-flex flex-column vh-100">
     <div class="flex-grow-1"></div>
     <div class="d-flex justify-content-center text-center p-4">
-        <form class="bg-light d-flex flex-column align-items-center p-4 pt-0 border rounded-3 border-secondary needs-validation" novalidate>
+        <form class="bg-light d-flex flex-column align-items-center p-4 pt-0 border rounded-3 border-secondary needs-validation" novalidate action="javascript:login()">
             <i class="bi-person-circle" style="font-size: calc(5rem + 1.5vw);"></i>
             <h2>Baseball Scoreboard</h2>
             <h3 class="fw-light mb-3">Log in to proceed</h3>
@@ -166,5 +166,34 @@
                     }, false)
                 })
         })()
+        function login(){
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var remember = document.getElementById("remember").checked;
+            sha256(password)
+                .then(function(hash){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    console.log(this.responseText);
+                    if (this.readyState == 4 && this.status == 200) {
+                        if(this.response.ok == true){
+                            //window.location.href = "index.php";
+                        }else{
+                            //document.getElementById("login-error").innerHTML = this.responseText;
+                        }
+                    }else{
+                        console.log(this.responseText);
+                    }
+                };
+                xhttp.open("POST", "/login", true);
+                xhttp.setRequestHeader("Content-type", "application/json");
+                xhttp.send("{\"username\":\""+username+"\",\"password\":\""+hash +"\",\"remember\":\""+remember+"\"}");
+                return false;
+            });
+        }
+        async function sha256(str) {
+            const buf = await crypto.subtle.digest("SHA-256", new TextEncoder("utf-8").encode(str));
+            return Array.prototype.map.call(new Uint8Array(buf), x=>(('00'+x.toString(16)).slice(-2))).join('');
+        }
     </script>
 </body>

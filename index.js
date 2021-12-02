@@ -225,6 +225,82 @@ io.on('connection', (socket) => {
 		io.emit('update',json)
 	});
 });
+
+app.post('/login', (req, res) => {
+	const { username, password, remember} = req.body;
+	if(!username || !password){
+		res.status(400).json({ok:false,message:'missing data'});
+		return;
+	}
+	const req_option = {
+		hostname: 'api.facchini-pu.it',
+		port: 443,
+		path: '/login',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	};
+	const req_data = JSON.stringify({
+		email: username,
+		password: password,
+		remember: remember,
+		scoreboard: "FAN"
+	});
+	//make a request to remote APIs
+	const req_post = https.request(req_option, (res_post) => {
+		res_post.on('data', (data) => {
+			const data_obj = JSON.parse(data);
+			if(data_obj.ok === true){
+				res.status(200).send(data_obj);
+			}else{
+				res.status(400).send(data_obj);
+			}
+		});
+	});
+	req_post.on('error', (e) => {
+		console.error(e);
+	});
+	req_post.write(req_data);
+	req_post.end();
+});
+
+app.post('/checkstat', (req, res) => {
+	const { id, token } = req.body;
+	if(!id || !token){
+		res.status(400).json({ok:false,message:'missing data'});
+		return;
+	}
+	const req_option = {
+		hostname: 'api.facchini-pu.it',
+		port: 443,
+		path: '/checkstat',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	};
+	const req_data = JSON.stringify({
+		id: id,
+		token: token
+	});
+	//make a request to remote APIs
+	const req_post = https.request(req_option, (res_post) => {
+		res_post.on('data', (data) => {
+			const data_obj = JSON.parse(data);
+			if(data_obj.ok === true){
+				res.status(200).send(data_obj);
+			}else{
+				res.status(400).send(data_obj);
+			}
+		});
+	});
+	req_post.on('error', (e) => {
+		console.error(e);
+	});
+	req_post.write(req_data);
+	req_post.end();
+});
 server.listen(PORT, () => {
 	console.log('listening on http://localhost:' + PORT);
 });

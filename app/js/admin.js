@@ -3,7 +3,7 @@ const user = localStorage.getItem('user');
 
 if (token && user) {
 	const xmlt = new XMLHttpRequest();
-	xmlt.open('POST', 'https://api.facchini-pu.it/checkstat', true);
+	xmlt.open('POST', '/checkstat', true);
 	xmlt.setRequestHeader('Content-Type', 'application/json');
 	xmlt.send(`{"id":"${user}","token":"${token}"}`);
 	xmlt.onload = function() {
