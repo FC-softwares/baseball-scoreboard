@@ -51,7 +51,7 @@
         <div class="d-flex flex-row flex-wrap align-items-center py-2 gap-2">
             <h1 class="fw-bolder fs-1 m-0 text-black text-opacity-75 me-auto">Control Center</h1>
             <div class="hstack gap-3 flex-shrink-0">
-                <button class="btn btn-danger" type="button" onclick="Reset_All()">Reset all data</button>
+                <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#ModalResetAllData">Reset all data</button>
                 <div class="vr d-xl-none"></div>
                 <button class="btn btn-outline-info d-xl-none" type="button" onclick="Array.prototype.slice.call(document.querySelectorAll('input[type=checkbox]')).forEach(function (check) { check.click() } )">Toggle all</button>
             </div>
@@ -278,6 +278,24 @@
                             <div class="modal-footer">
                                 <a rel="license" class="btn btn-primary" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">Visit license's website</a>
                                 <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="ModalResetAllData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ModalResetAllDataLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border border-danger">
+                            <div class="modal-header bg-danger bg-opacity-10 gap-1">
+                                <i class="bi-exclamation-triangle-fill fs-3 text-danger"></i>
+                                <h5 class="modal-title" id="ModalResetAllDataLabel">Are you sure?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                You are about to reset all data. Are you sure?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancell</button>
+                                <button type="button" class="btn btn-danger" onclick="Reset_All()" data-bs-dismiss="modal">Continue</button>
                             </div>
                         </div>
                     </div>

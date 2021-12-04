@@ -34,5 +34,8 @@
     "express": "^4.17.1",
     "https": "^1.0.0",
     "socket.io": "^4.3.2"
+  },
+  "pkg":{
+    "assets":"app"
   }
 }

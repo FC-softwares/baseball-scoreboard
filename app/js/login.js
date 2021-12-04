@@ -66,10 +66,16 @@ function login(){
                 if(this.readyState == 4){
                     switch(this.status){
                         case 500:
-                            alert("Errore: "+this.status+"\n"+JSON.parse(this.responseText));
+                            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.";
+                            document.getElementById("ErrorMsg").classList.remove("visually-hidden");
                             break;
                         case 401:
-                            alert("Errore: "+this.status+"\n"+JSON.parse(this.responseText));
+                            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.";
+                            document.getElementById("ErrorMsg").classList.remove("visually-hidden");
+                            break;
+                        case 400:
+                            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.";
+                            document.getElementById("ErrorMsg").classList.remove("visually-hidden");
                             break;
                         default:
                             alert("Errore: "+this.status);
