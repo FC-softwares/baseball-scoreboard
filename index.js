@@ -10,6 +10,8 @@ const fs = require('fs');
 
 const PORT = process.argv[2]|| process.env.PORT || 2095;
 
+require("./electron.js");
+
 app.use(express.static(__dirname + '/app'));
 app.use(express.json({
 	verify: (req, res, buf) => {
