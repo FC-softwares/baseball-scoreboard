@@ -70,17 +70,29 @@ function login(){
                             document.getElementById("ErrorMsg").classList.remove("visually-hidden");
                             break;
                         case 401:
-                            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.";
+                            if (username === "guest") {
+                                document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>You are trying to login as a guest, <br>please check you are trying to access to a demo product.";
+                            }else{
+                                document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.";
+                            }
                             document.getElementById("ErrorMsg").classList.remove("visually-hidden");
                             break;
                         case 400:
-                            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.";
+                            if (username === "guest") {
+                                document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>You are trying to login as a guest, <br>please check you are trying to access to a demo product.";
+                            }else{
+                                document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.";
+                            }
                             document.getElementById("ErrorMsg").classList.remove("visually-hidden");
                             break;
                         default:
                             alert("Errore: "+this.status);
                             break;
                     }
+                    document.querySelector(`#guestSpin`).classList.add("visually-hidden")
+                    document.querySelector(`#guestButton`).classList.remove("disabled")
+                    document.querySelector(`#loginSpin`).classList.add("visually-hidden")
+                    document.querySelector(`#loginButton`).classList.remove("disabled")
                 }
             }
         };
@@ -99,4 +111,14 @@ async function sha256(str) {
 function loginLoadAnim (btnType) {
     document.querySelector(`#${btnType}Spin`).classList.remove("visually-hidden")
     document.querySelector(`#${btnType}Button`).classList.add("disabled")
+}
+
+function CancelLoginGuest() {
+    document.querySelector(`#guestSpin`).classList.add("visually-hidden")
+    document.querySelector(`#guestButton`).classList.remove("disabled")
+}
+function LoginGuest(){
+    document.getElementById("username").value = "guest";
+    document.getElementById("password").value = "guest";
+    login();
 }

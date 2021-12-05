@@ -8,8 +8,10 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const fs = require('fs');
 
+//definitions of constaints
 const PORT = process.argv[2]|| process.env.PORT || 2095;
-
+const API = process.env.HOST_API || 'https://api.facchini-pu.it';
+const CLIENT = process.env.CLIENT || 'DEMO';
 require("./electron.js");
 
 app.use(express.static(__dirname + '/app'));
@@ -25,7 +27,7 @@ io.on('connection', (socket) => {
 	socket.on('update_data', (data) => {			
 		if (socket.handshake.auth.id && socket.handshake.auth.token) {
 			const ver_options = {
-				hostname: 'api.facchini-pu.it',
+				hostname: API,
 				port: 443,
 				path: '/checkstat',
 				method: 'POST',
@@ -235,7 +237,7 @@ app.post('/login', (req, res) => {
 		return;
 	}
 	const req_option = {
-		hostname: 'api.facchini-pu.it',
+		hostname: API,
 		port: 443,
 		path: '/login',
 		method: 'POST',
@@ -247,7 +249,7 @@ app.post('/login', (req, res) => {
 		email: username,
 		password: password,
 		remember: remember,
-		scoreboard: "FAN"
+		scoreboard: CLIENT
 	});
 	//make a request to remote APIs
 	const req_post = https.request(req_option, (res_post) => {
@@ -274,7 +276,7 @@ app.post('/checkstat', (req, res) => {
 		return;
 	}
 	const req_option = {
-		hostname: 'api.facchini-pu.it',
+		hostname: API,
 		port: 443,
 		path: '/checkstat',
 		method: 'POST',

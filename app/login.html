@@ -65,7 +65,7 @@
                         <div class="modal-header bg-warning bg-opacity-10 gap-1">
                             <i class="bi-exclamation-triangle-fill fs-3 text-warning"></i>
                             <h5 class="modal-title text-warning" id="guestModal">Warning</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="location.reload()" aria-label="Cancel"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="CancelLoginGuest()" aria-label="Cancel"></button>
                         </div>
                         <div class="modal-body text-start">
                             <div>
@@ -74,8 +74,8 @@
                         </div>
                         <div class="modal-footer">
                             <a type="button" class="btn btn-primary" href="https://opencollective.com/baseball-scoreboard" target="_blank" rel="noopener noreferrer">Buy a license key</a>
-                            <a type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="location.reload()">Proceed anyways</a>
-                            <a type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="location.reload()">Cancel</a>
+                            <a type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="LoginGuest()">Proceed anyways</a>
+                            <a type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="CancelLoginGuest()">Cancel</a>
                         </div>
                     </div>
                 </div>
