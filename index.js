@@ -10,7 +10,7 @@ const fs = require('fs');
 
 //definitions of constaints
 const PORT = process.argv[2]|| process.env.PORT || 2095;
-const API = process.env.HOST_API || 'https://api.facchini-pu.it';
+const API = 'api.facchini-pu.it';
 const CLIENT = process.env.CLIENT || 'DEMO';
 require("./electron.js");
 
