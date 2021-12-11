@@ -72,7 +72,9 @@
                             <div class="col">
                                 <h4 class="text-center">Ball</h4>
                                 <div class="row">
-                                    <div class="col d-flex justify-content-center">
+                                    <div class="col d-flex flex-column align-items-center">
+                                        <!-- al momento la dimensione del text readonly è hardcoded. un giorno cercherò di renderla variabile, prendendo dalla width del btn-group.-->
+                                        <input class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
                                         <div class="btn-group" role="group" aria-label="Controls">
                                             <button type="button" class="btn btn-outline-primary" onclick="Ball('-')"><i class="bi bi-dash-lg"></i></button>
                                             <button type="button" class="btn btn-outline-danger" onclick="Ball('0')">Reset</button>
@@ -84,7 +86,8 @@
                             <div class="col">
                                 <h4 class="text-center">Strike</h4>
                                 <div class="row">
-                                    <div class="col d-flex justify-content-center">
+                                    <div class="col d-flex flex-column align-items-center">
+                                        <input class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
                                         <div class="btn-group" role="group" aria-label="Controls">
                                             <button type="button" class="btn btn-outline-primary" onclick="Strike('-')"><i class="bi bi-dash-lg"></i></button>
                                             <button type="button" class="btn btn-outline-danger" onclick="Strike('0')">Reset</button>
@@ -96,7 +99,8 @@
                             <div class="col">
                                 <h4 class="text-center">Out</h4>
                                 <div class="row">
-                                    <div class="col d-flex justify-content-center">
+                                    <div class="col d-flex flex-column align-items-center">
+                                        <input class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
                                         <div class="btn-group" role="group" aria-label="Controls">
                                             <button type="button" class="btn btn-outline-primary" onclick="Out('-')"><i class="bi bi-dash-lg"></i></button>
                                             <button type="button" class="btn btn-outline-danger" onclick="Out('0')">Reset</button>
@@ -127,7 +131,8 @@
                             <div class="col">
                                 <h4 class="text-center">Inning</h4>
                                 <div class="row">
-                                    <div class="col d-flex justify-content-center">
+                                    <div class="col d-flex flex-column align-items-center">
+                                        <input class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
                                         <div class="btn-group" role="group" aria-label="Controls">
                                             <button type="button" class="btn btn-outline-primary" onclick="Inning('-')"><i class="bi bi-dash-lg"></i></button>
                                             <button type="button" class="btn btn-outline-danger" onclick="Inning('0')">Reset</button>
@@ -139,7 +144,7 @@
                             <div class="col">
                                 <h4 class="text-center">Top/Bottom</h4>
                                 <div class="row">
-                                    <div class="col d-flex justify-content-center">
+                                    <div class="col d-flex flex-column align-items-center">
                                         <div class="btn-group" role="group" aria-label="Controls">
                                             <button type="button" class="btn btn-outline-primary" onclick="TopBot('top')">TOP</button>
                                             <button type="button" class="btn btn-outline-primary" onclick="TopBot('bot')">BOT</button>
@@ -150,7 +155,7 @@
                             <div class="col">
                                 <h4 class="text-center">Bases</h4>
                                 <div class="row">
-                                    <div class="col d-flex justify-content-center">
+                                    <div class="col d-flex flex-column align-items-center">
                                         <div class="btn-group" role="group" aria-label="Controls">
                                             <button type="button" class="btn btn-outline-primary" onclick="Base('1')">1st base</button>
                                             <button type="button" class="btn btn-outline-primary" onclick="Base('2')">2nd base</button>
@@ -184,6 +189,7 @@
                                 <h4 class="text-center">Away</h4>
                                 <div class="mb-2 d-flex flex-column align-items-center">
                                     <h5 class="text-center fw-normal">Score</h5>
+                                    <input class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
                                     <div class="btn-group" role="group" aria-label="Controls">
                                         <button type="button" class="btn btn-outline-primary" onclick="ScoreAway('-')"><i class="bi bi-dash-lg"></i></button>
                                         <button type="button" class="btn btn-outline-danger" onclick="ScoreAway('0')">Reset</button>
@@ -203,6 +209,7 @@
                                 <h4 class="text-center">Home</h4>
                                 <div class="mb-2 d-flex flex-column align-items-center">
                                     <h5 class="text-center fw-normal">Score</h5>
+                                    <input class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
                                     <div class="btn-group" role="group" aria-label="Controls">
                                         <button type="button" class="btn btn-outline-primary" onclick="ScoreHome('-')"><i class="bi bi-dash-lg"></i></button>
                                         <button type="button" class="btn btn-outline-danger" onclick="ScoreHome('0')">Reset</button>
@@ -229,10 +236,10 @@
                 </div>
             </div>
         </div>
-        <div class="bg-light p-5 border border-info border-1" style="border-style: dashed!important;">
+        <!-- <div class="bg-light p-5 border border-info border-1" style="border-style: dashed!important;">
             This will contain a live preview of the partials scoreboard. For now, though, here's a placeholder!
             <strong>It'll be made without an iframe! 👀</strong>
-        </div>
+        </div> -->
     </div>
     <div class="flex-grow-1"></div>
     <footer class="bg-black bg-opacity-10">
@@ -288,14 +295,14 @@
                         <div class="modal-content border border-danger">
                             <div class="modal-header bg-danger bg-opacity-10 gap-1">
                                 <i class="bi-exclamation-triangle-fill fs-3 text-danger"></i>
-                                <h5 class="modal-title" id="ModalResetAllDataLabel">Are you sure?</h5>
+                                <h5 class="modal-title" id="ModalResetAllDataLabel">Reset all data</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 You are about to reset all data. Are you sure?
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancell</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button type="button" class="btn btn-danger" onclick="Reset_All()" data-bs-dismiss="modal">Continue</button>
                             </div>
                         </div>
