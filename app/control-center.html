@@ -79,7 +79,7 @@
                                 <div class="row">
                                     <div class="col d-flex flex-column align-items-center">
                                         <!-- al momento la dimensione del text readonly è hardcoded. un giorno cercherò di renderla variabile, prendendo dalla width del btn-group.-->
-                                        <input class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
+                                        <input id="BallView" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
                                         <div class="btn-group" role="group" aria-label="Controls">
                                             <button type="button" class="btn btn-outline-primary" onclick="Ball('-')"><i class="bi bi-dash-lg"></i></button>
                                             <button type="button" class="btn btn-outline-danger" onclick="Ball('0')">Reset</button>
@@ -92,7 +92,7 @@
                                 <h4 class="text-center">Strike</h4>
                                 <div class="row">
                                     <div class="col d-flex flex-column align-items-center">
-                                        <input class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
+                                        <input id="StrikeView" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
                                         <div class="btn-group" role="group" aria-label="Controls">
                                             <button type="button" class="btn btn-outline-primary" onclick="Strike('-')"><i class="bi bi-dash-lg"></i></button>
                                             <button type="button" class="btn btn-outline-danger" onclick="Strike('0')">Reset</button>
@@ -105,7 +105,7 @@
                                 <h4 class="text-center">Out</h4>
                                 <div class="row">
                                     <div class="col d-flex flex-column align-items-center">
-                                        <input class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
+                                        <input id="OutView" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
                                         <div class="btn-group" role="group" aria-label="Controls">
                                             <button type="button" class="btn btn-outline-primary" onclick="Out('-')"><i class="bi bi-dash-lg"></i></button>
                                             <button type="button" class="btn btn-outline-danger" onclick="Out('0')">Reset</button>
@@ -137,7 +137,7 @@
                                 <h4 class="text-center">Inning</h4>
                                 <div class="row">
                                     <div class="col d-flex flex-column align-items-center">
-                                        <input class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
+                                        <input id="InningView" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
                                         <div class="btn-group" role="group" aria-label="Controls">
                                             <button type="button" class="btn btn-outline-primary" onclick="Inning('-')"><i class="bi bi-dash-lg"></i></button>
                                             <button type="button" class="btn btn-outline-danger" onclick="Inning('0')">Reset</button>
@@ -151,8 +151,8 @@
                                 <div class="row">
                                     <div class="col d-flex flex-column align-items-center">
                                         <div class="btn-group" role="group" aria-label="Controls">
-                                            <button type="button" class="btn btn-outline-primary" onclick="TopBot('top')">TOP</button>
-                                            <button type="button" class="btn btn-outline-primary" onclick="TopBot('bot')">BOT</button>
+                                            <button id="TopView" type="button" class="btn btn-outline-primary" onclick="TopBot('top')">TOP</button>
+                                            <button id="BotView" type="button" class="btn btn-outline-primary" onclick="TopBot('bot')">BOT</button>
                                         </div>
                                     </div>
                                 </div>
@@ -162,9 +162,9 @@
                                 <div class="row">
                                     <div class="col d-flex flex-column align-items-center">
                                         <div class="btn-group" role="group" aria-label="Controls">
-                                            <button type="button" class="btn btn-outline-primary" onclick="Base('1')">1st base</button>
-                                            <button type="button" class="btn btn-outline-primary" onclick="Base('2')">2nd base</button>
-                                            <button type="button" class="btn btn-outline-primary" onclick="Base('3')">3rd base</button>
+                                            <button id="Base1View" type="button" class="btn btn-outline-primary" onclick="Base('1')">1st base</button>
+                                            <button id="Base2View" type="button" class="btn btn-outline-primary" onclick="Base('2')">2nd base</button>
+                                            <button id="Base3View" type="button" class="btn btn-outline-primary" onclick="Base('3')">3rd base</button>
                                         </div>
                                     </div>
                                 </div>
@@ -194,7 +194,7 @@
                                 <h4 class="text-center">Away</h4>
                                 <div class="mb-2 d-flex flex-column align-items-center">
                                     <h5 class="text-center fw-normal">Score</h5>
-                                    <input class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
+                                    <input id="ScoreAView" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
                                     <div class="btn-group" role="group" aria-label="Controls">
                                         <button type="button" class="btn btn-outline-primary" onclick="ScoreAway('-')"><i class="bi bi-dash-lg"></i></button>
                                         <button type="button" class="btn btn-outline-danger" onclick="ScoreAway('0')">Reset</button>
@@ -214,7 +214,7 @@
                                 <h4 class="text-center">Home</h4>
                                 <div class="mb-2 d-flex flex-column align-items-center">
                                     <h5 class="text-center fw-normal">Score</h5>
-                                    <input class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
+                                    <input id="ScoreHView" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
                                     <div class="btn-group" role="group" aria-label="Controls">
                                         <button type="button" class="btn btn-outline-primary" onclick="ScoreHome('-')"><i class="bi bi-dash-lg"></i></button>
                                         <button type="button" class="btn btn-outline-danger" onclick="ScoreHome('0')">Reset</button>
