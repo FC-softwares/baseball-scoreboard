@@ -1,4 +1,4 @@
-//Js file to be included in all pages exept login page
+// JS file to be included in all pages except login page
 
 function LogOut(){
 	localStorage.removeItem("user");
@@ -6,7 +6,7 @@ function LogOut(){
 	location.reload();
 }
 
-function CeackSession(){
+function CheckSession(){
 	const id = localStorage.getItem('user');
 	const token = localStorage.getItem('token');
 	if (id&&token) {
@@ -22,7 +22,7 @@ function CeackSession(){
 					const { name, surname, email} = response.user
 					//document.getElementById('user_name').innerHTML = name;
 					//var profileHTML = ``;
-					document.getElementById('profile_plc').innerHTML = `<span class="dropdown"><a class="dropdown-toggle text-dark text-decoration-none" href="#" id="navScoreboardLinks" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Hi <strong>${name} ${surname}</strong> </a><ul class="dropdown-menu mb-2" aria-labelledby="navScoreboardLinks"><li><a class="dropdown-item" href="#">Profile <i class="bi-box-arrow-up-right"></i></a></li><li><a class="dropdown-item" href="#" title="logout" onclick="LogOut();return false;">logout</a></li></ul></span>`;
+					document.getElementById('profile_plc').innerHTML = `<a class="dropdown-toggle nav-link text-dark text-decoration-none pe-0" href="#" id="navUserLinks" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Hi <strong>${name} ${surname}</strong> </a><ul class="dropdown-menu dropdown-menu-end mb-2" aria-labelledby="navUserLinks"><li><a class="dropdown-item" href="#">Manage profile <i class="bi-box-arrow-up-right"></i></a></li><li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="#" title="logout" onclick="LogOut();return false;">Logout</a></li></ul>`;
 				}
 			}else{
 				if (this.readyState === 4) {
@@ -34,4 +34,4 @@ function CeackSession(){
 		return false;
 	}
 }
-CeackSession();
+CheckSession();
