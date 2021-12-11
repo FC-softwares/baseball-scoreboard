@@ -71,7 +71,7 @@ function login(){
                             break;
                         case 401:
                             if (username === "guest") {
-                                document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>You are trying to login as a guest, <br>please check you are trying to access to a demo product.";
+                                document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>You are trying to login as a guest, <br>please check you are trying to access a demo product.";
                             }else{
                                 document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.";
                             }
@@ -79,7 +79,7 @@ function login(){
                             break;
                         case 400:
                             if (username === "guest") {
-                                document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>You are trying to login as a guest, <br>please check you are trying to access to a demo product.";
+                                document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>You are trying to login as a guest, <br>please check you are trying to access a demo product.";
                             }else{
                                 document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.";
                             }

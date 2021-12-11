@@ -13,11 +13,11 @@
 <body class="d-flex flex-column vh-100">
     <div class="flex-grow-1"></div>
     <div class="d-flex justify-content-center text-center p-4">
-        <form class="bg-light d-flex flex-column align-items-center p-4 pt-0 border rounded-3 border-secondary needs-validation" novalidate action="javascript:login()">
+        <form class="bg-light d-flex flex-column align-items-center p-4 pt-0 border rounded-3 border-secondary needs-validation" style="max-width: 20rem;" novalidate action="javascript:login()">
             <i class="bi-person-circle" style="font-size: calc(5rem + 1.5vw);"></i>
             <h2>Baseball Scoreboard</h2>
             <h3 class="fw-light mb-3">Log in to proceed</h3>
-            <div class="alert alert-danger visually-hidden flex-row" role="alert" id="ErrorMsg" style="max-width: 250px;"></div>
+            <div class="alert alert-danger visually-hidden flex-row" role="alert" id="ErrorMsg"></div>
             <div class="form-floating mb-2 w-100">
                 <input type="text" class="form-control" id="username" placeholder="guest" required>
                 <label for="username">Username</label>
