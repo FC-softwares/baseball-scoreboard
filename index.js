@@ -7,6 +7,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const fs = require('fs');
+const { Console } = require('console');
 
 //definitions of constaints
 const PORT = process.argv[2]|| process.env.PORT || 2095;
@@ -67,12 +68,20 @@ io.on('connection', (socket) => {
 													data_old_obj[indx]++;
 												break;
 											case 'Teams.Away.Score':
-													data_old_obj.Teams.Away.Score++;
 													data_old_obj.Int[data_old_obj.Inning].A++;
+													var ScoreATmp = 0;
+													for(var i=1;i<=data_old_obj.Inning;i++) {
+														ScoreATmp += data_old_obj.Int[i].A;
+													}
+													data_old_obj.Teams.Away.Score = ScoreATmp;
 													break;
 											case 'Teams.Home.Score':
-													data_old_obj.Teams.Home.Score++;
 													data_old_obj.Int[data_old_obj.Inning].H++;
+													var ScoreHTmp = 0;
+													for(var i=1;i<=data_old_obj.Inning;i++) {
+														ScoreHTmp += data_old_obj.Int[i].H;
+													}
+													data_old_obj.Teams.Home.Score = ScoreHTmp;
 													break;
 											case 'Inning':
 												data_old_obj.Inning++;
@@ -101,6 +110,13 @@ io.on('connection', (socket) => {
 												if(data_old_obj.Inning>1){
 													delete data_old_obj.Int[data_old_obj.Inning];
 													data_old_obj.Inning--;
+													var ScoreATmp = 0, ScoreHTmp = 0;
+													for(var i=0;i<data_old_obj.Inning;i++){
+														ScoreATmp += data_old_obj.Int[i].A;
+														ScoreHTmp += data_old_obj.Int[i].H;
+													}
+													data_old_obj.Teams.Away.Score = ScoreATmp;
+													data_old_obj.Teams.Home.Score = ScoreHTmp;
 												}
 												break;
 											default:
@@ -123,6 +139,8 @@ io.on('connection', (socket) => {
 											case 'Inning':
 												data_old_obj[indx] = 1;
 												data_old_obj.Int={1:{A:0,H:0}};
+												data_old_obj.Teams.Away.Score = 0;
+												data_old_obj.Teams.Home.Score = 0;
 												break;
 											case 'Teams.Away.Score':
 												data_old_obj.Teams.Away.Score = 0;
