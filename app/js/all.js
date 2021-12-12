@@ -1,9 +1,18 @@
 // JS file to be included in all pages except login page
 
 function LogOut(){
-	localStorage.removeItem("user");
-	localStorage.removeItem("token");
-	location.reload();
+	//make request to logout
+	const xmlt = new XMLHttpRequest();
+	xmlt.open('POST', '/logout', true);
+	xmlt.setRequestHeader('Content-Type', 'application/json');
+	xmlt.send(`{"id":"${localStorage.getItem('user')}","token":"${localStorage.getItem('token')}"}`);
+	xmlt.onload = function() {
+		if (xmlt.status == 200) {
+			localStorage.removeItem('user');
+			localStorage.removeItem('token');
+			window.location.href = '/';
+		}
+	}
 }
 
 function CheckSession(){
