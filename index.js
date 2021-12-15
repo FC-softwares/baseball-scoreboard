@@ -111,7 +111,7 @@ io.on('connection', (socket) => {
 													delete data_old_obj.Int[data_old_obj.Inning];
 													data_old_obj.Inning--;
 													var ScoreATmp = 0, ScoreHTmp = 0;
-													for(var i=0;i<data_old_obj.Inning;i++){
+													for(var i=1;i<=data_old_obj.Inning;i++){
 														ScoreATmp += data_old_obj.Int[i].A;
 														ScoreHTmp += data_old_obj.Int[i].H;
 													}
