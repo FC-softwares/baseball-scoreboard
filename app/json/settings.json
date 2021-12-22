@@ -1,4 +1,4 @@
 {
-    "MaxInning": "9",
-    "BlackLastInning": "true"
+    "MaxInning": 9,
+    "BlackenLastInning": true
 }

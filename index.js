@@ -260,7 +260,7 @@ io.on('connection', (socket) => {
 					//process.stdout.write(d);
 					res_data = JSON.parse(d);
 					if (res_data.ok === true) {
-						fs.readFile(__dirname + './app/json/settings.json', 'utf8', (err, data_old) => {
+						fs.readFile(__dirname + '/app/json/settings.json', 'utf8', (err, data_old) => {
 							if (err) throw err;
 							var json = JSON.parse(data);
 							var data_old_obj = JSON.parse(data_old);
@@ -272,7 +272,7 @@ io.on('connection', (socket) => {
 											break;
 									}
 							});
-							fs.writeFile(__dirname + './app/json/settings.json', JSON.stringify(data_old_obj, null, 4), (err) => {
+							fs.writeFile(__dirname + '/app/json/settings.json', JSON.stringify(data_old_obj, null, 4), (err) => {
 								if (err) throw err;
 							});
 							socket.emit('update', data_old_obj);
@@ -288,6 +288,11 @@ io.on('connection', (socket) => {
 			ver_req_set.write(ver_data);
 			ver_req_set.end();
 		}
+	});
+	socket.on('get_settings',()=>{
+		fs.readFile(__dirname + '/app/json/settings.json', 'utf8', (err, data) => {
+			socket.emit('connect_settings',data);
+		})
 	});
 	socket.on('disconnect', () => {
 		console.log('user disconnected');

@@ -154,8 +154,3 @@ function Reset_All(){
 	socket.emit('update_data',`{"Reset_All":"toggle"}`);
 	return true;
 }
-function UpdateSettings(){
-	const MaxInning = document.getElementById('MaxInning').value;
-	const BlackLastInning = document.getElementById('BlackLastInning').checked;
-	socket.emit('update_settings',`{"MaxInning":"${MaxInning}","BlackLastInning":"${BlackLastInning}"}`);
-}
