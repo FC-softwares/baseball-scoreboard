@@ -238,6 +238,57 @@ io.on('connection', (socket) => {
 			ver_req.end();
 		}
 	});
+
+	socket.on('update_settings', (data) => {			
+		if (socket.handshake.auth.id && socket.handshake.auth.token) {
+			const ver_req_set_option = {
+				hostname: API,
+				port: 443,
+				path: '/checkstat',
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				}
+			}
+			const ver_data = JSON.stringify({
+				id: socket.handshake.auth.id,
+				token: socket.handshake.auth.token
+			});
+			const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
+				//console.log(`statusCode: ${ver_res.statusCode}`)
+				ver_res.on('data', (d) => {
+					//process.stdout.write(d);
+					res_data = JSON.parse(d);
+					if (res_data.ok === true) {
+						fs.readFile(__dirname + './app/json/settings.json', 'utf8', (err, data_old) => {
+							if (err) throw err;
+							var json = JSON.parse(data);
+							var data_old_obj = JSON.parse(data_old);
+							Object.entries(json).forEach(entry => {
+								const [indx, element] = entry;
+								switch(element) { 
+										default:
+											
+											break;
+									}
+							});
+							fs.writeFile(__dirname + './app/json/settings.json', JSON.stringify(data_old_obj, null, 4), (err) => {
+								if (err) throw err;
+							});
+							socket.emit('update', data_old_obj);
+						});
+					}else{
+						
+					}
+				});
+			});
+			ver_req_set.on('error', (e) => {
+				console.error(e);
+			});
+			ver_req_set.write(ver_data);
+			ver_req_set.end();
+		}
+	});
 	socket.on('disconnect', () => {
 		console.log('user disconnected');
 	});
