@@ -13,7 +13,6 @@ const { Console } = require('console');
 const PORT = process.argv[2]|| process.env.PORT || 2095;
 const API = 'api.facchini-pu.it';
 const CLIENT = process.env.CLIENT || 'DEMO';
-require("./electron.js");
 
 app.use(express.static(__dirname + '/app'));
 app.use(express.json({
