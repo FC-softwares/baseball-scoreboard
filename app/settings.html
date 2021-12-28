@@ -24,7 +24,10 @@
                         <a class="nav-link" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="control-center.html">Control Center</a>
+                        <a class="nav-link" aria-current="page" href="control-center.html">Control Center</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="settings.html">Settings</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navScoreboardLinks" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Scoreboards</a>
@@ -63,7 +66,7 @@
                     <div class="form-check d-xl-none">
                         <input class="form-check-input" type="checkbox" value="" id="toggle-ha" data-bs-toggle="collapse" href="#collapse-ha" aria-expanded="true" aria-controls="#collapse-ha" checked>
                         <label class="form-check-label" for="toggle-ha">
-                            Settings
+                            Scoreboard Settings
                         </label>
                     </div>
                     <div class="collapse show" id="collapse-ha">
@@ -80,10 +83,10 @@
                                 <h4 class="text-center">Darken Last Inning</h4>
                                 <div class="mb-2 d-flex flex-column align-items-center">
                                     <h5 class="text-center fw-normal">Score</h5>
-                                    <select id="BlackenLastInning" class="form-control text-center mb-2 form-select" style="max-width: 9.11rem;">
-                                        <option value="true">true</option>
-                                        <option value="false">false</option>
-                                    </select>
+                                    <div class="btn-group" role="group" aria-label="Controls">
+                                        <button id="BlackenLastInningTrue" type="button" class="btn btn-outline-primary" onclick="BlackenLastInning(true)">Yes</button>
+                                        <button id="BlackenLastInningFalse" type="button" class="btn btn-outline-primary" onclick="BlackenLastInning(false)">No</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -91,6 +94,83 @@
                         <div class="row mt-3 justify-content-center">
                             <div class="col-auto">
                                 <button type="button" class="btn btn-outline-primary mx-auto" onclick="Update_Data()">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="bg-body p-3 mb-3 shadow rounded-3 border">
+                    <div class="form-check d-xl-none">
+                        <input class="form-check-input" type="checkbox" value="" id="toggle-ha" data-bs-toggle="collapse" href="#collapse-ha" aria-expanded="true" aria-controls="#collapse-ha" checked>
+                        <label class="form-check-label" for="toggle-ha">
+                            Product Settings
+                        </label>
+                    </div>
+                    <div class="collapse show" id="collapse-ha">
+                        <hr class="d-xl-none">
+                        <div class="row gy-3 justify-content-center ">
+                            <div class="col">
+                                <h4 class="text-center">Product Owner</h4>
+                                <div class="mb-2 d-flex flex-row align-items-center justify-content-evenly">
+                                    <div class="mb-2 d-flex flex-column align-items-center">
+                                        <h5 class="text-center fw-normal">Name</h5>
+                                        <input id="ProductOwner" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="">
+                                    </div>
+                                    <div class="mb-2 d-flex flex-column align-items-center">
+                                        <h5 class="text-center fw-normal">Email</h5>
+                                        <input id="ProductOwnerEmail" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="email" value="">   
+                                    </div>
+                                    <div class="mb-2 d-flex flex-column align-items-center">
+                                        <h5 class="text-center fw-normal">Team Short</h5>
+                                        <input id="ProductOwnerEmail" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="" size="4">   
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row mt-3 justify-content-center">
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-outline-primary mx-auto" onclick="Update_Data()">Send Changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="bg-body p-3 mb-3 shadow rounded-3 border">
+                    <div class="form-check d-xl-none">
+                        <input class="form-check-input" type="checkbox" value="" id="toggle-ha" data-bs-toggle="collapse" href="#collapse-ha" aria-expanded="true" aria-controls="#collapse-ha" checked>
+                        <label class="form-check-label" for="toggle-ha">
+                            Users Settings
+                        </label>
+                    </div>
+                    <div class="collapse show" id="collapse-ha">
+                        <hr class="d-xl-none">
+                        <div class="row gy-3 justify-content-center">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="text-center">Auth Users</h4>
+                                    <div class="mb-2 d-flex flex-row align-items-center justify-content-evenly">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">##NOME## <##email##> <button type="button" class="btn btn-outline-danger mx-auto ms-1">X</button></li>
+                                            <li class="list-group-item">##NOME## <##email##> <button type="button" class="btn btn-outline-danger mx-auto ms-1">X</button></li>
+                                            <li class="list-group-item">##NOME## <##email##> <button type="button" class="btn btn-outline-danger mx-auto ms-1">X</button></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h4 class="text-center">Add new user</h4>
+                                    <div class="mb-2 d-flex flex-row align-items-center justify-content-evenly">
+                                        <div class="mb-2 d-flex flex-column align-items-center">
+                                            <h5 class="text-center fw-normal">Email</h5>
+                                            <input id="UserAddEmail" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="email" value="">   
+                                            <button type="button" class="btn btn-outline-primary mx-auto" onclick="Add_User()">Add User</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

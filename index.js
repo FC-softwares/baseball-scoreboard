@@ -267,14 +267,14 @@ io.on('connection', (socket) => {
 								const [indx, element] = entry;
 								switch(element) { 
 										default:
-											
+											data_old_obj[indx]=element;
 											break;
 									}
 							});
 							fs.writeFile(__dirname + '/app/json/settings.json', JSON.stringify(data_old_obj, null, 4), (err) => {
 								if (err) throw err;
 							});
-							socket.emit('update', data_old_obj);
+							socket.emit('update_settings', data_old_obj);
 						});
 					}else{
 						

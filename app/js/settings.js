@@ -40,15 +40,41 @@ const socket = io({
 
 socket.on('update_settings', function(data){
     document.getElementById('MaxInning').value = data.MaxInning;
-    document.getElementById('BlackenLastInning').value = data.BlackenLastInning;    
+	if(data.BlackenLastInning){
+		document.getElementById("BlackenLastInningTrue").classList.remove("btn-outline-primary");
+		document.getElementById("BlackenLastInningTrue").classList.add("btn-primary");
+		document.getElementById("BlackenLastInningFalse").classList.remove("btn-primary");
+		document.getElementById("BlackenLastInningFalse").classList.add("btn-outline-primary");
+	}else{
+		document.getElementById("BlackenLastInningTrue").classList.remove("btn-primary");
+		document.getElementById("BlackenLastInningTrue").classList.add("btn-outline-primary");
+		document.getElementById("BlackenLastInningFalse").classList.remove("btn-outline-primary");
+		document.getElementById("BlackenLastInningFalse").classList.add("btn-primary");
+	}
 });
 socket.on('connect_settings',function(data){
     dataDecode = JSON.parse(data);
     document.getElementById('MaxInning').value = dataDecode.MaxInning;
-    document.getElementById('BlackenLastInning').value = dataDecode.BlackenLastInning;
+    if(data.BlackenLastInning){
+		document.getElementById("BlackenLastInningTrue").classList.remove("btn-outline-primary");
+		document.getElementById("BlackenLastInningTrue").classList.add("btn-primary");
+		document.getElementById("BlackenLastInningFalse").classList.remove("btn-primary");
+		document.getElementById("BlackenLastInningFalse").classList.add("btn-outline-primary");
+	}else{
+		document.getElementById("BlackenLastInningTrue").classList.remove("btn-primary");
+		document.getElementById("BlackenLastInningTrue").classList.add("btn-outline-primary");
+		document.getElementById("BlackenLastInningFalse").classList.remove("btn-outline-primary");
+		document.getElementById("BlackenLastInningFalse").classList.add("btn-primary");
+	}
 });
 function UpdateSettings(){
 	const MaxInning = document.getElementById('MaxInning').value;
-	const BlackenLastInning = document.getElementById('BlackenLastInning').checked;
-	socket.emit('update_settings',`{"MaxInning":${MaxInning},"BlackenLastInning":${BlackenLastInning}}`);
+	socket.emit('update_settings',`{"MaxInning":${MaxInning}}`);
+}
+function BlackenLastInning(value){
+	if(value){
+		socket.emit('update_settings',`{"BlackenLastInning":true}`);
+	}else{
+		socket.emit('update_settings',`{"BlackenLastInning":false}`);
+	}
 }
