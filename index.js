@@ -416,6 +416,45 @@ app.post('/logout', (req, res) => {
 	req_post.write(req_data);
 	req_post.end();
 });
+app.post("/getAuthUsers", (req, res) => {
+	const { id, token } = req.body;
+	if(!id || !token){
+		res.status(400).json({ok:false,message:'missing data'});
+		return;
+	}
+	const req_option = {
+		hostname: API,
+		port: 443,
+		path: '/getAuthUsers',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	};
+	const req_data = JSON.stringify({
+		id: id,
+		token: token,
+		scoreboard: CLIENT
+	});
+	//make a request to remote APIs
+	const req_post = https.request(req_option, (res_post) => {
+		res_post.on('data', (data) => {
+			const data_obj = JSON.parse(data);
+			if(data_obj.ok === true){
+				res.status(200).send(data_obj);
+			}else{
+				res.status(res_post.statusCode).send(data_obj);
+			}
+		});
+	});
+	req_post.on('error', (e) => {
+		console.error(e);
+	}
+	);
+	req_post.write(req_data);
+	req_post.end();
+});
+
 server.listen(PORT, () => {
 	console.log('listening on http://localhost:' + PORT);
 });

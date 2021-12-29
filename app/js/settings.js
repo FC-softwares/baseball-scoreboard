@@ -15,6 +15,21 @@ if (token && user) {
 				localStorage.removeItem('user');
 			}
             socket.emit('get_settings');
+			xmlt.open('POST', '/getAuthUsers', true);
+			xmlt.setRequestHeader('Content-Type', 'application/json');
+			xmlt.send(`{"id":"${user}","token":"${token}"}`);
+			xmlt.onload = function() {
+				if (xmlt.status === 200) {
+					const response = JSON.parse(xmlt.responseText);
+					if (response.ok === true) {
+						var UsersHtml = "";
+						for (let i = 0; i < response.users.length; i++) {
+							UsersHtml += `<li class="list-group-item">${response.users[i].name} ${response.users[i].surname} "<a href="mailto:${response.users[i].email}">${response.users[i].email}</a>" <button type="button" class="btn btn-outline-danger mx-auto ms-1" onclick="removeUser('${response.users[i].id}')">X</button></li>`;
+						}
+						document.getElementById('AuthUsersUl').innerHTML = UsersHtml;
+					}
+				}
+			}
 		} else {
 			// User is not in a valid session
 			// Redirect to login page
