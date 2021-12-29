@@ -344,8 +344,12 @@ app.post('/login', (req, res) => {
 
 app.post('/checkstat', (req, res) => {
 	const { id, token } = req.body;
-	if(!id || !token){
-		res.status(400).json({ok:false,message:'missing data'});
+	if(!id){
+		res.status(400).json({ok:false,message:'missing ID'});
+		return;
+	}
+	if(!token){
+		res.status(400).json({ok:false,message:'missing ID'});
 		return;
 	}
 	const req_option = {

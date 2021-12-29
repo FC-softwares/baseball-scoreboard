@@ -15,21 +15,7 @@ if (token && user) {
 				localStorage.removeItem('user');
 			}
             socket.emit('get_settings');
-			xmlt.open('POST', '/getAuthUsers', true);
-			xmlt.setRequestHeader('Content-Type', 'application/json');
-			xmlt.send(`{"id":"${user}","token":"${token}"}`);
-			xmlt.onload = function() {
-				if (xmlt.status === 200) {
-					const response = JSON.parse(xmlt.responseText);
-					if (response.ok === true) {
-						var UsersHtml = "";
-						for (let i = 0; i < response.users.length; i++) {
-							UsersHtml += `<li class="list-group-item">${response.users[i].name} ${response.users[i].surname} "<a href="mailto:${response.users[i].email}">${response.users[i].email}</a>" <button type="button" class="btn btn-outline-danger mx-auto ms-1" onclick="removeUser('${response.users[i].id}')">X</button></li>`;
-						}
-						document.getElementById('AuthUsersUl').innerHTML = UsersHtml;
-					}
-				}
-			}
+			getCunrentUser();
 		} else {
 			// User is not in a valid session
 			// Redirect to login page
@@ -92,4 +78,61 @@ function BlackenLastInning(value){
 	}else{
 		socket.emit('update_settings',`{"BlackenLastInning":false}`);
 	}
+}
+
+function getCunrentUser (){
+	const xmlt = new XMLHttpRequest();
+	xmlt.open('POST', '/checkstat', true);
+	xmlt.setRequestHeader('Content-Type', 'application/json');
+	xmlt.send(`{"id":"${user}","token":"${token}"}`);
+	xmlt.onload = function() {
+		if (xmlt.status === 200) {
+			const response = JSON.parse(xmlt.responseText);
+			if (response.ok === true) {
+				printUsers(response.user);
+			}
+		}else{
+			if (this.readyState === 4) {
+				return false;
+			}
+		}
+	}
+}
+
+function printUsers(LoggedUser){
+	const xmlt = new XMLHttpRequest();
+	xmlt.open('POST', '/getAuthUsers', true);
+	xmlt.setRequestHeader('Content-Type', 'application/json');
+	xmlt.send(`{"id":"${user}","token":"${token}"}`);
+	xmlt.onload = function() {
+		if (xmlt.status === 200) {
+			const response = JSON.parse(xmlt.responseText);
+			if (response.ok === true) {
+				var UsersHtml = "";
+				for (let i = 0; i < response.users.length; i++) {
+					if(response.users[i].email == LoggedUser.email){
+						UsersHtml += `<li class="list-group-item">${response.users[i].name} ${response.users[i].surname} "<a href="mailto:${response.users[i].email}">${response.users[i].email}</a>" <button type="button" class="btn btn-outline-danger mx-auto ms-1" disabled>X</button></li>`;
+					}else{
+						UsersHtml += `<li class="list-group-item">${response.users[i].name} ${response.users[i].surname} "<a href="mailto:${response.users[i].email}">${response.users[i].email}</a>" <button type="button" class="btn btn-outline-danger mx-auto ms-1" onclick="removeUser('${response.users[i].id}')">X</button></li>`;
+					}
+				}
+				document.getElementById('AuthUsersUl').innerHTML = UsersHtml;
+			}
+		}
+	}
+}
+function removeUser(id){
+	xmlt = new XMLHttpRequest();
+	xmlt.open('POST', '/removeAuthUser', true);
+	xmlt.setRequestHeader('Content-Type', 'application/json');
+	xmlt.send(`{"id":"${user}","token":"${token}","user":"${id}"}`);
+	xmlt.onload = function() {
+		if (xmlt.status === 200) {
+			const response = JSON.parse(xmlt.responseText);
+			if (response.ok === true) {
+				document.getElementById('Allert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User deletted successfully  .<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+				getCunrentUser();
+			}
+		}
+	};
 }
