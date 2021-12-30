@@ -89,7 +89,11 @@ function getCunrentUser (){
 		if (xmlt.status === 200) {
 			const response = JSON.parse(xmlt.responseText);
 			if (response.ok === true) {
-				printUsers(response.user);
+				if(response.user.isOwner==true){
+					printUsers(response.user);
+				}else{
+					window.location.href = '/control-center.html';
+				}
 			}
 		}else{
 			if (this.readyState === 4) {
@@ -111,9 +115,9 @@ function printUsers(LoggedUser){
 				var UsersHtml = "";
 				for (let i = 0; i < response.users.length; i++) {
 					if(response.users[i].email == LoggedUser.email){
-						UsersHtml += `<li class="list-group-item">${response.users[i].name} ${response.users[i].surname} "<a href="mailto:${response.users[i].email}">${response.users[i].email}</a>" <button type="button" class="btn btn-outline-danger mx-auto ms-1" disabled>X</button></li>`;
+						UsersHtml += `<li class="list-group-item d-flex justify-content-between">${response.users[i].name} ${response.users[i].surname} "<a href="mailto:${response.users[i].email}">${response.users[i].email}</a>" <button type="button" class="btn btn-outline-danger me-0 ms-auto align-self-end" disabled>X</button></li>`;
 					}else{
-						UsersHtml += `<li class="list-group-item">${response.users[i].name} ${response.users[i].surname} "<a href="mailto:${response.users[i].email}">${response.users[i].email}</a>" <button type="button" class="btn btn-outline-danger mx-auto ms-1" onclick="removeUser('${response.users[i].id}')">X</button></li>`;
+						UsersHtml += `<li class="list-group-item d-flex justify-content-between">${response.users[i].name} ${response.users[i].surname} "<a href="mailto:${response.users[i].email}">${response.users[i].email}</a>" <button type="button" class="btn btn-outline-danger me-0 ms-auto align-self-end" onclick="removeUser('${response.users[i].id}')">X</button></li>`;
 					}
 				}
 				document.getElementById('AuthUsersUl').innerHTML = UsersHtml;
