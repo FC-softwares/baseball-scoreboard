@@ -134,8 +134,25 @@ function removeUser(id){
 		if (xmlt.status === 200) {
 			const response = JSON.parse(xmlt.responseText);
 			if (response.ok === true) {
-				document.getElementById('Allert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User deletted successfully  .<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+				document.getElementById('Allert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User deletted successfully.  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
 				getCunrentUser();
+			}
+		}
+	};
+}
+
+function Add_User(){
+	const email = document.getElementById('UserAddEmail').value;
+	xmlt = new XMLHttpRequest();
+	xmlt.open('POST', '/addAuthUser', true);
+	xmlt.setRequestHeader('Content-Type', 'application/json');
+	xmlt.send(`{"id":"${user}","token":"${token}","email":"${email}"}`);
+	xmlt.onload = function() {
+		if (xmlt.status === 200) {
+			const response = JSON.parse(xmlt.responseText);
+			if (response.ok === true) {
+				document.getElementById('Allert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User added successfully.  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+				
 			}
 		}
 	};

@@ -11,7 +11,7 @@ const { Console } = require('console');
 
 //definitions of constaints
 const PORT = process.argv[2]|| process.env.PORT || 2095;
-const API = 'api.facchini-pu.it';
+const API = process.env.API || 'api.facchini-pu.it';
 const CLIENT = process.env.CLIENT || 'DEMO';
 
 app.use(express.static(__dirname + '/app'));
@@ -458,6 +458,54 @@ app.post("/getAuthUsers", (req, res) => {
 	req_post.write(req_data);
 	req_post.end();
 });
+
+app.post("/addAuthUser", (req, res) => {
+	const { id, token, email } = req.body;
+	if(!id){
+		res.status(400).json({ok:false,message:'missing ID'});
+		return;
+	}
+	if(!token){
+		res.status(400).json({ok:false,message:'missing token'});
+		return;
+	}
+	if(!email){
+		res.status(400).json({ok:false,message:'missing email'});
+		return;
+	}
+	const req_option = {
+		hostname: API,
+		port: 443,
+		path: '/addAuthUser',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	};
+	const req_data = JSON.stringify({
+		id: id,
+		token: token,
+		email: email,
+		scoreboard: CLIENT
+	});
+	//make a request to remote APIs
+	const req_post = https.request(req_option, (res_post) => {
+		res_post.on('data', (data) => {
+			const data_obj = JSON.parse(data);
+			if(data_obj.ok === true){
+				res.status(200).send(data_obj);
+			}else{
+				res.status(res_post.statusCode).send(data_obj);
+			}
+		});
+	});
+	req_post.on('error', (e) => {
+		console.error(e);
+	});
+	req_post.write(req_data);
+	req_post.end();
+});
+
 app.post("/removeAuthUser", (req, res) => {
 	const { id, token, user_id } = req.body;
 	if(!id){
