@@ -129,7 +129,7 @@ function removeUser(id){
 	xmlt = new XMLHttpRequest();
 	xmlt.open('POST', '/removeAuthUser', true);
 	xmlt.setRequestHeader('Content-Type', 'application/json');
-	xmlt.send(`{"id":"${user}","token":"${token}","user":"${id}"}`);
+	xmlt.send(`{"id":"${user}","token":"${token}","user_id":"${id}"}`);
 	xmlt.onload = function() {
 		if (xmlt.status === 200) {
 			const response = JSON.parse(xmlt.responseText);

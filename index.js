@@ -458,6 +458,53 @@ app.post("/getAuthUsers", (req, res) => {
 	req_post.write(req_data);
 	req_post.end();
 });
+app.post("/removeAuthUser", (req, res) => {
+	const { id, token, user_id } = req.body;
+	if(!id){
+		res.status(400).json({ok:false,message:'missing ID'});
+		return;
+	}
+	if(!token){
+		res.status(400).json({ok:false,message:'missing token'});
+		return;
+	}
+	if(!user_id){
+		res.status(400).json({ok:false,message:'missing user_id'});
+		return;
+	}
+	const req_option = {
+		hostname: API,
+		port: 443,
+		path: '/removeAuthUser',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	};
+	const req_data = JSON.stringify({
+		id: id,
+		token: token,
+		user_id: user_id,
+		scoreboard: CLIENT
+	});
+	//make a request to remote APIs
+	const req_post = https.request(req_option, (res_post) => {
+		res_post.on('data', (data) => {
+			const data_obj = JSON.parse(data);
+			if(data_obj.ok === true){
+				res.status(200).send(data_obj);
+			}else{
+				res.status(res_post.statusCode).send(data_obj);
+			}
+		});
+	});
+	req_post.on('error', (e) => {
+		console.error(e);
+	}
+	);
+	req_post.write(req_data);
+	req_post.end();
+});
 
 server.listen(PORT, () => {
 	console.log('listening on http://localhost:' + PORT);
