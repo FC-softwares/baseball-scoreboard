@@ -15,7 +15,7 @@ if (token && user) {
 				localStorage.removeItem('user');
 			}
             socket.emit('get_settings');
-			getCunrentUser();
+			getCurrentUser();
 		} else {
 			// User is not in a valid session
 			// Redirect to login page
@@ -80,7 +80,7 @@ function BlackenLastInning(value){
 	}
 }
 
-function getCunrentUser (){
+function getCurrentUser (){
 	const xmlt = new XMLHttpRequest();
 	xmlt.open('POST', '/checkstat', true);
 	xmlt.setRequestHeader('Content-Type', 'application/json');
@@ -134,14 +134,14 @@ function removeUser(id){
 		if (xmlt.status === 200) {
 			const response = JSON.parse(xmlt.responseText);
 			if (response.ok === true) {
-				document.getElementById('Allert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User deletted successfully.  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-				getCunrentUser();
+				document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User deleted successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+				getCurrentUser();
 			}
 		}
 	};
 }
 
-function Add_User(){
+function addUser(){
 	const email = document.getElementById('UserAddEmail').value;
 	xmlt = new XMLHttpRequest();
 	xmlt.open('POST', '/addAuthUser', true);
@@ -151,7 +151,7 @@ function Add_User(){
 		if (xmlt.status === 200) {
 			const response = JSON.parse(xmlt.responseText);
 			if (response.ok === true) {
-				document.getElementById('Allert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User added successfully.  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+				document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User added successfully.  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
 				
 			}
 		}
