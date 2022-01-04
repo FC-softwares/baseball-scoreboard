@@ -224,6 +224,7 @@ io.on('connection', (socket) => {
 								if (err) throw err;
 							});
 							socket.emit('update', data_old_obj);
+							socket.broadcast.emit('update', data_old_obj);
 						});
 					}else{
 						
