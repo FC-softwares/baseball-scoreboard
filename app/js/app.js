@@ -8,12 +8,12 @@ function update(obj){
 
 	const darkenColorAway = lightenDarkenColor(obj.Teams.Away.Color,-75);
 	const darkenColorHome = lightenDarkenColor(obj.Teams.Home.Color,-75);
-	document.querySelector("div.teamName#away").innerHTML = obj.Teams.Away.Name;
-	document.querySelector("div.teamName#away").style.background = `radial-gradient(${darkenColorAway} 25%,${obj.Teams.Away.Color} 100%)`;
-	document.querySelector("div.teamColor#away").style.background = obj.Teams.Away.Color;
-	document.querySelector("div.teamName#home").innerHTML = obj.Teams.Home.Name;
-	document.querySelector("div.teamName#home").style.background = `radial-gradient(${darkenColorHome} 25%, ${obj.Teams.Home.Color} 100%)`;
-	document.querySelector("div.teamColor#home").style.background = obj.Teams.Home.Color;
+	try{document.querySelector("div.teamName#away").innerHTML = obj.Teams.Away.Name;}catch(error){}
+	try{document.querySelector("div.teamName#away").style.background = `radial-gradient(${darkenColorAway} 25%,${obj.Teams.Away.Color} 100%)`;}catch(error){}
+	try{document.querySelector("div.teamColor#away").style.background = obj.Teams.Away.Color;}catch(error){}
+	try{document.querySelector("div.teamName#home").innerHTML = obj.Teams.Home.Name;}catch(error){}
+	try{document.querySelector("div.teamName#home").style.background = `radial-gradient(${darkenColorHome} 25%, ${obj.Teams.Home.Color} 100%)`;}catch(error){}
+	try{document.querySelector("div.teamColor#home").style.background = obj.Teams.Home.Color;}catch(error){}
 }
 /**
  * 
