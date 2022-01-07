@@ -239,7 +239,7 @@ io.on('connection', (socket) => {
 		}
 	});
 
-	socket.on('update_settings', (data) => {			
+	socket.on('updateSettings', (data) => {			
 		if (socket.handshake.auth.id && socket.handshake.auth.token) {
 			const ver_req_set_option = {
 				hostname: API,
@@ -275,7 +275,8 @@ io.on('connection', (socket) => {
 							fs.writeFile(__dirname + '/app/json/settings.json', JSON.stringify(data_old_obj, null, 4), (err) => {
 								if (err) throw err;
 							});
-							socket.emit('update_settings', data_old_obj);
+							socket.emit('updateSettings', data_old_obj);
+							socket.broadcast.emit('updateSettings', data_old_obj);
 						});
 					}else{
 						
@@ -289,9 +290,9 @@ io.on('connection', (socket) => {
 			ver_req_set.end();
 		}
 	});
-	socket.on('get_settings',()=>{
+	socket.on('getSettings',()=>{
 		fs.readFile(__dirname + '/app/json/settings.json', 'utf8', (err, data) => {
-			socket.emit('connect_settings',data);
+			socket.emit('connectSettings',data);
 		})
 	});
 	socket.on('disconnect', () => {

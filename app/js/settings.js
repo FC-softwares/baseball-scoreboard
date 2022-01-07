@@ -14,7 +14,7 @@ if (token && user) {
 				localStorage.removeItem('token');
 				localStorage.removeItem('user');
 			}
-            socket.emit('get_settings');
+            socket.emit('getSettings');
 			getCurrentUser();
 		} else {
 			// User is not in a valid session
@@ -39,7 +39,8 @@ const socket = io({
   	}
 });
 
-socket.on('update_settings', function(data){
+socket.on('updateSettings', function(data){
+	console.log(data);
     document.getElementById('MaxInning').value = data.MaxInning;
 	if(data.BlackenLastInning){
 		document.getElementById("BlackenLastInningTrue").classList.remove("btn-outline-primary");
@@ -53,7 +54,7 @@ socket.on('update_settings', function(data){
 		document.getElementById("BlackenLastInningFalse").classList.add("btn-primary");
 	}
 });
-socket.on('connect_settings',function(data){
+socket.on('connectSettings',function(data){
     dataDecode = JSON.parse(data);
     document.getElementById('MaxInning').value = dataDecode.MaxInning;
     if(data.BlackenLastInning){
@@ -70,13 +71,13 @@ socket.on('connect_settings',function(data){
 });
 function UpdateSettings(){
 	const MaxInning = document.getElementById('MaxInning').value;
-	socket.emit('update_settings',`{"MaxInning":${MaxInning}}`);
+	socket.emit('updateSettings',`{"MaxInning":${MaxInning}}`);
 }
 function BlackenLastInning(value){
 	if(value){
-		socket.emit('update_settings',`{"BlackenLastInning":true}`);
+		socket.emit('updateSettings',`{"BlackenLastInning":true}`);
 	}else{
-		socket.emit('update_settings',`{"BlackenLastInning":false}`);
+		socket.emit('updateSettings',`{"BlackenLastInning":false}`);
 	}
 }
 
