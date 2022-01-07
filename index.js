@@ -22,7 +22,7 @@ app.use(express.json({
 }));
 
 io.on('connection', (socket) => {
-	console.log('a user connected');
+	console.log('a user connected\tID: '+socket.id);
 	//console.log(socket.handshake.auth);
 	socket.on('update_data', (data) => {			
 		if (socket.handshake.auth.id && socket.handshake.auth.token) {
@@ -296,7 +296,7 @@ io.on('connection', (socket) => {
 		})
 	});
 	socket.on('disconnect', () => {
-		console.log('user disconnected');
+		console.log('user disconnected\tID: '+socket.id);
 	});
 	fs.readFile('./app/json/data.json', function(err, data) {
 		if (err) throw err;
