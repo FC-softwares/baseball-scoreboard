@@ -5,12 +5,13 @@
     /* Scoreboard widths */
     --w-teamcolor: 7px;
     --w-teamname: 250px;
-    --w-score: 50px;
+    --w-score: 55px;
+    --w-div: 7px;
     /* Scoreboard row height */
     --h-row: 40px;
     /* Scoreboard team colors */
-    --c-home: #FF0000;
-    --c-away: #0000FF;
+    --c-home: #000000;
+    --c-away: #000000;
     --c-score-home: #000000;
     --c-score-away: #000000;
     /* Gradients (please don't edit them) */
@@ -18,13 +19,7 @@
     --g-away: linear-gradient(0deg, var(--c-away) 0%, rgba(255,255,255,0.4) 100%), var(--c-away);
     --g-def: linear-gradient(0deg, rgba(233,233,233,1) 0%, rgba(255,255,255,1) 100%);
 }
-.vs {
-    width: 50px;
-}
-.div {
-    width: 7px;
-    transform: skew(-30deg);
-}
+
 /* Standards */
 html {
     width: min-content;
@@ -38,13 +33,19 @@ body {
 div {
     display: grid;
 }
+
 /* Scoreboard & defaults */
 .scoreboard {
     font-family: 'Poppins', sans-serif;
     font-size: 25px;
     grid-auto-flow: column;
     grid-template-rows: var(--h-row);
-    grid-template-columns: var(--w-teamcolor) var(--w-teamname) var(--w-score) auto var(--w-score) var(--w-teamname) var(--w-teamcolor);
+}
+.scoreboard#pregame {
+    grid-template-columns: var(--w-teamcolor) var(--w-teamname) calc((var(--w-score) * 2) + var(--w-div)) var(--w-teamname) var(--w-teamcolor);
+}
+.scoreboard#postgame {
+    grid-template-columns: var(--w-teamcolor) var(--w-teamname) var(--w-score) var(--w-div) var(--w-score) var(--w-teamname) var(--w-teamcolor);
 }
 .scoreboard > div {
     align-items: center;
@@ -53,16 +54,43 @@ div {
     text-align: center;
 }
 
-.teamScore {
+/* Score and team divider */
+.teamScore, .vs, .div {
     transform: skew(-30deg);
 }
-.teamScore > span {
+.teamScore > span, .vs > span {
     transform: skew(30deg);
 }
+.vs, .div {
+    color: white;
+    background: black;
+}
+
+/* Team color */
+.teamColor {
+    width: 100%;
+}
+.teamColor#away {
+    border-radius: 7px 0 0 7px;
+    background: var(--g-away);
+}
+.teamColor#home {
+    border-radius: 0 7px 7px 0;
+    background: var(--g-home);
+}
+
+/* Team name */
 .teamName {
     background: var(--g-def);
-    padding-left: 7px;
-    padding-right: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.teamName#home {
+    text-align: end;
+    margin-left: -20px;
+}
+.teamName#away {
+    margin-right: -20px;
 }
 .teamName#home > span {
     background: var(--g-home);
@@ -76,24 +104,8 @@ div {
     -webkit-background-clip: text;
     background-clip: text;
 }
-.teamName#home {
-    text-align: end;
-    margin-left: -20px;
-}
-.teamName#away {
-    margin-right: -20px;
-}
-.teamColor {
-    width: 100%;
-}
-.teamColor#away {
-    border-radius: 7px 0 0 7px;
-    background: var(--g-away);
-}
-.teamColor#home {
-    border-radius: 0 7px 7px 0;
-    background: var(--g-home);
-}
+
+/* Team score */
 .teamScore#away {
     background: var(--g-away);
     color: var(--c-score-away);
@@ -101,8 +113,4 @@ div {
 .teamScore#home {
     background: var(--g-home);
     color: var(--c-score-home);
-}
-.vs, .div {
-    color: white;
-    background: black;
 }
