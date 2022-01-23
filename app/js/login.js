@@ -46,9 +46,11 @@ if (id&&token) {
             }, false)
         })
 })()
-function login(){
-    var username = document.getElementById("username").value;
-    var password = document.getElementById("password").value;
+function login(username,password){
+    if(username==undefined){
+        username = document.getElementById('username').value;
+        password = document.getElementById('password').value;
+    }
     var remember = document.getElementById("remember").checked;
     sha256(password)
         .then(function(hash){
@@ -118,7 +120,5 @@ function CancelLoginGuest() {
     document.querySelector(`#guestButton`).classList.remove("disabled")
 }
 function LoginGuest(){
-    document.getElementById("username").value = "guest";
-    document.getElementById("password").value = "guest";
-    login();
+    login("guest","guest");
 }
