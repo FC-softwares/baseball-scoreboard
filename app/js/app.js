@@ -7,17 +7,13 @@ socket.on('updateSettings', updateSettings);
 socket.on('connectSettings', updateSettings);
 
 function update(obj){
-	const darkenColorAway = lightenDarkenColor(obj.Teams.Away.Color,-75);
-	const darkenColorHome = lightenDarkenColor(obj.Teams.Home.Color,-75);
 	// Teams
 	// Away
 	try{document.querySelector("div.teamName#away").innerHTML = obj.Teams.Away.Name;}catch(error){}
-	try{document.querySelector("div.teamName#away").style.background = `radial-gradient(${darkenColorAway} 25%,${obj.Teams.Away.Color} 100%)`;}catch(error){}
-	try{document.querySelector("div.teamColor#away").style.background = obj.Teams.Away.Color;}catch(error){}
+	document.documentElement.style.setProperty('--c-away', obj.Teams.Away.Color);
 	// Home
 	try{document.querySelector("div.teamName#home").innerHTML = obj.Teams.Home.Name;}catch(error){}
-	try{document.querySelector("div.teamName#home").style.background = `radial-gradient(${darkenColorHome} 25%, ${obj.Teams.Home.Color} 100%)`;}catch(error){}
-	try{document.querySelector("div.teamColor#home").style.background = obj.Teams.Home.Color;}catch(error){}
+	document.documentElement.style.setProperty('--c-home', obj.Teams.Home.Color);
 	
 	// Score (for scoreboard, partials, and post-game)
 	if(document.URL.includes("scoreboard.html")||document.URL.includes("partials.html")||document.URL.includes("postgame.html")){
@@ -27,12 +23,36 @@ function update(obj){
 	// Only for scoreboard
 	if (document.URL.includes("scoreboard.html")) {
 		// Ball Strike
-		try{document.querySelector("div.ball").innerHTML = obj.Ball;}catch(error){}
+		try{document.querySelector("span#ball").innerHTML = obj.Ball;}catch(error){}
 		try{document.querySelector("span#strike").innerHTML = obj.Strike;}catch(error){}
 		// Outs
-		try{document.querySelector("span#outs").innerHTML = obj.Out;}catch(error){}
+		try{document.querySelector("span#number").innerHTML = obj.Out;}catch(error){}
 		// Inning and Top/Bottom
-		try{document.querySelector("span#inning").innerHTML = obj.Inning;}catch(error){}	
+		try{document.querySelector(".inning > span#number").innerHTML = obj.Inning;}catch(error){}
+		if(obj.Arrow == 1){
+			console.log("Top");
+			try{document.querySelector(".inning > span#up").classList.remove("disabled");}catch(error){console.log(error);}
+			try{document.querySelector(".inning > span#down").classList.add("disabled");}catch(error){console.log(error);}
+		}else{
+			console.log("Bottom");
+			try{document.querySelector(".inning > span#up").classList.add("disabled");}catch(error){console.log(error);}
+			try{document.querySelector(".inning > span#down").classList.remove("disabled");}catch(error){console.log(error);}
+		}
+		if(obj.Bases[1]){
+			try{document.querySelector("div#first").classList.remove("disabled");}catch(error){}
+		}else{
+			try{document.querySelector("div#first").classList.add("disabled");}catch(error){}
+		}
+		if(obj.Bases[2]){
+			try{document.querySelector("div#second").classList.remove("disabled");}catch(error){}
+		}else{
+			try{document.querySelector("div#second").classList.add("disabled");}catch(error){}
+		}
+		if(obj.Bases[3]){
+			try{document.querySelector("div#third").classList.remove("disabled");}catch(error){}
+		}else{
+			try{document.querySelector("div#third").classList.add("disabled");}catch(error){}
+		}
 	}
 	// Only for partials
 	if (document.URL.includes("partials.html")) {
@@ -104,27 +124,3 @@ function updateSettings(json){
  * @param {int} amt amount to lighten or darken from -255 to 255
  * @returns {String} Hex color with at least 6 digits
  */
-function lightenDarkenColor(col, amt) {
-	var usePound = false;
-	if (col[0] == "#") {
-		col = col.slice(1);
-		usePound = true;
-	}
-	var num = parseInt(col, 16);
-	var r = (num >> 16) + amt;
-	if (r > 255) r = 255;
-	else if (r < 0) r = 0;
-	var b = ((num >> 8) & 0x00FF) + amt;
-	if (b > 255) b = 255;
-	else if (b < 0) b = 0;
-	var g = (num & 0x0000FF) + amt;
-	if (g > 255) g = 255;
-	else if (g < 0) g = 0;
-	//check if the result is a valid hex color
-	var result = "#" + (g | (b << 8) | (r << 16)).toString(16);
-	if (result.length == 7) {
-		return result;
-	} else {
-		return "#000000";
-	}
-}
