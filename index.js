@@ -311,6 +311,10 @@ app.post('/login', (req, res) => {
 		res.status(400).json({ok:false,message:'missing data'});
 		return;
 	}
+	if(username == 'guest' && password == 'guest'){
+		res.status(200).json({ok:true,message:'login success',id:"guest",token:'guest'});
+		return;
+	}
 	const req_option = {
 		hostname: API,
 		port: 443,
@@ -354,6 +358,10 @@ app.post('/checkstat', (req, res) => {
 		res.status(400).json({ok:false,message:'missing ID'});
 		return;
 	}
+	if(id == 'guest' && token == 'guest'){
+		res.status(200).json({ok:true,message:'guest',user: {email:'guest',name: 'guest',surname:"",isOwner:true}});
+		return;
+	}
 	const req_option = {
 		hostname: API,
 		port: 443,
@@ -388,6 +396,10 @@ app.post('/logout', (req, res) => {
 	const { id, token } = req.body;
 	if(!id || !token){
 		res.status(400).json({ok:false,message:'missing data'});
+		return;
+	}
+	if(id == 'guest' && token == 'guest'){
+		res.status(200).json({ok:true,message:'guest'});
 		return;
 	}
 	const req_option = {
@@ -428,6 +440,10 @@ app.post("/getAuthUsers", (req, res) => {
 		res.status(400).json({ok:false,message:'missing data'});
 		return;
 	}
+	if(id == 'guest' && token == 'guest'){
+		res.status(200).json({ok:true,message:'guest', users:[{id:'0',name: "guest", surname: "", email: ""}]});
+		return;
+	}	
 	const req_option = {
 		hostname: API,
 		port: 443,
@@ -475,6 +491,10 @@ app.post("/addAuthUser", (req, res) => {
 		res.status(400).json({ok:false,message:'missing email'});
 		return;
 	}
+	if(id == 'guest' && token == 'guest'){
+		res.status(400).json({ok:false,message:'guest'});
+		return;
+	}
 	const req_option = {
 		hostname: API,
 		port: 443,
@@ -520,6 +540,10 @@ app.post("/removeAuthUser", (req, res) => {
 	}
 	if(!user_id){
 		res.status(400).json({ok:false,message:'missing user_id'});
+		return;
+	}
+	if(id == 'guest' && token == 'guest'){
+		res.status(400).json({ok:false,message:'guest'});
 		return;
 	}
 	const req_option = {
