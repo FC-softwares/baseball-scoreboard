@@ -226,8 +226,6 @@ io.on('connection', (socket) => {
 							socket.emit('update', data_old_obj);
 							socket.broadcast.emit('update', data_old_obj);
 						});
-					}else{
-						
 					}
 				});
 			});
@@ -278,8 +276,6 @@ io.on('connection', (socket) => {
 							socket.emit('updateSettings', data_old_obj);
 							socket.broadcast.emit('updateSettings', data_old_obj);
 						});
-					}else{
-						
 					}
 				});
 			});
