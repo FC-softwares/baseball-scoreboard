@@ -9,53 +9,52 @@ socket.on('connectSettings', updateSettings);
 function update(obj){
 	// Teams
 	// Away
-	try{document.querySelector("div.teamName#away").innerHTML = obj.Teams.Away.Name;}catch(error){}
+	try{document.querySelector("div.teamName#away").innerHTML = obj.Teams.Away.Name;}catch(error){console.error(error)}
 	document.documentElement.style.setProperty('--c-away', obj.Teams.Away.Color);
 	// Home
-	try{document.querySelector("div.teamName#home").innerHTML = obj.Teams.Home.Name;}catch(error){}
+	try{document.querySelector("div.teamName#home").innerHTML = obj.Teams.Home.Name;}catch(error){console.error(error)}
 	document.documentElement.style.setProperty('--c-home', obj.Teams.Home.Color);
 	
 	// Score (for scoreboard, partials, and post-game)
 	if(document.URL.includes("scoreboard.html")||document.URL.includes("partials.html")||document.URL.includes("postgame.html")){
-		try{document.querySelector("div.teamScore#home").innerHTML = obj.Teams.Home.Score;}catch(error){}
-		try{document.querySelector("div.teamScore#away").innerHTML = obj.Teams.Away.Score;}catch(error){}
+		try{document.querySelector("div.teamScore#home").innerHTML = obj.Teams.Home.Score;}catch(error){console.error(error)}
+		try{document.querySelector("div.teamScore#away").innerHTML = obj.Teams.Away.Score;}catch(error){console.error(error)}
 	}
 	// Only for scoreboard
 	if (document.URL.includes("scoreboard.html")) {
 		// Ball Strike
-		try{document.querySelector("span#ball").innerHTML = obj.Ball;}catch(error){}
-		try{document.querySelector("span#strike").innerHTML = obj.Strike;}catch(error){}
+		try{document.querySelector("span#ball").innerHTML = obj.Ball;}catch(error){console.error(error)}
+		try{document.querySelector("span#strike").innerHTML = obj.Strike;}catch(error){console.error(error)}
 		// Outs
-		try{document.querySelector("span#number").innerHTML = obj.Out;}catch(error){}
+		try{document.querySelector("span#number").innerHTML = obj.Out;}catch(error){console.error(error)}
 		// Inning and Top/Bottom
-		try{document.querySelector(".inning > span#number").innerHTML = obj.Inning;}catch(error){}
+		try{document.querySelector(".inning > span#number").innerHTML = obj.Inning;}catch(error){console.error(error)}
 		if(obj.Arrow == 1){
-			console.log("Top");
-			try{document.querySelector(".inning > span#up").classList.remove("disabled");}catch(error){console.log(error);}
-			try{document.querySelector(".inning > span#down").classList.add("disabled");}catch(error){console.log(error);}
+			try{document.querySelector(".inning > span#up").classList.remove("disabled");}catch(error){console.error(error)}
+			try{document.querySelector(".inning > span#down").classList.add("disabled");}catch(error){console.error(error)}
 		}else{
-			console.log("Bottom");
-			try{document.querySelector(".inning > span#up").classList.add("disabled");}catch(error){console.log(error);}
-			try{document.querySelector(".inning > span#down").classList.remove("disabled");}catch(error){console.log(error);}
+			try{document.querySelector(".inning > span#up").classList.add("disabled");}catch(error){console.error(error)}
+			try{document.querySelector(".inning > span#down").classList.remove("disabled");}catch(error){console.error(error)}
 		}
 		if(obj.Bases[1]){
-			try{document.querySelector("div#first").classList.remove("disabled");}catch(error){}
+			try{document.querySelector("div#first").classList.remove("disabled");}catch(error){console.error(error)}
 		}else{
-			try{document.querySelector("div#first").classList.add("disabled");}catch(error){}
+			try{document.querySelector("div#first").classList.add("disabled");}catch(error){console.error(error)}
 		}
 		if(obj.Bases[2]){
-			try{document.querySelector("div#second").classList.remove("disabled");}catch(error){}
+			try{document.querySelector("div#second").classList.remove("disabled");}catch(error){console.error(error)}
 		}else{
-			try{document.querySelector("div#second").classList.add("disabled");}catch(error){}
+			try{document.querySelector("div#second").classList.add("disabled");}catch(error){console.error(error)}
 		}
 		if(obj.Bases[3]){
-			try{document.querySelector("div#third").classList.remove("disabled");}catch(error){}
+			try{document.querySelector("div#third").classList.remove("disabled");}catch(error){console.error(error)}
 		}else{
-			try{document.querySelector("div#third").classList.add("disabled");}catch(error){}
+			try{document.querySelector("div#third").classList.add("disabled");}catch(error){console.error(error)}
 		}
 	}
 	// Only for partials
-	if (document.URL.includes("partials.html")) {
+	// This code is now commented because it have to be tested after @TheTecnoKing will have finished to write the HTML page "partials.html"
+	/* if (document.URL.includes("partials.html")) {
 		let extraInningScoreAway = 0,extraInningScoreHome = 0;
 		for (let i = 1; i <= localStoeage.getItem("MaxInning"); i++) {
 			try{
@@ -109,7 +108,7 @@ function update(obj){
 			//add the extra inning div to the scoreboard
 			
 		}
-	}
+	} */
 }
 
 function updateSettings(json){
