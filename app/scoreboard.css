@@ -64,7 +64,7 @@ div {
 }
 .teamColor#away {
     grid-area: colorAway;
-    border-radius: 7px 0 0 0;
+    border-radius: 7px 0 0;
     background: var(--g-away)
 }
 .teamColor#home {
@@ -129,7 +129,7 @@ div {
     transform: translateX(3px) translateY(3px);
     width: 80%;
     height: 80%;
-    border: 0px solid black;
+    border: 0 solid black;
     border-top-left-radius: 50px;
     background-color:var(--c-disabled);
 }
