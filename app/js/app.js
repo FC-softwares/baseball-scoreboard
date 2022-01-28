@@ -53,18 +53,22 @@ function update(obj){
 		}
 	}
 	// Only for partials
-	// This code is now commented because it have to be tested after @TheTecnoKing will have finished to write the HTML page "partials.html"
-	/* if (document.URL.includes("partials.html")) {
+	// This code is now commented because it have to be tested after @TheTecnoKing will have finished to write the HTML page "inning.html"
+	if (document.URL.includes("partials.html")) {
 		let extraInningScoreAway = 0,extraInningScoreHome = 0;
 		for (let i = 1; i <= localStoeage.getItem("MaxInning"); i++) {
 			try{
-				document.querySelector("div.inningScore#away"+i).classList.remove("active");
+				document.querySelector("div.inningScore#away"+i).classList.add("disabled");
 				document.querySelector("div.inningScore#away"+i).innerHTML = "";
-			}catch(error){}
+			}catch(error){
+				console.error(error);
+			}
 			try{
-				document.querySelector("div.inningScore#home"+i).classList.remove("active");
+				document.querySelector("div.inningScore#home"+i).classList.add("disabled");
 				document.querySelector("div.inningScore#home"+i).innerHTML = "";
-			}catch(error){}			
+			}catch(error){
+				console.error(error);
+			}			
 		}
 		for(let i = 1; i <= obj.Inning; i++){
 			if(i>localStorage.getItem("MaxInning")){
@@ -73,53 +77,79 @@ function update(obj){
 			}else{
 				if(i<obj.Inning){
 					try{
-						document.querySelector("div.inningScore#home"+i).classList.add("active");
+						document.querySelector("div.inningScore#home"+i).classList.remove("disabled");
 						document.querySelector("div.inningScore#home"+i).innerHTML = obj.Int[i].H;
-					}catch(error){}
+					}catch(error){
+						console.error(error);
+					}
 					try{
-						document.querySelector("div.inningScore#away"+i).classList.add("active");
+						document.querySelector("div.inningScore#away"+i).classList.remove("disabled");
 						document.querySelector("div.inningScore#away"+i).innerHTML = obj.Int[i].A;
-					}catch(error){}
+					}catch(error){
+						console.error(error);
+					}
 				}else{
 					if(obj.Arrow==2){
 						try {
-							document.querySelector("div.inningScore#away"+i).classList.add("active");
+							document.querySelector("div.inningScore#away"+i).classList.remove("disabled");
 							document.querySelector("div.inningScore#away"+i).innerHTML = obj.Int[i].A;
-						} catch (error) {}
+						} catch (error) {
+							console.error(error);
+						}
 					}else if(obj.Int[i].H!=0){
 						try {
-							document.querySelector("div.inningScore#away"+i).classList.add("active");
+							document.querySelector("div.inningScore#away"+i).classList.remove("disabled");
 							document.querySelector("div.inningScore#away"+i).innerHTML = obj.Int[i].A;
-						} catch (error) {}
+						} catch (error) {
+							console.error(error);
+						}
 						try {
-							document.querySelector("div.inningScore#home"+i).classList.add("active");
+							document.querySelector("div.inningScore#home"+i).classList.remove("disabled");
 							document.querySelector("div.inningScore#home"+i).innerHTML = obj.Int[i].H;
-						} catch (error) {}
+						} catch (error) {
+							console.error(error);
+						}
 					}else if(obj.Int[i].A!=0){
 						try {
 							document.querySelector("div.inningScore#away"+i).classList.add("active");
 							document.querySelector("div.inningScore#away"+i).innerHTML = obj.Int[i].A;
-						} catch (error) {}
+						} catch (error) {
+							console.error(error);
+						}
 					}
 				}
 			}
 		}
 		if(obj.Inning>localStorage.getItem("MaxInning")){
 			//add the extra inning div to the scoreboard
-			
+			let extraInning=``;
+			try{document.querySelector("div.inningContainer").innerHTML += extraInning;}catch(error){console.error(error);}
 		}
-	} */
+	}
 }
 
 function updateSettings(json){
 	// Settings
 	const obj = JSON.parse(json);
+	const oldMaxInning = localStorage.getItem("MaxInning");
 	localStorage.setItem("MaxInning",obj.MaxInning);
 	localStorage.setItem("BlackenLastInning",obj.BlackenLastInning);
+	// update the container of the innings
+	if(obj.MaxInning>oldMaxInning){
+		// TODO add remaining innings
+	}else if(obj.MaxInning>oldMaxInning){
+		// TODO remove excess innings
+	}
 }
-/**
- * 
- * @param {String} col input color
- * @param {int} amt amount to lighten or darken from -255 to 255
- * @returns {String} Hex color with at least 6 digits
- */
+
+function connectSettings(json) {
+	// Settings
+	const obj = JSON.parse(json);
+	localStorage.setItem("MaxInning",obj.MaxInning);
+	localStorage.setItem("BlackenLastInning",obj.BlackenLastInning);
+	// Set the container with the innings 
+	let container="";
+	for(let i=0;i<obj.MaxInning;i++)
+		container+="";
+	document.querySelector("div.inningContainer").innerHTML = container;
+}
