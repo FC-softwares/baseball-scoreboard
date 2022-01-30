@@ -122,7 +122,7 @@ function update(obj){
 		}
 		if(obj.Inning>localStorage.getItem("MaxInning")){
 			//add the extra inning div to the scoreboard
-			let extraInning=``;
+			let extraInning=``; // waiting for @TheTecnoKing snippet
 			try{document.querySelector("div.inningContainer").innerHTML += extraInning;}catch(error){console.error(error);}
 		}
 	}
@@ -137,8 +137,15 @@ function updateSettings(json){
 	// update the container of the innings
 	if(obj.MaxInning>oldMaxInning){
 		// TODO add remaining innings
+		for(let i=oldMaxInning+1;i<=obj.MaxInning;i++){
+			let inning = ``; //waiting for @TheTecnoKing snippet
+			try{document.querySelector("div.inningContainer").innerHTML += inning;}catch(error){console.error(error);}
+		}
 	}else if(obj.MaxInning>oldMaxInning){
 		// TODO remove excess innings
+		for(let i=obj.MaxInning+1;i<=oldMaxInning;i++){
+			try{document.querySelector("div.inningContainer").removeChild(document.querySelector("div.inningContainer").lastChild);}catch(error){console.error(error);}
+		}
 	}
 }
 
@@ -148,8 +155,8 @@ function connectSettings(json) {
 	localStorage.setItem("MaxInning",obj.MaxInning);
 	localStorage.setItem("BlackenLastInning",obj.BlackenLastInning);
 	// Set the container with the innings 
-	let container="";
+	let container=``; //waiting for @TheTecnoKing snippet
 	for(let i=0;i<obj.MaxInning;i++)
-		container+="";
+		container+=``; //waiting for @TheTecnoKing snippet
 	document.querySelector("div.inningContainer").innerHTML = container;
 }
