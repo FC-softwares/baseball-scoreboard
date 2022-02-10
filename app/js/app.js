@@ -54,18 +54,18 @@ function update(obj){
 	}
 	// Only for partials
 	// This code is now commented because it have to be tested after @TheTecnoKing will have finished to write the HTML page "inning.html"
-	if (document.URL.includes("partials.html")) {
+	if (document.URL.includes("inning.html")) {
 		let extraInningScoreAway = 0,extraInningScoreHome = 0;
-		for (let i = 1; i <= localStoeage.getItem("MaxInning"); i++) {
+		for (let i = 1; i <= localStorage.getItem("MaxInning"); i++) {
 			try{
-				document.querySelector("div.inningScore#away"+i).classList.add("disabled");
-				document.querySelector("div.inningScore#away"+i).innerHTML = "";
+				document.querySelector("#i"+i+" > #away").classList.add("disabled");
+				document.querySelector("#i"+i+" > #away").innerHTML = "";
 			}catch(error){
 				console.error(error);
 			}
 			try{
-				document.querySelector("div.inningScore#home"+i).classList.add("disabled");
-				document.querySelector("div.inningScore#home"+i).innerHTML = "";
+				document.querySelector("#i"+i+" > #home").classList.add("disabled");
+				document.querySelector("#i"+i+" > #home").innerHTML = "";
 			}catch(error){
 				console.error(error);
 			}			
@@ -77,42 +77,42 @@ function update(obj){
 			}else{
 				if(i<obj.Inning){
 					try{
-						document.querySelector("div.inningScore#home"+i).classList.remove("disabled");
-						document.querySelector("div.inningScore#home"+i).innerHTML = obj.Int[i].H;
+						document.querySelector("#i"+i+" > #home").classList.remove("disabled");
+						document.querySelector("#i"+i+" > #home").innerHTML = obj.Int[i].H;
 					}catch(error){
 						console.error(error);
 					}
 					try{
-						document.querySelector("div.inningScore#away"+i).classList.remove("disabled");
-						document.querySelector("div.inningScore#away"+i).innerHTML = obj.Int[i].A;
+						document.querySelector("#i"+i+" > #away").classList.remove("disabled");
+						document.querySelector("#i"+i+" > #away").innerHTML = obj.Int[i].A;
 					}catch(error){
 						console.error(error);
 					}
 				}else{
 					if(obj.Arrow==2){
 						try {
-							document.querySelector("div.inningScore#away"+i).classList.remove("disabled");
-							document.querySelector("div.inningScore#away"+i).innerHTML = obj.Int[i].A;
+							document.querySelector("#i"+i+" > #away").classList.remove("disabled");
+							document.querySelector("#i"+i+" > #away").innerHTML = obj.Int[i].A;
 						} catch (error) {
 							console.error(error);
 						}
 					}else if(obj.Int[i].H!=0){
 						try {
-							document.querySelector("div.inningScore#away"+i).classList.remove("disabled");
-							document.querySelector("div.inningScore#away"+i).innerHTML = obj.Int[i].A;
+							document.querySelector("#i"+i+" > #away").classList.remove("disabled");
+							document.querySelector("#i"+i+" > #away").innerHTML = obj.Int[i].A;
 						} catch (error) {
 							console.error(error);
 						}
 						try {
-							document.querySelector("div.inningScore#home"+i).classList.remove("disabled");
-							document.querySelector("div.inningScore#home"+i).innerHTML = obj.Int[i].H;
+							document.querySelector("#i"+i+" > #home").classList.remove("disabled");
+							document.querySelector("#i"+i+" > #home").innerHTML = obj.Int[i].H;
 						} catch (error) {
 							console.error(error);
 						}
 					}else if(obj.Int[i].A!=0){
 						try {
-							document.querySelector("div.inningScore#away"+i).classList.add("active");
-							document.querySelector("div.inningScore#away"+i).innerHTML = obj.Int[i].A;
+							document.querySelector("#i"+i+" > #away").classList.add("disabled");
+							document.querySelector("#i"+i+" > #away").innerHTML = obj.Int[i].A;
 						} catch (error) {
 							console.error(error);
 						}
