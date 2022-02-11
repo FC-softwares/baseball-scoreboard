@@ -11,9 +11,19 @@ function update(obj){
 	// Away
 	try{document.querySelector("div.teamName#away").innerHTML = obj.Teams.Away.Name;}catch(error){console.error(error)}
 	document.documentElement.style.setProperty('--c-away', obj.Teams.Away.Color);
+	console.log(brightnessByColor(obj.Teams.Away.Color));
+	if(brightnessByColor(obj.Teams.Away.Color)<60)
+		document.documentElement.style.setProperty('--c-score-away', '#ffffff');
+	else
+		document.documentElement.style.setProperty('--c-score-away', '#000000');
 	// Home
 	try{document.querySelector("div.teamName#home").innerHTML = obj.Teams.Home.Name;}catch(error){console.error(error)}
 	document.documentElement.style.setProperty('--c-home', obj.Teams.Home.Color);
+	console.log(brightnessByColor(obj.Teams.Home.Color));
+	if(brightnessByColor(obj.Teams.Home.Color)<60)
+		document.documentElement.style.setProperty('--c-score-home', '#ffffff');
+	else
+		document.documentElement.style.setProperty('--c-score-home', '#000000');
 	
 	// Score (for scoreboard, partials, and post-game)
 	if(document.URL.includes("scoreboard.html")||document.URL.includes("partials.html")||document.URL.includes("postgame.html")){
@@ -135,16 +145,18 @@ function updateSettings(json){
 	localStorage.setItem("MaxInning",obj.MaxInning);
 	localStorage.setItem("BlackenLastInning",obj.BlackenLastInning);
 	// update the container of the innings
-	if(obj.MaxInning>oldMaxInning){
-		// TODO add remaining innings
-		for(let i=oldMaxInning+1;i<=obj.MaxInning;i++){
-			let inning = ``; //waiting for @TheTecnoKing snippet
-			try{document.querySelector("div.inningContainer").innerHTML += inning;}catch(error){console.error(error);}
-		}
-	}else if(obj.MaxInning>oldMaxInning){
-		// TODO remove excess innings
-		for(let i=obj.MaxInning+1;i<=oldMaxInning;i++){
-			try{document.querySelector("div.inningContainer").removeChild(document.querySelector("div.inningContainer").lastChild);}catch(error){console.error(error);}
+	if(document.URL.includes("inning.html")){
+		if(obj.MaxInning>oldMaxInning){
+			// TODO add remaining innings
+			for(let i=oldMaxInning+1;i<=obj.MaxInning;i++){
+				let inning = ``; //waiting for @TheTecnoKing snippet
+				try{document.querySelector("div.inningContainer").innerHTML += inning;}catch(error){console.error(error);}
+			}
+		}else if(obj.MaxInning<oldMaxInning){
+			// TODO remove excess innings
+			for(let i=obj.MaxInning+1;i<=oldMaxInning;i++){
+				try{document.querySelector("div.inningContainer").removeChild(document.querySelector("div.inningContainer").lastChild);}catch(error){console.error(error);}
+			}
 		}
 	}
 }
@@ -159,4 +171,21 @@ function connectSettings(json) {
 	for(let i=0;i<obj.MaxInning;i++)
 		container+=``; //waiting for @TheTecnoKing snippet
 	document.querySelector("div.inningContainer").innerHTML = container;
+}
+/**
+ * @param {String} color 
+ * @returns Color Brightness from 0 to 255
+ */
+function brightnessByColor (color) {
+	var color = "" + color, isHEX = color.indexOf("#") == 0, isRGB = color.indexOf("rgb") == 0;
+	if (isHEX) {
+		const hasFullSpec = color.length == 7;
+		var m = color.substr(1).match(hasFullSpec ? /(\S{2})/g : /(\S{1})/g);
+		if (m) var r = parseInt(m[0] + (hasFullSpec ? '' : m[0]), 16), g = parseInt(m[1] + (hasFullSpec ? '' : m[1]), 16), b = parseInt(m[2] + (hasFullSpec ? '' : m[2]), 16);
+	}
+	if (isRGB) {
+		var m = color.match(/(\d+){3}/g);
+		if (m) var r = m[0], g = m[1], b = m[2];
+	}
+	if (typeof r != "undefined") return ((r*299)+(g*587)+(b*114))/1000;
 }
