@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+/* Global variables */
+:root {
+    /* Scoreboard widths */
+    --w-teamcolor: 7px;
+    --w-teamname: 150px;
+    --w-inning: 50px;
+    --w-score: 100px;
+    /* Scoreboard row height */
+    --h-row: 40px;
+    /* Scoreboard team colors */
+    --c-home: #000000;
+    --c-away: #000000;
+    --c-score-home: #000000;
+    --c-score-away: #000000;
+    /* Gradients (please don't edit them) */
+    --g-home: linear-gradient(0deg, var(--c-home) 0%, rgba(255,255,255,0.4) 100%), var(--c-home);
+    --g-away: linear-gradient(0deg, var(--c-away) 0%, rgba(255,255,255,0.4) 100%), var(--c-away);
+    --g-def: linear-gradient(0deg, rgba(233,233,233,1) 0%, rgba(255,255,255,1) 100%);
+    /* Misc */
+    --c-disabled: rgb(247, 247, 247);
+    --i-inning: 10; /* REIMPOSTA A 9 IN PROD */
+}
+
+/* Standards */
+html {
+    width: min-content;
+    background-color: transparent;
+}
+body {
+    margin: 0;
+    width: fit-content;
+    overflow: hidden;
+}
+div {
+    display: grid;
+}
+
+/* Scoreboard & defaults */
+.scoreboard {
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
+    grid-template-rows: repeat(3, var(--h-row));
+    grid-template-columns: var(--w-teamcolor) var(--w-teamname) auto var(--w-score);
+    grid-auto-flow: column;
+    grid-template-areas:
+        "empty empty container score"
+        "colorAway nameAway container score"
+        "colorHome nameHome container score";
+}
+div {
+    align-items: center;
+}
+div:not(.teamName, .scoreboard) {
+    text-align: center;
+}
+
+.teamColor#away {
+    grid-area: colorAway;
+    border-radius: 7px 0 0;
+    background: var(--g-away)
+}
+.teamColor#home {
+    grid-area: colorHome;
+    border-radius: 0 0 0 7px;
+    background: var(--g-home)
+}
+.container {
+    grid-area: container;
+    grid-template-columns: repeat(var(--i-inning), var(--w-inning));
+}
+.inning {
+    grid-template-rows: repeat(3, var(--h-row));
+}
+
+.teamName {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.teamName, .inning > .number, .score > .inning > .total {
+    background: var(--g-def);
+}
+
+.disabled {
+    color: var(--c-disabled);
+}
+.scoreboard#inning > *, .inning > *, .score > * {
+    height: 100%;
+}
+
+.inning > *, .score > * {
+    display: grid;
+    align-items: center;
+}
+div.score {
+    border-radius: 0 7px 7px 0;
+    grid-area: score;
+}
+.score > .total {
+    background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(255,255,255,0.4) 100%), rgb(0, 0, 0);
+    color: white;
+}
+.score > .score#away {
+    background: var(--g-away);
+}
+.score > .score#home {
+    background: var(--g-home);
+}
+.total {
+    border-radius: 0 7px 0 0;
+}
+.score > span.score#home {
+    border-radius: 0 0 7px 0;
+}
+.inning#i1 > span.number {
+    border-radius: 7px 0 0 0;
+}
+span.score {
+    background: var(--c-disabled);
+}
