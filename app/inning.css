@@ -20,7 +20,7 @@
     --g-def: linear-gradient(0deg, rgba(233,233,233,1) 0%, rgba(255,255,255,1) 100%);
     /* Misc */
     --c-disabled: rgb(247, 247, 247);
-    --i-inning: 10; /* REIMPOSTA A 9 IN PROD */
+    --i-inning: 0;
 }
 
 /* Standards */
@@ -78,7 +78,18 @@ div:not(.teamName, .scoreboard) {
     padding-left: 10px;
     padding-right: 10px;
 }
-
+.teamName#away > span {
+    background: var(--g-away);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+.teamName#home > span {
+    background: var(--g-home);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
 .teamName, .inning > .number, .score > .inning > .total {
     background: var(--g-def);
 }
@@ -104,9 +115,11 @@ div.score {
 }
 .score > .score#away {
     background: var(--g-away);
+    color: var(--c-score-away);
 }
 .score > .score#home {
     background: var(--g-home);
+    color: var(--c-score-home);
 }
 .total {
     border-radius: 0 7px 0 0;
