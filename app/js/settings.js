@@ -40,7 +40,6 @@ const socket = io({
 });
 
 socket.on('updateSettings', function(data){
-	console.log(data);
     document.getElementById('MaxInning').value = data.MaxInning;
 	if(data.BlackenLastInning){
 		document.getElementById("BlackenLastInningTrue").classList.remove("btn-outline-primary");
