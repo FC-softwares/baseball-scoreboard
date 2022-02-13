@@ -14,6 +14,7 @@ if (token && user) {
 				localStorage.removeItem('token');
 				localStorage.removeItem('user');
 			}
+			socket.emit("getData");
 		} else {
 			// User is not in a valid session
 			// Redirect to login page
@@ -36,8 +37,10 @@ const socket = io({
 	  token: token
   	}
 });
+socket.on('connectData', update);
+socket.on('update', update);
 
-socket.on('update', function(data){
+function update(data){
 	document.getElementById('NameAway').value = data.Teams.Away.Name;
 	document.getElementById('NameHome').value = data.Teams.Home.Name;
 	document.getElementById('ColorAway').value = data.Teams.Away.Color;
@@ -80,8 +83,7 @@ socket.on('update', function(data){
 		document.getElementById("Base3View").classList.remove("btn-primary");
 		document.getElementById("Base3View").classList.add("btn-outline-primary");
 	}
-
-});
+}
 //To add for all the variables
 function Ball(opr){
 	if(opr!="+"&&opr!="-"&&opr!="0")

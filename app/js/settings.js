@@ -34,13 +34,16 @@ if (token && user) {
 
 const socket = io({
 	auth: {
-	  id: user,
-	  token: token
-  	}
+		id: user,
+		token: token
+	}
 });
 
-socket.on('updateSettings', function(data){
-    document.getElementById('MaxInning').value = data.MaxInning;
+socket.on('updateSettings', updateSettings);
+socket.on('connectSettings',updateSettings);
+
+function updateSettings(data){
+	document.getElementById('MaxInning').value = data.MaxInning;
 	if(data.BlackenLastInning){
 		document.getElementById("BlackenLastInningTrue").classList.remove("btn-outline-primary");
 		document.getElementById("BlackenLastInningTrue").classList.add("btn-primary");
@@ -52,22 +55,7 @@ socket.on('updateSettings', function(data){
 		document.getElementById("BlackenLastInningFalse").classList.remove("btn-outline-primary");
 		document.getElementById("BlackenLastInningFalse").classList.add("btn-primary");
 	}
-});
-socket.on('connectSettings',function(data){
-    dataDecode = JSON.parse(data);
-    document.getElementById('MaxInning').value = dataDecode.MaxInning;
-    if(data.BlackenLastInning){
-		document.getElementById("BlackenLastInningTrue").classList.remove("btn-outline-primary");
-		document.getElementById("BlackenLastInningTrue").classList.add("btn-primary");
-		document.getElementById("BlackenLastInningFalse").classList.remove("btn-primary");
-		document.getElementById("BlackenLastInningFalse").classList.add("btn-outline-primary");
-	}else{
-		document.getElementById("BlackenLastInningTrue").classList.remove("btn-primary");
-		document.getElementById("BlackenLastInningTrue").classList.add("btn-outline-primary");
-		document.getElementById("BlackenLastInningFalse").classList.remove("btn-outline-primary");
-		document.getElementById("BlackenLastInningFalse").classList.add("btn-primary");
-	}
-});
+}
 function UpdateSettings(){
 	const MaxInning = document.getElementById('MaxInning').value;
 	socket.emit('updateSettings',`{"MaxInning":${MaxInning}}`);

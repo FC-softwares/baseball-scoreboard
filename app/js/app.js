@@ -4,14 +4,13 @@ socket.emit('getSettings');
 
 socket.on('update', update);
 socket.on('updateSettings', updateSettings);
-socket.on('connectSettings', updateSettings);
-
+socket.on('connectSettings', connectSettings);
+socket.on('connectData', update);
 function update(obj){
 	// Teams
 	// Away
 	try{document.querySelector("div.teamName#away").innerHTML = obj.Teams.Away.Name;}catch(error){console.error(error)}
 	document.documentElement.style.setProperty('--c-away', obj.Teams.Away.Color);
-	console.log(brightnessByColor(obj.Teams.Away.Color));
 	if(brightnessByColor(obj.Teams.Away.Color)<60)
 		document.documentElement.style.setProperty('--c-score-away', '#ffffff');
 	else
@@ -19,14 +18,13 @@ function update(obj){
 	// Home
 	try{document.querySelector("div.teamName#home").innerHTML = obj.Teams.Home.Name;}catch(error){console.error(error)}
 	document.documentElement.style.setProperty('--c-home', obj.Teams.Home.Color);
-	console.log(brightnessByColor(obj.Teams.Home.Color));
 	if(brightnessByColor(obj.Teams.Home.Color)<60)
 		document.documentElement.style.setProperty('--c-score-home', '#ffffff');
 	else
 		document.documentElement.style.setProperty('--c-score-home', '#000000');
 	
 	// Score (for scoreboard, partials, and post-game)
-	if(document.URL.includes("scoreboard.html")||document.URL.includes("partials.html")||document.URL.includes("postgame.html")){
+	if(document.URL.includes("scoreboard.html")||document.URL.includes("postgame.html")){
 		try{document.querySelector("div.teamScore#home").innerHTML = obj.Teams.Home.Score;}catch(error){console.error(error)}
 		try{document.querySelector("div.teamScore#away").innerHTML = obj.Teams.Away.Score;}catch(error){console.error(error)}
 	}
@@ -65,6 +63,10 @@ function update(obj){
 	// Only for partials
 	// This code is now commented because it have to be tested after @TheTecnoKing will have finished to write the HTML page "inning.html"
 	if (document.URL.includes("inning.html")) {
+		// Total score
+		try{document.querySelector(".score > #away").innerHTML = obj.Teams.Away.Score}catch(error){console.error(error)}
+		try{document.querySelector(".score > #home").innerHTML = obj.Teams.Home.Score}catch(error){console.error(error)}
+
 		let extraInningScoreAway = 0,extraInningScoreHome = 0;
 		for (let i = 1; i <= localStorage.getItem("MaxInning"); i++) {
 			try{
@@ -106,6 +108,14 @@ function update(obj){
 						} catch (error) {
 							console.error(error);
 						}
+						if(obj.Int[i].H!=0){
+							try {
+								document.querySelector("#i"+i+" > #home").classList.remove("disabled");
+								document.querySelector("#i"+i+" > #home").innerHTML = obj.Int[i].H;
+							} catch (error) {
+								console.error(error);
+							}
+						}
 					}else if(obj.Int[i].H!=0){
 						try {
 							document.querySelector("#i"+i+" > #away").classList.remove("disabled");
@@ -121,7 +131,7 @@ function update(obj){
 						}
 					}else if(obj.Int[i].A!=0){
 						try {
-							document.querySelector("#i"+i+" > #away").classList.add("disabled");
+							document.querySelector("#i"+i+" > #away").classList.remove("disabled");
 							document.querySelector("#i"+i+" > #away").innerHTML = obj.Int[i].A;
 						} catch (error) {
 							console.error(error);
@@ -131,46 +141,85 @@ function update(obj){
 			}
 		}
 		if(obj.Inning>localStorage.getItem("MaxInning")){
-			//add the extra inning div to the scoreboard
-			let extraInning=``; // waiting for @TheTecnoKing snippet
-			try{document.querySelector("div.inningContainer").innerHTML += extraInning;}catch(error){console.error(error);}
+			if(obj.Inning > parseInt(localStorage.getItem("MaxInning"))+1||obj.Arrow==2||extraInningScoreAway != 0 || extraInningScoreHome != 0){
+				let inning = getComputedStyle(document.documentElement).getPropertyValue('--i-inning');
+				if(inning==localStorage.getItem("MaxInning")){
+					document.documentElement.style.setProperty('--i-inning', inning);
+					let extraInning=`<div class="inning" id="iex">
+						<span class="number">EX</span>
+						<span class="score" id="away">${extraInningScoreAway}</span>
+						<span class="score" id="home">${extraInningScoreHome}</span>
+					</div>`; // waiting for @TheTecnoKing snippet
+					try{document.querySelector("div.container").innerHTML += extraInning;}catch(error){console.error(error);}
+					document.documentElement.style.setProperty('--i-inning', parseInt(localStorage.getItem("MaxInning"))+1);
+				}
+				try{document.querySelector("#iex > #away").innerHTML = extraInningScoreAway}catch(error){console.error(error)}
+				try{document.querySelector("#iex > #home").innerHTML = extraInningScoreHome}catch(error){console.error(error)}
+			}else{
+				if(getComputedStyle(document.documentElement).getPropertyValue('--i-inning')!=localStorage.getItem("MaxInning")){
+					document.documentElement.style.setProperty('--i-inning', localStorage.getItem("MaxInning"));
+					try{document.querySelector("div.container > #iex.inning").remove()}catch(error){console.error(error)};
+				}
+			}
+		}else{
+			if(getComputedStyle(document.documentElement).getPropertyValue('--i-inning')!=localStorage.getItem("MaxInning")){
+				document.documentElement.style.setProperty('--i-inning', localStorage.getItem("MaxInning"));
+				try{document.querySelector("div.container > #iex.inning").remove()}catch(error){console.error(error)};
+			}
 		}
 	}
 }
 
-function updateSettings(json){
+function updateSettings(obj){
 	// Settings
-	const obj = JSON.parse(json);
-	const oldMaxInning = localStorage.getItem("MaxInning");
+	const oldMaxInning = parseInt(localStorage.getItem("MaxInning"));
 	localStorage.setItem("MaxInning",obj.MaxInning);
 	localStorage.setItem("BlackenLastInning",obj.BlackenLastInning);
+	document.documentElement.style.setProperty('--i-inning', obj.MaxInning);
 	// update the container of the innings
 	if(document.URL.includes("inning.html")){
 		if(obj.MaxInning>oldMaxInning){
-			// TODO add remaining innings
 			for(let i=oldMaxInning+1;i<=obj.MaxInning;i++){
-				let inning = ``; //waiting for @TheTecnoKing snippet
-				try{document.querySelector("div.inningContainer").innerHTML += inning;}catch(error){console.error(error);}
+				let inning = `<div class="inning" id="i${i}">
+				<span class="number">${i}</span>
+				<span class="score disabled" id="away">0</span>
+				<span class="score disabled" id="home">0</span>
+			</div>`;
+				try{document.querySelector("div.container").innerHTML += inning;}catch(error){console.error(error);}
 			}
 		}else if(obj.MaxInning<oldMaxInning){
 			// TODO remove excess innings
 			for(let i=obj.MaxInning+1;i<=oldMaxInning;i++){
-				try{document.querySelector("div.inningContainer").removeChild(document.querySelector("div.inningContainer").lastChild);}catch(error){console.error(error);}
+				try{document.querySelector("div.container").removeChild(document.querySelector(`#i${i}.inning`));}catch(error){console.error(error);}
 			}
 		}
 	}
 }
 
-function connectSettings(json) {
+function connectSettings(obj) {
 	// Settings
-	const obj = JSON.parse(json);
 	localStorage.setItem("MaxInning",obj.MaxInning);
 	localStorage.setItem("BlackenLastInning",obj.BlackenLastInning);
-	// Set the container with the innings 
-	let container=``; //waiting for @TheTecnoKing snippet
-	for(let i=0;i<obj.MaxInning;i++)
-		container+=``; //waiting for @TheTecnoKing snippet
-	document.querySelector("div.inningContainer").innerHTML = container;
+	// Set the container with the innings
+	if(document.URL.includes("inning.html")){
+		document.documentElement.style.setProperty("--i-inning",obj.MaxInning); 
+		let container = ``;
+		for(let i=1;i<=obj.MaxInning;i++)
+			if(i<=obj.Data.Inning)
+				container+=`<div class="inning" id="i${i}">
+					<span class="number">${i}</span>
+					<span class="score" id="away">${obj.Data.Int[i].A}</span>
+					<span class="score" id="home">${obj.Data.Int[i].H}</span>
+				</div>`;
+			else
+				container+=`<div class="inning" id="i${i}">
+					<span class="number">${i}</span>
+					<span class="score" id="away">0</span>
+					<span class="score" id="home">0</span>
+				</div>`;
+		document.querySelector("div.container").innerHTML = container;
+	}
+	socket.emit("getData");
 }
 /**
  * @param {String} color 

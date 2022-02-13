@@ -7,7 +7,6 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const fs = require('fs');
-const { Console } = require('console');
 
 //definitions of constaints
 const PORT = process.argv[2]|| process.env.PORT || 2095;
@@ -23,7 +22,6 @@ app.use(express.json({
 
 io.on('connection', (socket) => {
 	console.log('a user connected\tID: '+socket.id);
-	//console.log(socket.handshake.auth);
 	socket.on('update_data', (data) => {			
 		if (socket.handshake.auth.id && socket.handshake.auth.token) {
 			const ver_options = {
@@ -40,7 +38,6 @@ io.on('connection', (socket) => {
 				token: socket.handshake.auth.token
 			});
 			const ver_req = https.request(ver_options, (ver_res) => {
-				//console.log(`statusCode: ${ver_res.statusCode}`)
 				ver_res.on('data', (d) => {
 					//process.stdout.write(d);
 					res_data = JSON.parse(d);
@@ -253,7 +250,6 @@ io.on('connection', (socket) => {
 				token: socket.handshake.auth.token
 			});
 			const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
-				//console.log(`statusCode: ${ver_res.statusCode}`)
 				ver_res.on('data', (d) => {
 					//process.stdout.write(d);
 					res_data = JSON.parse(d);
@@ -288,16 +284,22 @@ io.on('connection', (socket) => {
 	});
 	socket.on('getSettings',()=>{
 		fs.readFile(__dirname + '/app/json/settings.json', 'utf8', (err, data) => {
-			socket.emit('connectSettings',data);
+			let resp = JSON.parse(data);
+			fs.readFile(__dirname + '/app/json/data.json', 'utf8', (err, data2) => {
+				const obj2 = JSON.parse(data2);
+				resp.Data = obj2;
+				socket.emit('connectSettings',resp);
+			})
+		})
+	});
+	socket.on('getData',()=>{
+		fs.readFile(__dirname + '/app/json/data.json', 'utf8', (err, json) => {
+			const obj = JSON.parse(json);
+			socket.emit('connectData',obj);
 		})
 	});
 	socket.on('disconnect', () => {
 		console.log('user disconnected\tID: '+socket.id);
-	});
-	fs.readFile('./app/json/data.json', function(err, data) {
-		if (err) throw err;
-		const json = JSON.parse(data);
-		io.emit('update',json)
 	});
 });
 
