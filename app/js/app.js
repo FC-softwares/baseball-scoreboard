@@ -9,27 +9,28 @@ socket.on('connectData', update);
 function update(obj){
 	// Teams
 	// Away
-	try{document.querySelector("div.teamName#away").innerHTML = obj.Teams.Away.Name;}catch(error){console.error(error)}
+	try{document.querySelector("div.teamName#away > span").innerHTML = obj.Teams.Away.Name;}catch(error){console.error(error)}
 	document.documentElement.style.setProperty('--c-away', obj.Teams.Away.Color);
 	if(brightnessByColor(obj.Teams.Away.Color)<60)
 		document.documentElement.style.setProperty('--c-score-away', '#ffffff');
 	else
 		document.documentElement.style.setProperty('--c-score-away', '#000000');
 	// Home
-	try{document.querySelector("div.teamName#home").innerHTML = obj.Teams.Home.Name;}catch(error){console.error(error)}
+	try{document.querySelector("div.teamName#home > span").innerHTML = obj.Teams.Home.Name;}catch(error){console.error(error)}
 	document.documentElement.style.setProperty('--c-home', obj.Teams.Home.Color);
 	if(brightnessByColor(obj.Teams.Home.Color)<60)
 		document.documentElement.style.setProperty('--c-score-home', '#ffffff');
 	else
 		document.documentElement.style.setProperty('--c-score-home', '#000000');
-	
 	// Score (for scoreboard, partials, and post-game)
-	if(document.URL.includes("scoreboard.html")||document.URL.includes("postgame.html")){
-		try{document.querySelector("div.teamScore#home").innerHTML = obj.Teams.Home.Score;}catch(error){console.error(error)}
-		try{document.querySelector("div.teamScore#away").innerHTML = obj.Teams.Away.Score;}catch(error){console.error(error)}
+	if(document.URL.includes("postgame.html")){
+		try{document.querySelector("div.teamScore#home > span").innerHTML = obj.Teams.Home.Score;}catch(error){console.error(error)}
+		try{document.querySelector("div.teamScore#away  > span").innerHTML = obj.Teams.Away.Score;}catch(error){console.error(error)}
 	}
 	// Only for scoreboard
 	if (document.URL.includes("scoreboard.html")) {
+		try{document.querySelector("div.teamScore#home").innerHTML = obj.Teams.Home.Score;}catch(error){console.error(error)}
+		try{document.querySelector("div.teamScore#away").innerHTML = obj.Teams.Away.Score;}catch(error){console.error(error)}
 		// Ball Strike
 		try{document.querySelector("span#ball").innerHTML = obj.Ball;}catch(error){console.error(error)}
 		try{document.querySelector("span#strike").innerHTML = obj.Strike;}catch(error){console.error(error)}
