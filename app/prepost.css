@@ -53,6 +53,20 @@ div {
 .scoreboard > div:not(.teamName) {
     text-align: center;
 }
+#bg {
+    border-radius: 3px;
+    width: fit-content;
+    margin-left: -5px;
+    margin-right: -5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+#bg.bg-enabled {
+    background: #414141;
+}
 
 /* Score and team divider */
 .teamScore, .vs, .div {
@@ -86,19 +100,19 @@ div {
     padding-right: 10px;
 }
 .teamName#home {
-    text-align: end;
     margin-left: -20px;
+    justify-content: end;
 }
 .teamName#away {
     margin-right: -20px;
 }
-.teamName#home > span {
+.teamName#home > #bg > span {
     background: var(--g-home);
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
 }
-.teamName#away > span {
+.teamName#away > #bg > span {
     background: var(--g-away);
     color: transparent;
     -webkit-background-clip: text;
