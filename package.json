@@ -7,13 +7,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron-forge start",
-    "build": "pkg .",
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/luca-ceri/baseball-scoreboard.git"
+    "url": "git+https://github.com/FC-Softwares/baseball-scoreboard.git"
   },
   "keywords": [
     "live-streming",
@@ -28,9 +27,9 @@
   "author": "Luca Facchini & Kristian Ceribashi",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/luca-ceri/baseball-scoreboard/issues"
+    "url": "https://github.com/FC-Softwares/baseball-scoreboard/issues"
   },
-  "homepage": "https://github.com/luca-ceri/baseball-scoreboard#readme",
+  "homepage": "https://github.com/FC-Softwares/baseball-scoreboard#readme",
   "dependencies": {
     "dotenv": "^10.0.0",
     "electron-squirrel-startup": "^1.0.0",
@@ -56,7 +55,16 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "baseball_scoreboard"
+            "name": "baseball_scoreboard",
+            "author": "F&C softwares",
+            "exe": "baseball_scoreboard",
+            "loadingGif": "./assets/loading.gif",
+            "owners": [
+              "FC-Softwares"
+            ],
+            "uninstallerName": "baseball_scoreboard_uninstaller.exe",
+            "setupExe": "baseball_scoreboard_setup.exe",
+            "title": "Baseball Scoreboard"
           }
         },
         {
@@ -67,7 +75,18 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {}
+          "config": {
+            "options":{
+              "category": "Utility",
+              "genericName": "Streaming Overlay",
+              "homepage": "https://facchini-pu.it",
+              "name": "Baseball Scoreboard",
+              "priority": "optional",
+              "productDescription": "Baseball Scoreboard for youtube LIVE. You can use this tool as an overlay for your baseball live stream. In this tool, you can find four different overlays for four different baseball match phases: Pre-game, In-game, Between Innings and Post-Game.",
+              "productName": "Baseball Scoreboard",
+              "section": "utils"
+            }
+          }
         },
         {
           "name": "@electron-forge/maker-rpm",
