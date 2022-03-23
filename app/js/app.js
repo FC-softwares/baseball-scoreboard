@@ -9,19 +9,27 @@ socket.on('connectData', update);
 function update(obj){
 	// Teams
 	// Away
-	try{document.querySelector("div.teamName#away > span").innerHTML = obj.Teams.Away.Name;}catch(error){console.error(error)}
+	try{document.querySelector("div.teamName#away > div > span").innerHTML = obj.Teams.Away.Name;}catch(error){console.error(error)}
 	document.documentElement.style.setProperty('--c-away', obj.Teams.Away.Color);
 	if(brightnessByColor(obj.Teams.Away.Color)<60)
 		document.documentElement.style.setProperty('--c-score-away', '#ffffff');
 	else
 		document.documentElement.style.setProperty('--c-score-away', '#000000');
+	if(brightnessByColor(obj.Teams.Away.Color)>190)
+		document.querySelector("div.teamName#away > div").classList.add("bg-enabled");
+	else
+		document.querySelector("div.teamName#away > div").classList.remove("bg-enabled");
 	// Home
-	try{document.querySelector("div.teamName#home > span").innerHTML = obj.Teams.Home.Name;}catch(error){console.error(error)}
+	try{document.querySelector("div.teamName#home > div > span").innerHTML = obj.Teams.Home.Name;}catch(error){console.error(error)}
 	document.documentElement.style.setProperty('--c-home', obj.Teams.Home.Color);
 	if(brightnessByColor(obj.Teams.Home.Color)<60)
 		document.documentElement.style.setProperty('--c-score-home', '#ffffff');
 	else
 		document.documentElement.style.setProperty('--c-score-home', '#000000');
+	if(brightnessByColor(obj.Teams.Home.Color)>190)
+		document.querySelector("div.teamName#home > div").classList.add("bg-enabled");
+	else
+		document.querySelector("div.teamName#home > div").classList.remove("bg-enabled");
 	// Score (for scoreboard, partials, and post-game)
 	if(document.URL.includes("postgame.html")){
 		try{document.querySelector("div.teamScore#home > span").innerHTML = obj.Teams.Home.Score;}catch(error){console.error(error)}
