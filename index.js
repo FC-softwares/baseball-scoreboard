@@ -7,6 +7,8 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const fs = require('fs');
+const AppElectron = require('electron').app;
+const BrowserWindow = require('electron').BrowserWindow;
 
 //definitions of constaints
 const PORT = process.argv[2]|| process.env.PORT || 2095;
@@ -581,3 +583,12 @@ app.post("/removeAuthUser", (req, res) => {
 server.listen(PORT, () => {
 	console.log('listening on http://localhost:' + PORT);
 });
+
+const createWindow = () => {
+	const win = new BrowserWindow({
+		width: 800,
+		height: 600
+	})
+	win.loadURL(`http://localhost:${PORT}`);
+}
+AppElectron.whenReady().then(createWindow);
