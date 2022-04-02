@@ -16,9 +16,9 @@ function update(obj){
 	else
 		document.documentElement.style.setProperty('--c-score-away', '#000000');
 	if(brightnessByColor(obj.Teams.Away.Color)>190)
-		document.querySelector("div.teamName#away > div").classList.add("bg-enabled");
+		document.querySelector("div.teamName#away > div#bg").classList.add("bg-dark");
 	else
-		document.querySelector("div.teamName#away > div").classList.remove("bg-enabled");
+		document.querySelector("div.teamName#away > div#bg").classList.remove("bg-dark");
 	// Home
 	try{document.querySelector("div.teamName#home > div > span").innerHTML = obj.Teams.Home.Name;}catch(error){console.error(error)}
 	document.documentElement.style.setProperty('--c-home', obj.Teams.Home.Color);
@@ -27,9 +27,9 @@ function update(obj){
 	else
 		document.documentElement.style.setProperty('--c-score-home', '#000000');
 	if(brightnessByColor(obj.Teams.Home.Color)>190)
-		document.querySelector("div.teamName#home > div").classList.add("bg-enabled");
+		document.querySelector("div.teamName#home > div#bg").classList.add("bg-dark");
 	else
-		document.querySelector("div.teamName#home > div").classList.remove("bg-enabled");
+		document.querySelector("div.teamName#home > div#bg").classList.remove("bg-dark");
 	// Score (for scoreboard, partials, and post-game)
 	if(document.URL.includes("postgame.html")){
 		try{document.querySelector("div.teamScore#home > span").innerHTML = obj.Teams.Home.Score;}catch(error){console.error(error)}

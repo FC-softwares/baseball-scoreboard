@@ -66,7 +66,7 @@ div:not(.teamName, .scoreboard) {
     display: flex;
     align-items: center;
 }
-#bg.bg-enabled {
+#bg.bg-dark {
     background: #414141;
 }
 

@@ -31,7 +31,7 @@ function CheckSession(){
 					const { name, surname, email} = response.user
 					//document.getElementById('user_name').innerHTML = name;
 					//var profileHTML = ``;
-					document.getElementById('profile_plc').innerHTML = `<a class="dropdown-toggle nav-link text-dark text-decoration-none pe-0" href="#" id="navUserLinks" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Hi <strong>${name} ${surname}</strong> </a><ul class="dropdown-menu dropdown-menu-end mb-2" aria-labelledby="navUserLinks"><li><a class="dropdown-item" href="#">Manage profile <i class="bi-box-arrow-up-right"></i></a></li><li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="#" title="logout" onclick="LogOut();return false;">Logout</a></li></ul>`;
+					document.getElementById('profile_plc').innerHTML = `<a class="dropdown-toggle nav-link text-dark text-decoration-none pe-0" href="#" id="navUserLinks" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Hi <strong>${name} ${surname}</strong> </a><ul class="dropdown-menu dropdown-menu-end mb-2" aria-labelledby="navUserLinks"><li><a class="dropdown-item" href="https://www.facchini-pu.it/profile" target="_blank">Manage profile <i class="bi-box-arrow-up-right"></i></a></li><li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="#" title="logout" onclick="LogOut();return false;">Logout</a></li></ul>`;
 				}
 			}else{
 				if (this.readyState === 4) {

@@ -9,7 +9,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/settings.js" async></script>
     <title>Baseball Scoreboard - Bootstrap</title>
-    <script src="/js/all.js"></script>
+    <script src="js/all.js"></script>
 </head>
 <body class="d-flex flex-column vh-100">
     <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -33,16 +33,16 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navScoreboardLinks" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Scoreboards</a>
                         <ul class="dropdown-menu mb-2" aria-labelledby="navScoreboardLinks">
                             <li>
-                                <a class="dropdown-item" href="#">Main <i class="bi-box-arrow-up-right"></i></a>
+                                <a class="dropdown-item" href="scoreboard.html" target="_blank">Main <i class="bi-box-arrow-up-right"></i></a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Pre-game <i class="bi-box-arrow-up-right"></i></a>
+                                <a class="dropdown-item" href="pregame.html" target="_blank">Pre-game <i class="bi-box-arrow-up-right"></i></a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Post-game <i class="bi-box-arrow-up-right"></i></a>
+                                <a class="dropdown-item" href="postgame.html" target="_blank">Post-game <i class="bi-box-arrow-up-right"></i></a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Partials <i class="bi-box-arrow-up-right"></i></a>
+                                <a class="dropdown-item" href="inning.html" target="_blank">Partials <i class="bi-box-arrow-up-right"></i></a>
                             </li>
                         </ul>
                     </li>
@@ -56,112 +56,79 @@
             </div>
         </div>
     </nav>
-    <div class="container-md mb-3">
-        <div class="d-flex flex-row flex-wrap align-items-center py-2 gap-2">
-            <h1 class="fw-bolder fs-1 m-0 text-black text-opacity-75 me-auto">Settings Page</h1>
-        </div>
-        <div id="Allert"></div>
+    <div class="container-md">
+        <h1 class="fw-bolder fs-1 text-black text-opacity-75 pt-2">Settings</h1>
+        <div id="Alert"></div>
         <div class="row">
             <div class="col">
                 <div class="bg-body p-3 mb-3 shadow rounded-3 border">
-                    <div class="form-check d-xl-none">
-                        <input class="form-check-input" type="checkbox" value="" id="toggle-ha" data-bs-toggle="collapse" href="#collapse-ha" aria-expanded="true" aria-controls="#collapse-ha" checked>
-                        <label class="form-check-label" for="toggle-ha">
-                            Scoreboard Settings
-                        </label>
-                    </div>
-                    <div class="collapse show" id="collapse-ha">
-                        <hr class="d-xl-none">
-                        <div class="row gy-3 justify-content-center ">
-                            <div class="col">
-                                <h4 class="text-center">Max Inning</h4>
-                                <div class="mb-2 d-flex flex-column align-items-center">
-                                    <h5 class="text-center fw-normal">Score</h5>
-                                    <input id="MaxInning" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="num" value="">
-                                </div>
-                            </div>
-                            <div class="col">
-                                <h4 class="text-center">Darken Last Inning</h4>
-                                <div class="mb-2 d-flex flex-column align-items-center">
-                                    <h5 class="text-center fw-normal">Score</h5>
-                                    <div class="btn-group" role="group" aria-label="Controls">
-                                        <button id="BlackenLastInningTrue" type="button" class="btn btn-outline-primary" onclick="BlackenLastInning(true)">Yes</button>
-                                        <button id="BlackenLastInningFalse" type="button" class="btn btn-outline-primary" onclick="BlackenLastInning(false)">No</button>
-                                    </div>
+                    <div class="row row-cols-1 row-cols-sm-3 gap-3 gap-sm-0 justify-content-evenly">
+                        <div class="col">
+                            <h4 class="text-center">Max Inning</h4>
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="btn-group" role="group" aria-label="Inning Controls">
+                                    <button type="button" class="btn btn-outline-primary" onclick="if (document.getElementById('MaxInning').value < 2) { } else { document.getElementById('MaxInning').value-- }"><i class="bi bi-dash-lg"></i></button>
+                                    <input id="MaxInning" class="form-control text-center rounded-0" style="width: 3rem;" type="num" value="">
+                                    <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('MaxInning').value++"><i class="bi bi-plus-lg"></i></button>
                                 </div>
                             </div>
                         </div>
-                        <hr>
-                        <div class="row mt-3 justify-content-center">
-                            <div class="col-auto">
-                                <button type="button" class="btn btn-outline-primary mx-auto" onclick="UpdateSettings()">Update</button>
+                        <div class="vr p-0 d-none d-sm-block"></div>
+                        <div class="col">
+                            <h4 class="text-center">Darken Last Inning</h4>
+                            <div class="col d-flex flex-column align-items-center">
+                                <div class="btn-group" role="group" aria-label="Controls">
+                                    <button id="BlackenLastInningTrue" type="button" class="btn btn-outline-primary" onclick="BlackenLastInning(true)">Yes</button>
+                                    <button id="BlackenLastInningFalse" type="button" class="btn btn-outline-primary" onclick="BlackenLastInning(false)">No</button>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mt-3 justify-content-center">
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-outline-primary mx-auto" onclick="UpdateSettings()">Update</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-body p-3 mb-3 shadow rounded-3 border">
+                    <h4 class="text-center">Product Owner</h4>
+                    <div class="row row-cols-1 row-cols-sm-3 gap-3 gap-sm-0 justify-content-center">
+                        <div class="col d-flex flex-column align-items-center">
+                            <h5 class="text-center fw-normal">Name</h5>
+                            <input id="ProductOwner" class="form-control text-center" style="max-width: 20rem;" type="text" value="" disabled>
+                        </div>
+                        <div class="col d-flex flex-column align-items-center">
+                            <h5 class="text-center fw-normal">Email</h5>
+                            <input id="ProductOwnerEmail" class="form-control text-center" style="max-width: 20rem;" type="email" value="" disabled>   
+                        </div>
+                        <div class="col d-flex flex-column align-items-center">
+                            <h5 class="text-center fw-normal">Team</h5>
+                            <input id="ProductOwnerTeam" class="form-control text-center" style="max-width: 20rem;" type="text" value="" size="4" disabled>   
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-xl-auto">
                 <div class="bg-body p-3 mb-3 shadow rounded-3 border">
-                    <div class="form-check d-xl-none">
-                        <input class="form-check-input" type="checkbox" value="" id="toggle-ha" data-bs-toggle="collapse" href="#collapse-ha" aria-expanded="true" aria-controls="#collapse-ha" checked>
-                        <label class="form-check-label" for="toggle-ha">
-                            Product Settings
-                        </label>
-                    </div>
-                    <div class="collapse show" id="collapse-ha">
-                        <hr class="d-xl-none">
-                        <div class="row gy-3 justify-content-center ">
-                            <div class="col">
-                                <h4 class="text-center">Product Owner</h4>
-                                <div class="mb-2 d-flex flex-row align-items-center justify-content-evenly">
-                                    <div class="mb-2 d-flex flex-column align-items-center">
-                                        <h5 class="text-center fw-normal">Name</h5>
-                                        <input id="ProductOwner" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="" disabled>
-                                    </div>
-                                    <div class="mb-2 d-flex flex-column align-items-center">
-                                        <h5 class="text-center fw-normal">Email</h5>
-                                        <input id="ProductOwnerEmail" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="email" value="" disabled>   
-                                    </div>
-                                    <div class="mb-2 d-flex flex-column align-items-center">
-                                        <h5 class="text-center fw-normal">Team Short</h5>
-                                        <input id="ProductOwnerEmail" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="" size="4" disabled>   
-                                    </div>
-                                </div>
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <h4 class="text-center">Auth Users</h4>
+                            <div class="d-flex flex-row align-items-center justify-content-center">
+                                <ul class="list-group" id="AuthUsersUl">
+                                </ul>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="bg-body p-3 mb-3 shadow rounded-3 border">
-                    <div class="form-check d-xl-none">
-                        <input class="form-check-input" type="checkbox" value="" id="toggle-ha" data-bs-toggle="collapse" href="#collapse-ha" aria-expanded="true" aria-controls="#collapse-ha" checked>
-                        <label class="form-check-label" for="toggle-ha">
-                            Users Settings
-                        </label>
-                    </div>
-                    <div class="collapse show" id="collapse-ha">
-                        <hr class="d-xl-none">
-                        <div class="row gy-3 justify-content-center">
-                            <div class="row">
-                                <div class="col">
-                                    <h4 class="text-center">Auth Users</h4>
-                                    <div class="mb-2 d-flex flex-row align-items-center justify-content-evenly">
-                                        <ul class="list-group" id="AuthUsersUl">
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <h4 class="text-center">Add new user</h4>
-                                    <div class="mb-2 d-flex flex-row align-items-center justify-content-evenly">
-                                        <div class="mb-2 d-flex flex-column align-items-center">
-                                            <h5 class="text-center fw-normal">Email</h5>
-                                            <input id="UserAddEmail" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="email" value="">   
-                                            <button type="button" class="btn btn-outline-primary mx-auto" onclick="Add_User()">Add User</button>
-                                        </div>
-                                    </div>
+                    <hr>
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <h4 class="text-center">Add new user</h4>
+                            <div class="w-100 justify-content-center">
+                                <div class="d-flex flex-column align-items-center">
+                                    <h5 class="text-center fw-normal">Email</h5>
+                                    <input id="UserAddEmail" class="form-control text-center mb-3" style="max-width: 20rem;" type="email" value="">   
+                                    <button type="button" class="btn btn-outline-primary mx-auto" onclick="addUser()">Add User</button>
                                 </div>
                             </div>
                         </div>
@@ -215,24 +182,6 @@
                             <div class="modal-footer">
                                 <a rel="license" class="btn btn-primary" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">Visit license's website</a>
                                 <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal fade" id="ModalResetAllData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ModalResetAllDataLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content border border-danger">
-                            <div class="modal-header bg-danger bg-opacity-10 gap-1">
-                                <i class="bi-exclamation-triangle-fill fs-3 text-danger"></i>
-                                <h5 class="modal-title" id="ModalResetAllDataLabel">Reset all data</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                You are about to reset all data. Are you sure?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-danger" onclick="Reset_All()" data-bs-dismiss="modal">Continue</button>
                             </div>
                         </div>
                     </div>

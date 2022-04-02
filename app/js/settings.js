@@ -103,9 +103,9 @@ function printUsers(LoggedUser){
 				var UsersHtml = "";
 				for (let i = 0; i < response.users.length; i++) {
 					if(response.users[i].email == LoggedUser.email){
-						UsersHtml += `<li class="list-group-item d-flex justify-content-between">${response.users[i].name} ${response.users[i].surname} "<a href="mailto:${response.users[i].email}">${response.users[i].email}</a>" <button type="button" class="btn btn-outline-danger me-0 ms-auto align-self-end" disabled>X</button></li>`;
+						UsersHtml += `<li class="list-group-item d-flex"><div class="me-3"><span>${response.users[i].name} ${response.users[i].surname}</span><br><a href="mailto:${response.users[i].email}" class="text-break">${response.users[i].email}</a></div></li>`;
 					}else{
-						UsersHtml += `<li class="list-group-item d-flex justify-content-between">${response.users[i].name} ${response.users[i].surname} "<a href="mailto:${response.users[i].email}">${response.users[i].email}</a>" <button type="button" class="btn btn-outline-danger me-0 ms-auto align-self-end" onclick="removeUser('${response.users[i].id}')">X</button></li>`;
+						UsersHtml += `<li class="list-group-item d-flex"><div class="me-3"><span>${response.users[i].name} ${response.users[i].surname}</span><br><a href="mailto:${response.users[i].email}" class="text-break">${response.users[i].email}</a></div><button class="btn btn-outline-danger ms-auto my-auto p-0 flex-shrink-0" style="width: 2rem; height: 2rem;" onclick="removeUser('${response.users[i].id}')"><i class="bi bi-x-lg"></i></button></li>`;
 					}
 				}
 				document.getElementById('AuthUsersUl').innerHTML = UsersHtml;
@@ -140,7 +140,7 @@ function addUser(){
 			const response = JSON.parse(xmlt.responseText);
 			if (response.ok === true) {
 				document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User added successfully.  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-				
+				document.getElementById('UserAddEmail').value = '';
 			}
 		}
 	};
