@@ -55,9 +55,9 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "baseball_scoreboard",
+            "name": "baseball-scoreboard",
             "author": "F&C softwares",
-            "exe": "baseball_scoreboard",
+            "exe": "baseball-scoreboard.exe",
             "loadingGif": "./assets/loading.gif",
             "owners": [
               "FC-Softwares"
