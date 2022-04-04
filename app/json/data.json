@@ -1,14 +1,14 @@
 {
     "Teams": {
         "Away": {
-            "Name": "TITANO B.",
+            "Name": "AWAY",
             "Score": 0,
-            "Color": "#0033ff"
+            "Color": "#000000"
         },
         "Home": {
-            "Name": "PESARO",
+            "Name": "HOME",
             "Score": 0,
-            "Color": "#ffffff"
+            "Color": "#000000"
         }
     },
     "Ball": 0,
