@@ -7,6 +7,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const fs = require('fs');
+const { shell } = require('electron');
 const AppElectron = require('electron').app;
 const BrowserWindow = require('electron').BrowserWindow;
 
@@ -578,6 +579,16 @@ app.post("/removeAuthUser", (req, res) => {
 	);
 	req_post.write(req_data);
 	req_post.end();
+});
+
+app.post('/openExternal',(req,res)=>{
+	const {url} = req.body;
+	if(!url){
+		res.status(400).json({ok:false,message:'missing url'});
+		return;
+	}
+	shell.openExternal(url);
+	res.status(200).json({ok:true,message:'ok'});
 });
 
 server.listen(PORT, () => {

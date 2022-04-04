@@ -1,0 +1,24 @@
+{
+    "grammarly.overrides": [
+        {
+            "files": [
+                "**/package.json"
+            ],
+            "config": {
+                "audience": "expert",
+                "dialect": "american",
+                "domain": "technical",
+                "emotions": [
+                    "confident",
+                    "joyful",
+                    "optimistic",
+                    "respectful",
+                    "analytical"
+                ],
+                "goals": [
+                    "describe"
+                ]
+            }
+        }
+    ]
+}
