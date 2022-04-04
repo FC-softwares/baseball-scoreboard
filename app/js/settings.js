@@ -79,6 +79,9 @@ function getCurrentUser (){
 			if (response.ok === true) {
 				if(response.user.isOwner==true){
 					printUsers(response.user);
+					document.getElementById("ProductOwner").value = response.user.name+" "+response.user.surname;
+					document.getElementById("ProductOwnerEmail").value = response.user.email;
+					document.getElementById("ProductOwnerTeam").value = response.user.team;
 				}else{
 					window.location.href = '/control-center.html';
 				}
@@ -136,12 +139,14 @@ function addUser(){
 	xmlt.setRequestHeader('Content-Type', 'application/json');
 	xmlt.send(`{"id":"${user}","token":"${token}","email":"${email}"}`);
 	xmlt.onload = function() {
+		const response = JSON.parse(xmlt.responseText);
 		if (xmlt.status === 200) {
-			const response = JSON.parse(xmlt.responseText);
 			if (response.ok === true) {
 				document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User added successfully.  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
 				document.getElementById('UserAddEmail').value = '';
 			}
+		}else{
+			document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${response.error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
 		}
 	};
 }
