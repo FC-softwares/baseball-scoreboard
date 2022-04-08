@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/FC-Softwares/baseball-scoreboard#readme",
   "dependencies": {
+    "crypto": "^1.0.1",
     "dotenv": "^10.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "express": "^4.17.1",
@@ -76,7 +77,7 @@
         {
           "name": "@electron-forge/maker-deb",
           "config": {
-            "options":{
+            "options": {
               "category": "Utility",
               "genericName": "Streaming Overlay",
               "homepage": "https://facchini-pu.it",

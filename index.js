@@ -10,7 +10,7 @@ const fs = require('fs');
 const { shell } = require('electron');
 const AppElectron = require('electron').app;
 const BrowserWindow = require('electron').BrowserWindow;
-
+const crypto = require('crypto');
 //definitions of constaints
 const PORT = process.argv[2]|| process.env.PORT || 2095;
 const API = process.env.API || 'api.facchini-pu.it';
@@ -316,6 +316,10 @@ app.post('/login', (req, res) => {
 		res.status(200).json({ok:true,message:'login success',id:"guest",token:'guest'});
 		return;
 	}
+	//Convert password from base64 to utf8
+	const password2 = Buffer.from(password, 'base64').toString('utf8');
+	//convert password to hash
+	const hash = crypto.createHash('sha256').update(password2).digest('hex');
 	const req_option = {
 		hostname: API,
 		port: 443,
@@ -327,7 +331,7 @@ app.post('/login', (req, res) => {
 	};
 	const req_data = JSON.stringify({
 		email: username,
-		password: password,
+		password: hash,
 		remember: remember,
 		scoreboard: CLIENT
 	});
@@ -591,7 +595,7 @@ app.post('/openExternal',(req,res)=>{
 	res.status(200).json({ok:true,message:'ok'});
 });
 
-server.listen(PORT, () => {
+server.listen(PORT,'0.0.0.0', () => {
 	console.log('listening on http://localhost:' + PORT);
 });
 

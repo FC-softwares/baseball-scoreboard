@@ -52,61 +52,56 @@ function login(username,password){
         password = document.getElementById('password').value;
     }
     var remember = document.getElementById("remember").checked;
-    sha256(password)
-        .then(function(hash){
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status === 200) {
-                var response_obj = JSON.parse(this.responseText);
-                if(response_obj.ok === true){
-                    localStorage.setItem("token", response_obj.token);
-                    localStorage.setItem("user", response_obj.id);
-                    window.location.href = "control-center.html";
-                }else{
-                }
+    // convert password to base64
+    password = btoa(password);
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status === 200) {
+            var response_obj = JSON.parse(this.responseText);
+            if(response_obj.ok === true){
+                localStorage.setItem("token", response_obj.token);
+                localStorage.setItem("user", response_obj.id);
+                window.location.href = "control-center.html";
             }else{
-                if(this.readyState == 4){
-                    switch(this.status){
-                        case 500:
-                            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.";
-                            document.getElementById("ErrorMsg").classList.remove("visually-hidden");
-                            break;
-                        case 401:
-                            if (username === "guest") {
-                                document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>You are trying to login as a guest, <br>please check you are trying to access a demo product.";
-                            }else{
-                                document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.";
-                            }
-                            document.getElementById("ErrorMsg").classList.remove("visually-hidden");
-                            break;
-                        case 400:
-                            if (username === "guest") {
-                                document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>You are trying to login as a guest, <br>please check you are trying to access a demo product.";
-                            }else{
-                                document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.";
-                            }
-                            document.getElementById("ErrorMsg").classList.remove("visually-hidden");
-                            break;
-                        default:
-                            alert("Errore: "+this.status);
-                            break;
-                    }
-                    document.querySelector(`#guestSpin`).classList.add("visually-hidden")
-                    document.querySelector(`#guestButton`).classList.remove("disabled")
-                    document.querySelector(`#loginSpin`).classList.add("visually-hidden")
-                    document.querySelector(`#loginButton`).classList.remove("disabled")
-                }
             }
-        };
-        xhttp.open("POST", "/login", true);
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send("{\"username\":\""+username+"\",\"password\":\""+hash +"\",\"remember\":\""+remember+"\"}");
-        return false;
-    });
-}
-async function sha256(str) {
-    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder("utf-8").encode(str));
-    return Array.prototype.map.call(new Uint8Array(buf), x=>(('00'+x.toString(16)).slice(-2))).join('');
+        }else{
+            if(this.readyState == 4){
+                switch(this.status){
+                    case 500:
+                        document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.";
+                        document.getElementById("ErrorMsg").classList.remove("visually-hidden");
+                        break;
+                    case 401:
+                        if (username === "guest") {
+                            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>You are trying to login as a guest, <br>please check you are trying to access a demo product.";
+                        }else{
+                            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.";
+                        }
+                        document.getElementById("ErrorMsg").classList.remove("visually-hidden");
+                        break;
+                    case 400:
+                        if (username === "guest") {
+                            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>You are trying to login as a guest, <br>please check you are trying to access a demo product.";
+                        }else{
+                            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.";
+                        }
+                        document.getElementById("ErrorMsg").classList.remove("visually-hidden");
+                        break;
+                    default:
+                        alert("Errore: "+this.status);
+                        break;
+                }
+                document.querySelector(`#guestSpin`).classList.add("visually-hidden")
+                document.querySelector(`#guestButton`).classList.remove("disabled")
+                document.querySelector(`#loginSpin`).classList.add("visually-hidden")
+                document.querySelector(`#loginButton`).classList.remove("disabled")
+            }
+        }
+    };
+    xhttp.open("POST", "/login", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send("{\"username\":\""+username+"\",\"password\":\""+password +"\",\"remember\":\""+remember+"\"}");
+    return false;
 }
 
 //lines removed from login.html
