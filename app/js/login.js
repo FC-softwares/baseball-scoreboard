@@ -62,7 +62,6 @@ function login(username,password){
                 localStorage.setItem("token", response_obj.token);
                 localStorage.setItem("user", response_obj.id);
                 window.location.href = "control-center.html";
-            }else{
             }
         }else{
             if(this.readyState == 4){
