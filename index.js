@@ -1,4 +1,5 @@
-require('dotenv').config()
+const env = require('./.env.json')
+process.env = env
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -538,6 +539,24 @@ app.post('/openExternal',(req,res)=>{
 	shell.openExternal(url);
 	res.status(200).json({ok:true,message:'ok'});
 });
+app.post('/newWindow',(req,res)=>{
+	const {url,width,height} = req.body;
+	if(!url){
+		res.status(400).json({ok:false,message:'missing url'});
+		return;
+	}
+	const win = new BrowserWindow({
+		width: width,
+		height: height,
+		webPreferences: {
+			nodeIntegration: true
+		}
+	});
+	win.removeMenu()
+	win.loadURL(url);
+	res.status(200).json({ok:true,message:'ok'});
+});
+
 
 server.listen(PORT,'0.0.0.0', () => {
 	console.log('listening on http://localhost:' + PORT);
@@ -549,5 +568,6 @@ const createWindow = () => {
 		height: 600
 	})
 	win.loadURL(`http://localhost:${PORT}`);
+	// Close all windows when the main window is closed
 }
 AppElectron.whenReady().then(createWindow);

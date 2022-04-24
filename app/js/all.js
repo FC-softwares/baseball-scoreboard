@@ -52,3 +52,10 @@ function openExternal(url){
 	xmlt.send(`{"url":"${url}"}`);
 	xmlt.send();
 }
+function newWindow(url,width,height){
+	xmlt = new XMLHttpRequest();
+	xmlt.open('POST', `/newWindow`, true);
+	xmlt.setRequestHeader('Content-Type', 'application/json');
+	xmlt.send(`{"url":"${url}","width":${width},"height":${height}}`);
+	xmlt.send();
+}
