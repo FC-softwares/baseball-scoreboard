@@ -1,0 +1,59 @@
+<html>
+<head>
+    <title>Baseball Scoreboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+</head>
+<body style="background-color: rgba(0, 0, 0, 0);">
+    <table class="main">
+        <tr class="main">
+            <table>
+                <tr>
+                    <td>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="250" height="100">
+                            <polygon fill="#F3BC23" stroke="#F3BC23" stroke-width="1" points="0,0 250,0 200,50 0,50" id="labelA"/>
+                            <text id="nameA" x="25" y="37.5" text-anchor="start" fill="white" font-size="30">X</text>
+                        </svg>
+                    </td>
+                <td>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="250" height="100">
+                        <polygon fill="#F3BC23" stroke="#F3BC23" stroke-width="1" points="50,0 0,50 250,50 250,0" id="labelH"/>
+                        <text id="nameH" x="225" y="37.5" text-anchor="end" fill="white" font-size="30">X</text>
+                    </svg>
+                </td>
+            </tr>
+            </table>
+        </tr>
+    </table>
+    <!-- SCRIPT VARI-->
+    <script src="data.json"></script>
+<script async=false defer=false>
+    load()
+    function load(){
+        fetch("data.json",{cache: "no-cache"})
+        .then(response => response.json())
+        .then(data =>{
+            update(data);
+        })
+    }
+    function update(obj){
+        nameA.innerHTML=obj.Away;
+        labelA.style.fill=obj.ColorA;
+        labelA.style.stroke=obj.ColorA;
+        
+        nameH.innerHTML= obj.Home;
+        labelH.style.fill=obj.ColorH;
+        labelH.style.stroke=obj.ColorH;
+    }
+    window.setInterval(function(){
+        load();
+        setTimeout(function afterTwoSeconds() 
+        {
+            update()
+        },500)
+    }, 10000);
+</script>
+</body>
+</html>

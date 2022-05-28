@@ -1,0 +1,352 @@
+/* inizio definizione Categorie*/
+
+.main{ /*tabella principale*/
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px;
+    border-collapse: collapse;
+    width: 470px;
+    font-family: 'Heebo', sans-serif;
+    color: white;
+}
+
+/*Colonna Bordata*/
+td.b{
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px;
+    border-collapse: collapse;
+}
+
+/*solo Bordo sinistra*/
+td.l{ 
+    border-collapse: collapse;
+    border-left: 1px solid #000000;
+}
+/*Solo Bordo Destra*/
+td.r{
+    border-collapse: collapse;
+    border-right: 1px solid #000000;
+}
+tr.main{
+    height: 50px;
+}
+/*Rombi*/
+.list-item li{
+    width: 10px;
+    height: 10px;
+    position: relative;
+}
+.list-item li{
+    overflow: hidden;
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width: 25px;
+    height: 25px;
+    position: relative;
+}
+li.item-1{top: 46px;left: 41px; background-color: rgba(0,0,0,0); border: 1px solid rgb(255, 115, 0);}
+li.item-2{top: -2px;left: 20px; background-color: rgba(0,0,0,0); border: 1px solid rgb(255, 115, 0);}
+li.item-3{top: -8px;left: -1px; background-color: rgba(0,0,0,0); border: 1px solid rgb(255, 115, 0)}
+
+
+.rotate{
+    transform: rotate(270deg);
+    display: inline-block;
+    }
+/* inizio definizione Singoli Elementi*/
+
+#colbasi{
+    align-items: center;
+}
+#ScoreA{
+    text-align: center;
+}
+#ScoreH{
+    text-align: center;
+}
+#ining{
+    text-align: center;
+    border-bottom-width: 0px;
+}
+#conto{
+    text-align: center;
+    border-top-width: 0px;
+}
+
+/* sfondo celle diverse dal nome squadra */
+#ScoreA, #ScoreH, #Ining, #conto, #colbasi {
+    background: linear-gradient(to top left, rgb(41,41,41) 0%,rgb(86,86,86) 75%,rgb(142,142,142) 100%);
+    /*background-color: rgb(41, 41, 41);*/
+}
+
+/* gestione del font */
+#Home, #Away {
+    font-size: 30px;
+    height: 50%;
+    padding-left: 10px;
+}
+
+#colA, #colB {
+    width: 175px;
+}
+
+/*------------------- AMMINISTRAZIONE ---------------------*/
+html, body {
+    margin: 0px;
+    background-color: rgb(41,41,41);
+}
+
+.content{
+    margin-bottom: 5em;
+}
+
+.header {
+    background-color: #d00000;
+    color: white;
+    border: 0px none rgba(0,0,0,0);
+    /*border-radius: 0px 0px 20px 20px;*/
+}
+
+h1 {
+    font-family: 'Heebo', sans-serif;
+    margin: 0px;
+    font-size: 24px;
+    padding: 10px;
+}
+
+.mainA, .mainA2{
+    align-content: center;
+    align-self: center;
+    align-items: center;
+    text-align: center;
+    border: 3px solid red;
+    margin-left:auto; 
+    margin-right:auto;
+    border-collapse: collapse;
+    font-family: 'Heebo', sans-serif;
+    font-weight: normal;
+    background-color: black;
+    color: white;
+    font-size: large;
+}
+.buttonplus, .buttonminus{
+    height: 31px;
+    width: 31px;
+    text-align: center;
+    padding: 0px;
+}
+button{
+    border-radius: 50px;
+    border: 1px solid red;
+    margin: 1px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: rgba(0,0,0,0);
+    color: white;
+    font-size: medium;
+}
+
+input[type=submit]{
+    border-radius: 50px;
+    border: 1px solid red;
+    margin: 1px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: rgba(0,0,0,0);
+    color: white;
+    font-size: medium;
+}
+iframe{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border: none;
+}
+.Bright{
+    border-right: 2px solid white;
+    /*padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;*/
+    padding: 5px;
+}
+.Bleft{
+    border-left: 2px solid white;
+    /*padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;*/
+    padding: 5px;
+}
+.B-all{
+    border-right: 2px solid white;
+    border-left: 2px solid white;
+    /*padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;*/
+}
+.mainA2{
+    border: 0px solid red;
+    background-color: rgba(0,0,0,0);
+}
+.buttonr{
+    background-color: black;
+}
+#CIA{
+    margin: 10px;
+}
+.link{
+    text-align: center;
+    font-family: 'Heebo',sans-serif;
+    font-size: large;
+    color: whitesmoke;
+}
+.link a:link{
+    color: rgb(252, 186, 3);
+}
+.link a:visited{
+    color: pink;
+}
+#title {
+    text-align: center;
+    font-family: 'Heebo', sans-serif;
+    color: whitesmoke;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 24px;
+}
+.ul-navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.li-navbar {
+    float: left;
+}
+.a-navbar {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.a-navbar:hover {
+    background-color: #9D0000;
+}
+.active {
+    background-color: #9D0000;
+}
+@media screen and (max-width: 600px) {
+    .li-navbar {
+        float: none;
+    }
+}
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(71, 71, 71);
+    text-align: center;
+    color: white;
+    font-family: Arial;
+}
+.footer-text {
+    padding: 1em;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    -webkit-animation-name: fadeIn; /* Fade in the background */
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeIn;
+    animation-duration: 0.4s
+}
+  /* Modal Content */
+.modal-content {
+    position: fixed;
+    bottom: 0;
+    background-color: #fefefe;
+    width: 100%;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s
+}
+  /* The Close Button */
+.close, .close1{
+    color: black;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus,
+.close1:hover,
+.close1:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}  
+.modal-body {padding: 2px 16px;}  
+@-webkit-keyframes slideIn {
+    from {bottom: -300px; opacity: 0} 
+    to {bottom: 0; opacity: 1}
+}
+@keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 0; opacity: 1}
+}  
+@-webkit-keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
+}
+@keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
+}
+.tableset{
+    /*float: left;*/
+    width: 200px;
+    height: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.title{
+    text-align: center;
+    color: white;
+    font-size: x-large;
+    font-weight: bold;
+    font-family: 'Heebo', sans-serif;
+}
+.tablesetprop{
+    padding: 5px;
+}
+.tablesetmain{
+    align-items: center;
+    height: 60px;
+    /*width: 700px;*/
+    align-self: center;
+    align-items: center;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+}
