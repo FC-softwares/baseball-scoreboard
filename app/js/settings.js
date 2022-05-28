@@ -55,10 +55,12 @@ function updateSettings(data){
 		document.getElementById("BlackenLastInningFalse").classList.remove("btn-outline-primary");
 		document.getElementById("BlackenLastInningFalse").classList.add("btn-primary");
 	}
+	document.getElementById('Resolution').value = data.Resolution;
 }
 function UpdateSettings(){
 	const MaxInning = document.getElementById('MaxInning').value;
-	socket.emit('updateSettings',`{"MaxInning":${MaxInning}}`);
+	const Resolution = document.getElementById('Resolution').value;
+	socket.emit('updateSettings',`{"MaxInning":${MaxInning},"Resolution":${Resolution}}`);
 }
 function BlackenLastInning(value){
 	if(value){

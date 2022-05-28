@@ -1,4 +1,5 @@
 {
     "MaxInning": 9,
-    "BlackenLastInning": true
+    "BlackenLastInning": true,
+    "Resolution": 2160
 }
