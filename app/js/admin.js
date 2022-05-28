@@ -15,6 +15,7 @@ if (token && user) {
 				localStorage.removeItem('user');
 			}
 			socket.emit("getData");
+			socket.emit("getActive");
 		} else {
 			// User is not in a valid session
 			// Redirect to login page
@@ -33,9 +34,9 @@ if (token && user) {
 
 const socket = io({
 	auth: {
-	  id: user,
-	  token: token
-  	}
+		id: user,
+		token: token
+	}
 });
 socket.on('connectData', update);
 socket.on('update', update);
@@ -87,30 +88,31 @@ function update(data){
 //To add for all the variables
 function Ball(opr){
 	if(opr!="+"&&opr!="-"&&opr!="0")
-		return NaN;
+		return null;
 	socket.emit('update_data', `{"Ball":"${opr}"}`);
 	return true;
 }
 function Strike(opr){
 	if(opr!="+"&&opr!="-"&&opr!="0")
-		return NaN;
+		return null;
 	socket.emit('update_data', `{"Strike":"${opr}"}`);
 	return true;
 }
 function Out(opr){
 	if(opr!="+"&&opr!="-"&&opr!="0")
-		return NaN;
+		return null;
 	socket.emit('update_data', `{"Out":"${opr}"}`);
 	return true;
 }
 function Inning(opr){
 	if(opr!="+"&&opr!="-"&&opr!="0")
-		return NaN;
+		return null;
 	socket.emit('update_data', `{"Inning":"${opr}"}`);
 	return true;
 }
 function TopBot(opr){
-	if(opr!="top"&&opr!="bot") return NaN;
+	if(opr!="top"&&opr!="bot") 
+		return null;
 	if(opr=="top")
 		socket.emit('update_data', `{"Arrow":1}`);
 	else
@@ -119,19 +121,19 @@ function TopBot(opr){
 }
 function Base(base){
 	if(base!="1"&&base!="2"&&base!="3")
-		return NaN;
+		return null;
 	socket.emit('update_data', `{"${base}":"toggle"}`);
 	return true;
 }
 function ScoreHome(opr){
 	if(opr!="+"&&opr!="-"&&opr!="0")
-		return NaN;
+		return null;
 	socket.emit('update_data', `{"Teams.Home.Score":"${opr}"}`);
 	return true;
 }
 function ScoreAway(opr){
 	if(opr!="+"&&opr!="-"&&opr!="0")
-		return NaN;
+		return null;
 	socket.emit('update_data', `{"Teams.Away.Score":"${opr}"}`);
 	return true;
 }
@@ -154,5 +156,88 @@ function Auto_Change_Inning(){
 }
 function Reset_All(){
 	socket.emit('update_data',`{"Reset_All":"toggle"}`);
+	return true;
+}
+
+// Animation and Scoreboard controls
+socket.on('updateActive', updateActive);
+socket.on('connectActive', updateActive);
+
+function updateActive(data){
+	const dataObj = JSON.parse(data);
+	Object.entries(dataObj).forEach(([key, value]) => {
+		if(key=="main"){
+			if(value==true){
+				document.getElementById('mainOn').classList.remove("btn-outline-primary");
+				document.getElementById('mainOn').classList.add("btn-primary");
+				document.getElementById('mainOff').classList.remove("btn-primary");
+				document.getElementById('mainOff').classList.add("btn-outline-primary");
+			}else{
+				document.getElementById('mainOn').classList.remove("btn-primary");
+				document.getElementById('mainOn').classList.add("btn-outline-primary");
+				document.getElementById('mainOff').classList.remove("btn-outline-primary");
+				document.getElementById('mainOff').classList.add("btn-primary");
+			}
+		}else if (key=="pre") {
+			if(value==true){
+				document.getElementById('preOn').classList.remove("btn-outline-primary");
+				document.getElementById('preOn').classList.add("btn-primary");
+				document.getElementById('preOff').classList.remove("btn-primary");
+				document.getElementById('preOff').classList.add("btn-outline-primary");
+			}else{
+				document.getElementById('preOn').classList.remove("btn-primary");
+				document.getElementById('preOn').classList.add("btn-outline-primary");
+				document.getElementById('preOff').classList.remove("btn-outline-primary");
+				document.getElementById('preOff').classList.add("btn-primary");
+			}
+		}else if (key=="post") {
+			if(value==true){
+				document.getElementById('postOn').classList.remove("btn-outline-primary");
+				document.getElementById('postOn').classList.add("btn-primary");
+				document.getElementById('postOff').classList.remove("btn-primary");
+				document.getElementById('postOff').classList.add("btn-outline-primary");
+			}else{
+				document.getElementById('postOn').classList.remove("btn-primary");
+				document.getElementById('postOn').classList.add("btn-outline-primary");
+				document.getElementById('postOff').classList.remove("btn-outline-primary");
+				document.getElementById('postOff').classList.add("btn-primary");
+			}
+		}else if (key=="inning") {
+			if(value==true){
+				document.getElementById('inningOn').classList.remove("btn-outline-primary");
+				document.getElementById('inningOn').classList.add("btn-primary");
+				document.getElementById('inningOff').classList.remove("btn-primary");
+				document.getElementById('inningOff').classList.add("btn-outline-primary");
+			}else{
+				document.getElementById('inningOn').classList.remove("btn-primary");
+				document.getElementById('inningOn').classList.add("btn-outline-primary");
+				document.getElementById('inningOff').classList.remove("btn-outline-primary");
+				document.getElementById('inningOff').classList.add("btn-primary");
+			}
+		}
+	});
+}
+function main(opr){
+	if(opr!=true&&opr!=false)
+		return null;
+	socket.emit('updateActive',`{"main":${opr}}`);
+	return true;
+}
+function preGame(opr){
+	if(opr!=true&&opr!=false)
+		return null;
+	socket.emit('updateActive',`{"pre":${opr}}`);
+	return true;
+}
+function postGame(opr){
+	if(opr!=true&&opr!=false)
+		return null;
+	socket.emit('updateActive',`{"post":${opr}}`);
+	return true;
+}
+function inning(opr){
+	if(opr!=true&&opr!=false)
+		return null;
+	socket.emit('updateActive',`{"inning":${opr}}`);
 	return true;
 }

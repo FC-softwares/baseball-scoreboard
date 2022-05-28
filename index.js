@@ -246,6 +246,68 @@ io.on('connection', (socket) => {
 			socket.emit('connectData',obj);
 		})
 	});
+	socket.on('updateActive',(data)=>{
+		if (socket.handshake.auth.id && socket.handshake.auth.token) {
+			const ver_req_set_option = {
+				hostname: API,
+				port: 443,
+				path: '/checkstat',
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				}
+			}
+			const ver_data = JSON.stringify({
+				id: socket.handshake.auth.id,
+				token: socket.handshake.auth.token
+			});
+			const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
+				ver_res.on('data', (d) => {
+					res_data = JSON.parse(d);
+					if (res_data.ok === true) {
+						// Update The Active Scoreboards List
+						fs.readFile(__dirname + '/app/json/scoreboards.json', 'utf8', (err, scoreboard_old) => {
+							if (err) {
+								console.error(err);
+								return;
+							}
+							var json = JSON.parse(data);
+							console.log(json);
+							var jsonOld = JSON.parse(scoreboard_old);
+							var changes = {};
+							// Compare The Old Scoreboard With The New Scoreboard and save the changes
+							Object.entries(json).forEach(entry => {
+								const [indx, element] = entry;
+								if(element == true){
+									jsonOld[indx] = true;
+									changes[indx] = true;
+								}else{
+									jsonOld[indx] = false;
+									changes[indx] = false;
+								}
+							});
+							fs.writeFile(__dirname + '/app/json/scoreboards.json', JSON.stringify(jsonOld, null, 4), (err) => {
+								if (err) throw err;
+								const changesJson = JSON.stringify(changes);
+								socket.emit('updateActive',changesJson);
+								socket.broadcast.emit('updateActive',changesJson);
+							});
+						})
+					}
+				});
+			});
+			ver_req_set.on('error', (e) => {
+				console.error(e);
+			});
+			ver_req_set.write(ver_data);
+			ver_req_set.end();
+		}
+	});
+	socket.on('getActive',()=>{
+		fs.readFile(__dirname + '/app/json/scoreboards.json', 'utf8', (err, data) => {
+			socket.emit('connectActive',data);
+		})
+	});
 	socket.on('disconnect', () => {
 		console.log('user disconnected\tID: '+socket.id);
 	});
