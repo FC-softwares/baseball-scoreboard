@@ -22,6 +22,9 @@
     --g-def: linear-gradient(0deg, rgba(233,233,233,1) 0%, rgba(255,255,255,1) 100%);
     /* Misc */
     --c-disabled: rgb(214, 214, 214);
+    /* Code to be reviewed by @TheTecnoKing*/
+    --w-scale: 1920px;
+    --h-scale: 1080px;
 }
 
 /* Standards */
@@ -33,6 +36,10 @@ body {
     margin: 0;
     width: fit-content;
     overflow: hidden;
+    /* Code to be reviewed by @TheTecnoKing
+    width: var(--w-scale);
+    height: var(--h-scale);
+    */
 }
 div {
     display: grid;
@@ -47,6 +54,13 @@ div {
     grid-template-areas:
         "colorAway nameAway scoreAway bases ballStrike inning"
         "colorHome nameHome scoreHome bases out inning";
+    
+    /* Code to be reviewed by @TheTecnoKing
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    transform: scale(calc(var(--w-scale) / 360));
+    */
 }
 .scoreboard > div {
     align-items: center;

@@ -191,6 +191,10 @@ function updateSettings(obj){
 	const oldMaxInning = parseInt(localStorage.getItem("MaxInning"));
 	localStorage.setItem("MaxInning",obj.MaxInning);
 	localStorage.setItem("BlackenLastInning",obj.BlackenLastInning);
+
+	document.documentElement.style.setProperty('--h-scale', obj.Resolution+"px");
+	document.documentElement.style.setProperty('--w-scale', obj.Resolution*1.78+"px");
+	
 	document.documentElement.style.setProperty('--i-inning', obj.MaxInning);
 	// update the container of the innings
 	if(document.URL.includes("inning.html")){
@@ -216,6 +220,8 @@ function connectSettings(obj) {
 	// Settings
 	localStorage.setItem("MaxInning",obj.MaxInning);
 	localStorage.setItem("BlackenLastInning",obj.BlackenLastInning);
+	document.documentElement.style.setProperty('--h-scale', obj.Resolution+"px");
+	document.documentElement.style.setProperty('--w-scale', obj.Resolution*1.78+"px");
 	// Set the container with the innings
 	if(document.URL.includes("inning.html")){
 		document.documentElement.style.setProperty("--i-inning",obj.MaxInning); 
