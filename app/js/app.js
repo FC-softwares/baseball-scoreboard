@@ -1,11 +1,15 @@
 var socket = io("http://"+window.location.hostname+":"+location.port);
 
 socket.emit('getSettings');
+socket.emit('getActive');
 
 socket.on('update', update);
 socket.on('updateSettings', updateSettings);
 socket.on('connectSettings', connectSettings);
 socket.on('connectData', update);
+socket.on('updateActive', updateActive);
+socket.on('connectActive', connectActive);
+
 function update(obj){
 	// Teams
 	// Away
@@ -243,6 +247,73 @@ function connectSettings(obj) {
 	}
 	socket.emit("getData");
 }
+// TODO: make this function WORK with the help of @TheTecnoKing
+function updateActive(json){
+	const obj = JSON.parse(json);
+	console.log(obj);
+	if(obj.main!==undefined && document.URL.includes("scoreboard.html")){
+		if(obj.main){
+			// Trigger the open animation for the main scoreboard
+		}else{
+			// Trigger the close animation for the main scoreboard
+		}
+	}
+	if(obj.pre!==undefined && document.URL.includes("pregame.html")){
+		if(obj.pre){
+			// Trigger the open animation for the pre-game scoreboard
+		}else{
+			// Trigger the close animation for the pre-game scoreboard
+		}
+	}
+	if(obj.post!==undefined && document.URL.includes("postgame.html")){
+		if(obj.post){
+			// Trigger the open animation for the post-game scoreboard
+		}else{
+			// Trigger the close animation for the post-game scoreboard
+		}
+	}
+	if(obj.inning!==undefined && document.URL.includes("inning.html")){
+		if(obj.inning){
+			// Trigger the open animation for the inning scoreboard
+		}else{
+			// Trigger the close animation for the inning scoreboard
+		}
+	}
+}
+
+function connectActive(json){
+	const obj = JSON.parse(json);
+	console.log(obj);
+	if(document.URL.includes("scoreboard.html")){
+		if(obj.main){
+			// Show the main scoreboard widthout animation
+		}else{
+			// Hide the main scoreboard widthout animation
+		}
+	}
+	if(document.URL.includes("pregame.html")){
+		if(obj.pre){
+			// Show the pre-game scoreboard widthout animation
+		}else{
+			// Hide the pre-game scoreboard widthout animation
+		}
+	}
+	if(document.URL.includes("postgame.html")){
+		if(obj.post){
+			// Show the post-game scoreboard widthout animation
+		}else{
+			// Hide the post-game scoreboard widthout animation
+		}
+	}
+	if(document.URL.includes("inning.html")){
+		if(obj.inning){
+			// Show the inning scoreboard widthout animation
+		}else{
+			// Hide the inning scoreboard widthout animation
+		}
+	}
+}
+
 /**
  * @param {String} color 
  * @returns Color Brightness from 0 to 255

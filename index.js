@@ -272,7 +272,6 @@ io.on('connection', (socket) => {
 								return;
 							}
 							var json = JSON.parse(data);
-							console.log(json);
 							var jsonOld = JSON.parse(scoreboard_old);
 							var changes = {};
 							// Compare The Old Scoreboard With The New Scoreboard and save the changes
