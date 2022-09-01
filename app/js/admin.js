@@ -168,51 +168,51 @@ function updateActive(data){
 	Object.entries(dataObj).forEach(([key, value]) => {
 		if(key=="main"){
 			if(value==true){
-				document.getElementById('mainOn').classList.remove("btn-outline-primary");
-				document.getElementById('mainOn').classList.add("btn-primary");
-				document.getElementById('mainOff').classList.remove("btn-primary");
-				document.getElementById('mainOff').classList.add("btn-outline-primary");
+				document.getElementById('mainOn').classList.remove("btn-outline-success");
+				document.getElementById('mainOn').classList.add("btn-success");
+				document.getElementById('mainOff').classList.remove("btn-danger");
+				document.getElementById('mainOff').classList.add("btn-outline-danger");
 			}else{
-				document.getElementById('mainOn').classList.remove("btn-primary");
-				document.getElementById('mainOn').classList.add("btn-outline-primary");
-				document.getElementById('mainOff').classList.remove("btn-outline-primary");
-				document.getElementById('mainOff').classList.add("btn-primary");
+				document.getElementById('mainOn').classList.remove("btn-success");
+				document.getElementById('mainOn').classList.add("btn-outline-success");
+				document.getElementById('mainOff').classList.remove("btn-outline-danger");
+				document.getElementById('mainOff').classList.add("btn-danger");
 			}
 		}else if (key=="pre") {
 			if(value==true){
-				document.getElementById('preOn').classList.remove("btn-outline-primary");
-				document.getElementById('preOn').classList.add("btn-primary");
-				document.getElementById('preOff').classList.remove("btn-primary");
-				document.getElementById('preOff').classList.add("btn-outline-primary");
+				document.getElementById('preOn').classList.remove("btn-outline-success");
+				document.getElementById('preOn').classList.add("btn-success");
+				document.getElementById('preOff').classList.remove("btn-danger");
+				document.getElementById('preOff').classList.add("btn-outline-danger");
 			}else{
-				document.getElementById('preOn').classList.remove("btn-primary");
-				document.getElementById('preOn').classList.add("btn-outline-primary");
-				document.getElementById('preOff').classList.remove("btn-outline-primary");
-				document.getElementById('preOff').classList.add("btn-primary");
+				document.getElementById('preOn').classList.remove("btn-success");
+				document.getElementById('preOn').classList.add("btn-outline-success");
+				document.getElementById('preOff').classList.remove("btn-outline-danger");
+				document.getElementById('preOff').classList.add("btn-danger");
 			}
 		}else if (key=="post") {
 			if(value==true){
-				document.getElementById('postOn').classList.remove("btn-outline-primary");
-				document.getElementById('postOn').classList.add("btn-primary");
-				document.getElementById('postOff').classList.remove("btn-primary");
-				document.getElementById('postOff').classList.add("btn-outline-primary");
+				document.getElementById('postOn').classList.remove("btn-outline-success");
+				document.getElementById('postOn').classList.add("btn-success");
+				document.getElementById('postOff').classList.remove("btn-danger");
+				document.getElementById('postOff').classList.add("btn-outline-danger");
 			}else{
-				document.getElementById('postOn').classList.remove("btn-primary");
-				document.getElementById('postOn').classList.add("btn-outline-primary");
-				document.getElementById('postOff').classList.remove("btn-outline-primary");
-				document.getElementById('postOff').classList.add("btn-primary");
+				document.getElementById('postOn').classList.remove("btn-success");
+				document.getElementById('postOn').classList.add("btn-outline-success");
+				document.getElementById('postOff').classList.remove("btn-outline-danger");
+				document.getElementById('postOff').classList.add("btn-danger");
 			}
 		}else if (key=="inning") {
 			if(value==true){
-				document.getElementById('inningOn').classList.remove("btn-outline-primary");
-				document.getElementById('inningOn').classList.add("btn-primary");
-				document.getElementById('inningOff').classList.remove("btn-primary");
-				document.getElementById('inningOff').classList.add("btn-outline-primary");
+				document.getElementById('inningOn').classList.remove("btn-outline-success");
+				document.getElementById('inningOn').classList.add("btn-success");
+				document.getElementById('inningOff').classList.remove("btn-danger");
+				document.getElementById('inningOff').classList.add("btn-outline-danger");
 			}else{
-				document.getElementById('inningOn').classList.remove("btn-primary");
-				document.getElementById('inningOn').classList.add("btn-outline-primary");
-				document.getElementById('inningOff').classList.remove("btn-outline-primary");
-				document.getElementById('inningOff').classList.add("btn-primary");
+				document.getElementById('inningOn').classList.remove("btn-success");
+				document.getElementById('inningOn').classList.add("btn-outline-success");
+				document.getElementById('inningOff').classList.remove("btn-outline-danger");
+				document.getElementById('inningOff').classList.add("btn-danger");
 			}
 		}
 	});
