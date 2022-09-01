@@ -1,28 +1,44 @@
-# Baseball Scoreboard
-This is a HTML and JS based scoreboard for baseball live.
+<center>
 
-# English 
-## Installation (English)
-- Download and unzip the compressed folder into webserver directory
-- Go to the installation address from a browser 
-- Use the software
-### IMPORTANT
-Check all `*.json` files in order to work all users must have read and write permissions (you can give them via `chmod 666 *.json`) and make sure also all `*.php` files has execution rights (you can give them via: `chmod 755 *.php`)  
-## LICENSE (English)
+![insert banner here](file)
+
+![and maybe some badges as well](file)
+
+# Baseball Scoreboard
+A fast, lightweight and simple scoreboard manager built with Electron.
+Works on all streaming apps with support for browser sources.
+
+| Language: | [ 🇬🇧 <u>English</u> ]( https://github.com/FC-softwares/baseball-scoreboard/blob/main/README.md )  | [ 🇮🇹 Italian ]( https://github.com/FC-softwares/baseball-scoreboard/blob/main/README_it.md )  |
+|---|---|---|
+
+</center>
+
+---
+
+## Install
+### Install from setup executable
+1. Visit our [Releases](https://github.com/FC-softwares/baseball-scoreboard/releases/latest) page
+2. Download the latest release for your platform 
+3. Run the setup file and install the software
+4. Good to go! You can now find the app in your applications launcher and run it!
+### Install from source
+Before installing the software from source code, make sure you already have the latest LTS version of Node.js and npm installed.
+1. Clone the repository with `git clone https://github.com/FC-softwares/baseball-scoreboard.git`
+2. Go into the newly created "baseball-scoreboard" folder (`cd baseball-scoreboard`)
+3. Run `npm -i` and wait for all the dependencies to install
+4. Run `npm start` to execute the software
+
+## Usage
+work in progress
+
+## Docs
+Probably these instructions weren't that clear. If that's the case, don't panic! You can read the docs [here](https://github.com/FC-softwares/baseball-scoreboard/tree/main/docs/en/) for more info!
+> **WARNING**: the docs are far from being completed, yet. Everything is still a WIP, but we'll try to write everything down as soon as possible.
+
+---
+
+## License
 [![Creative Commons License](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)  
-Baseball-Scoreboard by [F&C softwares](https://github.com/FC-softwares/) is licensed under a [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License](http://creativecommons.org/licenses/by-nc-nd/4.0/).  
+Baseball Scoreboard by [F&C softwares](https://github.com/FC-softwares/) is licensed under a [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License](http://creativecommons.org/licenses/by-nc-nd/4.0/).  
 Based on a work at [https://github.com/FC-softwares/baseball-scoreboard](https://github.com/FC-softwares/baseball-scoreboard).  
 Permissions beyond the scope of this license may be available at [https://github.com/FC-softwares/](https://github.com/FC-softwares/).
-
-# Italiano
-## Installazione (Italiano)
-- Scarica e decomprimi la cartella compressa nella cartella del webserver
-- Vai all'indirizzo di installazione da un browser
-- Usa il software
-### IMPORTANTE
-Controlla che i file `*.json` abbiano i permessi di lettura e scrittura (li puoi fornire tramite `chmod 666 *.json`) e assicurati che i file di tipo `*.php` abbiano i diritti di esecuzione (li puoi dare con: `chmod 755 *.php`)
-## LICENZA (Italiano)
-[![Licenza Creative Commons](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)  
-Baseball-Scoreboard di[F&C softwares](https://github.com/FC-softwares) è distribuito con Licenza [Creative Commons Attribuzione - Non commerciale - Non opere derivate 4.0 Internazionale](http://creativecommons.org/licenses/by-nc-nd/4.0/).  
-Based on a work at [https://github.com/FC-softwares/baseball-scoreboard](https://github.com/FC-softwares/baseball-scoreboard).  
-Permessi ulteriori rispetto alle finalità della presente licenza possono essere disponibili presso [https://github.com/FC-softwares](https://github.com/FC-softwares).
