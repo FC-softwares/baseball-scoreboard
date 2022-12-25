@@ -253,9 +253,9 @@ function updateActive(json){
 	console.log(obj);
 	if(obj.main!==undefined && document.URL.includes("scoreboard.html")){
 		if(obj.main){
-			// Trigger the open animation for the main scoreboard
+			document.querySelector("div.scoreboard").classList.remove("disabled");
 		}else{
-			// Trigger the close animation for the main scoreboard
+			document.querySelector("div.scoreboard").classList.add("disabled");
 		}
 	}
 	if(obj.pre!==undefined && document.URL.includes("pregame.html")){
@@ -286,9 +286,9 @@ function connectActive(json){
 	console.log(obj);
 	if(document.URL.includes("scoreboard.html")){
 		if(obj.main){
-			// Show the main scoreboard widthout animation
+			document.querySelector("div.scoreboard").classList.remove("disabled");
 		}else{
-			// Hide the main scoreboard widthout animation
+			document.querySelector("div.scoreboard").classList.add("disabled");
 		}
 	}
 	if(document.URL.includes("pregame.html")){

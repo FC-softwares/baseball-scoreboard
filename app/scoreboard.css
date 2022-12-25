@@ -59,9 +59,73 @@ div {
     position: fixed;
     bottom: 1rem;
     right: 1rem;
-    transform: scale(calc(var(--w-scale) / 360));
     */
 }
+.scoreboard > div#away{
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 0.4s;
+    position: relative;
+    left: 0;
+}
+.scoreboard.disabled > div#away{
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.5s;
+    position: relative;
+    left: -1000%;
+}
+
+.scoreboard > div#home{
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 0.6s;
+    left: 0;
+    position: relative;
+}
+.scoreboard.disabled > div#home{
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.7s;
+    left: -1000%;
+}
+
+.scoreboard > div.bases {
+    position: relative;
+    bottom: 0;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 0.8s;
+}
+.scoreboard.disabled > div.bases {
+    position: relative;
+    bottom: -1000%;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.9s;
+}
+
+.scoreboard > div.ballStrike {
+    position: relative;
+    bottom: 0;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1s;
+}
+.scoreboard.disabled > div.ballStrike {
+    position: relative;
+    bottom: -1000%;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 2.1s;
+}
+
+.scoreboard > div.out {
+    position: relative;
+    bottom: 0;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.2s;
+}
+.scoreboard.disabled > div.out {
+    position: relative;
+    bottom: -1000%;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 2.3s;
+}
+
+.scoreboard > div.inning {
+    position: relative;
+    bottom: 0;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.4s;
+}
+.scoreboard.disabled > div.inning {
+    position: relative;
+    bottom: -1000%;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 2.5s;
+}
+
 .scoreboard > div {
     align-items: center;
 }
