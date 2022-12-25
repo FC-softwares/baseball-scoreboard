@@ -260,16 +260,16 @@ function updateActive(json){
 	}
 	if(obj.pre!==undefined && document.URL.includes("pregame.html")){
 		if(obj.pre){
-			// Trigger the open animation for the pre-game scoreboard
+			document.querySelector("div.scoreboard").classList.remove("disabled");
 		}else{
-			// Trigger the close animation for the pre-game scoreboard
+			document.querySelector("div.scoreboard").classList.add("disabled");
 		}
 	}
 	if(obj.post!==undefined && document.URL.includes("postgame.html")){
 		if(obj.post){
-			// Trigger the open animation for the post-game scoreboard
+			document.querySelector("div.scoreboard").classList.remove("disabled");
 		}else{
-			// Trigger the close animation for the post-game scoreboard
+			document.querySelector("div.scoreboard").classList.add("disabled");
 		}
 	}
 	if(obj.inning!==undefined && document.URL.includes("inning.html")){
@@ -293,23 +293,23 @@ function connectActive(json){
 	}
 	if(document.URL.includes("pregame.html")){
 		if(obj.pre){
-			// Show the pre-game scoreboard widthout animation
+			document.querySelector("div.scoreboard").classList.remove("disabled");
 		}else{
-			// Hide the pre-game scoreboard widthout animation
+			document.querySelector("div.scoreboard").classList.add("disabled");
 		}
 	}
 	if(document.URL.includes("postgame.html")){
 		if(obj.post){
-			// Show the post-game scoreboard widthout animation
+			document.querySelector("div.scoreboard").classList.remove("disabled");
 		}else{
-			// Hide the post-game scoreboard widthout animation
+			document.querySelector("div.scoreboard").classList.add("disabled");
 		}
 	}
 	if(document.URL.includes("inning.html")){
 		if(obj.inning){
-			// Show the inning scoreboard widthout animation
+			document.querySelector("div.scoreboard").classList.remove("disabled");
 		}else{
-			// Hide the inning scoreboard widthout animation
+			document.querySelector("div.scoreboard").classList.add("disabled");
 		}
 	}
 }

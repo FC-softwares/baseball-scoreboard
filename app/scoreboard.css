@@ -61,6 +61,8 @@ div {
     right: 1rem;
     */
 }
+
+/* Code to be reviewed by @TheTecnoKing but is a good prototype for the animation */
 .scoreboard > div#away{
     transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 0.4s;
     position: relative;
@@ -125,6 +127,8 @@ div {
     bottom: -1000%;
     transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 2.5s;
 }
+
+/* end of code to be reviewed by @TheTecnoKing */
 
 .scoreboard > div {
     align-items: center;
