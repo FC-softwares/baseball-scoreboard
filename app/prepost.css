@@ -43,31 +43,35 @@ div {
 }
 /* Code to be reviewed by @TheTecnoKing  but is a good prototype for the animation */
 .scoreboard > div.teamScore#home, .scoreboard > div.teamScore#away {
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 2s !important;
     z-index: 2;
 }
+.scoreboard.disabled > div.teamName#home, .scoreboard.disabled > div.teamName#away {
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.0) 6s !important;
+}
 .scoreboard > div.teamName#home, .scoreboard > div.teamName#away {
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.0) 0.75s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.0) 2s;
 }
 
 .scoreboard > div#away{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 0.75s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 2s;
     position: relative;
     left: 0;
     z-index: 1;
 }
 .scoreboard.disabled > div#away{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.5s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 2.5s;
     position: relative;
     left: -1000%;
 }
 .scoreboard > div.vs{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.5s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.05) 2s;
     position: relative;
     bottom: 0;
     z-index: 2;
 }
 .scoreboard.disabled > div.vs{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.5s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.05) 2s;
     bottom: -1000%;
 }
 .scoreboard > div.div {
@@ -77,18 +81,18 @@ div {
     z-index: 2;
 }
 .scoreboard.disabled > div.div{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.5s;
-    bottom: -1000%;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 2.5s;
+    bottom: -500%;
 }
 
 .scoreboard > div#home{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 0.75s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 2s;
     position: relative;
     right: 0;
     z-index: 1;
 }
 .scoreboard.disabled > div#home{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.5s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 2.5s;
     position: relative;
     right: -1000%;
 }

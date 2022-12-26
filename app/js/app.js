@@ -250,7 +250,6 @@ function connectSettings(obj) {
 // TODO: make this function WORK with the help of @TheTecnoKing
 function updateActive(json){
 	const obj = JSON.parse(json);
-	console.log(obj);
 	if(obj.main!==undefined && document.URL.includes("scoreboard.html")){
 		if(obj.main){
 			document.querySelector("div.scoreboard").classList.remove("disabled");
@@ -283,7 +282,6 @@ function updateActive(json){
 
 function connectActive(json){
 	const obj = JSON.parse(json);
-	console.log(obj);
 	if(document.URL.includes("scoreboard.html")){
 		if(obj.main){
 			document.querySelector("div.scoreboard").classList.remove("disabled");
