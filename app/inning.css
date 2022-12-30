@@ -53,6 +53,97 @@ div {
 div:not(.teamName, .scoreboard) {
     text-align: center;
 }
+.scoreboard > .teamColor, .scoreboard > .teamName {
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.5s;
+    position: relative;
+    left: 0;
+}
+.scoreboard.disabled > .teamColor, .scoreboard.disabled > .teamName {
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 2s;
+    left: -1000%;
+}
+.scoreboard > .score {
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1.5s;
+    transition-delay: calc(var(--i-inning) * 0.1s + 0.4s);
+    position: relative;
+    right: 0;
+}
+.scoreboard.disabled > .score {
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1.5s;
+    transition-delay: calc(var(--i-inning) * 0.1s + 0.4s);
+    right: -1000%;
+}
+.scoreboard > .container > .inning {
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 2s;
+    position: relative;
+    bottom: 0;
+}
+/* Set the delay to the number of previous innings es: first inning = 0.2s, second inning = 0.3s, third inning = 0.4s, etc. */
+/* Without SCSS this is the only way to do it (sorry @TheTecnoKing) */
+.scoreboard > .container > .inning:nth-child(1), .scoreboard.disabled > .container > .inning:nth-child(1) {
+    transition-delay: 0.2s;
+}
+.scoreboard > .container > .inning:nth-child(2), .scoreboard.disabled > .container > .inning:nth-child(2) {
+    transition-delay: 0.3s;
+}
+.scoreboard > .container > .inning:nth-child(3), .scoreboard.disabled > .container > .inning:nth-child(3) {
+    transition-delay: 0.4s;
+}
+.scoreboard > .container > .inning:nth-child(4), .scoreboard.disabled > .container > .inning:nth-child(4) {
+    transition-delay: 0.5s;
+}
+.scoreboard > .container > .inning:nth-child(5), .scoreboard.disabled > .container > .inning:nth-child(5) {
+    transition-delay: 0.6s;
+}
+.scoreboard > .container > .inning:nth-child(6), .scoreboard.disabled > .container > .inning:nth-child(6) {
+    transition-delay: 0.7s;
+}
+.scoreboard > .container > .inning:nth-child(7), .scoreboard.disabled > .container > .inning:nth-child(7) {
+    transition-delay: 0.8s;
+}
+.scoreboard > .container > .inning:nth-child(8), .scoreboard.disabled > .container > .inning:nth-child(8) {
+    transition-delay: 0.9s;
+}
+.scoreboard > .container > .inning:nth-child(9), .scoreboard.disabled > .container > .inning:nth-child(9) {
+    transition-delay: 1s;
+}
+.scoreboard > .container > .inning:nth-child(10), .scoreboard.disabled > .container > .inning:nth-child(10) {
+    transition-delay: 1.1s;
+}
+.scoreboard > .container > .inning:nth-child(11), .scoreboard.disabled > .container > .inning:nth-child(11) {
+    transition-delay: 1.2s;
+}
+.scoreboard > .container > .inning:nth-child(12), .scoreboard.disabled > .container > .inning:nth-child(12) {
+    transition-delay: 1.3s;
+}
+.scoreboard > .container > .inning:nth-child(13), .scoreboard.disabled > .container > .inning:nth-child(13) {
+    transition-delay: 1.4s;
+}
+.scoreboard > .container > .inning:nth-child(14), .scoreboard.disabled > .container > .inning:nth-child(14) {
+    transition-delay: 1.5s;
+}
+.scoreboard > .container > .inning:nth-child(15), .scoreboard.disabled > .container > .inning:nth-child(15) {
+    transition-delay: 1.6s;
+}
+.scoreboard > .container > .inning:nth-child(16), .scoreboard.disabled > .container > .inning:nth-child(16) {
+    transition-delay: 1.7s;
+}
+.scoreboard > .container > .inning:nth-child(17), .scoreboard.disabled > .container > .inning:nth-child(17) {
+    transition-delay: 1.8s;
+}
+.scoreboard > .container > .inning:nth-child(18), .scoreboard.disabled > .container > .inning:nth-child(18) {
+    transition-delay: 1.9s;
+}
+.scoreboard > .container > .inning:nth-child(19), .scoreboard.disabled > .container > .inning:nth-child(19) {
+    transition-delay: 2s;
+}
+
+
+.scoreboard.disabled > .container > .inning {
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1.5s;
+    bottom: -1000%;
+}
+
 #bg {
     border-radius: 3px;
     width: fit-content;
@@ -106,7 +197,7 @@ div:not(.teamName, .scoreboard) {
     background: var(--g-def);
 }
 
-.disabled {
+.disabledinng {
     color: var(--c-disabled);
 }
 .scoreboard#inning > *, .inning > *, .score > * {

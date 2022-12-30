@@ -57,13 +57,13 @@ function updateInning(obj) {
 	let extraInningScoreAway = 0, extraInningScoreHome = 0;
 	for (let i = 1; i <= localStorage.getItem("MaxInning"); i++) {
 		try {
-			document.querySelector("#i" + i + " > #away").classList.add("disabled");
+			document.querySelector("#i" + i + " > #away").classList.add("disabledinng");
 			document.querySelector("#i" + i + " > #away").innerHTML = "";
 		} catch (error) {
 			console.error(error);
 		}
 		try {
-			document.querySelector("#i" + i + " > #home").classList.add("disabled");
+			document.querySelector("#i" + i + " > #home").classList.add("disabledinng");
 			document.querySelector("#i" + i + " > #home").innerHTML = "";
 		} catch (error) {
 			console.error(error);
@@ -76,13 +76,13 @@ function updateInning(obj) {
 		} else {
 			if (i < obj.Inning) {
 				try {
-					document.querySelector("#i" + i + " > #home").classList.remove("disabled");
+					document.querySelector("#i" + i + " > #home").classList.remove("disabledinng");
 					document.querySelector("#i" + i + " > #home").innerHTML = obj.Int[i].H;
 				} catch (error) {
 					console.error(error);
 				}
 				try {
-					document.querySelector("#i" + i + " > #away").classList.remove("disabled");
+					document.querySelector("#i" + i + " > #away").classList.remove("disabledinng");
 					document.querySelector("#i" + i + " > #away").innerHTML = obj.Int[i].A;
 				} catch (error) {
 					console.error(error);
@@ -90,14 +90,14 @@ function updateInning(obj) {
 			} else {
 				if (obj.Arrow == 2) {
 					try {
-						document.querySelector("#i" + i + " > #away").classList.remove("disabled");
+						document.querySelector("#i" + i + " > #away").classList.remove("disabledinng");
 						document.querySelector("#i" + i + " > #away").innerHTML = obj.Int[i].A;
 					} catch (error) {
 						console.error(error);
 					}
 					if (obj.Int[i].H != 0) {
 						try {
-							document.querySelector("#i" + i + " > #home").classList.remove("disabled");
+							document.querySelector("#i" + i + " > #home").classList.remove("disabledinng");
 							document.querySelector("#i" + i + " > #home").innerHTML = obj.Int[i].H;
 						} catch (error) {
 							console.error(error);
@@ -105,20 +105,20 @@ function updateInning(obj) {
 					}
 				} else if (obj.Int[i].H != 0) {
 					try {
-						document.querySelector("#i" + i + " > #away").classList.remove("disabled");
+						document.querySelector("#i" + i + " > #away").classList.remove("disabledinng");
 						document.querySelector("#i" + i + " > #away").innerHTML = obj.Int[i].A;
 					} catch (error) {
 						console.error(error);
 					}
 					try {
-						document.querySelector("#i" + i + " > #home").classList.remove("disabled");
+						document.querySelector("#i" + i + " > #home").classList.remove("disabledinng");
 						document.querySelector("#i" + i + " > #home").innerHTML = obj.Int[i].H;
 					} catch (error) {
 						console.error(error);
 					}
 				} else if (obj.Int[i].A != 0) {
 					try {
-						document.querySelector("#i" + i + " > #away").classList.remove("disabled");
+						document.querySelector("#i" + i + " > #away").classList.remove("disabledinng");
 						document.querySelector("#i" + i + " > #away").innerHTML = obj.Int[i].A;
 					} catch (error) {
 						console.error(error);
@@ -273,9 +273,9 @@ function updateActive(json){
 	}
 	if(obj.inning!==undefined && document.URL.includes("inning.html")){
 		if(obj.inning){
-			// Trigger the open animation for the inning scoreboard
+			document.querySelector("div.scoreboard").classList.remove("disabled");
 		}else{
-			// Trigger the close animation for the inning scoreboard
+			document.querySelector("div.scoreboard").classList.add("disabled");
 		}
 	}
 }

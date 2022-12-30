@@ -64,68 +64,78 @@ div {
 
 /* Code to be reviewed by @TheTecnoKing but is a good prototype for the animation */
 .scoreboard > div#away{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 0.4s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 0.8s;
     position: relative;
     left: 0;
 }
 .scoreboard.disabled > div#away{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.5s;
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 0.8s;
     position: relative;
     left: -1000%;
 }
 
 .scoreboard > div#home{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 0.6s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 0.8s;
     left: 0;
     position: relative;
+    transition-delay: 0.1s;
 }
 .scoreboard.disabled > div#home{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.7s;
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 0.8s;
     left: -1000%;
+    transition-delay: 0.1s;
 }
 
 .scoreboard > div.bases {
     position: relative;
     bottom: 0;
     transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 0.8s;
+    transition-delay: 0.2s;
 }
 .scoreboard.disabled > div.bases {
     position: relative;
     bottom: -1000%;
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.9s;
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 0.8s;
+    transition-delay: 0.2s;
 }
 
 .scoreboard > div.ballStrike {
     position: relative;
     bottom: 0;
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 0.8s;
+    transition-delay: 0.3s;
 }
 .scoreboard.disabled > div.ballStrike {
     position: relative;
     bottom: -1000%;
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 2.1s;
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 0.8s;
+    transition-delay: 0.3s;
 }
 
 .scoreboard > div.out {
     position: relative;
     bottom: 0;
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.2s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 0.8s;
+    transition-delay: 0.4s;
 }
 .scoreboard.disabled > div.out {
     position: relative;
     bottom: -1000%;
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 2.3s;
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 0.8s;
+    transition-delay: 0.4s;
 }
 
 .scoreboard > div.inning {
     position: relative;
     bottom: 0;
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.4s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 0.8s;
+    transition-delay: 0.5s;
 }
 .scoreboard.disabled > div.inning {
     position: relative;
     bottom: -1000%;
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 2.5s;
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 0.8s;
+    transition-delay: 0.5s;
 }
 
 /* end of code to be reviewed by @TheTecnoKing */
