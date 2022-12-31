@@ -1,6 +1,7 @@
 <center>
 
 ![insert banner here](file)
+[![CodeFactor](https://www.codefactor.io/repository/github/fc-softwares/baseball-scoreboard/badge/main)](https://www.codefactor.io/repository/github/fc-softwares/baseball-scoreboard/overview/main)
 
 ![and maybe some badges as well](file)
 
@@ -25,7 +26,7 @@ Funziona su tutte le applicazioni di streaming con supporto alle sorgenti web.
 Se desideri installare l'applicazione dal codice sorgente, assicurati di aver già installato l'ultima versione LTS disponibile di Node.js ed npm.
 1. Clona la repository eseguendo `git clone https://github.com/FC-softwares/baseball-scoreboard.git`
 2. Entra nella nuova cartella "baseball-scoreboard" (`cd baseball-scoreboard`)
-3. Esegui `npm -i` ed attendi che tutte le dipendenze vengano installate
+3. Esegui `npm i` ed attendi che tutte le dipendenze vengano installate
 4. Esegui `npm start` per avviare il software
 
 ## Uso
