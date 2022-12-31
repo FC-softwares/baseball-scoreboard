@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/settings.js" async></script>
     <title>Baseball Scoreboard</title>
@@ -60,7 +61,7 @@
         <h1 class="fw-bolder text-black text-opacity-75 pt-2">Settings</h1>
         <div id="Alert"></div>
         <div class="row">
-            <div class="col">
+            <div class="col-12 col-lg-6">
                 <div class="bg-body p-3 mb-4 shadow rounded-3 border">
                     <div class="row row-cols-1 row-cols-sm-3 gap-3 gap-sm-0 justify-content-evenly">
                         <div class="col">
@@ -84,7 +85,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row row-cols-1 row-cols-sm-3 gap-3 gap-sm-0 justify-content-evenly">
+                    <div class="row row-cols-1 gap-3 justify-content-evenly">
                         <div class="col d-flex flex-column align-items-center justify-content-between">
                             <h4 class="text-center">Streaming Resolution</h4>
                             <select name="res" id="Resolution" class="form-select" aria-label="Select for Resolution of the streaming">
@@ -106,7 +107,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-auto">
+            <div class="col-12 col-lg-6">
                 <div class="bg-body p-3 mb-4 shadow rounded-3 border">
                     <h4 class="text-center">Product Owner</h4>
                     <div class="row row-cols-1 row-cols-sm-3 gap-3 gap-sm-0 justify-content-center">
@@ -125,11 +126,11 @@
                     </div>
                 </div>
                 <div class="bg-body p-3 mb-4 shadow rounded-3 border">
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 justify-content-center">
+                    <div class="row row-cols-1 row-cols-sm-2 justify-content-center">
                         <div class="col">
                             <h4 class="text-center">Auth Users</h4>
                             <div class="d-flex flex-row align-items-center justify-content-center">
-                                <ul class="list-group" id="AuthUsersUl">
+                                <ul class="list-group w-100" id="AuthUsersUl">
                                 </ul>
                             </div>
                         </div>
@@ -206,6 +207,5 @@
             </div>
         </div>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </body>
 </html>
