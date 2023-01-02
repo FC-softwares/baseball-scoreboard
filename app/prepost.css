@@ -42,61 +42,98 @@ div {
     grid-template-rows: var(--h-row);
 }
 /* Code to be reviewed by @TheTecnoKing  but is a good prototype for the animation */
-.scoreboard > div.teamScore#home, .scoreboard > div.teamScore#away {
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 2s !important;
-    transition-delay:0.75s !important;
-    z-index: 2;
+.scoreboard > div.teamName#home, .scoreboard > div.teamName#away, .scoreboard > div.teamColor#home, .scoreboard > div.teamColor#away {
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.0) 1s;
+    transition-delay: 1.125s;
+    transform: scaleX(1);
+    z-index: 0;
 }
-.scoreboard.disabled > div.teamScore#home, .scoreboard.disabled > div.teamScore#away {
-    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s !important;
+.scoreboard.disabled > div.teamName#home, .scoreboard.disabled > div.teamName#away, .scoreboard.disabled > div.teamColor#home, .scoreboard.disabled > div.teamColor#away {
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.0) 1s;
+    transform: scaleX(0);
 }
-.scoreboard > div.teamName#home, .scoreboard > div.teamName#away {
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.0) 2s;
-}
-
-.scoreboard > div#away{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 2s;
-    position: relative;
-    left: 0;
+.scoreboard > div.teamScore {
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.0) 1.5s;
+    transition-delay: 1.125s;
+    transform: scaleX(1) skew(-30deg);
     z-index: 1;
 }
-.scoreboard.disabled > div#away{
-    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
-    position: relative;
-    left: -1000%;
+.scoreboard.disabled > div.teamScore {
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1.0) 1s;
+    transform: scaleX(0) skew(-30deg);
+}
+.scoreboard > div.teamName#away {
+    transform-origin: right;
+}
+.scoreboard > div.teamName#home {
+    transform-origin: left;
+}
+.scoreboard > div.teamColor#away {
+    transform-origin: 270px
+}
+.scoreboard > div.teamColor#home {
+    transform-origin: -270px
+}
+.scoreboard#postgame > div.teamScore#away {
+    transform: skew(-30deg);
+    transform-origin: left;
+}
+.scoreboard.disabled#postgame > div.teamScore#away {
+    transform: translateX(-350px) skew(-30deg);
+}
+.scoreboard#postgame > div.teamScore#home {
+    transform: skew(-30deg);
+    transform-origin: right;
+}
+.scoreboard.disabled#postgame > div.teamScore#home {
+    transform: translateX(350px) skew(-30deg);
+}
+.scoreboard#postgame > div.teamName#away {
+    transform: none;
+    transform-origin: left;
+}
+.scoreboard.disabled#postgame > div.teamName#away {
+    transform: translateX(-350px);
+}
+.scoreboard#postgame > div.teamName#home {
+    transform: none;
+    transform-origin: right;
+}
+.scoreboard.disabled#postgame > div.teamName#home {
+    transform: translateX(350px);
+}
+.scoreboard#postgame > div.teamColor#away {
+    transform: none;
+    transform-origin: left;
+}
+.scoreboard.disabled#postgame > div.teamColor#away {
+    transform: translateX(-350px);
+}
+.scoreboard#postgame > div.teamColor#home {
+    transform: none;
+    transform-origin: right;
+}
+.scoreboard.disabled#postgame > div.teamColor#home {
+    transform: translateX(350px);
 }
 .scoreboard > div.vs{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.05) 2s;
-    position: relative;
-    bottom: 0;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    transform-origin: center;
     z-index: 2;
 }
 .scoreboard.disabled > div.vs{
     transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
-    bottom: -1000%;
+    transform: translateY(750px) skew(-30deg);
+    transition-delay: 1.5s;
 }
 .scoreboard > div.div {
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1s;
-    transition-delay: 1.5s;
-    position: relative;
-    bottom: 0;
+    transition: cubic-bezier(0.18, 0.89, 0.33,1) 1s;
     z-index: 2;
 }
 .scoreboard.disabled > div.div{
     transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
-    bottom: -1000%;
-}
-
-.scoreboard > div#home{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 2s;
-    position: relative;
-    right: 0;
-    z-index: 1;
-}
-.scoreboard.disabled > div#home{
-    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
-    position: relative;
-    right: -1000%;
+    transform: translateY(750px) skew(-30deg);
+    transition-delay: 1s;
 }
 
 /* end of code to be reviewed by @TheTecnoKing */
@@ -132,7 +169,7 @@ div {
 .teamScore, .vs, .div {
     transform: skew(-30deg);
 }
-.teamScore > span, .vs > span {
+.teamScore > span, .vs > span, .div > span {
     transform: skew(30deg);
 }
 .vs, .div {

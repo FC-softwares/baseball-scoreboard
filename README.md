@@ -2,8 +2,9 @@
 
 ![insert banner here](file)
 
-![and maybe some badges as well](file)
 [![CodeFactor](https://www.codefactor.io/repository/github/fc-softwares/baseball-scoreboard/badge/main)](https://www.codefactor.io/repository/github/fc-softwares/baseball-scoreboard/overview/main)
+![Version](https://img.shields.io/github/package-json/v/FC-softwares/baseball-scoreboard/next)
+[![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/aauk.svg)](https://betteruptime.com/?utm_source=status_badge)
 
 # Baseball Scoreboard
 A fast, lightweight and simple scoreboard manager built with Electron.

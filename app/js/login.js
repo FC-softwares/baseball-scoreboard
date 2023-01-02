@@ -65,25 +65,31 @@ function login(username,password){
             }
         }else{
             if(this.readyState == 4){
+                const error = JSON.parse(this.responseText).error;
                 switch(this.status){
                     case 500:
-                        document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.";
+                        if (error)
+                            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>Server error: "+error;
+                        else
+                            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.";
                         document.getElementById("ErrorMsg").classList.remove("visually-hidden");
                         break;
                     case 401:
-                        if (username === "guest") {
+                        if (username === "guest")
                             document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>You are trying to login as a guest, <br>please check you are trying to access a demo product.";
-                        }else{
+                        else if (error)
+                            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.<br>Error: "+error;
+                        else
                             document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.";
-                        }
                         document.getElementById("ErrorMsg").classList.remove("visually-hidden");
                         break;
                     case 400:
                         if (username === "guest") {
                             document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>You are trying to login as a guest, <br>please check you are trying to access a demo product.";
-                        }else{
+                        }else if (error)
+                            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.<br>Error: "+error;
+                        else
                             document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.";
-                        }
                         document.getElementById("ErrorMsg").classList.remove("visually-hidden");
                         break;
                     default:
@@ -94,6 +100,7 @@ function login(username,password){
                 document.querySelector(`#guestButton`).classList.remove("disabled")
                 document.querySelector(`#loginSpin`).classList.add("visually-hidden")
                 document.querySelector(`#loginButton`).classList.remove("disabled")
+                console.log(this.responseText);
             }
         }
     };

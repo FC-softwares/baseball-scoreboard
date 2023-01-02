@@ -55,28 +55,25 @@ div:not(.teamName, .scoreboard) {
 }
 .scoreboard > .teamColor, .scoreboard > .teamName {
     transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.5s;
-    position: relative;
-    left: 0;
+    transform: none;
 }
 .scoreboard.disabled > .teamColor, .scoreboard.disabled > .teamName {
     transition: cubic-bezier(0.67, 0, 0.82, 0.11) 2s;
-    left: -1000%;
+    transform: translateX(-1000px);
 }
 .scoreboard > .score {
     transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1.5s;
     transition-delay: calc(var(--i-inning) * 0.1s + 0.4s);
-    position: relative;
-    right: 0;
+    transform: none;
 }
 .scoreboard.disabled > .score {
     transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1.5s;
     transition-delay: calc(var(--i-inning) * 0.1s + 0.4s);
-    right: -1000%;
+    transform: translateX(1000px);
 }
 .scoreboard > .container > .inning {
     transition: cubic-bezier(0.18, 0.89, 0.33, 1) 2s;
-    position: relative;
-    bottom: 0;
+    transform: none;
 }
 /* Set the delay to the number of previous innings es: first inning = 0.2s, second inning = 0.3s, third inning = 0.4s, etc. */
 /* Without SCSS this is the only way to do it (sorry @TheTecnoKing) */
@@ -141,7 +138,7 @@ div:not(.teamName, .scoreboard) {
 
 .scoreboard.disabled > .container > .inning {
     transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1.5s;
-    bottom: -1000%;
+    transform: translateY(1000px);
 }
 
 #bg {
