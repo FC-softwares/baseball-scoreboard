@@ -2,5 +2,7 @@
     "main": false,
     "pre": false,
     "post": false,
-    "inning": false
+    "inning": false,
+    "umpires": false,
+    "scorers": false
 }

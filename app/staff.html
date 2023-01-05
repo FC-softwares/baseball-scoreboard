@@ -8,10 +8,27 @@
     <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script src="/socket.io/socket.io.js"></script>
-    <script src="js/actives.js"></script>
-    <script src="js/admin.js" async></script>
+    <script src="js/actives.js" async></script>
+    <script src="js/staff.js" async></script>
     <title>Baseball Scoreboard</title>
     <script src="/js/all.js"></script>
+    <style>
+        .form-floating>.form-control,
+        .form-floating>.form-control-plaintext {
+        padding: 0rem 0.75rem;
+        }
+
+        .form-floating>.form-control,
+        .form-floating>.form-control-plaintext,
+        .form-floating>.form-select {
+        height: calc(2.25rem + 2px);
+        line-height: 1;
+        }
+
+        .form-floating>label {
+        padding: 0.5rem 1.5rem;
+        }
+    </style>
 </head>
 <body class="d-flex flex-column vh-100">
     <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -26,10 +43,10 @@
                         <a class="nav-link" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="control-center.html">Control Center</a>
+                        <a class="nav-link" aria-current="page" href="control-center.html">Control Center</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="staff.html">Staff Menagement</a>
+                        <a class="nav-link active" aria-current="page" href="staff.html">Staff Menagement</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="settings.html">Settings</a>
@@ -72,199 +89,171 @@
     </nav>
     <div class="container-md">
         <div class="d-flex flex-row flex-wrap align-items-center py-2 gap-2">
-            <h1 class="fw-bolder m-0 text-black text-opacity-75 me-auto">Control Center</h1>
+            <h1 class="fw-bolder m-0 text-black text-opacity-75 me-auto">Staff Name Menagment</h1>
             <div class="hstack gap-3 flex-shrink-0">
                 <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#ModalResetAllData">Reset all data</button>
-                <div class="vr d-lg-none"></div>
-                <button class="btn btn-outline-info d-lg-none" type="button" onclick="Array.prototype.slice.call(document.querySelectorAll('input[type=checkbox]')).forEach(function (check) { if(check.checked) check.click() } )">Toggle all</button>
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col-lg">
                 <div class="bg-body p-3 mb-4 shadow rounded-3 border">
                     <div class="form-check d-lg-none">
-                        <input class="form-check-input" type="checkbox" value="" id="toggle-bso" data-bs-toggle="collapse" href="#collapse-bso" aria-expanded="true" aria-controls="#collapse-bso" checked>
-                        <label class="form-check-label" for="toggle-bso">
-                            Ball - Strike - Out
+                        <input class="form-check-input" type="checkbox" value="" id="toggle-umpires" data-bs-toggle="collapse" href="#collapse-umpires" aria-expanded="true" aria-controls="#collapse-umpires" checked>
+                        <label class="form-check-label" for="toggle-umpires">
+                            Umpires
                         </label>
                     </div>
-                    <div class="collapse show" id="collapse-bso">
+                    <div class="collapse show" id="collapse-umpires">
                         <hr class="d-lg-none">
-                        <div class="row row-cols-1 row-cols-sm-3 gap-3 gap-sm-0 justify-content-center">
-                            <div class="col d-flex d-sm-block justify-content-between align-items-center">
-                                <h4 class="text-center mb-0 mb-sm-2 me-2 me-sm-0">Ball</h4>
-                                <div class="row">
-                                    <div class="col d-flex justify-content-center">
-                                        <div class="d-flex flex-sm-column gap-2 gap-sm-0" style="width: min-content;">
-                                            <input id="BallView" class="form-control text-center mb-0 mb-sm-2" style="min-width: 3.5rem;" type="text" value="#" readonly>
-                                            <div class="btn-group" role="group" aria-label="Controls">
-                                                <button type="button" class="btn btn-outline-primary" onclick="Ball('-')"><i class="bi bi-dash-lg"></i></button>
-                                                <button type="button" class="btn btn-outline-danger" onclick="Ball('0')"><i class="bi bi-arrow-repeat"></i></button>
-                                                <button type="button" class="btn btn-outline-primary" onclick="Ball('+')"><i class="bi bi-plus-lg"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col d-flex d-sm-block justify-content-between align-items-center">
-                                <h4 class="text-center mb-0 mb-sm-2 me-2 me-sm-0">Strike</h4>
-                                <div class="row">
-                                    <div class="col d-flex justify-content-center">
-                                        <div class="d-flex flex-sm-column gap-2 gap-sm-0" style="width: min-content;">
-                                            <input id="StrikeView" class="form-control text-center mb-0 mb-sm-2" style="min-width: 3.5rem;" type="text" value="#" readonly>
-                                            <div class="btn-group" role="group" aria-label="Controls">
-                                                <button type="button" class="btn btn-outline-primary" onclick="Strike('-')"><i class="bi bi-dash-lg"></i></button>
-                                                <button type="button" class="btn btn-outline-danger" onclick="Strike('0')"><i class="bi bi-arrow-repeat"></i></button>
-                                                <button type="button" class="btn btn-outline-primary" onclick="Strike('+')"><i class="bi bi-plus-lg"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col d-flex d-sm-block justify-content-between align-items-center">
-                                <h4 class="text-center mb-0 mb-sm-2 me-2 me-sm-0">Out</h4>
-                                <div class="row">
-                                    <div class="col d-flex justify-content-center">
-                                        <div class="d-flex flex-sm-column gap-2 gap-sm-0" style="width: min-content;">
-                                            <input id="OutView" class="form-control text-center mb-0 mb-sm-2" style="min-width: 3.5rem;" type="text" value="#" readonly>
-                                            <div class="btn-group" role="group" aria-label="Controls">
-                                                <button type="button" class="btn btn-outline-primary" onclick="Out('-')"><i class="bi bi-dash-lg"></i></button>
-                                                <button type="button" class="btn btn-outline-danger" onclick="Out('0')"><i class="bi bi-arrow-repeat"></i></button>
-                                                <button type="button" class="btn btn-outline-primary" onclick="Out('+')"><i class="bi bi-plus-lg"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="row justify-content-center align-items-center d-none d-lg-flex">
+                            <div class="col d-flex justify-content-between align-items-center flex-column">
+                                <h3 style="width: min-content;">Umpires</h3>
                             </div>
                         </div>
-                        <hr>
-                        <div class="row mt-3 justify-content-center">
-                            <div class="col-auto">
-                                <button type="button" class="btn btn-outline-primary mx-auto" onclick="New_Batter()">New batter</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-body p-3 mb-4 shadow rounded-3 border">
-                    <div class="form-check d-lg-none">
-                        <input class="form-check-input" type="checkbox" value="" id="toggle-itpb" data-bs-toggle="collapse" href="#collapse-itpb" aria-expanded="true" aria-controls="#collapse-itpb" checked>
-                        <label class="form-check-label" for="toggle-itpb">
-                            Inning - Top/Bottom - Bases
-                        </label>
-                    </div>
-                    <div class="collapse show" id="collapse-itpb">
-                        <hr class="d-lg-none">
-                        <div class="row row-cols-1 row-cols-sm-3 gap-3 gap-sm-0 justify-content-center">
-                            <div class="col d-flex d-sm-block justify-content-between align-items-center">
-                                <h4 class="text-center mb-0 mb-sm-2 me-2 me-sm-0">Inning</h4>
-                                <div class="row">
-                                    <div class="col d-flex justify-content-center">
-                                        <div class="d-flex flex-sm-column gap-2 gap-sm-0" style="width: min-content;">
-                                            <input id="InningView" class="form-control text-center mb-0 mb-sm-2" style="min-width: 3.5rem;" type="text" value="#" readonly>
-                                            <div class="btn-group" role="group" aria-label="Controls">
-                                                <button type="button" class="btn btn-outline-primary" onclick="Inning('-')"><i class="bi bi-dash-lg"></i></button>
-                                                <button type="button" class="btn btn-outline-danger" onclick="Inning('0')"><i class="bi bi-arrow-repeat"></i></button>
-                                                <button type="button" class="btn btn-outline-primary" onclick="Inning('+')"><i class="bi bi-plus-lg"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="container text-center">
+                            <div class="row my-1 gap-3 gap-sm-0">
+                                <div class="col col-sm-2 d-flex justify-content-center align-items-center">
+                                    <h5>HP</h5>
+                                </div>
+                                <div class="col col-sm-2 d-flex d-sm-block justify-content-center align-items-center form-switch">
+                                    <input class="form-check-input" type="checkbox" value="" id="hp" data-bs-toggle="collapse" href="#collapse-umpire-hp" aria-expanded="true" aria-controls="#collapse-umpire-hp" checked onclick="checkAndDeCheck('hp')" role="switch">
+                                </div>
+                                <div class="col-12 col-sm-5 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="hp-surname" placeholder="Surname" value="">
+                                    <label for="hp-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-3 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="hp-name" placeholder="Name" value="">
+                                    <label for="hp-name">Name</label>
                                 </div>
                             </div>
-                            <div class="col d-flex d-sm-block justify-content-between align-items-center">
-                                <h4 class="text-center mb-0 mb-sm-2 me-2 me-sm-0">Top/Bottom</h4>
-                                <div class="row">
-                                    <div class="col d-flex justify-content-center">
-                                        <div class="btn-group" role="group" aria-label="Controls">
-                                            <button id="TopView" type="button" class="btn btn-outline-primary" onclick="TopBot('top')">TOP</button>
-                                            <button id="BotView" type="button" class="btn btn-outline-primary" onclick="TopBot('bot')">BOT</button>
-                                        </div>
-                                    </div>
+                            <div class="row my-1 gap-3 gap-sm-0">
+                                <div class="col col-sm-2 d-flex justify-content-center align-items-center">
+                                    <h5>1B</h5>
+                                </div>
+                                <div class="col col-sm-2 d-flex d-sm-block justify-content-center align-items-center form-switch">
+                                    <input class="form-check-input" type="checkbox" value="" id="b1" data-bs-toggle="collapse" href="#collapse-umpire-1b" aria-expanded="true" aria-controls="#collapse-umpire-1b" checked onclick="checkAndDeCheck('b1')" role="switch">
+                                </div>
+                                <div class="col-12 col-sm-5 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="b1-surname" placeholder="Surname" value="">
+                                    <label for="1b-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-3 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="b1-name" placeholder="Name" value="">
+                                    <label for="1b-name">Name</label>
                                 </div>
                             </div>
-                            <div class="col d-flex d-sm-block justify-content-between align-items-center">
-                                <h4 class="text-center mb-0 mb-sm-2 me-2 me-sm-0">Bases</h4>
-                                <div class="row">
-                                    <div class="col d-flex justify-content-center">
-                                        <div class="btn-group" role="group" aria-label="Controls">
-                                            <button id="Base1View" type="button" class="btn btn-outline-primary" onclick="Base('1')">1st</button>
-                                            <button id="Base2View" type="button" class="btn btn-outline-primary" onclick="Base('2')">2nd</button>
-                                            <button id="Base3View" type="button" class="btn btn-outline-primary" onclick="Base('3')">3rd</button>
-                                        </div>
-                                    </div>
+                            <div class="row my-1 gap-3 gap-sm-0">
+                                <div class="col col-sm-2 d-flex justify-content-center align-items-center">
+                                    <h5>2B</h5>
+                                </div>
+                                <div class="col col-sm-2 d-flex d-sm-block justify-content-center align-items-center form-switch">
+                                    <input class="form-check-input" type="checkbox" value="" id="b2" data-bs-toggle="collapse" href="#collapse-umpire-2b" aria-expanded="true" aria-controls="#collapse-umpire-2b" checked onclick="checkAndDeCheck('b2')" role="switch">
+                                </div>
+                                <div class="col-12 col-sm-5 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="b2-surname" placeholder="Surname" value="">
+                                    <label for="2b-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-3 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="b2-name" placeholder="Name" value="">
+                                    <label for="2b-name">Name</label>
                                 </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row mt-3 justify-content-center">
-                            <div class="col-auto">
-                                <button type="button" class="btn btn-outline-primary mx-auto" onclick="Auto_Change_Inning()">Automatically change inning</button>
+                            <div class="row my-1 gap-3 gap-sm-0">
+                                <div class="col col-sm-2 d-flex justify-content-center align-items-center">
+                                    <h5>3B</h5>
+                                </div>
+                                <div class="col col-sm-2 d-flex d-sm-block justify-content-center align-items-center form-switch">
+                                    <input class="form-check-input" type="checkbox" value="" id="b3" data-bs-toggle="collapse" href="#collapse-umpire-3b" aria-expanded="true" aria-controls="#collapse-umpire-3b" checked onclick="checkAndDeCheck('b3')" role="switch">
+                                </div>
+                                <div class="col-12 col-sm-5 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="b3-surname" placeholder="Surname" value="">
+                                    <label for="3b-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-3 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="b3-name" placeholder="Name" value="">
+                                    <label for="3b-name">Name</label>
+                                </div>
+                            </div>
+                            <hr class="my-2">
+                            <div class="row d-flex justify-content-center">
+                                <button type="button" class="btn btn-outline-primary" id="btn-umpire-save" onclick="sendUmpires()">Save</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-5 col-xl-auto">
+            <div class="col-lg">
                 <div class="bg-body p-3 mb-4 shadow rounded-3 border">
                     <div class="form-check d-lg-none">
-                        <input class="form-check-input" type="checkbox" value="" id="toggle-ha" data-bs-toggle="collapse" href="#collapse-ha" aria-expanded="true" aria-controls="#collapse-ha" checked>
-                        <label class="form-check-label" for="toggle-ha">
-                            Away - Home
+                        <input class="form-check-input" type="checkbox" value="" id="toggle-umpires" data-bs-toggle="collapse" href="#collapse-umpires" aria-expanded="true" aria-controls="#collapse-umpires" checked>
+                        <label class="form-check-label" for="toggle-umpires">
+                            Scorers
                         </label>
                     </div>
-                    <div class="collapse show" id="collapse-ha">
+                    <div class="collapse show" id="collapse-umpires">
                         <hr class="d-lg-none">
-                        <div class="row gap-1 justify-content-evenly">
-                            <div class="col" style="max-width: 200px;">
-                                <h4 class="text-center">Away</h4>
-                                <div class="mb-2 d-flex flex-column align-items-center">
-                                    <h5 class="text-center fw-normal">Score</h5>
-                                    <input id="ScoreAView" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
-                                    <div class="btn-group" role="group" aria-label="Controls">
-                                        <button type="button" class="btn btn-outline-primary" onclick="ScoreAway('-')"><i class="bi bi-dash-lg"></i></button>
-                                        <button type="button" class="btn btn-outline-danger" onclick="ScoreAway('0')"><i class="bi bi-arrow-repeat"></i></button>
-                                        <button type="button" class="btn btn-outline-primary" onclick="ScoreAway('+')"><i class="bi bi-plus-lg"></i></button>
-                                    </div>
-                                </div>
-                                <div class="mb-2 d-flex flex-column align-items-center">
-                                    <label for="NameAway" class="form-label h5 fw-normal">Name</label>
-                                    <input type="text" class="form-control form-control-sm" id="NameAway">
-                                </div>
-                                <div class="d-flex flex-column align-items-center">
-                                    <label for="ColorAway" class="form-label h5 fw-normal">Color</label>
-                                    <input type="color" class="form-control form-control-sm" id="ColorAway">
-                                </div>
-                            </div>
-                            <div class="vr p-0 d-none d-sm-block"></div> <!--unico problema è che non se lo schermo è xs, le metà ci saranno ugualmente, ma la divisione scomparirà-->
-                            <div class="col" style="max-width: 200px;">
-                                <h4 class="text-center">Home</h4>
-                                <div class="mb-2 d-flex flex-column align-items-center">
-                                    <h5 class="text-center fw-normal">Score</h5>
-                                    <input id="ScoreHView" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
-                                    <div class="btn-group" role="group" aria-label="Controls">
-                                        <button type="button" class="btn btn-outline-primary" onclick="ScoreHome('-')"><i class="bi bi-dash-lg"></i></button>
-                                        <button type="button" class="btn btn-outline-danger" onclick="ScoreHome('0')"><i class="bi bi-arrow-repeat"></i></button>
-                                        <button type="button" class="btn btn-outline-primary" onclick="ScoreHome('+')"><i class="bi bi-plus-lg"></i></button>
-                                    </div>
-                                </div>
-                                <div class="mb-2 d-flex flex-column align-items-center">
-                                    <label for="NameHome" class="form-label h5 fw-normal">Name</label>
-                                    <input type="text" class="form-control form-control-sm" id="NameHome">
-                                </div>
-                                <div class="d-flex flex-column align-items-center">
-                                    <label for="ColorHome" class="form-label h5 fw-normal">Color</label>
-                                    <input type="color" class="form-control form-control-sm" id="ColorHome">
-                                </div>
+                        <div class="row justify-content-center align-items-center d-none d-lg-flex">
+                            <div class="col d-flex justify-content-between align-items-center flex-column">
+                                <h3 style="width: min-content;">Scorers</h3>
                             </div>
                         </div>
-                        <hr>
-                        <div class="row mt-3 justify-content-center">
-                            <div class="col-auto">
-                                <button type="button" class="btn btn-outline-primary mx-auto" onclick="Update_Data()">Update</button>
+                        <div class="container text-center">
+                            <div class="row my-1 gap-3 gap-sm-0">
+                                <div class="col col-sm-2 d-flex justify-content-center align-items-center">
+                                    <h5>Head</h5>
+                                </div>
+                                <div class="col col-sm-2 d-flex d-sm-block justify-content-center align-items-center form-switch">
+                                    <input class="form-check-input" type="checkbox" value="" id="head" checked onclick="checkAndDeCheck('head')" role="switch">
+                                </div>
+                                <div class="col-12 col-sm-5 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="head-surname" placeholder="Surname" value="">
+                                    <label for="hp-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-3 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="head-name" placeholder="Name" value="">
+                                    <label for="hp-name">Name</label>
+                                </div>
+                            </div>
+                            <div class="row my-1 gap-3 gap-sm-0">
+                                <div class="col col-sm-2 d-flex justify-content-center align-items-center">
+                                    <h5>2°</h5>
+                                </div>
+                                <div class="col col-sm-2 d-flex d-sm-block justify-content-center align-items-center form-switch">
+                                    <input class="form-check-input" type="checkbox" value="" id="second" checked onclick="checkAndDeCheck('second')" role="switch">
+                                </div>
+                                <div class="col-12 col-sm-5 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="second-surname" placeholder="Surname" value="">
+                                    <label for="1b-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-3 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="second-name" placeholder="Name" value="">
+                                    <label for="1b-name">Name</label>
+                                </div>
+                            </div>
+                            <div class="row my-1 gap-3 gap-sm-0">
+                                <div class="col col-sm-2 d-flex justify-content-center align-items-center">
+                                    <h5>3°</h5>
+                                </div>
+                                <div class="col col-sm-2 d-flex d-sm-block justify-content-center align-items-center form-switch">
+                                    <input class="form-check-input" type="checkbox" value="" id="third" checked onclick="checkAndDeCheck('third')" role="switch">
+                                </div>
+                                <div class="col-12 col-sm-5 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="third-surname" placeholder="Surname" value="">
+                                    <label for="2b-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-3 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="third-name" placeholder="Name" value="">
+                                    <label for="2b-name">Name</label>
+                                </div>
+                            </div>
+                            <hr class="my-2">
+                            <div class="row d-flex justify-content-center">
+                                <button type="button" class="btn btn-outline-primary" id="btn-umpire-save" onclick="sendScorers()">Save</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- non so minimamente perché esistano -->
                 <div class="bg-body p-3 mb-4 shadow rounded-3 border">
                     <div class="form-check d-lg-none">
                         <input class="form-check-input" type="checkbox" value="" id="toggle-anim" data-bs-toggle="collapse" href="#collapse-anim" aria-expanded="true" aria-controls="#collapse-anim" checked>
@@ -385,7 +374,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                You are about to <strong>reset all data</strong>.<br>Are you sure?
+                                You are about to <strong>reset all staff names</strong>.<br>Are you sure?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

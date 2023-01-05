@@ -1,0 +1,41 @@
+{
+    "umpires": {
+        "HP": {
+            "surname": "",
+            "name": "",
+            "active": true
+        },
+        "B1": {
+            "surname": "",
+            "name": "",
+            "active": true
+        },
+        "B2": {
+            "surname": "",
+            "name": "",
+            "active": true
+        },
+        "B3": {
+            "surname": "",
+            "name": "",
+            "active": true
+        }
+    },
+    "scorers": {
+        "head": {
+            "surname": "",
+            "name": "",
+            "active": true
+        },
+        "second": {
+            "surname": "",
+            "name": "",
+            "active": true
+        },
+        "third": {
+            "surname": "",
+            "name": "",
+            "active": true
+        }
+    }
+}

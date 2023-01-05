@@ -307,6 +307,139 @@ io.on('connection', (socket) => {
 			socket.emit('connectActive',data);
 		})
 	});
+	socket.on('updateOffices',(data)=>{
+		if (socket.handshake.auth.id && socket.handshake.auth.token) {
+			const ver_req_set_option = {
+				hostname: API,
+				port: 443,
+				path: '/checkstat',
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				}
+			}
+			const ver_data = JSON.stringify({
+				id: socket.handshake.auth.id,
+				token: socket.handshake.auth.token
+			});
+			const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
+				ver_res.on('data', (d) => {
+					res_data = JSON.parse(d);
+					if (res_data.ok === true) {
+						// Get and Update The Offices List
+						fs.readFile(__dirname + '/app/json/umpiresScorers.json', 'utf8', (err, umpiresScorers_old) => {
+							if (err) {
+								console.error(err);
+								return;
+							}
+							var jsonOld = JSON.parse(umpiresScorers_old);
+							var changes = {};
+							// Compare The Old offices list With The New offices list and save the changes
+							Object.entries(data).forEach(entry => {
+								const [indx, element] = entry;
+								Object.entries(element).forEach(entry2 => {
+									const [indx2, element2] = entry2;
+									Object.entries(element2).forEach(entry3 => {
+										const [indx3, element3] = entry3;
+										if(jsonOld[indx][indx2][indx3] != element3){
+											jsonOld[indx][indx2][indx3] = element3;
+											if(!changes[indx])
+												changes[indx] = {};
+											if(!changes[indx][indx2])
+												changes[indx][indx2] = {};
+											changes[indx][indx2][indx3] = element3;
+										}
+									});
+								});
+							});
+							fs.writeFile(__dirname + '/app/json/umpiresScorers.json', JSON.stringify(jsonOld, null, 4), (err) => {
+								if (err) throw err;
+								socket.emit('updateOffices',changes);
+								socket.broadcast.emit('updateOffices',changes);
+							});
+						})
+					}
+				});
+			});
+			ver_req_set.on('error', (e) => {
+				console.error(e);
+			});
+			ver_req_set.write(ver_data);
+			ver_req_set.end();
+		}
+	});
+	socket.on('getOffices',()=>{
+		fs.readFile(__dirname + '/app/json/umpiresScorers.json', 'utf8', (err, data) => {
+			if(err){
+				console.error(err);
+				return;
+			}
+			socket.emit('connectOffices',JSON.parse(data));
+		})
+	});
+	socket.on('Reset_all_staff',()=>{
+		if (socket.handshake.auth.id && socket.handshake.auth.token) {
+			const ver_req_set_option = {
+				hostname: API,
+				port: 443,
+				path: '/checkstat',
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				}
+			}
+			const ver_data = JSON.stringify({
+				id: socket.handshake.auth.id,
+				token: socket.handshake.auth.token
+			});
+			const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
+				ver_res.on('data', (d) => {
+					res_data = JSON.parse(d);
+					if (res_data.ok === true) {
+						fs.readFile(__dirname + '/app/json/umpiresScorers.json', 'utf8', (err, data) => {
+							if(err){
+								console.error(err);
+								return;
+							}
+							var json = JSON.parse(data);
+							Object.entries(json).forEach(entry => {
+								const [indx, element] = entry;
+								Object.entries(element).forEach(entry2 => {
+									const [indx2, element2] = entry2;
+									Object.entries(element2).forEach(entry3 => {
+										const [indx3, element3] = entry3;
+										switch(indx3){
+											case 'name':
+												json[indx][indx2][indx3] = '';
+												break;
+											case 'surname':
+												json[indx][indx2][indx3] = '';
+												break;
+											case 'active':
+												json[indx][indx2][indx3] = false;
+												break;
+											default:
+												break;
+										}
+									});
+								});
+							});
+							fs.writeFile(__dirname + '/app/json/umpiresScorers.json', JSON.stringify(json, null, 4), (err) => {
+								if (err) throw err;
+								socket.emit('updateOffices',JSON.stringify(json));
+								socket.broadcast.emit('updateOffices',JSON.stringify(json));
+							});
+						})
+					}
+				});
+			});
+			ver_req_set.on('error', (e) => {
+				console.error(e);
+			});
+			ver_req_set.write(ver_data);
+			ver_req_set.end();
+		}
+	});
 	socket.on('disconnect', () => {
 		console.log('user disconnected\tID: '+socket.id);
 	});
