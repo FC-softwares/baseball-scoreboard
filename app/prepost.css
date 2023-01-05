@@ -34,17 +34,10 @@ div {
     display: grid;
 }
 
-/* Scoreboard & defaults */
-.scoreboard {
-    font-family: 'Poppins', sans-serif;
-    font-size: 25px;
-    grid-auto-flow: column;
-    grid-template-rows: var(--h-row);
-}
-/* Code to be reviewed by @TheTecnoKing  but is a good prototype for the animation */
+/* Transitions */
 .scoreboard > div.teamName#home, .scoreboard > div.teamName#away, .scoreboard > div.teamColor#home, .scoreboard > div.teamColor#away {
     transition: cubic-bezier(0.18, 0.89, 0.33, 1.0) 1s;
-    transition-delay: 1.125s;
+    transition-delay: 1s;
     transform: scaleX(1);
     z-index: 0;
 }
@@ -54,7 +47,6 @@ div {
 }
 .scoreboard > div.teamScore {
     transition: cubic-bezier(0.18, 0.89, 0.33, 1.0) 1.5s;
-    transition-delay: 1.125s;
     transform: scaleX(1) skew(-30deg);
     z-index: 1;
 }
@@ -116,28 +108,32 @@ div {
 .scoreboard.disabled#postgame > div.teamColor#home {
     transform: translateX(350px);
 }
-.scoreboard > div.vs{
+.scoreboard > div.vs {
     transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
     transform-origin: center;
     z-index: 2;
 }
-.scoreboard.disabled > div.vs{
+.scoreboard.disabled > div.vs {
     transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
-    transform: translateY(750px) skew(-30deg);
-    transition-delay: 1.5s;
+    transform: translateY(120px) skew(-30deg);
+    transition-delay: 0.75s;
 }
 .scoreboard > div.div {
     transition: cubic-bezier(0.18, 0.89, 0.33,1) 1s;
     z-index: 2;
 }
 .scoreboard.disabled > div.div{
-    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
-    transform: translateY(750px) skew(-30deg);
-    transition-delay: 1s;
+    transition: cubic-bezier(0.18, 0.89, 0.33,1) 1s;
+    transform: translateY(80px) skew(-30deg);
 }
 
-/* end of code to be reviewed by @TheTecnoKing */
-
+/* Scoreboard & defaults */
+.scoreboard {
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
+    grid-auto-flow: column;
+    grid-template-rows: var(--h-row);
+}
 .scoreboard#pregame {
     grid-template-columns: var(--w-teamcolor) var(--w-teamname) calc((var(--w-score) * 2) + var(--w-div)) var(--w-teamname) var(--w-teamcolor);
 }
@@ -208,12 +204,14 @@ div {
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
+    text-transform: uppercase;
 }
 .teamName#away > #bg > span {
     background: var(--g-away);
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
+    text-transform: uppercase;
 }
 
 /* Team score */

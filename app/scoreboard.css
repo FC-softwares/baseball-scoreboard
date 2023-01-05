@@ -45,35 +45,17 @@ div {
     display: grid;
 }
 
-/* Scoreboard & defaults */
-.scoreboard {
-    font-family: 'Poppins', sans-serif;
-    font-size: 25px;
-    grid-template-rows: repeat(2, var(--h-row));
-    grid-template-columns: var(--w-teamcolor) var(--w-teamname) var(--w-score) var(--w-bases) var(--w-bs-out) var(--w-inning);
-    grid-template-areas:
-        "colorAway nameAway scoreAway bases ballStrike inning"
-        "colorHome nameHome scoreHome bases out inning";
-    
-    /* Code to be reviewed by @TheTecnoKing
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    */
-}
-
-/* Code to be reviewed by @TheTecnoKing but is a good prototype for the animation */
+/* Transitions */
 .scoreboard > div#away{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
     transform: none;
 }
 .scoreboard.disabled > div#away{
     transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
     transform: translateX(-750px);
 }
-
 .scoreboard > div#home{
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
     transition-delay: 0.1s;
     transform: none;
 }
@@ -82,9 +64,8 @@ div {
     transition-delay: 0.1s;
     transform: translateX(-750px);
 }
-
 .scoreboard > div.bases {
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
     transition-delay: 0.2s;
     transform: none;
 }
@@ -93,31 +74,28 @@ div {
     transition-delay: 0.2s;
     transform: translateY(750px);
 }
-
 .scoreboard > div.ballStrike {
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
     transition-delay: 0.3s;
     transform: none;
 }
 .scoreboard.disabled > div.ballStrike {
     transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
-    transition-delay: 0.3s;
+    transition-delay: 0.4s;
     transform: translateY(750px);
 }
-
 .scoreboard > div.out {
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
     transition-delay: 0.4s;
     transform: none;
 }
 .scoreboard.disabled > div.out {
     transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
-    transition-delay: 0.4s;
+    transition-delay: 0.3s;
     transform: translateY(750px);
 }
-
 .scoreboard > div.inning {
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
     transition-delay: 0.5s;
     transform: none;
 }
@@ -127,8 +105,16 @@ div {
     transform: translateY(750px);
 }
 
-/* end of code to be reviewed by @TheTecnoKing */
-
+/* Scoreboard & defaults */
+.scoreboard {
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
+    grid-template-rows: repeat(2, var(--h-row));
+    grid-template-columns: var(--w-teamcolor) var(--w-teamname) var(--w-score) var(--w-bases) var(--w-bs-out) var(--w-inning);
+    grid-template-areas:
+        "colorAway nameAway scoreAway bases ballStrike inning"
+        "colorHome nameHome scoreHome bases out inning";
+}
 .scoreboard > div {
     align-items: center;
 }
@@ -180,12 +166,14 @@ div {
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
+    text-transform: uppercase;
 }
 .teamName#away > #bg > span {
     background: var(--g-away);
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
+    text-transform: uppercase;
 }
 
 /* Team score */

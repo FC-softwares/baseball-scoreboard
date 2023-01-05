@@ -38,23 +38,9 @@ div {
     align-items: center;
 }
 
-/* Scoreboard & defaults */
-.scoreboard {
-    font-family: 'Poppins', sans-serif;
-    font-size: 25px;
-    grid-template-rows: repeat(3, var(--h-row));
-    grid-template-columns: var(--w-teamcolor) var(--w-teamname) auto var(--w-score);
-    grid-auto-flow: column;
-    grid-template-areas:
-        "empty empty container score"
-        "colorAway nameAway container score"
-        "colorHome nameHome container score";
-}
-div:not(.teamName, .scoreboard) {
-    text-align: center;
-}
+/* Transitions */
 .scoreboard > .teamColor, .scoreboard > .teamName {
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1.1) 1.5s;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1.5s;
     transform: none;
 }
 .scoreboard.disabled > .teamColor, .scoreboard.disabled > .teamName {
@@ -68,7 +54,7 @@ div:not(.teamName, .scoreboard) {
 }
 .scoreboard.disabled > .score {
     transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1.5s;
-    transition-delay: calc(var(--i-inning) * 0.1s + 0.4s);
+    transition-delay: calc(var(--i-inning) * 0.1s + 0.1s);
     transform: translateX(1000px);
 }
 .scoreboard > .container > .inning {
@@ -134,13 +120,33 @@ div:not(.teamName, .scoreboard) {
 .scoreboard > .container > .inning:nth-child(19), .scoreboard.disabled > .container > .inning:nth-child(19) {
     transition-delay: 2s;
 }
-
-
 .scoreboard.disabled > .container > .inning {
     transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1.5s;
     transform: translateY(1000px);
 }
 
+/* Scoreboard & defaults */
+.scoreboard {
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
+    grid-template-rows: repeat(3, var(--h-row));
+    grid-template-columns: var(--w-teamcolor) var(--w-teamname) auto var(--w-score);
+    grid-auto-flow: column;
+    grid-template-areas:
+        "empty empty container score"
+        "colorAway nameAway container score"
+        "colorHome nameHome container score";
+}
+div:not(.teamName, .scoreboard) {
+    text-align: center;
+}
+.container {
+    grid-area: container;
+    grid-template-columns: repeat(var(--i-inning), var(--w-inning));
+}
+.inning {
+    grid-template-rows: repeat(3, var(--h-row));
+}
 #bg {
     border-radius: 3px;
     width: fit-content;
@@ -156,6 +162,7 @@ div:not(.teamName, .scoreboard) {
     background: #414141;
 }
 
+/* Team color */
 .teamColor#away {
     grid-area: colorAway;
     border-radius: 7px 0 0;
@@ -166,14 +173,8 @@ div:not(.teamName, .scoreboard) {
     border-radius: 0 0 0 7px;
     background: var(--g-home)
 }
-.container {
-    grid-area: container;
-    grid-template-columns: repeat(var(--i-inning), var(--w-inning));
-}
-.inning {
-    grid-template-rows: repeat(3, var(--h-row));
-}
 
+/* Team name */
 .teamName {
     padding-left: 10px;
     padding-right: 10px;
@@ -183,12 +184,14 @@ div:not(.teamName, .scoreboard) {
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
+    text-transform: uppercase;
 }
 .teamName#home > #bg > span {
     background: var(--g-home);
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
+    text-transform: uppercase;
 }
 .teamName, .inning > .number, .score > .inning > .total {
     background: var(--g-def);
