@@ -1,41 +1,51 @@
 {
     "umpires": {
         "HP": {
-            "surname": "",
-            "name": "",
+            "surname": "HP Surname",
+            "name": "Name",
             "active": true
         },
         "B1": {
-            "surname": "",
-            "name": "",
+            "surname": "1B Surname",
+            "name": "Name",
             "active": true
         },
         "B2": {
-            "surname": "",
-            "name": "",
+            "surname": "2B Surname",
+            "name": "Name",
             "active": true
         },
         "B3": {
-            "surname": "",
-            "name": "",
+            "surname": "3B Surname",
+            "name": "Name",
             "active": true
         }
     },
     "scorers": {
         "head": {
-            "surname": "",
-            "name": "",
+            "surname": "Head Surname",
+            "name": "Name",
             "active": true
         },
         "second": {
-            "surname": "",
-            "name": "",
+            "surname": "Second Surname",
+            "name": "Name",
             "active": true
         },
         "third": {
-            "surname": "",
-            "name": "",
+            "surname": "Third Surname",
+            "name": "Name",
             "active": true
+        }
+    },
+    "commentators": {
+        "main": {
+            "surname": "Sportcaster Surname",
+            "name": "Name"
+        },
+        "technical": {
+            "surname": "Technical Surname",
+            "name": "Name"
         }
     }
 }

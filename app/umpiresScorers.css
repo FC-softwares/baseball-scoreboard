@@ -110,6 +110,18 @@ div {
     height: calc(var(--h-row) + var(--h-row-head) + var(--h-row-second) + var(--h-row-third));
 }
 
+.scoreboard#commentator {
+    grid-template-columns: var(--w-column);
+    grid-template-rows:  var(--h-row);
+    display: grid;
+    grid-template-areas: 
+        "Header"
+        "Commentator";
+    ;
+    width: var(--w-column);
+    height: calc(var(--h-row) + var(--h-row));
+}
+
 .scoreboard > div {
     align-items: center;
     text-align: center;
@@ -285,6 +297,37 @@ div {
 .scoreboard > .scorer.notActive {
     display: none;
 }
+/* Commentors */
+.scoreboard#commentator > .commentator {
+    background: var(--g-def);
+    width: calc(var(--w-column) - 20px);
+    height: var(--h-row);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 0 0 10px 10px;
+    grid-area: Commentator;
+    transition-delay: var(--d-standard) !important;
+    z-index: 0;
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    transform: none;
+    position: static;
+}
+.scoreboard.disabled#commentator > .commentator{
+    transition-delay: 0s !important;
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s !important;
+    transform: translateY(-500%) !important;
+}
+
+.scoreboard#commentator > .header {
+    transition-delay: 0s;
+}
+.scoreboard.disabled#commentator > .header {
+    transition-delay: var(--d-standard);
+}
+
 .scoreboard > #bg > span {
     background: var(--g-def);
     color: black;

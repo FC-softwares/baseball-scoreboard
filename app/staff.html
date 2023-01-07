@@ -21,12 +21,12 @@
         .form-floating>.form-control,
         .form-floating>.form-control-plaintext,
         .form-floating>.form-select {
-        height: calc(2.25rem + 2px);
-        line-height: 1;
+            height: calc(2.25rem + 2px);
+            line-height: 1;
         }
 
         .form-floating>label {
-        padding: 0.5rem 1.5rem;
+            padding: 0.5rem 1.5rem;
         }
     </style>
 </head>
@@ -75,6 +75,12 @@
                             <li>
                                 <a class="dropdown-item" onclick="newWindow(window.location.origin+'/scorers.html',600,200)">Scorers <i class="bi-box-arrow-up-right"></i></a>
                             </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/commentator.html',600,100)">Sportcaster <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/tecnicalComment.html',600,100)">Technical Comment <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -115,14 +121,14 @@
                                 <div class="col col-sm-2 d-flex justify-content-center align-items-center">
                                     <h5>HP</h5>
                                 </div>
-                                <div class="col col-sm-2 d-flex d-sm-block justify-content-center align-items-center form-switch">
+                                <div class="col col-sm-2 d-flex d-sm-block my-auto justify-content-center align-items-center form-switch">
                                     <input class="form-check-input" type="checkbox" value="" id="hp" data-bs-toggle="collapse" href="#collapse-umpire-hp" aria-expanded="true" aria-controls="#collapse-umpire-hp" checked onclick="checkAndDeCheck('hp')" role="switch">
                                 </div>
-                                <div class="col-12 col-sm-5 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="hp-surname" placeholder="Surname" value="">
                                     <label for="hp-surname">Surname</label>
                                 </div>
-                                <div class="col-12 col-sm-3 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="hp-name" placeholder="Name" value="">
                                     <label for="hp-name">Name</label>
                                 </div>
@@ -131,14 +137,14 @@
                                 <div class="col col-sm-2 d-flex justify-content-center align-items-center">
                                     <h5>1B</h5>
                                 </div>
-                                <div class="col col-sm-2 d-flex d-sm-block justify-content-center align-items-center form-switch">
+                                <div class="col col-sm-2 d-flex d-sm-block my-auto justify-content-center align-items-center form-switch">
                                     <input class="form-check-input" type="checkbox" value="" id="b1" data-bs-toggle="collapse" href="#collapse-umpire-1b" aria-expanded="true" aria-controls="#collapse-umpire-1b" checked onclick="checkAndDeCheck('b1')" role="switch">
                                 </div>
-                                <div class="col-12 col-sm-5 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="b1-surname" placeholder="Surname" value="">
                                     <label for="1b-surname">Surname</label>
                                 </div>
-                                <div class="col-12 col-sm-3 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="b1-name" placeholder="Name" value="">
                                     <label for="1b-name">Name</label>
                                 </div>
@@ -147,14 +153,14 @@
                                 <div class="col col-sm-2 d-flex justify-content-center align-items-center">
                                     <h5>2B</h5>
                                 </div>
-                                <div class="col col-sm-2 d-flex d-sm-block justify-content-center align-items-center form-switch">
+                                <div class="col col-sm-2 d-flex d-sm-block my-auto justify-content-center align-items-center form-switch">
                                     <input class="form-check-input" type="checkbox" value="" id="b2" data-bs-toggle="collapse" href="#collapse-umpire-2b" aria-expanded="true" aria-controls="#collapse-umpire-2b" checked onclick="checkAndDeCheck('b2')" role="switch">
                                 </div>
-                                <div class="col-12 col-sm-5 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="b2-surname" placeholder="Surname" value="">
                                     <label for="2b-surname">Surname</label>
                                 </div>
-                                <div class="col-12 col-sm-3 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="b2-name" placeholder="Name" value="">
                                     <label for="2b-name">Name</label>
                                 </div>
@@ -163,14 +169,14 @@
                                 <div class="col col-sm-2 d-flex justify-content-center align-items-center">
                                     <h5>3B</h5>
                                 </div>
-                                <div class="col col-sm-2 d-flex d-sm-block justify-content-center align-items-center form-switch">
+                                <div class="col col-sm-2 d-flex d-sm-block my-auto justify-content-center align-items-center form-switch">
                                     <input class="form-check-input" type="checkbox" value="" id="b3" data-bs-toggle="collapse" href="#collapse-umpire-3b" aria-expanded="true" aria-controls="#collapse-umpire-3b" checked onclick="checkAndDeCheck('b3')" role="switch">
                                 </div>
-                                <div class="col-12 col-sm-5 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="b3-surname" placeholder="Surname" value="">
                                     <label for="3b-surname">Surname</label>
                                 </div>
-                                <div class="col-12 col-sm-3 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="b3-name" placeholder="Name" value="">
                                     <label for="3b-name">Name</label>
                                 </div>
@@ -182,16 +188,64 @@
                         </div>
                     </div>
                 </div>
+                <div class="bg-body p-3 mb-4 shadow rounded-3 border">
+                    <div class="form-check d-lg-none">
+                        <input class="form-check-input" type="checkbox" value="" id="toggle-commentors" data-bs-toggle="collapse" href="#collapse-commentors" aria-expanded="true" aria-controls="#collapse-commentors" checked>
+                        <label class="form-check-label" for="toggle-commentors">
+                            Commentors
+                        </label>
+                    </div>
+                    <div class="collapse show" id="collapse-commentors">
+                        <hr class="d-lg-none">
+                        <div class="row justify-content-center align-items-center d-none d-lg-flex">
+                            <div class="col d-flex justify-content-between align-items-center flex-column">
+                                <h3 style="width: min-content;">Commentors</h3>
+                            </div>
+                        </div>
+                        <div class="container text-center">
+                            <div class="row my-1 gap-3 gap-sm-0">
+                                <div class="col col-sm-4 d-flex justify-content-center align-items-center">
+                                    <h5>Main</h5>
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="Main-surname" placeholder="Surname" value="">
+                                    <label for="hp-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="Main-name" placeholder="Name" value="">
+                                    <label for="hp-name">Name</label>
+                                </div>
+                            </div>
+                            <div class="row my-1 gap-3 gap-sm-0">
+                                <div class="col col-sm-4 d-flex justify-content-center align-items-center">
+                                    <h5>Technical Commentor</h5>
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="TC-surname" placeholder="Surname" value="">
+                                    <label for="hp-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="TC-name" placeholder="Name" value="">
+                                    <label for="hp-name">Name</label>
+                                </div>
+                            </div>
+                            <hr class="my-2">
+                            <div class="row d-flex justify-content-center">
+                                <button type="button" class="btn btn-outline-primary" id="btn-umpire-save" onclick="sendSportcasters()">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-lg">
                 <div class="bg-body p-3 mb-4 shadow rounded-3 border">
                     <div class="form-check d-lg-none">
-                        <input class="form-check-input" type="checkbox" value="" id="toggle-umpires" data-bs-toggle="collapse" href="#collapse-umpires" aria-expanded="true" aria-controls="#collapse-umpires" checked>
-                        <label class="form-check-label" for="toggle-umpires">
+                        <input class="form-check-input" type="checkbox" value="" id="toggle-scorers" data-bs-toggle="collapse" href="#collapse-scorers" aria-expanded="true" aria-controls="#collapse-scorers" checked>
+                        <label class="form-check-label" for="toggle-scorers">
                             Scorers
                         </label>
                     </div>
-                    <div class="collapse show" id="collapse-umpires">
+                    <div class="collapse show" id="collapse-scorers">
                         <hr class="d-lg-none">
                         <div class="row justify-content-center align-items-center d-none d-lg-flex">
                             <div class="col d-flex justify-content-between align-items-center flex-column">
@@ -203,14 +257,14 @@
                                 <div class="col col-sm-2 d-flex justify-content-center align-items-center">
                                     <h5>Head</h5>
                                 </div>
-                                <div class="col col-sm-2 d-flex d-sm-block justify-content-center align-items-center form-switch">
+                                <div class="col col-sm-2 d-flex d-sm-block my-auto justify-content-center align-items-center form-switch">
                                     <input class="form-check-input" type="checkbox" value="" id="head" checked onclick="checkAndDeCheck('head')" role="switch">
                                 </div>
-                                <div class="col-12 col-sm-5 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="head-surname" placeholder="Surname" value="">
                                     <label for="hp-surname">Surname</label>
                                 </div>
-                                <div class="col-12 col-sm-3 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="head-name" placeholder="Name" value="">
                                     <label for="hp-name">Name</label>
                                 </div>
@@ -219,14 +273,14 @@
                                 <div class="col col-sm-2 d-flex justify-content-center align-items-center">
                                     <h5>2°</h5>
                                 </div>
-                                <div class="col col-sm-2 d-flex d-sm-block justify-content-center align-items-center form-switch">
+                                <div class="col col-sm-2 d-flex d-sm-block my-auto justify-content-center align-items-center form-switch">
                                     <input class="form-check-input" type="checkbox" value="" id="second" checked onclick="checkAndDeCheck('second')" role="switch">
                                 </div>
-                                <div class="col-12 col-sm-5 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="second-surname" placeholder="Surname" value="">
                                     <label for="1b-surname">Surname</label>
                                 </div>
-                                <div class="col-12 col-sm-3 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="second-name" placeholder="Name" value="">
                                     <label for="1b-name">Name</label>
                                 </div>
@@ -235,14 +289,14 @@
                                 <div class="col col-sm-2 d-flex justify-content-center align-items-center">
                                     <h5>3°</h5>
                                 </div>
-                                <div class="col col-sm-2 d-flex d-sm-block justify-content-center align-items-center form-switch">
+                                <div class="col col-sm-2 d-flex d-sm-block my-auto justify-content-center align-items-center form-switch">
                                     <input class="form-check-input" type="checkbox" value="" id="third" checked onclick="checkAndDeCheck('third')" role="switch">
                                 </div>
-                                <div class="col-12 col-sm-5 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="third-surname" placeholder="Surname" value="">
                                     <label for="2b-surname">Surname</label>
                                 </div>
-                                <div class="col-12 col-sm-3 d-flex d-sm-block justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="third-name" placeholder="Name" value="">
                                     <label for="2b-name">Name</label>
                                 </div>
@@ -308,6 +362,20 @@
                                 <div class="btn-group" role="group" aria-label="Controls">
                                     <button type="button" class="btn btn-outline-success" onclick="scorers(true)" id="scorersOn">On</button>
                                     <button type="button" class="btn btn-outline-danger" onclick="scorers(false)" id="scorersOff">Off</button>
+                                </div>
+                            </div>
+                            <div class="col-sm d-flex flex-row flex-sm-column flex-lg-row flex-xl-column align-items-center justify-content-between m-0 px-0">
+                                <h6 class="text-center mb-0 mb-sm-2 mb-lg-0 mb-xl-2">Sportscaster</h6>
+                                <div class="btn-group" role="group" aria-label="Controls">
+                                    <button type="button" class="btn btn-outline-success" onclick="sportscaster(true)" id="sportscasterOn">On</button>
+                                    <button type="button" class="btn btn-outline-danger" onclick="sportscaster(false)" id="sportscasterOff">Off</button>
+                                </div>
+                            </div>
+                            <div class="col-sm d-flex flex-row flex-sm-column flex-lg-row flex-xl-column align-items-center justify-content-between m-0 px-0">
+                                <h6 class="text-center mb-0 mb-sm-2 mb-lg-0 mb-xl-2">Technical Commentor</h6>
+                                <div class="btn-group" role="group" aria-label="Controls">
+                                    <button type="button" class="btn btn-outline-success" onclick="technicalCommentor(true)" id="technicalCommentorOn">On</button>
+                                    <button type="button" class="btn btn-outline-danger" onclick="technicalCommentor(false)" id="technicalCommentorOff">Off</button>
                                 </div>
                             </div>
                         </div>

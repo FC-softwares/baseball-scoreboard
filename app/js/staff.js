@@ -102,7 +102,16 @@ function update(obj){
             }
         });
     }
-
+    const commentators = obj.commentators;
+    if(obj.commentators !== undefined){
+        Object.keys(commentators).forEach(function(key) {
+            const key2 = key=="main"?"Main":key=="technical"?"TC":null;
+            if(commentators[key]?.surname !== undefined)
+                document.getElementById(key2+"-surname").value = commentators[key].surname;
+            if(commentators[key]?.name !== undefined)
+                document.getElementById(key2+"-name").value = commentators[key].name;
+        });
+    }
 }
 function sendUmpires(){
     let umpires = {};
@@ -146,6 +155,18 @@ function sendScorers(){
     scorer.name = document.getElementById("third-name").value;
     scorers.third = scorer;
     socket.emit("updateOffices", {scorers: scorers});
+}
+function sendSportcasters(){
+    let sportcasters = {};
+    let sportcaster = {};
+    sportcaster.surname = document.getElementById("Main-surname").value;
+    sportcaster.name = document.getElementById("Main-name").value;
+    sportcasters.main = sportcaster;
+    sportcaster = {};
+    sportcaster.surname = document.getElementById("TC-surname").value;
+    sportcaster.name = document.getElementById("TC-name").value;
+    sportcasters.technical = sportcaster;
+    socket.emit("updateOffices", {commentators: sportcasters});
 }
 
 function Reset_All(){

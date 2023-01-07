@@ -8,7 +8,9 @@ const scoreboard = [
 ]
 const officials = [
 	"umpires.html",
-	"scorers.html"
+	"scorers.html",
+	"commentator.html",
+	"tecnicalComment.html"
 ]
 socket.emit('getSettings');
 socket.emit('getActive');
@@ -311,6 +313,20 @@ function updateActive(json){
 			document.querySelector("div.scoreboard").classList.add("disabled");
 		}
 	}
+	if(obj.commentator!==undefined && document.URL.includes("commentator.html")){
+		if(obj.commentator){
+			document.querySelector("div.scoreboard").classList.remove("disabled");
+		}else{
+			document.querySelector("div.scoreboard").classList.add("disabled");
+		}
+	}
+	if(obj.technicalComment!==undefined && document.URL.includes("tecnicalComment.html")){
+		if(obj.technicalComment){
+			document.querySelector("div.scoreboard").classList.remove("disabled");
+		}else{
+			document.querySelector("div.scoreboard").classList.add("disabled");
+		}
+	}
 }
 
 function connectActive(json){
@@ -357,6 +373,20 @@ function connectActive(json){
 			document.querySelector("div.scoreboard").classList.add("disabled");
 		}
 	}
+	if(document.URL.includes("commentator.html")){
+		if(obj.commentator){
+			document.querySelector("div.scoreboard").classList.remove("disabled");
+		}else{
+			document.querySelector("div.scoreboard").classList.add("disabled");
+		}
+	}
+	if(document.URL.includes("tecnicalComment.html")){
+		if(obj.technicalComment){
+			document.querySelector("div.scoreboard").classList.remove("disabled");
+		}else{
+			document.querySelector("div.scoreboard").classList.add("disabled");
+		}
+	}
 }
 
 function updateOffices(obj){
@@ -364,6 +394,10 @@ function updateOffices(obj){
 		updateUmpires(obj.umpires);
 	}else if(document.URL.includes("scorers.html")){
 		updateScorer(obj.scorers);
+	}else if(document.URL.includes("commentator.html")){
+		updateCommentators(obj.commentators);
+	}else if (document.URL.includes("tecnicalComment.html")){
+		updateTecnicalComment(obj.commentators);
 	}
 }
 function updateUmpires(obj){
@@ -493,6 +527,24 @@ function updateScorer(obj){
 			document.documentElement.style.setProperty("--d-third", "0s");
 			document.documentElement.style.setProperty("--d-d-third", "0s");
 		}
+	}
+}
+
+function updateCommentators(obj){
+	const main = obj?.main;
+	
+	if(main !== undefined){
+		main.surname || main.surname=="" ? document.querySelector(".commentator > span#surname").innerHTML = main.surname : null;
+		main.name || main.name=="" ? document.querySelector(".commentator > span#name").innerHTML = main.name : null;
+	}
+}
+
+function updateTecnicalComment(obj){
+	const technical = obj?.technical;
+
+	if(technical !== undefined){
+		technical.surname || technical.surname=="" ? document.querySelector(".commentator > span#surname").innerHTML = technical.surname : null;
+		technical.name || technical.name=="" ? document.querySelector(".commentator > span#name").innerHTML = technical.name : null;
 	}
 }
 

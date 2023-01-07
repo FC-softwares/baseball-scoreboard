@@ -4,5 +4,7 @@
     "post": false,
     "inning": false,
     "umpires": false,
-    "scorers": false
+    "scorers": false,
+    "commentator": false,
+    "technicalComment": false
 }

@@ -122,6 +122,46 @@ function updateActive(data){
                     console.log(e);
                 }
             }
+        }else if (key == "commentator") {
+            if(value==true){
+                try{
+                    document.getElementById('sportscasterOn').classList.remove("btn-outline-success");
+                    document.getElementById('sportscasterOn').classList.add("btn-success");
+                    document.getElementById('sportscasterOff').classList.remove("btn-danger");
+                    document.getElementById('sportscasterOff').classList.add("btn-outline-danger");
+                }catch(e){
+                    console.log(e);
+                }
+            }else{
+                try{
+                    document.getElementById('sportscasterOn').classList.remove("btn-success");
+                    document.getElementById('sportscasterOn').classList.add("btn-outline-success");
+                    document.getElementById('sportscasterOff').classList.remove("btn-outline-danger");
+                    document.getElementById('sportscasterOff').classList.add("btn-danger");
+                }catch(e){
+                    console.log(e);
+                }
+            }
+        }else if (key == "technicalComment"){
+            if(value==true){
+                try{
+                    document.getElementById('technicalCommentorOn').classList.remove("btn-outline-success");
+                    document.getElementById('technicalCommentorOn').classList.add("btn-success");
+                    document.getElementById('technicalCommentorOff').classList.remove("btn-danger");
+                    document.getElementById('technicalCommentorOff').classList.add("btn-outline-danger");
+                }catch(e){
+                    console.log(e);
+                }
+            }else{
+                try{
+                    document.getElementById('technicalCommentorOn').classList.remove("btn-success");
+                    document.getElementById('technicalCommentorOn').classList.add("btn-outline-success");
+                    document.getElementById('technicalCommentorOff').classList.remove("btn-outline-danger");
+                    document.getElementById('technicalCommentorOff').classList.add("btn-danger");
+                }catch(e){
+                    console.log(e);
+                }
+            }
         }
 	});
 }
@@ -159,5 +199,17 @@ function scorers(opr){
     if(opr!=true&&opr!=false)
         return null;
     socket.emit('updateActive',`{"scorers":${opr}}`);
+    return true;
+}
+function sportscaster(opr){
+    if(opr!=true&&opr!=false)
+        return null;
+    socket.emit('updateActive',`{"commentator":${opr}}`);
+    return true;
+}
+function technicalCommentor(opr){
+    if(opr!=true&&opr!=false)
+        return null;
+    socket.emit('updateActive',`{"technicalComment":${opr}}`);
     return true;
 }
