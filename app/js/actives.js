@@ -3,168 +3,200 @@ function updateActive(data){
 	const dataObj = JSON.parse(data);
 	Object.entries(dataObj).forEach(([key, value]) => {
 		if(key=="main"){
-			if(value==true){
-                try{
-                    document.getElementById('mainOn').classList.remove("btn-outline-success");
-                    document.getElementById('mainOn').classList.add("btn-success");
-                    document.getElementById('mainOff').classList.remove("btn-danger");
-                    document.getElementById('mainOff').classList.add("btn-outline-danger");
-                }catch(e){
-                    console.log(e);
-                }
-			}else{
-                try{
-                    document.getElementById('mainOn').classList.remove("btn-success");
-                    document.getElementById('mainOn').classList.add("btn-outline-success");
-                    document.getElementById('mainOff').classList.remove("btn-outline-danger");
-                    document.getElementById('mainOff').classList.add("btn-danger");
-                }catch(e){
-                    console.log(e);
-                }
-			}
+			updateMainButton(value);
 		}else if (key=="pre") {
-			if(value==true){
-                try{
-                    document.getElementById('preOn').classList.remove("btn-outline-success");
-                    document.getElementById('preOn').classList.add("btn-success");
-                    document.getElementById('preOff').classList.remove("btn-danger");
-                    document.getElementById('preOff').classList.add("btn-outline-danger");
-                }catch(e){
-                    console.log(e);
-                }
-			}else{
-				try{
-                    document.getElementById('preOn').classList.remove("btn-success");
-                    document.getElementById('preOn').classList.add("btn-outline-success");
-                    document.getElementById('preOff').classList.remove("btn-outline-danger");
-                    document.getElementById('preOff').classList.add("btn-danger");
-                }catch(e){
-                    console.log(e);
-                }
-			}
+			updatePreGameButton(value);
 		}else if (key=="post") {
-			if(value==true){
-				try{
-                    document.getElementById('postOn').classList.remove("btn-outline-success");
-                    document.getElementById('postOn').classList.add("btn-success");
-                    document.getElementById('postOff').classList.remove("btn-danger");
-                    document.getElementById('postOff').classList.add("btn-outline-danger");
-                }catch(e){
-                    console.log(e);
-                }
-			}else{
-                try{
-                    document.getElementById('postOn').classList.remove("btn-success");
-                    document.getElementById('postOn').classList.add("btn-outline-success");
-                    document.getElementById('postOff').classList.remove("btn-outline-danger");
-                    document.getElementById('postOff').classList.add("btn-danger");
-                }catch(e){
-                    console.log(e);
-                }
-			}
+			updatePostGameButton(value);
 		}else if (key=="inning") {
-			if(value==true){
-                try{
-                    document.getElementById('inningOn').classList.remove("btn-outline-success");
-                    document.getElementById('inningOn').classList.add("btn-success");
-                    document.getElementById('inningOff').classList.remove("btn-danger");
-                    document.getElementById('inningOff').classList.add("btn-outline-danger");
-                }catch(e){
-                    console.log(e);
-                }
-			}else{
-                try{
-                    document.getElementById('inningOn').classList.remove("btn-success");
-                    document.getElementById('inningOn').classList.add("btn-outline-success");
-                    document.getElementById('inningOff').classList.remove("btn-outline-danger");
-                    document.getElementById('inningOff').classList.add("btn-danger");
-                }catch(e){
-                    console.log(e);
-                }
-			}
+			updatePartialsButton(value);
 		}else if (key=="umpires") {
-            if(value==true){
-                try{
-                    document.getElementById('umpiresOn').classList.remove("btn-outline-success");
-                    document.getElementById('umpiresOn').classList.add("btn-success");
-                    document.getElementById('umpiresOff').classList.remove("btn-danger");
-                    document.getElementById('umpiresOff').classList.add("btn-outline-danger");
-                }catch(e){
-                    console.log(e);
-                }
-            }else{
-                try{
-                    document.getElementById('umpiresOn').classList.remove("btn-success");
-                    document.getElementById('umpiresOn').classList.add("btn-outline-success");
-                    document.getElementById('umpiresOff').classList.remove("btn-outline-danger");
-                    document.getElementById('umpiresOff').classList.add("btn-danger");
-                }catch(e){
-                    console.log(e);
-                }
-            }
+            updateUmpiresButton(value);
         }else if (key=="scorers") {
-            if(value==true){
-                try{
-                    document.getElementById('scorersOn').classList.remove("btn-outline-success");
-                    document.getElementById('scorersOn').classList.add("btn-success");
-                    document.getElementById('scorersOff').classList.remove("btn-danger");
-                    document.getElementById('scorersOff').classList.add("btn-outline-danger");
-                }catch(e){
-                    console.log(e);
-                }
-            }else{
-                try{
-                    document.getElementById('scorersOn').classList.remove("btn-success");
-                    document.getElementById('scorersOn').classList.add("btn-outline-success");
-                    document.getElementById('scorersOff').classList.remove("btn-outline-danger");
-                    document.getElementById('scorersOff').classList.add("btn-danger");
-                }catch(e){
-                    console.log(e);
-                }
-            }
+            updateScorersButton(value);
         }else if (key == "commentator") {
-            if(value==true){
-                try{
-                    document.getElementById('sportscasterOn').classList.remove("btn-outline-success");
-                    document.getElementById('sportscasterOn').classList.add("btn-success");
-                    document.getElementById('sportscasterOff').classList.remove("btn-danger");
-                    document.getElementById('sportscasterOff').classList.add("btn-outline-danger");
-                }catch(e){
-                    console.log(e);
-                }
-            }else{
-                try{
-                    document.getElementById('sportscasterOn').classList.remove("btn-success");
-                    document.getElementById('sportscasterOn').classList.add("btn-outline-success");
-                    document.getElementById('sportscasterOff').classList.remove("btn-outline-danger");
-                    document.getElementById('sportscasterOff').classList.add("btn-danger");
-                }catch(e){
-                    console.log(e);
-                }
-            }
+            updateCommentatorButton(value);
         }else if (key == "technicalComment"){
-            if(value==true){
-                try{
-                    document.getElementById('technicalCommentorOn').classList.remove("btn-outline-success");
-                    document.getElementById('technicalCommentorOn').classList.add("btn-success");
-                    document.getElementById('technicalCommentorOff').classList.remove("btn-danger");
-                    document.getElementById('technicalCommentorOff').classList.add("btn-outline-danger");
-                }catch(e){
-                    console.log(e);
-                }
-            }else{
-                try{
-                    document.getElementById('technicalCommentorOn').classList.remove("btn-success");
-                    document.getElementById('technicalCommentorOn').classList.add("btn-outline-success");
-                    document.getElementById('technicalCommentorOff').classList.remove("btn-outline-danger");
-                    document.getElementById('technicalCommentorOff').classList.add("btn-danger");
-                }catch(e){
-                    console.log(e);
-                }
-            }
+            updateTecnicalCommentButton(value);
         }
 	});
 }
+function updateTecnicalCommentButton(value) {
+    if (value == true) {
+        try {
+            document.getElementById('technicalCommentorOn').classList.remove("btn-outline-success");
+            document.getElementById('technicalCommentorOn').classList.add("btn-success");
+            document.getElementById('technicalCommentorOff').classList.remove("btn-danger");
+            document.getElementById('technicalCommentorOff').classList.add("btn-outline-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    } else {
+        try {
+            document.getElementById('technicalCommentorOn').classList.remove("btn-success");
+            document.getElementById('technicalCommentorOn').classList.add("btn-outline-success");
+            document.getElementById('technicalCommentorOff').classList.remove("btn-outline-danger");
+            document.getElementById('technicalCommentorOff').classList.add("btn-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
+function updateCommentatorButton(value) {
+    if (value == true) {
+        try {
+            document.getElementById('sportscasterOn').classList.remove("btn-outline-success");
+            document.getElementById('sportscasterOn').classList.add("btn-success");
+            document.getElementById('sportscasterOff').classList.remove("btn-danger");
+            document.getElementById('sportscasterOff').classList.add("btn-outline-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    } else {
+        try {
+            document.getElementById('sportscasterOn').classList.remove("btn-success");
+            document.getElementById('sportscasterOn').classList.add("btn-outline-success");
+            document.getElementById('sportscasterOff').classList.remove("btn-outline-danger");
+            document.getElementById('sportscasterOff').classList.add("btn-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
+function updateScorersButton(value) {
+    if (value == true) {
+        try {
+            document.getElementById('scorersOn').classList.remove("btn-outline-success");
+            document.getElementById('scorersOn').classList.add("btn-success");
+            document.getElementById('scorersOff').classList.remove("btn-danger");
+            document.getElementById('scorersOff').classList.add("btn-outline-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    } else {
+        try {
+            document.getElementById('scorersOn').classList.remove("btn-success");
+            document.getElementById('scorersOn').classList.add("btn-outline-success");
+            document.getElementById('scorersOff').classList.remove("btn-outline-danger");
+            document.getElementById('scorersOff').classList.add("btn-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
+function updateUmpiresButton(value) {
+    if (value == true) {
+        try {
+            document.getElementById('umpiresOn').classList.remove("btn-outline-success");
+            document.getElementById('umpiresOn').classList.add("btn-success");
+            document.getElementById('umpiresOff').classList.remove("btn-danger");
+            document.getElementById('umpiresOff').classList.add("btn-outline-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    } else {
+        try {
+            document.getElementById('umpiresOn').classList.remove("btn-success");
+            document.getElementById('umpiresOn').classList.add("btn-outline-success");
+            document.getElementById('umpiresOff').classList.remove("btn-outline-danger");
+            document.getElementById('umpiresOff').classList.add("btn-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
+function updatePartialsButton(value) {
+    if (value == true) {
+        try {
+            document.getElementById('inningOn').classList.remove("btn-outline-success");
+            document.getElementById('inningOn').classList.add("btn-success");
+            document.getElementById('inningOff').classList.remove("btn-danger");
+            document.getElementById('inningOff').classList.add("btn-outline-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    } else {
+        try {
+            document.getElementById('inningOn').classList.remove("btn-success");
+            document.getElementById('inningOn').classList.add("btn-outline-success");
+            document.getElementById('inningOff').classList.remove("btn-outline-danger");
+            document.getElementById('inningOff').classList.add("btn-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
+function updatePostGameButton(value) {
+    if (value == true) {
+        try {
+            document.getElementById('postOn').classList.remove("btn-outline-success");
+            document.getElementById('postOn').classList.add("btn-success");
+            document.getElementById('postOff').classList.remove("btn-danger");
+            document.getElementById('postOff').classList.add("btn-outline-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    } else {
+        try {
+            document.getElementById('postOn').classList.remove("btn-success");
+            document.getElementById('postOn').classList.add("btn-outline-success");
+            document.getElementById('postOff').classList.remove("btn-outline-danger");
+            document.getElementById('postOff').classList.add("btn-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
+function updatePreGameButton(value) {
+    if (value == true) {
+        try {
+            document.getElementById('preOn').classList.remove("btn-outline-success");
+            document.getElementById('preOn').classList.add("btn-success");
+            document.getElementById('preOff').classList.remove("btn-danger");
+            document.getElementById('preOff').classList.add("btn-outline-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    } else {
+        try {
+            document.getElementById('preOn').classList.remove("btn-success");
+            document.getElementById('preOn').classList.add("btn-outline-success");
+            document.getElementById('preOff').classList.remove("btn-outline-danger");
+            document.getElementById('preOff').classList.add("btn-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
+function updateMainButton(value) {
+    if (value == true) {
+        try {
+            document.getElementById('mainOn').classList.remove("btn-outline-success");
+            document.getElementById('mainOn').classList.add("btn-success");
+            document.getElementById('mainOff').classList.remove("btn-danger");
+            document.getElementById('mainOff').classList.add("btn-outline-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    } else {
+        try {
+            document.getElementById('mainOn').classList.remove("btn-success");
+            document.getElementById('mainOn').classList.add("btn-outline-success");
+            document.getElementById('mainOff').classList.remove("btn-outline-danger");
+            document.getElementById('mainOff').classList.add("btn-danger");
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
 function main(opr){
 	if(opr!=true&&opr!=false)
 		return null;
