@@ -536,6 +536,11 @@ app.post('/openExternal',(req,res)=>{
 		res.status(400).json({ok:false,message:'missing url'});
 		return;
 	}
+	// Check that the URL is a pattern we expect
+	if (!url.match(/^https?:\/\/(www\.)?facchini-pu\.it/)) {
+		res.status(400).json({ok:false,message:'invalid url'});
+		return;
+	}
 	shell.openExternal(url);
 	res.status(200).json({ok:true,message:'ok'});
 });
