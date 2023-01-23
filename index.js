@@ -541,7 +541,9 @@ app.post('/openExternal',(req,res)=>{
 		res.status(400).json({ok:false,message:'invalid url'});
 		return;
 	}
-	shell.openExternal(url);
+	// convert the url to a redirect free url (remove the redirect query param)
+	const redirectFreeUrl = url.replace(/redirect=1&?/,'');
+	shell.openExternal(redirectFreeUrl);
 	res.status(200).json({ok:true,message:'ok'});
 });
 app.post('/newWindow',(req,res)=>{
