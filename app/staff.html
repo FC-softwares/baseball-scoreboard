@@ -26,9 +26,13 @@
         }
 
         .form-floating>label {
-            padding: 0.5rem 1.5rem;
+            padding: 0.25rem 1rem;
         }
-    </style>
+        .form-floating>.form-control:not(:placeholder-shown) {
+            padding-top: 1.25rem;
+            padding-bottom: 0.625rem;
+        }
+    </style>    
 </head>
 <body class="d-flex flex-column vh-100">
     <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -46,7 +50,7 @@
                         <a class="nav-link" aria-current="page" href="control-center.html">Control Center</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="staff.html">Staff Menagement</a>
+                        <a class="nav-link active" aria-current="page" href="staff.html">Staff Management</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="settings.html">Settings</a>
@@ -95,7 +99,7 @@
     </nav>
     <div class="container-md">
         <div class="d-flex flex-row flex-wrap align-items-center py-2 gap-2">
-            <h1 class="fw-bolder m-0 text-black text-opacity-75 me-auto">Staff Name Menagment</h1>
+            <h1 class="fw-bolder m-0 text-black text-opacity-75 me-auto">Staff Name Management</h1>
             <div class="hstack gap-3 flex-shrink-0">
                 <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#ModalResetAllData">Reset all data</button>
             </div>
@@ -117,7 +121,7 @@
                             </div>
                         </div>
                         <div class="container text-center">
-                            <div class="row my-1 gap-3 gap-sm-0">
+                            <div class="row my-1 g-2">
                                 <div class="col col-sm-2 d-flex justify-content-center align-items-center">
                                     <h5>HP</h5>
                                 </div>
@@ -133,7 +137,7 @@
                                     <label for="hp-name">Name</label>
                                 </div>
                             </div>
-                            <div class="row my-1 gap-3 gap-sm-0">
+                            <div class="row my-1 g-2">
                                 <div class="col col-sm-2 d-flex justify-content-center align-items-center">
                                     <h5>1B</h5>
                                 </div>
@@ -149,7 +153,7 @@
                                     <label for="1b-name">Name</label>
                                 </div>
                             </div>
-                            <div class="row my-1 gap-3 gap-sm-0">
+                            <div class="row my-1 g-2">
                                 <div class="col col-sm-2 d-flex justify-content-center align-items-center">
                                     <h5>2B</h5>
                                 </div>
@@ -165,7 +169,7 @@
                                     <label for="2b-name">Name</label>
                                 </div>
                             </div>
-                            <div class="row my-1 gap-3 gap-sm-0">
+                            <div class="row my-1 g-2">
                                 <div class="col col-sm-2 d-flex justify-content-center align-items-center">
                                     <h5>3B</h5>
                                 </div>
@@ -183,7 +187,9 @@
                             </div>
                             <hr class="my-2">
                             <div class="row d-flex justify-content-center">
-                                <button type="button" class="btn btn-outline-primary" id="btn-umpire-save" onclick="sendUmpires()">Save</button>
+                                <div class="col-12 d-flex d-sm-block justify-content-center align-items-center">
+                                    <button type="button" class="btn btn-outline-primary w-100" id="btn-umpire-save" onclick="sendUmpires()">Save</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -203,35 +209,41 @@
                             </div>
                         </div>
                         <div class="container text-center">
-                            <div class="row my-1 gap-3 gap-sm-0">
-                                <div class="col col-sm-4 d-flex justify-content-center align-items-center">
+                            <div class="row mb-0">
+                                <div class="col text-start">
                                     <h5>Main</h5>
                                 </div>
-                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                            </div>
+                            <div class="row mt-0 mb-2 g-2">
+                                <div class="col-12 col-sm-6 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="Main-surname" placeholder="Surname" value="">
                                     <label for="hp-surname">Surname</label>
                                 </div>
-                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-6 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="Main-name" placeholder="Name" value="">
                                     <label for="hp-name">Name</label>
                                 </div>
                             </div>
-                            <div class="row my-1 gap-3 gap-sm-0">
-                                <div class="col col-sm-4 d-flex justify-content-center align-items-center">
+                            <div class="row mt-2 mb-1">
+                                <div class="col text-start">
                                     <h5>Technical Commentor</h5>
                                 </div>
-                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                            </div>
+                            <div class="row mb-1 g-2">
+                                <div class="col-12 col-sm-6 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="TC-surname" placeholder="Surname" value="">
-                                    <label for="hp-surname">Surname</label>
+                                    <label for="TC-surname">Surname</label>
                                 </div>
-                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                <div class="col-12 col-sm-6 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
                                     <input type="text" class="form-control" id="TC-name" placeholder="Name" value="">
-                                    <label for="hp-name">Name</label>
+                                    <label for="TC-name">Name</label>
                                 </div>
                             </div>
                             <hr class="my-2">
                             <div class="row d-flex justify-content-center">
-                                <button type="button" class="btn btn-outline-primary" id="btn-umpire-save" onclick="sendSportcasters()">Save</button>
+                                <div class="col-12 d-flex d-sm-block justify-content-center align-items-center">
+                                    <button type="button" class="btn btn-outline-primary w-100" id="btn-umpire-save" onclick="sendSportcasters()">Save</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -253,7 +265,7 @@
                             </div>
                         </div>
                         <div class="container text-center">
-                            <div class="row my-1 gap-3 gap-sm-0">
+                            <div class="row my-1 g-2">
                                 <div class="col col-sm-2 d-flex justify-content-center align-items-center">
                                     <h5>Head</h5>
                                 </div>
@@ -269,7 +281,7 @@
                                     <label for="hp-name">Name</label>
                                 </div>
                             </div>
-                            <div class="row my-1 gap-3 gap-sm-0">
+                            <div class="row my-1 g-2">
                                 <div class="col col-sm-2 d-flex justify-content-center align-items-center">
                                     <h5>2°</h5>
                                 </div>
@@ -285,7 +297,7 @@
                                     <label for="1b-name">Name</label>
                                 </div>
                             </div>
-                            <div class="row my-1 gap-3 gap-sm-0">
+                            <div class="row my-1 g-2">
                                 <div class="col col-sm-2 d-flex justify-content-center align-items-center">
                                     <h5>3°</h5>
                                 </div>
@@ -303,79 +315,8 @@
                             </div>
                             <hr class="my-2">
                             <div class="row d-flex justify-content-center">
-                                <button type="button" class="btn btn-outline-primary" id="btn-umpire-save" onclick="sendScorers()">Save</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-body p-3 mb-4 shadow rounded-3 border">
-                    <div class="form-check d-lg-none">
-                        <input class="form-check-input" type="checkbox" value="" id="toggle-anim" data-bs-toggle="collapse" href="#collapse-anim" aria-expanded="true" aria-controls="#collapse-anim" checked>
-                        <label class="form-check-label" for="toggle-anim">
-                            Scoreboard controls
-                        </label>
-                    </div>
-                    <div class="collapse show" id="collapse-anim">
-                        <hr class="d-lg-none">
-                        <div class="row row-cols-lg-1 row-cols-xl-auto gap-3 justify-content-center p-3 py-0">
-                            <!-- h6 o h5? questo è il dilemma... -->
-                            <div class="col-sm d-flex flex-row flex-sm-column flex-lg-row flex-xl-column align-items-center justify-content-between m-0 px-0">
-                                <h6 class="text-center mb-0 mb-sm-2 mb-lg-0 mb-xl-2">Main</h6>
-                                <div class="btn-group" role="group" aria-label="Controls">
-                                    <button type="button" class="btn btn-outline-success" onclick="main(true)" id="mainOn">On</button>
-                                    <button type="button" class="btn btn-outline-danger" onclick="main(false)" id="mainOff">Off</button>
-                                </div>
-                            </div>
-                            <div class="col-sm d-flex flex-row flex-sm-column flex-lg-row flex-xl-column align-items-center justify-content-between m-0 px-0">
-                                <h6 class="text-center mb-0 mb-sm-2 mb-lg-0 mb-xl-2">Pre-Game</h6>
-                                <div class="btn-group" role="group" aria-label="Controls">
-                                    <button type="button" class="btn btn-outline-success" onclick="preGame(true)" id="preOn">On</button>
-                                    <button type="button" class="btn btn-outline-danger" onclick="preGame(false)" id="preOff">Off</button>
-                                </div>
-                            </div>
-                            <div class="col-sm d-flex flex-row flex-sm-column flex-lg-row flex-xl-column align-items-center justify-content-between m-0 px-0">
-                                <h6 class="text-center mb-0 mb-sm-2 mb-lg-0 mb-xl-2">Post-Game</h6>
-                                <div class="btn-group" role="group" aria-label="Controls">
-                                    <button type="button" class="btn btn-outline-success" onclick="postGame(true)" id="postOn">On</button>
-                                    <button type="button" class="btn btn-outline-danger" onclick="postGame(false)" id="postOff">Off</button>
-                                </div>
-                            </div>
-                            <div class="col-sm d-flex flex-row flex-sm-column flex-lg-row flex-xl-column align-items-center justify-content-between m-0 px-0">
-                                <h6 class="text-center mb-0 mb-sm-2 mb-lg-0 mb-xl-2">Partials</h6>
-                                <div class="btn-group" role="group" aria-label="Controls">
-                                    <button type="button" class="btn btn-outline-success" onclick="inning(true)" id="inningOn">On</button>
-                                    <button type="button" class="btn btn-outline-danger" onclick="inning(false)" id="inningOff">Off</button>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="my-2">
-                        <div class="row row-cols-lg-1 row-cols-xl-auto gap-3 justify-content-center p-3 py-0">
-                            <div class="col-sm d-flex flex-row flex-sm-column flex-lg-row flex-xl-column align-items-center justify-content-between m-0 px-0">
-                                <h6 class="text-center mb-0 mb-sm-2 mb-lg-0 mb-xl-2">Umpires</h6>
-                                <div class="btn-group" role="group" aria-label="Controls">
-                                    <button type="button" class="btn btn-outline-success" onclick="umpires(true)" id="umpiresOn">On</button>
-                                    <button type="button" class="btn btn-outline-danger" onclick="umpires(false)" id="umpiresOff">Off</button>
-                                </div>
-                            </div>
-                            <div class="col-sm d-flex flex-row flex-sm-column flex-lg-row flex-xl-column align-items-center justify-content-between m-0 px-0">
-                                <h6 class="text-center mb-0 mb-sm-2 mb-lg-0 mb-xl-2">Scorers</h6>
-                                <div class="btn-group" role="group" aria-label="Controls">
-                                    <button type="button" class="btn btn-outline-success" onclick="scorers(true)" id="scorersOn">On</button>
-                                    <button type="button" class="btn btn-outline-danger" onclick="scorers(false)" id="scorersOff">Off</button>
-                                </div>
-                            </div>
-                            <div class="col-sm d-flex flex-row flex-sm-column flex-lg-row flex-xl-column align-items-center justify-content-between m-0 px-0">
-                                <h6 class="text-center mb-0 mb-sm-2 mb-lg-0 mb-xl-2">Sportscaster</h6>
-                                <div class="btn-group" role="group" aria-label="Controls">
-                                    <button type="button" class="btn btn-outline-success" onclick="sportscaster(true)" id="sportscasterOn">On</button>
-                                    <button type="button" class="btn btn-outline-danger" onclick="sportscaster(false)" id="sportscasterOff">Off</button>
-                                </div>
-                            </div>
-                            <div class="col-sm d-flex flex-row flex-sm-column flex-lg-row flex-xl-column align-items-center justify-content-between m-0 px-0">
-                                <h6 class="text-center mb-0 mb-sm-2 mb-lg-0 mb-xl-2">Technical Commentor</h6>
-                                <div class="btn-group" role="group" aria-label="Controls">
-                                    <button type="button" class="btn btn-outline-success" onclick="technicalCommentor(true)" id="technicalCommentorOn">On</button>
-                                    <button type="button" class="btn btn-outline-danger" onclick="technicalCommentor(false)" id="technicalCommentorOff">Off</button>
+                                <div class="col-12 d-flex d-sm-block justify-content-center align-items-center">
+                                    <button type="button" class="btn btn-outline-primary w-100" id="btn-umpire-save" onclick="sendScorers()">Save</button>
                                 </div>
                             </div>
                         </div>
