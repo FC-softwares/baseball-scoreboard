@@ -34,7 +34,35 @@ Se desideri installare l'applicazione dal codice sorgente, assicurati di aver gi
 4. Esegui `npm start` per avviare il software
 
 ## Uso
-work in progress
+Tutte le scoreboad e il pannelllo di controllo sono assimilati a delle pagine web per aggiungerle a OBS o ad altre applicazioni di streaming, è sufficiente aggiungere la pagina web e inserire l'URL della scoreboard che si desidera utilizzare.
+### Aggiunta Scoreboard a OBS
+1. Avvia l'applicazione OBS o simili
+2. Avvia Baseball-Scoreboard
+3. Aggiungi una nuova sorgente web e inserisci il nome che preferisci
+4. L'indizizzo web da inserire è `http://localhost:2095/nome-scoreboard.html` se esegui Baseball-Scoreboard sulla tua macchina locale, altrimenti è `http://IP-DEL-PC:2095/nome-scoreboard.html` (dove IP-DEL-PC è l'indirizzo IP della macchina su cui è eseguito Baseball-Scoreboard) Il nome della scorebord segue la tabella sottostante
+
+| Nome scoreboard | Nome file |
+|---|---|
+| Scoreboard Principale | `scoreboard.html` |
+| Pre Game | `pregame.html` |
+| Post Game | `postgame.html` |
+| Parziali / Inning | `inning.html` |
+| Arbitri | `umpires.html` |
+| Classificatori | `scorers.html` |
+| Telecronista | `commentator.html` |
+| Commentatore Tecnico | `technicalComment.html` |
+
+5. Una volta aggiunta la sorgente web, trascinala nella posizione che preferisci e ridimensionala a piacimento (durante il posizionamento si consiglia di attivare la scoreboard dal `Control Center` per vedere il risultato)
+6. Una volta finito, si consiglia di disattivare tutte le altre scoreboard dal `Control Center` per evitare che vengano visualizzate durante la trasmissione
+
+### Aggiunta Pannello di Controllo a OBS (opzionale)
+1. Avvia l'applicazione OBS (Queste istruzioni sono valide per OBS, ma dovrebbero funzionare anche per altre applicazioni di streaming probabbilmente hanno nomi simili)
+2. Avvia Baseball-Scoreboard
+3. Per aggiungere il pannello di controllo, è necessario aggiungere un nuovo pannello web e inserire l'indirizzo `http://localhost:2095/control-center.html` se Baseball-Scoreboard è eseguito sulla tua macchina locale, altrimenti è `http://IP-DEL-PC:2095/control-center.html` (dove IP-DEL-PC è l'indirizzo IP della macchina su cui è eseguito Baseball-Scoreboard)
+4. Per farlo vai su `Pannelli` > `Pannelli Browser Personalizzati`
+5. Poi aggiungi alla tabella una nuova riga inseredo il nome che preferisci nella colonna `Nome Del Pannello` e l'indirizzo web: `http://localhost:2095/control-center.html` o `http://IP-DEL-PC:2095/control-center.html` (dove IP-DEL-PC è l'indirizzo IP della macchina su cui è eseguito Baseball-Scoreboard) nella colonna `URL`
+6. Conferma premendo `Applica` e poi `Chiudi`
+7. Ora puoi trascinare il nuovo pannello nella posizione che preferisci, ridimensionarlo a piacimento e bloccandolo della UI di OBS dove preferisci
 
 ## Documentazione
 Probabilmente queste istruzioni non sono state molto esaustive, ma non c'è da preoccuparsi! Per maggiori informazioni, la documentazione è disponibile [qui](https://github.com/FC-softwares/baseball-scoreboard/tree/main/docs/it/)!
