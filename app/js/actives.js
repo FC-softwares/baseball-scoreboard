@@ -24,19 +24,19 @@ function updateActive(data){
 function updateTecnicalCommentButton(value) {
     if (value == true) {
         try {
-            document.getElementById('technicalCommentorOn').classList.remove("btn-outline-success");
-            document.getElementById('technicalCommentorOn').classList.add("btn-success");
-            document.getElementById('technicalCommentorOff').classList.remove("btn-danger");
-            document.getElementById('technicalCommentorOff').classList.add("btn-outline-danger");
+            document.getElementById('technicalCommentatorOn').classList.remove("btn-outline-success");
+            document.getElementById('technicalCommentatorOn').classList.add("btn-success");
+            document.getElementById('technicalCommentatorOff').classList.remove("btn-danger");
+            document.getElementById('technicalCommentatorOff').classList.add("btn-outline-danger");
         } catch (e) {
             console.log(e);
         }
     } else {
         try {
-            document.getElementById('technicalCommentorOn').classList.remove("btn-success");
-            document.getElementById('technicalCommentorOn').classList.add("btn-outline-success");
-            document.getElementById('technicalCommentorOff').classList.remove("btn-outline-danger");
-            document.getElementById('technicalCommentorOff').classList.add("btn-danger");
+            document.getElementById('technicalCommentatorOn').classList.remove("btn-success");
+            document.getElementById('technicalCommentatorOn').classList.add("btn-outline-success");
+            document.getElementById('technicalCommentatorOff').classList.remove("btn-outline-danger");
+            document.getElementById('technicalCommentatorOff').classList.add("btn-danger");
         } catch (e) {
             console.log(e);
         }
@@ -239,7 +239,7 @@ function sportscaster(opr){
     socket.emit('updateActive',`{"commentator":${opr}}`);
     return true;
 }
-function technicalCommentor(opr){
+function technicalCommentator(opr){
     if(opr!=true&&opr!=false)
         return null;
     socket.emit('updateActive',`{"technicalComment":${opr}}`);

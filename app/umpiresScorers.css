@@ -294,7 +294,7 @@ div {
 .scoreboard > .scorer.notActive {
     display: none;
 }
-/* Commentors */
+/* Commentators */
 .scoreboard#commentator > .commentator {
     background: var(--g-def);
     width: calc(var(--w-column) - 20px);
