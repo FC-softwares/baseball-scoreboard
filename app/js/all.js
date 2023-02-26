@@ -47,7 +47,6 @@ CheckSession();
 
 function openExternal(url){
 	if (navigator.userAgent.toLowerCase().indexOf(' electron/')== -1) {
-		console.log('not in electron');
 		// We are not in electron
 		window.open(url, '_blank');
 		return;
@@ -61,7 +60,6 @@ function openExternal(url){
 
 function newWindow(url,width,height){
 	if (navigator.userAgent.toLowerCase().indexOf(' electron/')== -1) {
-		console.log('not in electron');
 		// We are not in electron
 		window.open(url, '_blank');
 		

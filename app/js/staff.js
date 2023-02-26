@@ -41,8 +41,6 @@ socket.emit("getActive");
 
 socket.on('connectOffices', update);
 socket.on('updateOffices', update);
-socket.on('connectActive', updateActive);
-socket.on('updateActive', updateActive);
 
 function checkAndDeCheck(id){
     try{
