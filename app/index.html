@@ -11,40 +11,43 @@
     <title>Baseball Scoreboard</title>
 </head>
 <body class="d-flex flex-column vh-100">
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <div class="container-md"  style="max-width: 1140px;">
             <a class="navbar-brand" href="#">Baseball Scoreboard</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toggleNav" aria-controls="toggleNav" aria-expanded="false" aria-label="Toggle navigation bar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="toggleNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav flex-shrink-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="#"><i class="d-lg-none d-xl-inline bi bi-house-fill me-1"></i><span class="d-sm-none d-lg-inline">Home</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="control-center.html">Control Center</a>
+                        <a class="nav-link" href="control-center.html"><i class="d-lg-none d-xl-inline bi bi bi-toggles me-1"></i><span class="d-sm-none d-lg-inline">Control Center</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="staff.html">Staff Management</a>
+                        <a class="nav-link" href="staff.html"><i class="d-lg-none d-xl-inline bi bi-person-fill-gear me-1"></i><span class="d-sm-none d-lg-inline">Staff Management</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="settings.html">Settings</a>
+                        <a class="nav-link" href="settings.html"><i class="d-lg-none d-xl-inline bi bi bi-gear-fill me-1"></i><span class="d-sm-none d-lg-inline">Settings</span></a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navScoreboardLinks" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Scoreboards</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navScoreboardLinks" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"><i class="d-lg-none d-xl-inline bi bi-2-square-fill me-1"></i><span class="d-sm-none d-lg-inline">Scoreboards</span></a>
                         <ul class="dropdown-menu mb-2" aria-labelledby="navScoreboardLinks">
                             <li>
                                 <a class="dropdown-item" onclick="newWindow(window.location.origin+'/scoreboard.html',427,80)">Main <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/inning.html',707,120)">Partials <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
                             </li>
                             <li>
                                 <a class="dropdown-item" onclick="newWindow(window.location.origin+'/pregame.html',631,40)">Pre-game <i class="bi-box-arrow-up-right"></i></a>
                             </li>
                             <li>
                                 <a class="dropdown-item" onclick="newWindow(window.location.origin+'/postgame.html',631,40)">Post-game <i class="bi-box-arrow-up-right"></i></a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/inning.html',707,120)">Partials <i class="bi-box-arrow-up-right"></i></a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -54,6 +57,15 @@
                             </li>
                             <li>
                                 <a class="dropdown-item" onclick="newWindow(window.location.origin+'/scorers.html',600,200)">Scorers <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/commentator.html',600,100)">Sportscaster <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/technicalComment.html',600,100)">Technical Commentator <i class="bi-box-arrow-up-right"></i></a>
                             </li>
                         </ul>
                     </li>

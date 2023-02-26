@@ -17,11 +17,11 @@ function updateActive(data){
         }else if (key == "commentator") {
             updateCommentatorButton(value);
         }else if (key == "technicalComment"){
-            updateTecnicalCommentButton(value);
+            updateTechnicalCommentButton(value);
         }
 	});
 }
-function updateTecnicalCommentButton(value) {
+function updateTechnicalCommentButton(value) {
     if (value == true) {
         try {
             document.getElementById('technicalCommentatorOn').classList.remove("btn-outline-success");

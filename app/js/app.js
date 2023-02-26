@@ -10,7 +10,7 @@ const officials = [
 	"umpires.html",
 	"scorers.html",
 	"commentator.html",
-	"tecnicalComment.html"
+	"technicalComment.html"
 ]
 socket.emit('getSettings');
 socket.emit('getActive');
@@ -320,7 +320,7 @@ function updateActive(json){
 			document.querySelector("div.scoreboard").classList.add("disabled");
 		}
 	}
-	if(obj.technicalComment!==undefined && document.URL.includes("tecnicalComment.html")){
+	if(obj.technicalComment!==undefined && document.URL.includes("technicalComment.html")){
 		if(obj.technicalComment){
 			document.querySelector("div.scoreboard").classList.remove("disabled");
 		}else{
@@ -380,7 +380,7 @@ function connectActive(json){
 			document.querySelector("div.scoreboard").classList.add("disabled");
 		}
 	}
-	if(document.URL.includes("tecnicalComment.html")){
+	if(document.URL.includes("technicalComment.html")){
 		if(obj.technicalComment){
 			document.querySelector("div.scoreboard").classList.remove("disabled");
 		}else{
@@ -396,8 +396,8 @@ function updateOffices(obj){
 		updateScorer(obj.scorers);
 	}else if(document.URL.includes("commentator.html")){
 		updateCommentators(obj.commentators);
-	}else if (document.URL.includes("tecnicalComment.html")){
-		updateTecnicalComment(obj.commentators);
+	}else if (document.URL.includes("technicalComment.html")){
+		updateTechnicalComment(obj.commentators);
 	}
 }
 function updateUmpires(obj){
@@ -539,7 +539,7 @@ function updateCommentators(obj){
 	}
 }
 
-function updateTecnicalComment(obj){
+function updateTechnicalComment(obj){
 	const technical = obj?.technical;
 
 	if(technical !== undefined){
