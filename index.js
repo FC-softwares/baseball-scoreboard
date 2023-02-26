@@ -451,7 +451,7 @@ app.post('/login', (req, res) => {
 		res.status(400).json({ok:false,message:'missing data'});
 		return;
 	}
-	if(username == 'guest' && password == 'guest'){
+	if(username == 'guest' && Buffer.from(password, 'base64').toString('utf8') == 'guest' && CLIENT == 'DEMO'){
 		res.status(200).json({ok:true,message:'login success',id:"guest",token:'guest'});
 		return;
 	}
@@ -487,6 +487,7 @@ app.post('/login', (req, res) => {
 	});
 	req_post.on('error', (e) => {
 		console.error(e);
+		res.status(500).json({ok:false,message:'internal server error, please try again later and check your internet connection'});
 	});
 	req_post.write(req_data);
 	req_post.end();
@@ -502,8 +503,11 @@ app.post('/checkstat', (req, res) => {
 		res.status(400).json({ok:false,message:'missing ID'});
 		return;
 	}
-	if(id == 'guest' && token == 'guest'){
+	if(id == 'guest' && token == 'guest' && CLIENT == 'DEMO'){
 		res.status(200).json({ok:true,message:'guest',user: {email:'guest',name: 'guest',surname:"",isOwner:true}});
+		return;
+	}else if(id == 'guest' && token == 'guest' && CLIENT != 'DEMO'){
+		res.status(400).json({ok:false,message:'invalid token'});
 		return;
 	}
 	const req_option = {
@@ -532,6 +536,7 @@ app.post('/checkstat', (req, res) => {
 	});
 	req_post.on('error', (e) => {
 		console.error(e);
+		res.status(500).json({ok:false,message:'internal server error, please try again later and check your internet connection'});
 	});
 	req_post.write(req_data);
 	req_post.end();
@@ -573,6 +578,7 @@ app.post('/logout', (req, res) => {
 	);
 	req_post.on('error', (e) => {
 		console.error(e);
+		res.status(500).json({ok:false,message:'internal server error, please try again later and check your internet connection'});
 	}
 	);
 	req_post.write(req_data);
@@ -585,7 +591,7 @@ app.post("/getAuthUsers", (req, res) => {
 		return;
 	}
 	if(id == 'guest' && token == 'guest'){
-		res.status(200).json({ok:true,message:'guest', users:[{id:'0',name: "guest", surname: "", email: ""}]});
+		res.status(200).json({ok:true,message:'guest', users:[{id:'0',name: "guest", surname: "guest", email: "guest@guest.com"}]});
 		return;
 	}	
 	const req_option = {
@@ -615,6 +621,7 @@ app.post("/getAuthUsers", (req, res) => {
 	});
 	req_post.on('error', (e) => {
 		console.error(e);
+		res.status(500).json({ok:false,message:'internal server error, please try again later and check your internet connection'});
 	}
 	);
 	req_post.write(req_data);
@@ -667,6 +674,7 @@ app.post("/addAuthUser", (req, res) => {
 	});
 	req_post.on('error', (e) => {
 		console.error(e);
+		res.status(500).json({ok:false,message:'internal server error, please try again later and check your internet connection'});
 	});
 	req_post.write(req_data);
 	req_post.end();
@@ -718,6 +726,7 @@ app.post("/removeAuthUser", (req, res) => {
 	});
 	req_post.on('error', (e) => {
 		console.error(e);
+		res.status(500).json({ok:false,message:'internal server error, please try again later and check your internet connection'});
 	}
 	);
 	req_post.write(req_data);
