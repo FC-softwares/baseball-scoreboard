@@ -159,7 +159,7 @@ io.on('connection', (socket) => {
 	socket.on('updateOffices',(data)=>{
 		if (socket.handshake.auth.id && socket.handshake.auth.token) {
 			if(socket.handshake.auth.id === 'guest' && socket.handshake.auth.token === 'guest' && CLIENT === 'DEMO'){
-				updateOfficial();
+				updateOfficial(data,socket);
 			}else{
 				const ver_req_set_option = {
 					hostname: API,
@@ -179,7 +179,7 @@ io.on('connection', (socket) => {
 						res_data = JSON.parse(d);
 						if (res_data.ok === true) {
 							// Get and Update The Offices List
-							updateOfficial();
+							updateOfficial(data,socket);
 						}
 					});
 				});
@@ -188,40 +188,6 @@ io.on('connection', (socket) => {
 				});
 				ver_req_set.write(ver_data);
 				ver_req_set.end();
-			}
-			function updateOfficial() {
-				fs.readFile(__dirname + '/app/json/umpiresScorers.json', 'utf8', (err, umpiresScorers_old) => {
-					if (err) {
-						console.error(err);
-						return;
-					}
-					var jsonOld = JSON.parse(umpiresScorers_old);
-					var changes = {};
-					// Compare The Old offices list With The New offices list and save the changes
-					Object.entries(data).forEach(entry => {
-						const [indx, element] = entry;
-						Object.entries(element).forEach(entry2 => {
-							const [indx2, element2] = entry2;
-							Object.entries(element2).forEach(entry3 => {
-								const [indx3, element3] = entry3;
-								if (jsonOld[indx][indx2][indx3] != element3) {
-									jsonOld[indx][indx2][indx3] = element3;
-									if (!changes[indx])
-										changes[indx] = {};
-									if (!changes[indx][indx2])
-										changes[indx][indx2] = {};
-									changes[indx][indx2][indx3] = element3;
-								}
-							});
-						});
-					});
-					fs.writeFile(__dirname + '/app/json/umpiresScorers.json', JSON.stringify(jsonOld, null, 4), (err) => {
-						if (err)
-							throw err;
-						socket.emit('updateOffices', changes);
-						socket.broadcast.emit('updateOffices', changes);
-					});
-				});
 			}
 		}
 	});
@@ -784,41 +750,103 @@ function updateActive(data,socket) {
 		});
 	});
 }
-
-function resetAllStaff(socket) {
-	fs.readFile(__dirname + '/app/json/umpiresScorers.json', 'utf8', (err, data) => {
+function updateOfficial(data,socket) {
+	fs.readFile(__dirname + '/app/json/umpiresScorers.json', 'utf8', (err, umpiresScorers_old) => {
 		if (err) {
 			console.error(err);
 			return;
 		}
-		var json = JSON.parse(data);
-		Object.entries(json).forEach(entry => {
+		var jsonOld = JSON.parse(umpiresScorers_old);
+		var changes = {};
+		// Compare The Old offices list With The New offices list and save the changes
+		Object.entries(data).forEach(entry => {
 			const [indx, element] = entry;
 			Object.entries(element).forEach(entry2 => {
 				const [indx2, element2] = entry2;
 				Object.entries(element2).forEach(entry3 => {
 					const [indx3, element3] = entry3;
-					switch (indx3) {
-						case 'name':
-							json[indx][indx2][indx3] = '';
-							break;
-						case 'surname':
-							json[indx][indx2][indx3] = '';
-							break;
-						case 'active':
-							json[indx][indx2][indx3] = false;
-							break;
-						default:
-							break;
+					if (jsonOld[indx][indx2][indx3] != element3) {
+						jsonOld[indx][indx2][indx3] = element3;
+						if (!changes[indx])
+							changes[indx] = {};
+						if (!changes[indx][indx2])
+							changes[indx][indx2] = {};
+						changes[indx][indx2][indx3] = element3;
 					}
 				});
 			});
 		});
+		fs.writeFile(__dirname + '/app/json/umpiresScorers.json', JSON.stringify(jsonOld, null, 4), (err) => {
+			if (err)
+				throw err;
+			socket.emit('updateOffices', changes);
+			socket.broadcast.emit('updateOffices', changes);
+		});
+	});
+}
+
+function resetAllStaff(socket) {
+	fs.readFile(__dirname + '/app/json/umpiresScorers.json', 'utf8', (err, ) => {
+		if (err) {
+			console.error(err);
+			return;
+		}
+		const json = JSON.parse(`{
+			"umpires": {
+				"HP": {
+					"surname": "HP Surname",
+					"name": "Name",
+					"active": true
+				},
+				"B1": {
+					"surname": "1B Surname",
+					"name": "Name",
+					"active": true
+				},
+				"B2": {
+					"surname": "2B Surname",
+					"name": "Name",
+					"active": true
+				},
+				"B3": {
+					"surname": "3B Surname",
+					"name": "Name",
+					"active": true
+				}
+			},
+			"scorers": {
+				"head": {
+					"surname": "Head Surname",
+					"name": "Name",
+					"active": true
+				},
+				"second": {
+					"surname": "Second Surname",
+					"name": "Name",
+					"active": true
+				},
+				"third": {
+					"surname": "Third Surname",
+					"name": "Name",
+					"active": true
+				}
+			},
+			"commentators": {
+				"main": {
+					"surname": "Sportcaster Surname",
+					"name": "Name"
+				},
+				"technical": {
+					"surname": "Technical Surname",
+					"name": "Name"
+				}
+			}
+		}`);
 		fs.writeFile(__dirname + '/app/json/umpiresScorers.json', JSON.stringify(json, null, 4), (err) => {
 			if (err)
 				throw err;
-			socket.emit('updateOffices', JSON.stringify(json));
-			socket.broadcast.emit('updateOffices', JSON.stringify(json));
+			socket.emit('updateOffices', json);
+			socket.broadcast.emit('updateOffices', json);
 		});
 	});
 }

@@ -20,5 +20,8 @@
                 ]
             }
         }
+    ],
+    "conventionalCommits.scopes": [
+        "staff"
     ]
 }

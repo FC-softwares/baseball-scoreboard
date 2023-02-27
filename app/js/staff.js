@@ -168,5 +168,5 @@ function sendSportcasters(){
 }
 
 function Reset_All(){
-    socket.emit("Reset_All_Staff");
+    socket.emit("Reset_all_staff");
 }
