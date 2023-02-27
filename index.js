@@ -28,206 +28,227 @@ io.on('connection', (socket) => {
 	console.log('a user connected\tID: '+socket.id);
 	socket.on('update_data', (data) => {			
 		if (socket.handshake.auth.id && socket.handshake.auth.token) {
-			const ver_options = {
-				hostname: API,
-				port: 443,
-				path: '/checkstat',
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				}
-			}
-			const ver_data = JSON.stringify({
-				id: socket.handshake.auth.id,
-				token: socket.handshake.auth.token
-			});
-			const ver_req = https.request(ver_options, (ver_res) => {
-				ver_res.on('data', (d) => {
-					//process.stdout.write(d);
-					res_data = JSON.parse(d);
-					if (res_data.ok === true) {
-						fs.readFile(__dirname + '/app/json/data.json', 'utf8', (err, data_old) => {
-							if (err) throw err;
-							var json = JSON.parse(data);
-							var data_old_obj = JSON.parse(data_old);
-							Object.entries(json).forEach(entry => {
-								const [indx, element] = entry;
-								if(element === '+'){
-									var { ScoreATmp, ScoreHTmp, i } = plusChanges();
-								}else if(element === '-'){
-									var { ScoreATmp, ScoreHTmp, i } = minusChanges();
-								}else if(element === '0'){
-									var i = zeroChanges();
-								}else if(element === 'toggle'){
-									toggleChanges();
-								}else if(indx === 'Teams.Away.Name')
-									data_old_obj.Teams.Away.Name = element;
-								else if(indx === 'Teams.Home.Name')
-									data_old_obj.Teams.Home.Name = element;
-								else if(indx === 'Teams.Away.Color')
-									data_old_obj.Teams.Away.Color = element;
-								else if(indx === 'Teams.Home.Color')
-									data_old_obj.Teams.Home.Color = element;
-								else
-									data_old_obj[indx] = element;
-
-								function toggleChanges() {
-									if (indx === '1')
-										data_old_obj.Bases[1] = !data_old_obj.Bases[1];
-									else if (indx === '2')
-										data_old_obj.Bases[2] = !data_old_obj.Bases[2];
-									else if (indx === '3')
-										data_old_obj.Bases[3] = !data_old_obj.Bases[3];
-									else if (indx === 'Auto_Change_Inning') {
-										data_old_obj.Bases[1] = false;
-										data_old_obj.Bases[2] = false;
-										data_old_obj.Bases[3] = false;
-										data_old_obj.Ball = 0;
-										data_old_obj.Strike = 0;
-										data_old_obj.Out = 0;
-										if (data_old_obj.Arrow == 1) {
-											data_old_obj.Arrow = 2;
-										} else {
-											data_old_obj.Arrow = 1;
-											data_old_obj.Inning++;
-											data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 };
-										}
-									} else if (indx === 'Reset_All')
-										data_old_obj = { "Teams": { "Away": { "Name": "AWAY", "Score": 0, "Color": "#000000" }, "Home": { "Name": "HOME", "Score": 0, "Color": "#000000" } }, "Ball": 0, "Strike": 0, "Out": 0, "Inning": 1, "Arrow": 1, "Bases": { "1": false, "2": false, "3": false }, "Int": { "1": { "A": 0, "H": 0 } } };
-								}
-								function zeroChanges() {
-									if (indx === 'Inning') {
-										data_old_obj[indx] = 1;
-										data_old_obj.Int = { 1: { A: 0, H: 0 } };
-										data_old_obj.Teams.Away.Score = 0;
-										data_old_obj.Teams.Home.Score = 0;
-									} else if (indx === 'Teams.Away.Score') {
-										data_old_obj.Teams.Away.Score = 0;
-										for (var i = 1; i <= data_old_obj.Inning; i++)
-											data_old_obj.Int[i].A = 0;
-									} else if (indx === 'Teams.Home.Score') {
-										data_old_obj.Teams.Home.Score = 0;
-										for (var i = 1; i <= data_old_obj.Inning; i++)
-											data_old_obj.Int[i].H = 0;
-									}
-									else
-										data_old_obj[indx] = 0;
-									return i;
-								}
-								function minusChanges() {
-									if (indx === 'Teams.Home.Score' && data_old_obj.Int[data_old_obj.Inning].H > 0) {
-										data_old_obj.Int[data_old_obj.Inning].H--;
-										data_old_obj.Teams.Home.Score--;
-									} else if (indx === 'Teams.Away.Score' && data_old_obj.Int[data_old_obj.Inning].A > 0) {
-										data_old_obj.Int[data_old_obj.Inning].A--;
-										data_old_obj.Teams.Away.Score--;
-									} else if (indx === 'Inning') {
-										if (data_old_obj.Inning > 1) {
-											delete data_old_obj.Int[data_old_obj.Inning];
-											data_old_obj.Inning--;
-											var ScoreATmp = 0, ScoreHTmp = 0;
-											for (var i = 1; i <= data_old_obj.Inning; i++) {
-												ScoreATmp += data_old_obj.Int[i].A;
-												ScoreHTmp += data_old_obj.Int[i].H;
-											}
-											data_old_obj.Teams.Away.Score = ScoreATmp;
-											data_old_obj.Teams.Home.Score = ScoreHTmp;
-										}
-									} else if (data_old_obj[indx] > 0)
-										data_old_obj[indx]--;
-									return { ScoreATmp, ScoreHTmp, i };
-								}
-								function plusChanges() {
-									if (indx === 'Ball' && data_old_obj.Ball < 3)
-										data_old_obj[indx] = data_old_obj[indx] + 1;
-									else if (indx === 'Strike' && data_old_obj.Strike < 2)
-										data_old_obj[indx]++;
-									else if (indx === 'Out' && data_old_obj.Out < 2)
-										data_old_obj[indx]++;
-									else if (indx === 'Teams.Away.Score') {
-										data_old_obj.Int[data_old_obj.Inning].A++;
-										var ScoreATmp = 0;
-										for (var i = 1; i <= data_old_obj.Inning; i++) {
-											ScoreATmp += data_old_obj.Int[i].A;
-										}
-										data_old_obj.Teams.Away.Score = ScoreATmp;
-									} else if (indx === 'Teams.Home.Score') {
-										data_old_obj.Int[data_old_obj.Inning].H++;
-										var ScoreHTmp = 0;
-										for (var i = 1; i <= data_old_obj.Inning; i++) {
-											ScoreHTmp += data_old_obj.Int[i].H;
-										}
-										data_old_obj.Teams.Home.Score = ScoreHTmp;
-									} else if (indx === 'Inning') {
-										data_old_obj.Inning++;
-										data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 };
-									}
-									return { ScoreATmp, ScoreHTmp, i };
-								}
-							});
-							fs.writeFile(__dirname + '/app/json/data.json', JSON.stringify(data_old_obj, null, 4), (err) => {
-								if (err) throw err;
-							});
-							socket.emit('update', data_old_obj);
-							socket.broadcast.emit('update', data_old_obj);
-						});
+			if(socket.handshake.auth.id == 'guest' && socket.handshake.auth.token == 'guest' && CLIENT == 'DEMO'){
+				updateData();
+			}else{
+				const ver_options = {
+					hostname: API,
+					port: 443,
+					path: '/checkstat',
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
 					}
+				}
+				const ver_data = JSON.stringify({
+					id: socket.handshake.auth.id,
+					token: socket.handshake.auth.token
 				});
-			});
-			ver_req.on('error', (e) => {
-				console.error(e);
-			});
-			ver_req.write(ver_data);
-			ver_req.end();
+				const ver_req = https.request(ver_options, (ver_res) => {
+					ver_res.on('data', (d) => {
+						//process.stdout.write(d);
+						res_data = JSON.parse(d);
+						if (res_data.ok === true) {
+							updateData();
+						}
+					});
+				});
+				ver_req.on('error', (e) => {
+					console.error(e);
+				});
+				ver_req.write(ver_data);
+				ver_req.end();
+			}
+			function updateData() {
+				fs.readFile(__dirname + '/app/json/data.json', 'utf8', (err, data_old) => {
+					if (err)
+						throw err;
+					var json = JSON.parse(data);
+					var data_old_obj = JSON.parse(data_old);
+					Object.entries(json).forEach(entry => {
+						const [indx, element] = entry;
+						if (element === '+') {
+							var { ScoreATmp, ScoreHTmp, i } = plusChanges();
+						} else if (element === '-') {
+							var { ScoreATmp, ScoreHTmp, i } = minusChanges();
+						} else if (element === '0') {
+							var i = zeroChanges();
+						} else if (element === 'toggle') {
+							toggleChanges();
+						} else if (indx === 'Teams.Away.Name')
+							data_old_obj.Teams.Away.Name = element;
+						else if (indx === 'Teams.Home.Name')
+							data_old_obj.Teams.Home.Name = element;
+						else if (indx === 'Teams.Away.Color')
+							data_old_obj.Teams.Away.Color = element;
+						else if (indx === 'Teams.Home.Color')
+							data_old_obj.Teams.Home.Color = element;
+						
+						else
+							data_old_obj[indx] = element;
+						
+						function toggleChanges() {
+							if (indx === '1')
+								data_old_obj.Bases[1] = !data_old_obj.Bases[1];
+							else if (indx === '2')
+								data_old_obj.Bases[2] = !data_old_obj.Bases[2];
+							else if (indx === '3')
+								data_old_obj.Bases[3] = !data_old_obj.Bases[3];
+							else if (indx === 'Auto_Change_Inning') {
+								data_old_obj.Bases[1] = false;
+								data_old_obj.Bases[2] = false;
+								data_old_obj.Bases[3] = false;
+								data_old_obj.Ball = 0;
+								data_old_obj.Strike = 0;
+								data_old_obj.Out = 0;
+								if (data_old_obj.Arrow == 1) {
+									data_old_obj.Arrow = 2;
+								} else {
+									data_old_obj.Arrow = 1;
+									data_old_obj.Inning++;
+									data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 };
+								}
+							} else if (indx === 'Reset_All')
+								data_old_obj = { "Teams": { "Away": { "Name": "AWAY", "Score": 0, "Color": "#000000" }, "Home": { "Name": "HOME", "Score": 0, "Color": "#000000" } }, "Ball": 0, "Strike": 0, "Out": 0, "Inning": 1, "Arrow": 1, "Bases": { "1": false, "2": false, "3": false }, "Int": { "1": { "A": 0, "H": 0 } } };
+						}
+						function zeroChanges() {
+							if (indx === 'Inning') {
+								data_old_obj[indx] = 1;
+								data_old_obj.Int = { 1: { A: 0, H: 0 } };
+								data_old_obj.Teams.Away.Score = 0;
+								data_old_obj.Teams.Home.Score = 0;
+							} else if (indx === 'Teams.Away.Score') {
+								data_old_obj.Teams.Away.Score = 0;
+								for (var i = 1; i <= data_old_obj.Inning; i++)
+									data_old_obj.Int[i].A = 0;
+							} else if (indx === 'Teams.Home.Score') {
+								data_old_obj.Teams.Home.Score = 0;
+								for (var i = 1; i <= data_old_obj.Inning; i++)
+									data_old_obj.Int[i].H = 0;
+							} else
+								data_old_obj[indx] = 0;
+							return i;
+						}
+						function minusChanges() {
+							if (indx === 'Teams.Home.Score' && data_old_obj.Int[data_old_obj.Inning].H > 0) {
+								data_old_obj.Int[data_old_obj.Inning].H--;
+								data_old_obj.Teams.Home.Score--;
+							} else if (indx === 'Teams.Away.Score' && data_old_obj.Int[data_old_obj.Inning].A > 0) {
+								data_old_obj.Int[data_old_obj.Inning].A--;
+								data_old_obj.Teams.Away.Score--;
+							} else if (indx === 'Inning') {
+								if (data_old_obj.Inning > 1) {
+									delete data_old_obj.Int[data_old_obj.Inning];
+									data_old_obj.Inning--;
+									var ScoreATmp = 0, ScoreHTmp = 0;
+									for (var i = 1; i <= data_old_obj.Inning; i++) {
+										ScoreATmp += data_old_obj.Int[i].A;
+										ScoreHTmp += data_old_obj.Int[i].H;
+									}
+									data_old_obj.Teams.Away.Score = ScoreATmp;
+									data_old_obj.Teams.Home.Score = ScoreHTmp;
+								}
+							} else if (data_old_obj[indx] > 0)
+								data_old_obj[indx]--;
+							return { ScoreATmp, ScoreHTmp, i };
+						}
+						function plusChanges() {
+							if (indx === 'Ball' && data_old_obj.Ball < 3)
+								data_old_obj[indx] = data_old_obj[indx] + 1;
+							else if (indx === 'Strike' && data_old_obj.Strike < 2)
+								data_old_obj[indx]++;
+							else if (indx === 'Out' && data_old_obj.Out < 2)
+								data_old_obj[indx]++;
+							else if (indx === 'Teams.Away.Score') {
+								data_old_obj.Int[data_old_obj.Inning].A++;
+								var ScoreATmp = 0;
+								for (var i = 1; i <= data_old_obj.Inning; i++) {
+									ScoreATmp += data_old_obj.Int[i].A;
+								}
+								data_old_obj.Teams.Away.Score = ScoreATmp;
+							} else if (indx === 'Teams.Home.Score') {
+								data_old_obj.Int[data_old_obj.Inning].H++;
+								var ScoreHTmp = 0;
+								for (var i = 1; i <= data_old_obj.Inning; i++) {
+									ScoreHTmp += data_old_obj.Int[i].H;
+								}
+								data_old_obj.Teams.Home.Score = ScoreHTmp;
+							} else if (indx === 'Inning') {
+								data_old_obj.Inning++;
+								data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 };
+							}
+							return { ScoreATmp, ScoreHTmp, i };
+						}
+					});
+					fs.writeFile(__dirname + '/app/json/data.json', JSON.stringify(data_old_obj, null, 4), (err) => {
+						if (err)
+							throw err;
+					});
+					socket.emit('update', data_old_obj);
+					socket.broadcast.emit('update', data_old_obj);
+				});
+			}
+		}else{
+			socket.emit('error', 'No auth');
 		}
 	});
 
 	socket.on('updateSettings', (data) => {			
 		if (socket.handshake.auth.id && socket.handshake.auth.token) {
-			const ver_req_set_option = {
-				hostname: API,
-				port: 443,
-				path: '/checkstat',
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				}
-			}
-			const ver_data = JSON.stringify({
-				id: socket.handshake.auth.id,
-				token: socket.handshake.auth.token
-			});
-			const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
-				ver_res.on('data', (d) => {
-					//process.stdout.write(d);
-					res_data = JSON.parse(d);
-					if (res_data.ok === true) {
-						fs.readFile(__dirname + '/app/json/settings.json', 'utf8', (err, data_old) => {
-							if (err) throw err;
-							var json = JSON.parse(data);
-							var data_old_obj = JSON.parse(data_old);
-							Object.entries(json).forEach(entry => {
-								const [indx, element] = entry;
-								switch(element) { 
-										default:
-											data_old_obj[indx]=element;
-											break;
-									}
-							});
-							fs.writeFile(__dirname + '/app/json/settings.json', JSON.stringify(data_old_obj, null, 4), (err) => {
-								if (err) throw err;
-							});
-							socket.emit('updateSettings', data_old_obj);
-							socket.broadcast.emit('updateSettings', data_old_obj);
-						});
+			if(socket.handshake.auth.id === 'guest' && socket.handshake.auth.token === 'guest' && CLIENT === 'DEMO'){
+				updateSettings();
+			}else{
+				const ver_req_set_option = {
+					hostname: API,
+					port: 443,
+					path: '/checkstat',
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
 					}
+				}
+				const ver_data = JSON.stringify({
+					id: socket.handshake.auth.id,
+					token: socket.handshake.auth.token
 				});
-			});
-			ver_req_set.on('error', (e) => {
-				console.error(e);
-			});
-			ver_req_set.write(ver_data);
-			ver_req_set.end();
+				const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
+					ver_res.on('data', (d) => {
+						//process.stdout.write(d);
+						res_data = JSON.parse(d);
+						if (res_data.ok === true) {
+							updateSettings();
+						}
+					});
+				});
+				ver_req_set.on('error', (e) => {
+					console.error(e);
+				});
+				ver_req_set.write(ver_data);
+				ver_req_set.end();
+			}
+			
+			function updateSettings() {
+				fs.readFile(__dirname + '/app/json/settings.json', 'utf8', (err, data_old) => {
+					if (err)
+						throw err;
+					var json = JSON.parse(data);
+					var data_old_obj = JSON.parse(data_old);
+					Object.entries(json).forEach(entry => {
+						const [indx, element] = entry;
+						switch (element) {
+							default:
+								data_old_obj[indx] = element;
+								break;
+						}
+					});
+					fs.writeFile(__dirname + '/app/json/settings.json', JSON.stringify(data_old_obj, null, 4), (err) => {
+						if (err)
+							throw err;
+					});
+					socket.emit('updateSettings', data_old_obj);
+					socket.broadcast.emit('updateSettings', data_old_obj);
+				});
+			}
 		}
 	});
 	socket.on('getSettings',()=>{
@@ -248,58 +269,66 @@ io.on('connection', (socket) => {
 	});
 	socket.on('updateActive',(data)=>{
 		if (socket.handshake.auth.id && socket.handshake.auth.token) {
-			const ver_req_set_option = {
-				hostname: API,
-				port: 443,
-				path: '/checkstat',
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				}
-			}
-			const ver_data = JSON.stringify({
-				id: socket.handshake.auth.id,
-				token: socket.handshake.auth.token
-			});
-			const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
-				ver_res.on('data', (d) => {
-					res_data = JSON.parse(d);
-					if (res_data.ok === true) {
-						// Update The Active Scoreboards List
-						fs.readFile(__dirname + '/app/json/scoreboards.json', 'utf8', (err, scoreboard_old) => {
-							if (err) {
-								console.error(err);
-								return;
-							}
-							var json = JSON.parse(data);
-							var jsonOld = JSON.parse(scoreboard_old);
-							var changes = {};
-							// Compare The Old Scoreboard With The New Scoreboard and save the changes
-							Object.entries(json).forEach(entry => {
-								const [indx, element] = entry;
-								if(element == true){
-									jsonOld[indx] = true;
-									changes[indx] = true;
-								}else{
-									jsonOld[indx] = false;
-									changes[indx] = false;
-								}
-							});
-							fs.writeFile(__dirname + '/app/json/scoreboards.json', JSON.stringify(jsonOld, null, 4), (err) => {
-								if (err) throw err;
-								const changesJson = JSON.stringify(changes);
-								socket.emit('updateActive',changesJson);
-								socket.broadcast.emit('updateActive',changesJson);
-							});
-						})
+			if(socket.handshake.auth.id === 'guest' && socket.handshake.auth.token === 'guest' && CLIENT === 'DEMO'){
+				updateActive();
+			}else{
+				const ver_req_set_option = {
+					hostname: API,
+					port: 443,
+					path: '/checkstat',
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
 					}
+				}
+				const ver_data = JSON.stringify({
+					id: socket.handshake.auth.id,
+					token: socket.handshake.auth.token
 				});
-			});
-			ver_req_set.on('error', (e) => {
-				console.error(e);
-			});
-			ver_req_set.write(ver_data);
-			ver_req_set.end();
+				const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
+					ver_res.on('data', (d) => {
+						res_data = JSON.parse(d);
+						if (res_data.ok === true) {
+							// Update The Active Scoreboards List
+							updateActive();
+						}
+					});
+				});
+				ver_req_set.on('error', (e) => {
+					console.error(e);
+				});
+				ver_req_set.write(ver_data);
+				ver_req_set.end();
+			}
+			function updateActive() {
+				fs.readFile(__dirname + '/app/json/scoreboards.json', 'utf8', (err, scoreboard_old) => {
+					if (err) {
+						console.error(err);
+						return;
+					}
+					var json = JSON.parse(data);
+					var jsonOld = JSON.parse(scoreboard_old);
+					var changes = {};
+					// Compare The Old Scoreboard With The New Scoreboard and save the changes
+					Object.entries(json).forEach(entry => {
+						const [indx, element] = entry;
+						if (element == true) {
+							jsonOld[indx] = true;
+							changes[indx] = true;
+						} else {
+							jsonOld[indx] = false;
+							changes[indx] = false;
+						}
+					});
+					fs.writeFile(__dirname + '/app/json/scoreboards.json', JSON.stringify(jsonOld, null, 4), (err) => {
+						if (err)
+							throw err;
+						const changesJson = JSON.stringify(changes);
+						socket.emit('updateActive', changesJson);
+						socket.broadcast.emit('updateActive', changesJson);
+					});
+				});
+			}
 		}
 	});
 	socket.on('getActive',()=>{
@@ -309,63 +338,71 @@ io.on('connection', (socket) => {
 	});
 	socket.on('updateOffices',(data)=>{
 		if (socket.handshake.auth.id && socket.handshake.auth.token) {
-			const ver_req_set_option = {
-				hostname: API,
-				port: 443,
-				path: '/checkstat',
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				}
-			}
-			const ver_data = JSON.stringify({
-				id: socket.handshake.auth.id,
-				token: socket.handshake.auth.token
-			});
-			const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
-				ver_res.on('data', (d) => {
-					res_data = JSON.parse(d);
-					if (res_data.ok === true) {
-						// Get and Update The Offices List
-						fs.readFile(__dirname + '/app/json/umpiresScorers.json', 'utf8', (err, umpiresScorers_old) => {
-							if (err) {
-								console.error(err);
-								return;
-							}
-							var jsonOld = JSON.parse(umpiresScorers_old);
-							var changes = {};
-							// Compare The Old offices list With The New offices list and save the changes
-							Object.entries(data).forEach(entry => {
-								const [indx, element] = entry;
-								Object.entries(element).forEach(entry2 => {
-									const [indx2, element2] = entry2;
-									Object.entries(element2).forEach(entry3 => {
-										const [indx3, element3] = entry3;
-										if(jsonOld[indx][indx2][indx3] != element3){
-											jsonOld[indx][indx2][indx3] = element3;
-											if(!changes[indx])
-												changes[indx] = {};
-											if(!changes[indx][indx2])
-												changes[indx][indx2] = {};
-											changes[indx][indx2][indx3] = element3;
-										}
-									});
-								});
-							});
-							fs.writeFile(__dirname + '/app/json/umpiresScorers.json', JSON.stringify(jsonOld, null, 4), (err) => {
-								if (err) throw err;
-								socket.emit('updateOffices',changes);
-								socket.broadcast.emit('updateOffices',changes);
-							});
-						})
+			if(socket.handshake.auth.id === 'guest' && socket.handshake.auth.token === 'guest' && CLIENT === 'DEMO'){
+				updateOfficial();
+			}else{
+				const ver_req_set_option = {
+					hostname: API,
+					port: 443,
+					path: '/checkstat',
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
 					}
+				}
+				const ver_data = JSON.stringify({
+					id: socket.handshake.auth.id,
+					token: socket.handshake.auth.token
 				});
-			});
-			ver_req_set.on('error', (e) => {
-				console.error(e);
-			});
-			ver_req_set.write(ver_data);
-			ver_req_set.end();
+				const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
+					ver_res.on('data', (d) => {
+						res_data = JSON.parse(d);
+						if (res_data.ok === true) {
+							// Get and Update The Offices List
+							updateOfficial();
+						}
+					});
+				});
+				ver_req_set.on('error', (e) => {
+					console.error(e);
+				});
+				ver_req_set.write(ver_data);
+				ver_req_set.end();
+			}
+			function updateOfficial() {
+				fs.readFile(__dirname + '/app/json/umpiresScorers.json', 'utf8', (err, umpiresScorers_old) => {
+					if (err) {
+						console.error(err);
+						return;
+					}
+					var jsonOld = JSON.parse(umpiresScorers_old);
+					var changes = {};
+					// Compare The Old offices list With The New offices list and save the changes
+					Object.entries(data).forEach(entry => {
+						const [indx, element] = entry;
+						Object.entries(element).forEach(entry2 => {
+							const [indx2, element2] = entry2;
+							Object.entries(element2).forEach(entry3 => {
+								const [indx3, element3] = entry3;
+								if (jsonOld[indx][indx2][indx3] != element3) {
+									jsonOld[indx][indx2][indx3] = element3;
+									if (!changes[indx])
+										changes[indx] = {};
+									if (!changes[indx][indx2])
+										changes[indx][indx2] = {};
+									changes[indx][indx2][indx3] = element3;
+								}
+							});
+						});
+					});
+					fs.writeFile(__dirname + '/app/json/umpiresScorers.json', JSON.stringify(jsonOld, null, 4), (err) => {
+						if (err)
+							throw err;
+						socket.emit('updateOffices', changes);
+						socket.broadcast.emit('updateOffices', changes);
+					});
+				});
+			}
 		}
 	});
 	socket.on('getOffices',()=>{
@@ -379,65 +416,73 @@ io.on('connection', (socket) => {
 	});
 	socket.on('Reset_all_staff',()=>{
 		if (socket.handshake.auth.id && socket.handshake.auth.token) {
-			const ver_req_set_option = {
-				hostname: API,
-				port: 443,
-				path: '/checkstat',
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				}
-			}
-			const ver_data = JSON.stringify({
-				id: socket.handshake.auth.id,
-				token: socket.handshake.auth.token
-			});
-			const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
-				ver_res.on('data', (d) => {
-					res_data = JSON.parse(d);
-					if (res_data.ok === true) {
-						fs.readFile(__dirname + '/app/json/umpiresScorers.json', 'utf8', (err, data) => {
-							if(err){
-								console.error(err);
-								return;
-							}
-							var json = JSON.parse(data);
-							Object.entries(json).forEach(entry => {
-								const [indx, element] = entry;
-								Object.entries(element).forEach(entry2 => {
-									const [indx2, element2] = entry2;
-									Object.entries(element2).forEach(entry3 => {
-										const [indx3, element3] = entry3;
-										switch(indx3){
-											case 'name':
-												json[indx][indx2][indx3] = '';
-												break;
-											case 'surname':
-												json[indx][indx2][indx3] = '';
-												break;
-											case 'active':
-												json[indx][indx2][indx3] = false;
-												break;
-											default:
-												break;
-										}
-									});
-								});
-							});
-							fs.writeFile(__dirname + '/app/json/umpiresScorers.json', JSON.stringify(json, null, 4), (err) => {
-								if (err) throw err;
-								socket.emit('updateOffices',JSON.stringify(json));
-								socket.broadcast.emit('updateOffices',JSON.stringify(json));
-							});
-						})
+			if(socket.handshake.auth.id === 'guest' && socket.handshake.auth.token === 'guest' && CLIENT === 'DEMO'){
+				resetAllStaff();
+			}else{
+				const ver_req_set_option = {
+					hostname: API,
+					port: 443,
+					path: '/checkstat',
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
 					}
+				}
+				const ver_data = JSON.stringify({
+					id: socket.handshake.auth.id,
+					token: socket.handshake.auth.token
 				});
-			});
-			ver_req_set.on('error', (e) => {
-				console.error(e);
-			});
-			ver_req_set.write(ver_data);
-			ver_req_set.end();
+				const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
+					ver_res.on('data', (d) => {
+						res_data = JSON.parse(d);
+						if (res_data.ok === true) {
+							resetAllStaff();
+						}
+					});
+				});
+				ver_req_set.on('error', (e) => {
+					console.error(e);
+				});
+				ver_req_set.write(ver_data);
+				ver_req_set.end();
+			}
+			function resetAllStaff() {
+				fs.readFile(__dirname + '/app/json/umpiresScorers.json', 'utf8', (err, data) => {
+					if (err) {
+						console.error(err);
+						return;
+					}
+					var json = JSON.parse(data);
+					Object.entries(json).forEach(entry => {
+						const [indx, element] = entry;
+						Object.entries(element).forEach(entry2 => {
+							const [indx2, element2] = entry2;
+							Object.entries(element2).forEach(entry3 => {
+								const [indx3, element3] = entry3;
+								switch (indx3) {
+									case 'name':
+										json[indx][indx2][indx3] = '';
+										break;
+									case 'surname':
+										json[indx][indx2][indx3] = '';
+										break;
+									case 'active':
+										json[indx][indx2][indx3] = false;
+										break;
+									default:
+										break;
+								}
+							});
+						});
+					});
+					fs.writeFile(__dirname + '/app/json/umpiresScorers.json', JSON.stringify(json, null, 4), (err) => {
+						if (err)
+							throw err;
+						socket.emit('updateOffices', JSON.stringify(json));
+						socket.broadcast.emit('updateOffices', JSON.stringify(json));
+					});
+				});
+			}
 		}
 	});
 	socket.on('disconnect', () => {
