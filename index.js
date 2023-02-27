@@ -643,7 +643,7 @@ app.post("/addAuthUser", (req, res) => {
 		return;
 	}
 	if(id == 'guest' && token == 'guest'){
-		res.status(400).json({ok:false,message:'guest'});
+		res.status(400).json({ok:false,message:'You can not change the authorized user on the DEMO version'});
 		return;
 	}
 	const req_option = {
@@ -695,7 +695,7 @@ app.post("/removeAuthUser", (req, res) => {
 		return;
 	}
 	if(id == 'guest' && token == 'guest'){
-		res.status(400).json({ok:false,message:'guest'});
+		res.status(400).json({ok:false,message:'You can not change the authorized user on the DEMO version'});
 		return;
 	}
 	const req_option = {
