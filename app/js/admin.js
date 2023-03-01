@@ -42,47 +42,65 @@ socket.on('connectData', update);
 socket.on('update', update);
 
 function update(data){
-	document.getElementById('NameAway').value = data.Teams.Away.Name;
-	document.getElementById('NameHome').value = data.Teams.Home.Name;
-	document.getElementById('ColorAway').value = data.Teams.Away.Color;
-	document.getElementById('ColorHome').value = data.Teams.Home.Color;
-	document.getElementById('BallView').value = data.Ball;
-	document.getElementById('StrikeView').value = data.Strike;
-	document.getElementById('OutView').value = data.Out;
-	document.getElementById('InningView').value = data.Inning;
-	document.getElementById('ScoreHView').value = data.Teams.Home.Score;
-	document.getElementById('ScoreAView').value = data.Teams.Away.Score;
-	if (data.Arrow == 1) {
-		document.getElementById("TopView").classList.remove("btn-outline-primary");
-		document.getElementById("TopView").classList.add("btn-primary");
-		document.getElementById("BotView").classList.remove("btn-primary");
-		document.getElementById("BotView").classList.add("btn-outline-primary");
-	}else{
-		document.getElementById("TopView").classList.remove("btn-primary");
-		document.getElementById("TopView").classList.add("btn-outline-primary");
-		document.getElementById("BotView").classList.remove("btn-outline-primary");
-		document.getElementById("BotView").classList.add("btn-primary");
+	if(data?.Teams?.Away?.Name !== undefined)
+		document.getElementById('NameAway').value = data.Teams.Away.Name;
+	if(data?.Teams?.Home?.Name !== undefined)
+		document.getElementById('NameHome').value = data.Teams.Home.Name;
+	if(data?.Teams?.Away?.Color !== undefined)
+		document.getElementById('ColorAway').value = data.Teams.Away.Color;
+	if(data?.Teams?.Home?.Color !== undefined)
+		document.getElementById('ColorHome').value = data.Teams.Home.Color;
+	if(data?.Ball !== undefined)
+		document.getElementById('BallView').value = data.Ball;
+	if(data?.Strike !== undefined)
+		document.getElementById('StrikeView').value = data.Strike;
+	if(data?.Out !== undefined)
+		document.getElementById('OutView').value = data.Out;
+	if(data?.Inning !== undefined)
+		document.getElementById('InningView').value = data.Inning;
+	if(data?.Teams?.Home?.Score !== undefined)
+		document.getElementById('ScoreHView').value = data.Teams.Home.Score;
+	if(data?.Teams?.Away?.Score !== undefined)
+		document.getElementById('ScoreAView').value = data.Teams.Away.Score;
+	if(data?.Arrow !== undefined){
+		if (data.Arrow == 1) {
+			document.getElementById("TopView").classList.remove("btn-outline-primary");
+			document.getElementById("TopView").classList.add("btn-primary");
+			document.getElementById("BotView").classList.remove("btn-primary");
+			document.getElementById("BotView").classList.add("btn-outline-primary");
+		}else{
+			document.getElementById("TopView").classList.remove("btn-primary");
+			document.getElementById("TopView").classList.add("btn-outline-primary");
+			document.getElementById("BotView").classList.remove("btn-outline-primary");
+			document.getElementById("BotView").classList.add("btn-primary");
+		}
 	}
-	if(data.Bases[1]==true){
-		document.getElementById("Base1View").classList.remove("btn-outline-primary");
-		document.getElementById("Base1View").classList.add("btn-primary");
-	}else{
-		document.getElementById("Base1View").classList.remove("btn-primary");
-		document.getElementById("Base1View").classList.add("btn-outline-primary");
+	if(data?.Bases[1] !== undefined){
+		if(data.Bases[1]==true){
+			document.getElementById("Base1View").classList.remove("btn-outline-primary");
+			document.getElementById("Base1View").classList.add("btn-primary");
+		}else{
+			document.getElementById("Base1View").classList.remove("btn-primary");
+			document.getElementById("Base1View").classList.add("btn-outline-primary");
+		}
 	}
-	if(data.Bases[2]==true){
-		document.getElementById("Base2View").classList.remove("btn-outline-primary");
-		document.getElementById("Base2View").classList.add("btn-primary");
-	}else{
-		document.getElementById("Base2View").classList.remove("btn-primary");
-		document.getElementById("Base2View").classList.add("btn-outline-primary");
+	if(data?.Bases[2] !== undefined){
+		if(data.Bases[2]==true){
+			document.getElementById("Base2View").classList.remove("btn-outline-primary");
+			document.getElementById("Base2View").classList.add("btn-primary");
+		}else{
+			document.getElementById("Base2View").classList.remove("btn-primary");
+			document.getElementById("Base2View").classList.add("btn-outline-primary");
+		}
 	}
-	if(data.Bases[3]==true){
-		document.getElementById("Base3View").classList.remove("btn-outline-primary");
-		document.getElementById("Base3View").classList.add("btn-primary");
-	}else{
-		document.getElementById("Base3View").classList.remove("btn-primary");
-		document.getElementById("Base3View").classList.add("btn-outline-primary");
+	if(data?.Bases[3] !== undefined){
+		if(data.Bases[3]==true){
+			document.getElementById("Base3View").classList.remove("btn-outline-primary");
+			document.getElementById("Base3View").classList.add("btn-primary");
+		}else{
+			document.getElementById("Base3View").classList.remove("btn-primary");
+			document.getElementById("Base3View").classList.add("btn-outline-primary");
+		}
 	}
 }
 //To add for all the variables

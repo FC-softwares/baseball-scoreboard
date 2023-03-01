@@ -27,35 +27,43 @@ socket.on('updateOffices', updateOffices);
 function update(obj){
 	// Teams
 	// Away
-	try{document.querySelector("div.teamName#away > div > span").innerHTML = obj.Teams.Away.Name;}catch(error){console.error(error)}
-	document.documentElement.style.setProperty('--c-away', obj.Teams.Away.Color);
-	if(brightnessByColor(obj.Teams.Away.Color)<60)
-		document.documentElement.style.setProperty('--c-score-away', '#ffffff');
-	else
-		document.documentElement.style.setProperty('--c-score-away', '#000000');
-	try{
-	if(brightnessByColor(obj.Teams.Away.Color)>190)
-		document.querySelector("div.teamName#away > div#bg").classList.add("bg-dark");
-	else
-		document.querySelector("div.teamName#away > div#bg").classList.remove("bg-dark");
-	}catch(error){console.error(error)}
+	if(obj?.Teams?.Away?.Name !== undefined)
+		try{document.querySelector("div.teamName#away > div > span").innerHTML = obj.Teams.Away.Name;}catch(error){console.error(error)}
+	if(obj?.Teams?.Away?.Color !== undefined){
+		document.documentElement.style.setProperty('--c-away', obj.Teams.Away.Color);
+		if(brightnessByColor(obj.Teams.Away.Color)<60)
+			document.documentElement.style.setProperty('--c-score-away', '#ffffff');
+		else
+			document.documentElement.style.setProperty('--c-score-away', '#000000');
+		try{
+		if(brightnessByColor(obj.Teams.Away.Color)>190)
+			document.querySelector("div.teamName#away > div#bg").classList.add("bg-dark");
+		else
+			document.querySelector("div.teamName#away > div#bg").classList.remove("bg-dark");
+		}catch(error){console.error(error)}
+	}
 	// Home
-	try{document.querySelector("div.teamName#home > div > span").innerHTML = obj.Teams.Home.Name;}catch(error){console.error(error)}
-	document.documentElement.style.setProperty('--c-home', obj.Teams.Home.Color);
-	if(brightnessByColor(obj.Teams.Home.Color)<60)
-		document.documentElement.style.setProperty('--c-score-home', '#ffffff');
-	else
-		document.documentElement.style.setProperty('--c-score-home', '#000000');
-	try{
-	if(brightnessByColor(obj.Teams.Home.Color)>190)
-		document.querySelector("div.teamName#home > div#bg").classList.add("bg-dark");
-	else
-		document.querySelector("div.teamName#home > div#bg").classList.remove("bg-dark");
-	}catch(error){console.error(error)}
-	// Score (for scoreboard, partials, and post-game)
+	if(obj?.Teams?.Home?.Name !== undefined)
+		try{document.querySelector("div.teamName#home > div > span").innerHTML = obj.Teams.Home.Name;}catch(error){console.error(error)}
+	if(obj?.Teams?.Home?.Color !== undefined){
+		document.documentElement.style.setProperty('--c-home', obj.Teams.Home.Color);
+		if(brightnessByColor(obj.Teams.Home.Color)<60)
+			document.documentElement.style.setProperty('--c-score-home', '#ffffff');
+		else
+			document.documentElement.style.setProperty('--c-score-home', '#000000');
+		try{
+		if(brightnessByColor(obj.Teams.Home.Color)>190)
+			document.querySelector("div.teamName#home > div#bg").classList.add("bg-dark");
+		else
+			document.querySelector("div.teamName#home > div#bg").classList.remove("bg-dark");
+		}catch(error){console.error(error)}
+	}
+	// Score (for postgame)
 	if(document.URL.includes("postgame.html")){
-		try{document.querySelector("div.teamScore#home > span").innerHTML = obj.Teams.Home.Score;}catch(error){console.error(error)}
-		try{document.querySelector("div.teamScore#away  > span").innerHTML = obj.Teams.Away.Score;}catch(error){console.error(error)}
+		if(obj?.Teams?.Home?.Score !== undefined)
+			try{document.querySelector("div.teamScore#home > span").innerHTML = obj.Teams.Home.Score;}catch(error){console.error(error)}
+		if(obj?.Teams?.Away?.Score !== undefined)
+			try{document.querySelector("div.teamScore#away  > span").innerHTML = obj.Teams.Away.Score;}catch(error){console.error(error)}
 	}
 	// Only for scoreboard
 	if (document.URL.includes("scoreboard.html")) {
@@ -69,9 +77,11 @@ function update(obj){
 }
 
 function updateInning(obj) {
-	try { document.querySelector(".score > #away").innerHTML = obj.Teams.Away.Score; } catch (error) { console.error(error); }
-	try { document.querySelector(".score > #home").innerHTML = obj.Teams.Home.Score; } catch (error) { console.error(error); }
-
+	if (obj?.Teams?.Away?.Score !== undefined)
+		try { document.querySelector(".score > #away").innerHTML = obj.Teams.Away.Score; } catch (error) { console.error(error); }
+	if (obj?.Teams?.Home?.Score !== undefined)
+		try { document.querySelector(".score > #home").innerHTML = obj.Teams.Home.Score; } catch (error) { console.error(error); }
+	
 	let extraInningScoreAway = 0, extraInningScoreHome = 0;
 	for (let i = 1; i <= localStorage.getItem("MaxInning"); i++) {
 		try {
@@ -178,33 +188,44 @@ function updateScoreboard(obj) {
 	try { document.querySelector("div.teamScore#home").innerHTML = obj.Teams.Home.Score; } catch (error) { console.error(error); }
 	try { document.querySelector("div.teamScore#away").innerHTML = obj.Teams.Away.Score; } catch (error) { console.error(error); }
 	// Ball Strike
-	try { document.querySelector("span#ball").innerHTML = obj.Ball; } catch (error) { console.error(error); }
-	try { document.querySelector("span#strike").innerHTML = obj.Strike; } catch (error) { console.error(error); }
+	if(obj?.Ball !== undefined) 
+		try { document.querySelector("span#ball").innerHTML = obj.Ball; } catch (error) { console.error(error); }
+	if(obj?.Strike !== undefined)
+		try { document.querySelector("span#strike").innerHTML = obj.Strike; } catch (error) { console.error(error); }
 	// Outs
-	try { document.querySelector("span#number").innerHTML = obj.Out; } catch (error) { console.error(error); }
+	if(obj?.Out !== undefined)
+		try { document.querySelector("span#number").innerHTML = obj.Out; } catch (error) { console.error(error); }
 	// Inning and Top/Bottom
 	try { document.querySelector(".inning > span#number").innerHTML = obj.Inning; } catch (error) { console.error(error); }
-	if (obj.Arrow == 1) {
-		try { document.querySelector(".inning > span#up").classList.remove("disabled"); } catch (error) { console.error(error); }
-		try { document.querySelector(".inning > span#down").classList.add("disabled"); } catch (error) { console.error(error); }
-	} else {
-		try { document.querySelector(".inning > span#up").classList.add("disabled"); } catch (error) { console.error(error); }
-		try { document.querySelector(".inning > span#down").classList.remove("disabled"); } catch (error) { console.error(error); }
+	if(obj?.Arrow !== undefined){
+		if (obj.Arrow == 1) {
+			try { document.querySelector(".inning > span#up").classList.remove("disabled"); } catch (error) { console.error(error); }
+			try { document.querySelector(".inning > span#down").classList.add("disabled"); } catch (error) { console.error(error); }
+		} else {
+			try { document.querySelector(".inning > span#up").classList.add("disabled"); } catch (error) { console.error(error); }
+			try { document.querySelector(".inning > span#down").classList.remove("disabled"); } catch (error) { console.error(error); }
+		}
 	}
-	if (obj.Bases[1]) {
-		try { document.querySelector("div#first").classList.remove("disabled"); } catch (error) { console.error(error); }
-	} else {
-		try { document.querySelector("div#first").classList.add("disabled"); } catch (error) { console.error(error); }
+	if(obj?.Bases[1] !== undefined){
+		if (obj.Bases[1]) {
+			try { document.querySelector("div#first").classList.remove("disabled"); } catch (error) { console.error(error); }
+		} else {
+			try { document.querySelector("div#first").classList.add("disabled"); } catch (error) { console.error(error); }
+		}
 	}
-	if (obj.Bases[2]) {
-		try { document.querySelector("div#second").classList.remove("disabled"); } catch (error) { console.error(error); }
-	} else {
-		try { document.querySelector("div#second").classList.add("disabled"); } catch (error) { console.error(error); }
+	if(obj?.Bases[2] !== undefined){
+		if (obj.Bases[2]) {
+			try { document.querySelector("div#second").classList.remove("disabled"); } catch (error) { console.error(error); }
+		} else {
+			try { document.querySelector("div#second").classList.add("disabled"); } catch (error) { console.error(error); }
+		}
 	}
-	if (obj.Bases[3]) {
-		try { document.querySelector("div#third").classList.remove("disabled"); } catch (error) { console.error(error); }
-	} else {
-		try { document.querySelector("div#third").classList.add("disabled"); } catch (error) { console.error(error); }
+	if(obj?.Bases[3] !== undefined){
+		if (obj.Bases[3]) {
+			try { document.querySelector("div#third").classList.remove("disabled"); } catch (error) { console.error(error); }
+		} else {
+			try { document.querySelector("div#third").classList.add("disabled"); } catch (error) { console.error(error); }
+		}
 	}
 }
 

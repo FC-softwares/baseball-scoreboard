@@ -17,6 +17,19 @@ const PORT = process.argv[2]|| process.env.PORT || 2095;
 const API = process.env.API || 'api.facchini-pu.it';
 const CLIENT = process.env.CLIENT || 'DEMO';
 
+// definitions of request options
+const reqOption = {
+	"checkstat": {
+		hostname: API,
+		port: 443,
+		path: '/checkstat',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		}
+	}
+}
+
 app.use(express.static(__dirname + '/app'));
 app.use(express.json({
 	verify: (req, res, buf) => {
@@ -26,25 +39,16 @@ app.use(express.json({
 
 io.on('connection', (socket) => {
 	console.log('a user connected\tID: '+socket.id);
+	const ver_data = JSON.stringify({
+		id: socket.handshake.auth.id,
+		token: socket.handshake.auth.token
+	});
 	socket.on('update_data', (data) => {			
 		if (socket.handshake.auth.id && socket.handshake.auth.token) {
 			if(socket.handshake.auth.id == 'guest' && socket.handshake.auth.token == 'guest' && CLIENT == 'DEMO'){
 				updateData(data,socket);
 			}else{
-				const ver_options = {
-					hostname: API,
-					port: 443,
-					path: '/checkstat',
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					}
-				}
-				const ver_data = JSON.stringify({
-					id: socket.handshake.auth.id,
-					token: socket.handshake.auth.token
-				});
-				const ver_req = https.request(ver_options, (ver_res) => {
+				const ver_req = https.request(reqOption.checkstat, (ver_res) => {
 					ver_res.on('data', (d) => {
 						//process.stdout.write(d);
 						res_data = JSON.parse(d);
@@ -69,20 +73,7 @@ io.on('connection', (socket) => {
 			if(socket.handshake.auth.id === 'guest' && socket.handshake.auth.token === 'guest' && CLIENT === 'DEMO'){
 				updateSettings(data,socket);
 			}else{
-				const ver_req_set_option = {
-					hostname: API,
-					port: 443,
-					path: '/checkstat',
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					}
-				}
-				const ver_data = JSON.stringify({
-					id: socket.handshake.auth.id,
-					token: socket.handshake.auth.token
-				});
-				const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
+				const ver_req_set = https.request(reqOption.checkstat, (ver_res) => {
 					ver_res.on('data', (d) => {
 						//process.stdout.write(d);
 						res_data = JSON.parse(d);
@@ -121,20 +112,7 @@ io.on('connection', (socket) => {
 			if(socket.handshake.auth.id === 'guest' && socket.handshake.auth.token === 'guest' && CLIENT === 'DEMO'){
 				updateActive(data,socket);
 			}else{
-				const ver_req_set_option = {
-					hostname: API,
-					port: 443,
-					path: '/checkstat',
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					}
-				}
-				const ver_data = JSON.stringify({
-					id: socket.handshake.auth.id,
-					token: socket.handshake.auth.token
-				});
-				const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
+				const ver_req_set = https.request(reqOption.checkstat, (ver_res) => {
 					ver_res.on('data', (d) => {
 						res_data = JSON.parse(d);
 						if (res_data.ok === true) {
@@ -161,20 +139,7 @@ io.on('connection', (socket) => {
 			if(socket.handshake.auth.id === 'guest' && socket.handshake.auth.token === 'guest' && CLIENT === 'DEMO'){
 				updateOfficial(data,socket);
 			}else{
-				const ver_req_set_option = {
-					hostname: API,
-					port: 443,
-					path: '/checkstat',
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					}
-				}
-				const ver_data = JSON.stringify({
-					id: socket.handshake.auth.id,
-					token: socket.handshake.auth.token
-				});
-				const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
+				const ver_req_set = https.request(reqOption.checkstat, (ver_res) => {
 					ver_res.on('data', (d) => {
 						res_data = JSON.parse(d);
 						if (res_data.ok === true) {
@@ -205,20 +170,7 @@ io.on('connection', (socket) => {
 			if(socket.handshake.auth.id === 'guest' && socket.handshake.auth.token === 'guest' && CLIENT === 'DEMO'){
 				resetAllStaff(socket);
 			}else{
-				const ver_req_set_option = {
-					hostname: API,
-					port: 443,
-					path: '/checkstat',
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					}
-				}
-				const ver_data = JSON.stringify({
-					id: socket.handshake.auth.id,
-					token: socket.handshake.auth.token
-				});
-				const ver_req_set = https.request(ver_req_set_option, (ver_res) => {
+				const ver_req_set = https.request(reqOption.checkstat, (ver_res) => {
 					ver_res.on('data', (d) => {
 						res_data = JSON.parse(d);
 						if (res_data.ok === true) {
@@ -304,21 +256,12 @@ app.post('/checkstat', (req, res) => {
 		res.status(400).json({ok:false,message:'invalid token'});
 		return;
 	}
-	const req_option = {
-		hostname: API,
-		port: 443,
-		path: '/checkstat',
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	};
 	const req_data = JSON.stringify({
 		id: id,
 		token: token
 	});
 	//make a request to remote APIs
-	const req_post = https.request(req_option, (res_post) => {
+	const req_post = https.request(reqOption.checkstat, (res_post) => {
 		res_post.on('data', (data) => {
 			const data_obj = JSON.parse(data);
 			if(data_obj.ok === true){
@@ -575,6 +518,7 @@ function updateData(data,socket){
 			throw err;
 		var json = JSON.parse(data);
 		var data_old_obj = JSON.parse(data_old);
+		var toBeSent = {};
 		Object.entries(json).forEach(entry => {
 			const [indx, element] = entry;
 			if (element === '+') {
@@ -585,26 +529,55 @@ function updateData(data,socket){
 				var i = zeroChanges();
 			} else if (element === 'toggle') {
 				toggleChanges();
-			} else if (indx === 'Teams.Away.Name')
+			} else if (indx === 'Teams.Away.Name'){
 				data_old_obj.Teams.Away.Name = element;
-			else if (indx === 'Teams.Home.Name')
+				if(toBeSent.Teams === undefined)
+					toBeSent.Teams = {};
+				if(toBeSent.Teams.Away === undefined)
+					toBeSent.Teams.Away = {};
+				toBeSent.Teams.Away.Name = element;
+			}else if (indx === 'Teams.Home.Name'){
 				data_old_obj.Teams.Home.Name = element;
-			else if (indx === 'Teams.Away.Color')
+				if(toBeSent.Teams === undefined)
+					toBeSent.Teams = {};
+				if(toBeSent.Teams.Home === undefined)
+					toBeSent.Teams.Home = {};
+				toBeSent.Teams.Home.Name = element;
+			}else if (indx === 'Teams.Away.Color'){
 				data_old_obj.Teams.Away.Color = element;
-			else if (indx === 'Teams.Home.Color')
+				if(toBeSent.Teams === undefined)
+					toBeSent.Teams = {};
+				if(toBeSent.Teams.Away === undefined)
+					toBeSent.Teams.Away = {};
+				toBeSent.Teams.Away.Color = element;
+			}else if (indx === 'Teams.Home.Color'){
 				data_old_obj.Teams.Home.Color = element;
-			
-			else
+				if(toBeSent.Teams === undefined)
+					toBeSent.Teams = {};
+				if(toBeSent.Teams.Home === undefined)
+					toBeSent.Teams.Home = {};
+				toBeSent.Teams.Home.Color = element;
+			}else{
 				data_old_obj[indx] = element;
-			
+				toBeSent[indx] = element;
+			}
 			function toggleChanges() {
-				if (indx === '1')
+				if (indx === '1'){
 					data_old_obj.Bases[1] = !data_old_obj.Bases[1];
-				else if (indx === '2')
+					if(toBeSent.Bases === undefined)
+						toBeSent.Bases = {};
+					toBeSent.Bases[1] = data_old_obj.Bases[1];
+				}else if (indx === '2'){
 					data_old_obj.Bases[2] = !data_old_obj.Bases[2];
-				else if (indx === '3')
+					if(toBeSent.Bases === undefined)
+						toBeSent.Bases = {};
+					toBeSent.Bases[2] = data_old_obj.Bases[2];
+				}else if (indx === '3'){
 					data_old_obj.Bases[3] = !data_old_obj.Bases[3];
-				else if (indx === 'Auto_Change_Inning') {
+					if(toBeSent.Bases === undefined)
+						toBeSent.Bases = {};
+					toBeSent.Bases[3] = data_old_obj.Bases[3];
+				}else if (indx === 'Auto_Change_Inning') {
 					data_old_obj.Bases[1] = false;
 					data_old_obj.Bases[2] = false;
 					data_old_obj.Bases[3] = false;
@@ -618,8 +591,21 @@ function updateData(data,socket){
 						data_old_obj.Inning++;
 						data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 };
 					}
-				} else if (indx === 'Reset_All')
+					if(toBeSent.Bases === undefined)
+						toBeSent.Bases = {};
+					toBeSent.Bases[1] = data_old_obj.Bases[1];
+					toBeSent.Bases[2] = data_old_obj.Bases[2];
+					toBeSent.Bases[3] = data_old_obj.Bases[3];
+					toBeSent.Ball = data_old_obj.Ball;
+					toBeSent.Strike = data_old_obj.Strike;
+					toBeSent.Out = data_old_obj.Out;
+					toBeSent.Arrow = data_old_obj.Arrow;
+					toBeSent.Inning = data_old_obj.Inning;
+					toBeSent.Int = data_old_obj.Int;
+				} else if (indx === 'Reset_All'){
 					data_old_obj = { "Teams": { "Away": { "Name": "AWAY", "Score": 0, "Color": "#000000" }, "Home": { "Name": "HOME", "Score": 0, "Color": "#000000" } }, "Ball": 0, "Strike": 0, "Out": 0, "Inning": 1, "Arrow": 1, "Bases": { "1": false, "2": false, "3": false }, "Int": { "1": { "A": 0, "H": 0 } } };
+					toBeSent = data_old_obj;
+				}
 			}
 			function zeroChanges() {
 				if (indx === 'Inning') {
@@ -627,6 +613,20 @@ function updateData(data,socket){
 					data_old_obj.Int = { 1: { A: 0, H: 0 } };
 					data_old_obj.Teams.Away.Score = 0;
 					data_old_obj.Teams.Home.Score = 0;
+
+					toBeSent.Int = data_old_obj.Int;
+					toBeSent.Teams = {
+						...toBeSent?.Teams,
+						Away: {
+							...toBeSent?.Teams?.Away,
+							Score: 0
+						},
+						Home: {
+							...toBeSent?.Teams?.Home,
+							Score: 0
+						}
+					}
+					toBeSent.Inning = data_old_obj.Inning;	
 				} else if (indx === 'Teams.Away.Score') {
 					data_old_obj.Teams.Away.Score = 0;
 					for (var i = 1; i <= data_old_obj.Inning; i++)
@@ -635,8 +635,10 @@ function updateData(data,socket){
 					data_old_obj.Teams.Home.Score = 0;
 					for (var i = 1; i <= data_old_obj.Inning; i++)
 						data_old_obj.Int[i].H = 0;
-				} else
+				} else{
 					data_old_obj[indx] = 0;
+					toBeSent[indx] = data_old_obj[indx];
+				}
 				return i;
 			}
 			function minusChanges() {
@@ -658,18 +660,23 @@ function updateData(data,socket){
 						data_old_obj.Teams.Away.Score = ScoreATmp;
 						data_old_obj.Teams.Home.Score = ScoreHTmp;
 					}
-				} else if (data_old_obj[indx] > 0)
+				} else if (data_old_obj[indx] > 0){
 					data_old_obj[indx]--;
+					toBeSent[indx] = data_old_obj[indx];
+				}
 				return { ScoreATmp, ScoreHTmp, i };
 			}
 			function plusChanges() {
-				if (indx === 'Ball' && data_old_obj.Ball < 3)
+				if (indx === 'Ball' && data_old_obj.Ball < 3){
 					data_old_obj[indx] = data_old_obj[indx] + 1;
-				else if (indx === 'Strike' && data_old_obj.Strike < 2)
+					toBeSent.Ball = data_old_obj.Ball;
+				}else if (indx === 'Strike' && data_old_obj.Strike < 2){
 					data_old_obj[indx]++;
-				else if (indx === 'Out' && data_old_obj.Out < 2)
+					toBeSent.Strike = data_old_obj.Strike;
+				}else if (indx === 'Out' && data_old_obj.Out < 2){
 					data_old_obj[indx]++;
-				else if (indx === 'Teams.Away.Score') {
+					toBeSent.Out = data_old_obj.Out;
+				}else if (indx === 'Teams.Away.Score') {
 					data_old_obj.Int[data_old_obj.Inning].A++;
 					var ScoreATmp = 0;
 					for (var i = 1; i <= data_old_obj.Inning; i++) {
@@ -690,12 +697,28 @@ function updateData(data,socket){
 				return { ScoreATmp, ScoreHTmp, i };
 			}
 		});
+		toBeSent = {
+			...toBeSent,
+			Teams: {
+				...toBeSent?.Teams,
+				Away: {
+					...toBeSent?.Teams?.Away,
+					Score: data_old_obj.Teams.Away.Score,
+				},
+				Home: {
+					...toBeSent?.Teams?.Home,
+					Score: data_old_obj.Teams.Home.Score,
+				},
+			},
+			Int: data_old_obj.Int,
+			Inning: data_old_obj.Inning,
+		}
 		fs.writeFile(__dirname + '/app/json/data.json', JSON.stringify(data_old_obj, null, 4), (err) => {
 			if (err)
 				throw err;
 		});
-		socket.emit('update', data_old_obj);
-		socket.broadcast.emit('update', data_old_obj);
+		socket.emit('update', toBeSent);
+		socket.broadcast.emit('update', toBeSent);
 	});
 }
 
