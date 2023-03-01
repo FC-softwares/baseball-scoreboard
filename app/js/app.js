@@ -493,6 +493,16 @@ function updateUmpires(obj){
 			document.documentElement.style.setProperty("--d-d-3B", "0s");
 		}
 	}
+	var actives = 0;
+	if(document.documentElement.style.getPropertyValue("--h-row-hp") != "0")
+		actives++;
+	if(document.documentElement.style.getPropertyValue("--h-row-1B") != "0")
+		actives++;
+	if(document.documentElement.style.getPropertyValue("--h-row-2B") != "0")
+		actives++;
+	if(document.documentElement.style.getPropertyValue("--h-row-3B") != "0")
+		actives++;
+	document.documentElement.style.setProperty("--i-active", actives);
 }
 function updateScorer(obj){
 	const head = obj?.head;
@@ -549,6 +559,14 @@ function updateScorer(obj){
 			document.documentElement.style.setProperty("--d-d-third", "0s");
 		}
 	}
+	var actives = 0;
+	if(document.documentElement.style.getPropertyValue("--h-row-head") != "0")
+		actives++;
+	if(document.documentElement.style.getPropertyValue("--h-row-second") != "0")
+		actives++;
+	if(document.documentElement.style.getPropertyValue("--h-row-third") != "0")
+		actives++;
+	document.documentElement.style.setProperty("--i-active", actives);
 }
 
 function updateCommentators(obj){

@@ -613,7 +613,7 @@ function updateData(data,socket){
 					data_old_obj.Int = { 1: { A: 0, H: 0 } };
 					data_old_obj.Teams.Away.Score = 0;
 					data_old_obj.Teams.Home.Score = 0;
-
+					
 					toBeSent.Int = data_old_obj.Int;
 					toBeSent.Teams = {
 						...toBeSent?.Teams,
