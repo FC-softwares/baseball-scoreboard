@@ -497,6 +497,9 @@ app.post('/newWindow',(req,res)=>{
 	res.status(200).json({ok:true,message:'ok'});
 });
 
+app.get("/README.md", (req, res) => {
+	res.sendFile(__dirname + '/README.md');
+});
 
 server.listen(PORT,'0.0.0.0', () => {
 	console.log('listening on http://localhost:' + PORT);

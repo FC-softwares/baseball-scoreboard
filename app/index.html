@@ -7,7 +7,19 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script src="js/showdown.min.js"></script>
     <script src="/js/all.js"></script>
+    <script>
+        // Load the file 'readme.md' and convert it to HTML
+        fetch('README.md')
+            .then(response => response.text())
+            .then(text => {
+                const converter = new showdown.Converter();
+                converter.setFlavor('github');
+                const html = converter.makeHtml(text);
+                document.getElementById('readme').innerHTML = html;
+            });
+    </script>
     <title>Baseball Scoreboard</title>
 </head>
 <body class="d-flex flex-column vh-100">
@@ -83,6 +95,9 @@
     </nav>
     <div class="container-md"  style="max-width: 1140px;">
         <h1 class="fw-bolder text-black text-opacity-75 pt-2">Baseball Scoreboard V2.0.0</h1>
+        <div class="row">
+            <div class="col" id="readme"></div>
+        </div>
     </div>
     <div class="flex-grow-1"></div>
     <footer class="bg-black bg-opacity-10">
