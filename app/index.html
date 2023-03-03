@@ -14,8 +14,21 @@
         fetch('README.md')
             .then(response => response.text())
             .then(text => {
-                const converter = new showdown.Converter();
-                converter.setFlavor('github');
+                const converter = new showdown.Converter({
+                    tables: true,
+                    tablesHeaderId: true,
+                    strikethrough: true,
+                    tasklists: true,
+                    ghCodeBlocks: true,
+                    ghCompatibleHeaderId: true,
+                    ghMentions: true,
+                    ghMentionsLink: 'https://github.com/{u}',
+                    ghMentionsPing: true,
+                    smoothLivePreview: true,
+                    openLinksInNewWindow: true,
+                    emoji: true,
+                    underline: true,
+                });
                 const html = converter.makeHtml(text);
                 document.getElementById('readme').innerHTML = html;
             });
