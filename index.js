@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
 		id: socket.handshake.auth.id,
 		token: socket.handshake.auth.token
 	});
-	socket.on('update_data', (data) => {			
+	socket.on('update_data', (data) => {
 		if (socket.handshake.auth.id && socket.handshake.auth.token) {
 			if(socket.handshake.auth.id == 'guest' && socket.handshake.auth.token == 'guest' && CLIENT == 'DEMO'){
 				updateData(data,socket);
@@ -68,7 +68,7 @@ io.on('connection', (socket) => {
 		}
 	});
 
-	socket.on('updateSettings', (data) => {			
+	socket.on('updateSettings', (data) => {
 		if (socket.handshake.auth.id && socket.handshake.auth.token) {
 			if(socket.handshake.auth.id === 'guest' && socket.handshake.auth.token === 'guest' && CLIENT === 'DEMO'){
 				updateSettings(data,socket);
@@ -88,7 +88,7 @@ io.on('connection', (socket) => {
 				ver_req_set.write(ver_data);
 				ver_req_set.end();
 			}
-			
+
 		}
 	});
 	socket.on('getSettings',()=>{
@@ -330,7 +330,7 @@ app.post("/getAuthUsers", (req, res) => {
 	if(id == 'guest' && token == 'guest'){
 		res.status(200).json({ok:true,message:'guest', users:[{id:'0',name: "guest", surname: "guest", email: "guest@guest.com"}]});
 		return;
-	}	
+	}
 	const req_option = {
 		hostname: API,
 		port: 443,
@@ -500,6 +500,9 @@ app.post('/newWindow',(req,res)=>{
 app.get("/README.md", (req, res) => {
 	res.sendFile(__dirname + '/README.md');
 });
+app.get("/client", (req, res) => {
+	res.send(CLIENT);
+});
 
 server.listen(PORT,'0.0.0.0', () => {
 	console.log('listening on http://localhost:' + PORT);
@@ -616,7 +619,7 @@ function updateData(data,socket){
 					data_old_obj.Int = { 1: { A: 0, H: 0 } };
 					data_old_obj.Teams.Away.Score = 0;
 					data_old_obj.Teams.Home.Score = 0;
-					
+
 					toBeSent.Int = data_old_obj.Int;
 					toBeSent.Teams = {
 						...toBeSent?.Teams,
@@ -629,7 +632,7 @@ function updateData(data,socket){
 							Score: 0
 						}
 					}
-					toBeSent.Inning = data_old_obj.Inning;	
+					toBeSent.Inning = data_old_obj.Inning;
 				} else if (indx === 'Teams.Away.Score') {
 					data_old_obj.Teams.Away.Score = 0;
 					for (var i = 1; i <= data_old_obj.Inning; i++)

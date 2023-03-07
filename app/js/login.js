@@ -28,6 +28,18 @@ if (id&&token) {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
 }
+const xmlt2 = new XMLHttpRequest();
+xmlt2.open('GET', '/client', true);
+xmlt2.setRequestHeader('Content-Type', 'application/json');
+xmlt2.send();
+xmlt2.onload = function() {
+    if (xmlt2.status === 200) {
+        if (xmlt2.responseText !== "DEMO") {
+            document.getElementById('guestButton').classList.add('d-none');
+            document.getElementById('separator').classList.add('d-none');
+        }
+    }
+}
 function login(username,password){
     if(username==undefined){
         username = document.getElementById('username').value;
@@ -88,6 +100,8 @@ function login(username,password){
                 }
                 document.querySelector(`#loginSpin`).classList.add("visually-hidden")
                 document.querySelector(`#loginButton`).classList.remove("disabled")
+                document.querySelector(`#guestSpin`).classList.add("visually-hidden")
+                document.querySelector(`#guestButton`).classList.remove("disabled")
                 console.log(this.responseText);
             }
         }
