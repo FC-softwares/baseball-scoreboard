@@ -756,20 +756,36 @@ function updateActive(data,socket) {
 			console.error(err);
 			return;
 		}
-		var json = JSON.parse(data);
-		var jsonOld = JSON.parse(scoreboard_old);
+		var jsonOld = {};
 		var changes = {};
-		// Compare The Old Scoreboard With The New Scoreboard and save the changes
-		Object.entries(json).forEach(entry => {
-			const [indx, element] = entry;
-			if (element == true) {
-				jsonOld[indx] = true;
-				changes[indx] = true;
-			} else {
-				jsonOld[indx] = false;
-				changes[indx] = false;
+		if(JSON.parse(data).AllOff == true){
+			jsonOld = {
+				main: false,
+				pre: false,
+				post: false,
+				inning: false,
+				umpires: false,
+				scorers: false,
+				commentator: false,
+				technicalComment: false
 			}
-		});
+			changes = jsonOld;
+		}else{
+			var json = JSON.parse(data);
+			jsonOld = JSON.parse(scoreboard_old);
+			changes = {};
+			// Compare The Old Scoreboard With The New Scoreboard and save the changes
+			Object.entries(json).forEach(entry => {
+				const [indx, element] = entry;
+				if (element == true) {
+					jsonOld[indx] = true;
+					changes[indx] = true;
+				} else {
+					jsonOld[indx] = false;
+					changes[indx] = false;
+				}
+			});
+		}
 		fs.writeFile(__dirname + '/app/json/scoreboards.json', JSON.stringify(jsonOld, null, 4), (err) => {
 			if (err)
 				throw err;

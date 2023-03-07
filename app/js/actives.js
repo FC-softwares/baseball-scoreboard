@@ -245,3 +245,8 @@ function technicalCommentator(opr){
     socket.emit('updateActive',`{"technicalComment":${opr}}`);
     return true;
 }
+
+function allOff(){
+    socket.emit('updateActive',`{"AllOff":true}`);
+    return true;
+}
