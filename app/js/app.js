@@ -81,7 +81,7 @@ function updateInning(obj) {
 		try { document.querySelector(".score > #away").innerHTML = obj.Teams.Away.Score; } catch (error) { console.error(error); }
 	if (obj?.Teams?.Home?.Score !== undefined)
 		try { document.querySelector(".score > #home").innerHTML = obj.Teams.Home.Score; } catch (error) { console.error(error); }
-	
+
 	let extraInningScoreAway = 0, extraInningScoreHome = 0;
 	for (let i = 1; i <= localStorage.getItem("MaxInning"); i++) {
 		try {
@@ -188,7 +188,7 @@ function updateScoreboard(obj) {
 	try { document.querySelector("div.teamScore#home").innerHTML = obj.Teams.Home.Score; } catch (error) { console.error(error); }
 	try { document.querySelector("div.teamScore#away").innerHTML = obj.Teams.Away.Score; } catch (error) { console.error(error); }
 	// Ball Strike
-	if(obj?.Ball !== undefined) 
+	if(obj?.Ball !== undefined)
 		try { document.querySelector("span#ball").innerHTML = obj.Ball; } catch (error) { console.error(error); }
 	if(obj?.Strike !== undefined)
 		try { document.querySelector("span#strike").innerHTML = obj.Strike; } catch (error) { console.error(error); }
@@ -237,7 +237,7 @@ function updateSettings(obj){
 
 	document.documentElement.style.setProperty('--h-scale', obj.Resolution+"px");
 	document.documentElement.style.setProperty('--w-scale', obj.Resolution*1.78+"px");
-	
+
 	document.documentElement.style.setProperty('--i-inning', obj.MaxInning);
 	// update the container of the innings
 	if(document.URL.includes("inning.html")){
@@ -267,7 +267,7 @@ function connectSettings(obj) {
 	document.documentElement.style.setProperty('--w-scale', obj.Resolution*1.78+"px");
 	// Set the container with the innings
 	if(document.URL.includes("inning.html")){
-		document.documentElement.style.setProperty("--i-inning",obj.MaxInning); 
+		document.documentElement.style.setProperty("--i-inning",obj.MaxInning);
 		let container = ``;
 		for(let i=1;i<=obj.MaxInning;i++)
 			if(i<=obj.Data.Inning)
@@ -493,16 +493,14 @@ function updateUmpires(obj){
 			document.documentElement.style.setProperty("--d-d-3B", "0s");
 		}
 	}
-	var actives = 0;
-	if(document.documentElement.style.getPropertyValue("--h-row-hp") != "0")
-		actives++;
-	if(document.documentElement.style.getPropertyValue("--h-row-1B") != "0")
-		actives++;
-	if(document.documentElement.style.getPropertyValue("--h-row-2B") != "0")
-		actives++;
-	if(document.documentElement.style.getPropertyValue("--h-row-3B") != "0")
-		actives++;
-	document.documentElement.style.setProperty("--i-active", actives);
+	var active = 1;
+	if(document.documentElement.style.getPropertyValue('--h-row-3B') != "0")
+		active = 4;
+	else if(document.documentElement.style.getPropertyValue('--h-row-2B') != "0")
+		active = 3;
+	else if(document.documentElement.style.getPropertyValue('--h-row-1B') != "0")
+		active = 2;
+	document.documentElement.style.setProperty("--i-active", active);
 }
 function updateScorer(obj){
 	const head = obj?.head;
@@ -559,19 +557,16 @@ function updateScorer(obj){
 			document.documentElement.style.setProperty("--d-d-third", "0s");
 		}
 	}
-	var actives = 0;
-	if(document.documentElement.style.getPropertyValue("--h-row-head") != "0")
-		actives++;
-	if(document.documentElement.style.getPropertyValue("--h-row-second") != "0")
-		actives++;
-	if(document.documentElement.style.getPropertyValue("--h-row-third") != "0")
-		actives++;
-	document.documentElement.style.setProperty("--i-active", actives);
+	var toBeActive = 1;
+	if(document.documentElement.style.getPropertyValue("--h-third") != "0")
+		toBeActive = 3;
+	else if(document.documentElement.style.getPropertyValue("--h-second") != "0")
+		toBeActive = 2;
+	document.documentElement.style.setProperty("--i-active", toBeActive);
 }
 
 function updateCommentators(obj){
 	const main = obj?.main;
-	
 	if(main !== undefined){
 		main.surname || main.surname=="" ? document.querySelector(".commentator > span#surname").innerHTML = main.surname : null;
 		main.name || main.name=="" ? document.querySelector(".commentator > span#name").innerHTML = main.name : null;
@@ -580,7 +575,6 @@ function updateCommentators(obj){
 
 function updateTechnicalComment(obj){
 	const technical = obj?.technical;
-
 	if(technical !== undefined){
 		technical.surname || technical.surname=="" ? document.querySelector(".commentator > span#surname").innerHTML = technical.surname : null;
 		technical.name || technical.name=="" ? document.querySelector(".commentator > span#name").innerHTML = technical.name : null;
@@ -588,7 +582,7 @@ function updateTechnicalComment(obj){
 }
 
 /**
- * @param {String} color 
+ * @param {String} color
  * @returns Color Brightness from 0 to 255
  */
 function brightnessByColor (color) {
