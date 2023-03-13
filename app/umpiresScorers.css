@@ -6,7 +6,6 @@
     --w-role: 100px;
     --w-name: 500px;
     --w-column: calc(var(--w-role) + var(--w-name));
-    
     /* Scoreboard row height */
     --h-row: 50px;
     /* Umpires row height */
@@ -19,7 +18,8 @@
     --h-row-second: var(--h-row);
     --h-row-third: var(--h-row);
     /* Gradients (please don't edit them) */
-    --g-def: linear-gradient(0deg, rgba(213,213,213,1) 0%, rgba(255,255,255,1) 100%);
+    --g-def-w: linear-gradient(0deg, rgba(213,213,213,1) 0%, rgba(255,255,255,1) 100%);
+    --g-def-b: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(255,255,255,0.4) 100%), rgb(0, 0, 0);
     /* Delays */
     --d-standard: 0.75s;
     /* Deactivasion delays Umpires */
@@ -32,7 +32,7 @@
     --d-d-HB-calc: calc(var(--d-d-HB) + var(--d-d-1B-calc));
     --d-d-header: var(--d-standard);
     --d-d-header-calc: calc(var(--d-d-header) + var(--d-d-HB-calc));
-    
+
     /* Activation delays Umpires */
     --d-header: 0s;
     --d-HB: var(--d-standard);
@@ -52,7 +52,7 @@
     --d-d-head-calc: calc(var(--d-d-head) + var(--d-d-second-calc));
     --d-d-header-s: var(--d-standard);
     --d-d-header-s-calc: calc(var(--d-d-header-s) + var(--d-d-head-calc));
-    
+
     /* Activation delays Scorers */
     --d-header-s: 0s;
     --d-head: var(--d-standard);
@@ -86,7 +86,7 @@ div {
     grid-template-rows: var(--h-row) var(--h-row-HB) var(--h-row-1B) var(--h-row-2B) var(--h-row-3B);
     grid-template-columns: var(--w-role) var(--w-name);
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
         "Header Header"
         "RoleHB NameHB"
         "Role1B Name1B"
@@ -99,7 +99,7 @@ div {
     grid-template-columns: calc(var(--w-role) + var(--w-name));
     grid-template-rows:  var(--h-row) var(--h-row-head) var(--h-row-second) var(--h-row-third);
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
         "Header"
         "Head"
         "Second"
@@ -112,7 +112,7 @@ div {
     grid-template-columns: var(--w-column);
     grid-template-rows:  var(--h-row);
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
         "Header"
         "Commentator";
     width: var(--w-column);
@@ -126,7 +126,8 @@ div {
 
 /* Team name */
 .scoreboard > .header {
-    background: var(--g-def);
+    background: var(--g-def-b);
+    color: white;
     width: fit-parent;
     width: var(--w-column);
     height: var(--h-row);
@@ -134,31 +135,30 @@ div {
     align-items: center;
     justify-content: center;
     grid-area: Header;
-    border-radius: 0 0 10px 10px;
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    border-radius: 7px 7px 0 0;
+    transition: transform cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
     transform: none;
     position: relative;
     z-index: 5;
 }
 .scoreboard.disabled > .header, .scoreboard.disabled > .role, .scoreboard.disabled > .name, .scoreboard.disabled > .scorer {
     transform: translateY(-350px);
-    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
+    transition: transform cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
 }
 .scoreboard > .role {
-    background: var(--g-def);
+    background: var(--g-def-w);
     width: fit-parent;
     width: var(--w-role);
     height: var(--h-row);
     display: flex;
     align-items: right;
     justify-content: center;
-    border-radius: 0 0 10px 10px;
     transform: none;
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    transition: transform cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
     position: relative;
 }
 .scoreboard > .name {
-    background: var(--g-def);
+    background: var(--g-def-w);
     width: calc(var(--w-name) - 20px);
     height: var(--h-row);
     display: flex;
@@ -166,9 +166,8 @@ div {
     justify-content: space-between;
     padding-left: 10px;
     padding-right: 10px;
-    border-radius: 0 0 10px 10px;
     transform: none;
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    transition: transform cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
     position: relative;
 }
 .scoreboard > .role#home {
@@ -244,10 +243,16 @@ div {
 .scoreboard > .name.notActive, .scoreboard > .role.notActive {
     display: none;
 }
+.scoreboard > .role.last {
+    border-radius: 0 0 0 7px;
+}
+.scoreboard > .name.last {
+    border-radius: 0 0 7px 0;
+}
 
 /* Scorers */
 .scoreboard > .scorer {
-    background: var(--g-def);
+    background: var(--g-def-w);
     width: fit-parent;
     width: calc(var(--w-column) - 20px);
     height: var(--h-row);
@@ -256,9 +261,8 @@ div {
     justify-content: space-between;
     padding-left: 10px;
     padding-right: 10px;
-    border-radius: 0 0 10px 10px;
     transform: none;
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    transition: transform cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
     position: relative;
 }
 .scoreboard > .scorer#head {
@@ -294,9 +298,14 @@ div {
 .scoreboard > .scorer.notActive {
     display: none;
 }
+
+.scoreboard > .scorer.last{
+    border-radius: 0 0 7px 7px;
+}
+
 /* Commentators */
 .scoreboard#commentator > .commentator {
-    background: var(--g-def);
+    background: var(--g-def-w);
     width: calc(var(--w-column) - 20px);
     height: var(--h-row);
     display: flex;
@@ -304,18 +313,18 @@ div {
     justify-content: space-between;
     padding-left: 10px;
     padding-right: 10px;
-    border-radius: 0 0 10px 10px;
     grid-area: Commentator;
     z-index: 0;
-    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    transition: transform cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
     transition-delay: var(--d-standard) !important;
     transform: none;
     position: static;
 }
 .scoreboard.disabled#commentator > .commentator{
-    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s !important;
+    transition: transform cubic-bezier(0.67, 0, 0.82, 0.11) 1s !important;
     transition-delay: 0s !important;
     transform: translateY(-500%) !important;
+    border-radius: 0 0 7px 7px;
 }
 
 .scoreboard#commentator > .header {
@@ -326,7 +335,7 @@ div {
 }
 
 .scoreboard > #bg > span {
-    background: var(--g-def);
+    background: var(--g-def-w);
     color: black;
     background-clip: text;
 }

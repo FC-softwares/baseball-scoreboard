@@ -493,14 +493,26 @@ function updateUmpires(obj){
 			document.documentElement.style.setProperty("--d-d-3B", "0s");
 		}
 	}
-	var active = 1;
-	if(document.documentElement.style.getPropertyValue('--h-row-3B') != "0")
-		active = 4;
-	else if(document.documentElement.style.getPropertyValue('--h-row-2B') != "0")
-		active = 3;
-	else if(document.documentElement.style.getPropertyValue('--h-row-1B') != "0")
-		active = 2;
-	document.documentElement.style.setProperty("--i-active", active);
+	document.querySelectorAll(".scoreboard > div").forEach((e) => {
+		e.classList.remove("last");
+	});
+	if(document.documentElement.style.getPropertyValue('--h-row-3B') != "0"){
+		document.querySelectorAll("#B3").forEach((e) => {
+			e.classList.add("last")
+		});
+	}else if(document.documentElement.style.getPropertyValue('--h-row-2B') != "0"){
+		document.querySelectorAll("#B2").forEach((e) => {
+			e.classList.add("last")
+		});
+	}else if(document.documentElement.style.getPropertyValue('--h-row-1B') != "0"){
+		document.querySelectorAll("#B1").forEach((e) => {
+			e.classList.add("last")
+		});
+	}else if(document.documentElement.style.getPropertyValue('--h-row-hp') != "0"){
+		document.querySelectorAll("#home").forEach((e) => {
+			e.classList.add("last")
+		});
+	}
 }
 function updateScorer(obj){
 	const head = obj?.head;
@@ -557,12 +569,15 @@ function updateScorer(obj){
 			document.documentElement.style.setProperty("--d-d-third", "0s");
 		}
 	}
-	var toBeActive = 1;
-	if(document.documentElement.style.getPropertyValue("--h-third") != "0")
-		toBeActive = 3;
-	else if(document.documentElement.style.getPropertyValue("--h-second") != "0")
-		toBeActive = 2;
-	document.documentElement.style.setProperty("--i-active", toBeActive);
+	document.querySelectorAll(".scorer").forEach((e) => {
+		e.classList.remove("last");
+	});
+	if(document.documentElement.style.getPropertyValue("--h-row-third") != "0")
+		document.querySelector("#third").classList.add("last");
+	else if(document.documentElement.style.getPropertyValue("--h-row-second") != "0")
+		document.querySelector("#second").classList.add("last");
+	else if(document.documentElement.style.getPropertyValue("--h-row-head") != "0")
+		document.querySelector("#head").classList.add("last");
 }
 
 function updateCommentators(obj){
