@@ -247,7 +247,7 @@ div {
     border-radius: 0 0 0 7px;
 }
 .scoreboard > .name.last {
-    border-radius: 0 0 7px 0;
+    border-radius: 0 0 7px;
 }
 
 /* Scorers */
