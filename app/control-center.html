@@ -8,33 +8,48 @@
     <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script src="/socket.io/socket.io.js"></script>
+    <script src="js/actives.js"></script>
     <script src="js/admin.js" async></script>
     <title>Baseball Scoreboard</title>
     <script src="/js/all.js"></script>
+    <style>
+        .responsive-max-width {
+            content: ""
+        }
+    </style>
 </head>
 <body class="d-flex flex-column vh-100">
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <div class="container-md">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <div class="container-md responsive-max-width" style="max-width: 1140px;">
             <a class="navbar-brand" href="#">Baseball Scoreboard</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toggleNav" aria-controls="toggleNav" aria-expanded="false" aria-label="Toggle navigation bar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="toggleNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav flex-shrink-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
+                        <a class="nav-link" href="index.html"><i class="d-lg-none d-xl-inline bi bi-house-fill me-1"></i><span class="d-sm-none d-lg-inline">Home</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="control-center.html">Control Center</a>
+                        <a class="nav-link active" aria-current="page" href="#"><i class="d-lg-none d-xl-inline bi bi bi-toggles me-1"></i><span class="d-sm-none d-lg-inline">Control Center</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="settings.html">Settings</a>
+                        <a class="nav-link" href="staff.html"><i class="d-lg-none d-xl-inline bi bi-person-fill-gear me-1"></i><span class="d-sm-none d-lg-inline">Staff Management</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="settings.html"><i class="d-lg-none d-xl-inline bi bi bi-gear-fill me-1"></i><span class="d-sm-none d-lg-inline">Settings</span></a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navScoreboardLinks" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Scoreboards</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navScoreboardLinks" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"><i class="d-lg-none d-xl-inline bi bi-2-square-fill me-1"></i><span class="d-sm-none d-lg-inline">Scoreboards</span></a>
                         <ul class="dropdown-menu mb-2" aria-labelledby="navScoreboardLinks">
                             <li>
                                 <a class="dropdown-item" onclick="newWindow(window.location.origin+'/scoreboard.html',427,80)">Main <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/inning.html',707,120)">Partials <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
                             </li>
                             <li>
                                 <a class="dropdown-item" onclick="newWindow(window.location.origin+'/pregame.html',631,40)">Pre-game <i class="bi-box-arrow-up-right"></i></a>
@@ -43,7 +58,22 @@
                                 <a class="dropdown-item" onclick="newWindow(window.location.origin+'/postgame.html',631,40)">Post-game <i class="bi-box-arrow-up-right"></i></a>
                             </li>
                             <li>
-                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/inning.html',707,120)">Partials <i class="bi-box-arrow-up-right"></i></a>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/umpires.html',600,250)">Umpires <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/scorers.html',600,200)">Scorers <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/commentator.html',600,100)">Sportscaster <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/technicalComment.html',600,100)">Technical Commentator <i class="bi-box-arrow-up-right"></i></a>
                             </li>
                         </ul>
                     </li>
@@ -57,14 +87,10 @@
             </div>
         </div>
     </nav>
-    <div class="container-md">
+    <div class="container-md" style="max-width: 1140px;">
         <div class="d-flex flex-row flex-wrap align-items-center py-2 gap-2">
             <h1 class="fw-bolder m-0 text-black text-opacity-75 me-auto">Control Center</h1>
-            <div class="hstack gap-3 flex-shrink-0">
-                <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#ModalResetAllData">Reset all data</button>
-                <div class="vr d-lg-none"></div>
-                <button class="btn btn-outline-info d-lg-none" type="button" onclick="Array.prototype.slice.call(document.querySelectorAll('input[type=checkbox]')).forEach(function (check) { if(check.checked) check.click() } )">Toggle all</button>
-            </div>
+            <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#ModalResetAllData">Reset all data</button>
         </div>
         <div class="row">
             <div class="col">
@@ -86,7 +112,7 @@
                                             <input id="BallView" class="form-control text-center mb-0 mb-sm-2" style="min-width: 3.5rem;" type="text" value="#" readonly>
                                             <div class="btn-group" role="group" aria-label="Controls">
                                                 <button type="button" class="btn btn-outline-primary" onclick="Ball('-')"><i class="bi bi-dash-lg"></i></button>
-                                                <button type="button" class="btn btn-outline-danger" onclick="Ball('0')"><i class="bi bi-arrow-repeat"></i></button>
+                                                <button type="button" class="btn btn-outline-danger z-3" onclick="Ball('0')"><i class="bi bi-arrow-repeat"></i></button>
                                                 <button type="button" class="btn btn-outline-primary" onclick="Ball('+')"><i class="bi bi-plus-lg"></i></button>
                                             </div>
                                         </div>
@@ -101,7 +127,7 @@
                                             <input id="StrikeView" class="form-control text-center mb-0 mb-sm-2" style="min-width: 3.5rem;" type="text" value="#" readonly>
                                             <div class="btn-group" role="group" aria-label="Controls">
                                                 <button type="button" class="btn btn-outline-primary" onclick="Strike('-')"><i class="bi bi-dash-lg"></i></button>
-                                                <button type="button" class="btn btn-outline-danger" onclick="Strike('0')"><i class="bi bi-arrow-repeat"></i></button>
+                                                <button type="button" class="btn btn-outline-danger z-3" onclick="Strike('0')"><i class="bi bi-arrow-repeat"></i></button>
                                                 <button type="button" class="btn btn-outline-primary" onclick="Strike('+')"><i class="bi bi-plus-lg"></i></button>
                                             </div>
                                         </div>
@@ -116,7 +142,7 @@
                                             <input id="OutView" class="form-control text-center mb-0 mb-sm-2" style="min-width: 3.5rem;" type="text" value="#" readonly>
                                             <div class="btn-group" role="group" aria-label="Controls">
                                                 <button type="button" class="btn btn-outline-primary" onclick="Out('-')"><i class="bi bi-dash-lg"></i></button>
-                                                <button type="button" class="btn btn-outline-danger" onclick="Out('0')"><i class="bi bi-arrow-repeat"></i></button>
+                                                <button type="button" class="btn btn-outline-danger z-3" onclick="Out('0')"><i class="bi bi-arrow-repeat"></i></button>
                                                 <button type="button" class="btn btn-outline-primary" onclick="Out('+')"><i class="bi bi-plus-lg"></i></button>
                                             </div>
                                         </div>
@@ -150,7 +176,7 @@
                                             <input id="InningView" class="form-control text-center mb-0 mb-sm-2" style="min-width: 3.5rem;" type="text" value="#" readonly>
                                             <div class="btn-group" role="group" aria-label="Controls">
                                                 <button type="button" class="btn btn-outline-primary" onclick="Inning('-')"><i class="bi bi-dash-lg"></i></button>
-                                                <button type="button" class="btn btn-outline-danger" onclick="Inning('0')"><i class="bi bi-arrow-repeat"></i></button>
+                                                <button type="button" class="btn btn-outline-danger z-3" onclick="Inning('0')"><i class="bi bi-arrow-repeat"></i></button>
                                                 <button type="button" class="btn btn-outline-primary" onclick="Inning('+')"><i class="bi bi-plus-lg"></i></button>
                                             </div>
                                         </div>
@@ -205,11 +231,17 @@
                                 <h4 class="text-center">Away</h4>
                                 <div class="mb-2 d-flex flex-column align-items-center">
                                     <h5 class="text-center fw-normal">Score</h5>
-                                    <input id="ScoreAView" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
-                                    <div class="btn-group" role="group" aria-label="Controls">
-                                        <button type="button" class="btn btn-outline-primary" onclick="ScoreAway('-')"><i class="bi bi-dash-lg"></i></button>
-                                        <button type="button" class="btn btn-outline-danger" onclick="ScoreAway('0')"><i class="bi bi-arrow-repeat"></i></button>
-                                        <button type="button" class="btn btn-outline-primary" onclick="ScoreAway('+')"><i class="bi bi-plus-lg"></i></button>
+                                    <div class="row">
+                                        <div class="col d-flex justify-content-center">
+                                            <div class="d-flex flex-column gap-2" style="width: min-content;">
+                                                <input id="ScoreAView" class="form-control text-center mb-0" style="min-width: 3.5rem;" type="text" value="#" readonly>
+                                                <div class="btn-group" role="group" aria-label="Controls">
+                                                    <button type="button" class="btn btn-outline-primary" onclick="ScoreAway('-')"><i class="bi bi-dash-lg"></i></button>
+                                                    <button type="button" class="btn btn-outline-danger z-3" onclick="ScoreAway('0')"><i class="bi bi-arrow-repeat"></i></button>
+                                                    <button type="button" class="btn btn-outline-primary" onclick="ScoreAway('+')"><i class="bi bi-plus-lg"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="mb-2 d-flex flex-column align-items-center">
@@ -226,11 +258,17 @@
                                 <h4 class="text-center">Home</h4>
                                 <div class="mb-2 d-flex flex-column align-items-center">
                                     <h5 class="text-center fw-normal">Score</h5>
-                                    <input id="ScoreHView" class="form-control text-center mb-2" style="max-width: 9.11rem;" type="text" value="#" readonly>
-                                    <div class="btn-group" role="group" aria-label="Controls">
-                                        <button type="button" class="btn btn-outline-primary" onclick="ScoreHome('-')"><i class="bi bi-dash-lg"></i></button>
-                                        <button type="button" class="btn btn-outline-danger" onclick="ScoreHome('0')"><i class="bi bi-arrow-repeat"></i></button>
-                                        <button type="button" class="btn btn-outline-primary" onclick="ScoreHome('+')"><i class="bi bi-plus-lg"></i></button>
+                                    <div class="row">
+                                        <div class="col d-flex justify-content-center">
+                                            <div class="d-flex flex-column gap-2" style="width: min-content;">
+                                                <input id="ScoreHView" class="form-control text-center mb-0" style="min-width: 3.5rem;" type="text" value="#" readonly>
+                                                <div class="btn-group" role="group" aria-label="Controls">
+                                                    <button type="button" class="btn btn-outline-primary" onclick="ScoreHome('-')"><i class="bi bi-dash-lg"></i></button>
+                                                    <button type="button" class="btn btn-outline-danger z-3" onclick="ScoreHome('0')"><i class="bi bi-arrow-repeat"></i></button>
+                                                    <button type="button" class="btn btn-outline-primary" onclick="ScoreHome('+')"><i class="bi bi-plus-lg"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="mb-2 d-flex flex-column align-items-center">
@@ -251,7 +289,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- non so minimamente perché esistano -->
                 <div class="bg-body p-3 mb-4 shadow rounded-3 border">
                     <div class="form-check d-lg-none">
                         <input class="form-check-input" type="checkbox" value="" id="toggle-anim" data-bs-toggle="collapse" href="#collapse-anim" aria-expanded="true" aria-controls="#collapse-anim" checked>
@@ -262,7 +299,6 @@
                     <div class="collapse show" id="collapse-anim">
                         <hr class="d-lg-none">
                         <div class="row row-cols-lg-1 row-cols-xl-auto gap-3 justify-content-center p-3 py-0">
-                            <!-- h6 o h5? questo è il dilemma... -->
                             <div class="col-sm d-flex flex-row flex-sm-column flex-lg-row flex-xl-column align-items-center justify-content-between m-0 px-0">
                                 <h6 class="text-center mb-0 mb-sm-2 mb-lg-0 mb-xl-2">Main</h6>
                                 <div class="btn-group" role="group" aria-label="Controls">
@@ -292,6 +328,42 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row row-cols-lg-1 row-cols-xl-auto gap-3 justify-content-center p-3 py-0 mt-3">
+                            <div class="col-sm d-flex flex-row flex-sm-column flex-lg-row flex-xl-column align-items-center justify-content-between m-0 px-0">
+                                <h6 class="text-center mb-0 mb-sm-2 mb-lg-0 mb-xl-2">Umpires</h6>
+                                <div class="btn-group" role="group" aria-label="Controls">
+                                    <button type="button" class="btn btn-outline-success" onclick="umpires(true)" id="umpiresOn">On</button>
+                                    <button type="button" class="btn btn-outline-danger" onclick="umpires(false)" id="umpiresOff">Off</button>
+                                </div>
+                            </div>
+                            <div class="col-sm d-flex flex-row flex-sm-column flex-lg-row flex-xl-column align-items-center justify-content-between m-0 px-0">
+                                <h6 class="text-center mb-0 mb-sm-2 mb-lg-0 mb-xl-2">Scorers</h6>
+                                <div class="btn-group" role="group" aria-label="Controls">
+                                    <button type="button" class="btn btn-outline-success" onclick="scorers(true)" id="scorersOn">On</button>
+                                    <button type="button" class="btn btn-outline-danger" onclick="scorers(false)" id="scorersOff">Off</button>
+                                </div>
+                            </div>
+                            <div class="col-sm d-flex flex-row flex-sm-column flex-lg-row flex-xl-column align-items-center justify-content-between m-0 px-0">
+                                <h6 class="text-center mb-0 mb-sm-2 mb-lg-0 mb-xl-2">Sportscaster</h6>
+                                <div class="btn-group" role="group" aria-label="Controls">
+                                    <button type="button" class="btn btn-outline-success" onclick="sportscaster(true)" id="sportscasterOn">On</button>
+                                    <button type="button" class="btn btn-outline-danger" onclick="sportscaster(false)" id="sportscasterOff">Off</button>
+                                </div>
+                            </div>
+                            <div class="col-sm d-flex flex-row flex-sm-column flex-lg-row flex-xl-column align-items-center justify-content-between m-0 px-0">
+                                <h6 class="text-sm-center mb-0 mb-sm-2 mb-lg-0 mb-xl-2">Technical<br class="d-none d-sm-block d-lg-none d-xl-block"> Commentator</h6>
+                                <div class="btn-group" role="group" aria-label="Controls">
+                                    <button type="button" class="btn btn-outline-success" onclick="technicalCommentator(true)" id="technicalCommentatorOn">On</button>
+                                    <button type="button" class="btn btn-outline-danger" onclick="technicalCommentator(false)" id="technicalCommentatorOff">Off</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row mt-3 justify-content-center">
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-outline-danger" onclick="allOff()">Reset</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -299,7 +371,7 @@
     </div>
     <div class="flex-grow-1"></div>
     <footer class="bg-black bg-opacity-10">
-        <div class="container-md d-flex flex-row flex-wrap align-content-center align-items-center justify-content-center py-2" style="column-gap: .5rem;">
+        <div class="container-md d-flex flex-row flex-wrap align-content-center align-items-center justify-content-center py-2" style="column-gap: .5rem; max-width: 1140px;">
             <div class="me-sm-auto text-center">
                 <a class="text-decoration-none" type="button" data-bs-toggle="modal" data-bs-target="#licenseModal">
                     <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px" height="24px" viewBox="5.5 -3.5 64 64" enable-background="new 5.5 -3.5 64 64" xml:space="preserve">
@@ -367,7 +439,7 @@
                 <span class="align-text-top">Made by <a class="text-decoration-none" onclick="openExternal('https://github.com/lucafano04')" target="_blank" rel="noopener noreferrer">Luca Facchini</a> and <a class="text-decoration-none" onclick="openExternal('https://github.com/TheTecnoKing')" target="_blank" rel="noopener noreferrer">Kristian Ceribashi</a></span>
             </div>
             <div class="d-flex flex-row gap-2">
-                <a class="text-decoration-none fs-3" onclick="openExternal('https://github.com/luca-ceri/baseball-scoreboard')" rel="noopener noreferrer"><i class="bi-github"></i></a>
+                <a class="text-decoration-none fs-3" onclick="openExternal('https://github.com/FC-softwares/baseball-scoreboard')" rel="noopener noreferrer"><i class="bi-github"></i></a>
                 <a class="text-decoration-none fs-3" onclick="openExternal('https://opencollective.com/baseball-scoreboard')" rel="noopener noreferrer"><i class="bi-cash-coin"></i></a>
             </div>
         </div>

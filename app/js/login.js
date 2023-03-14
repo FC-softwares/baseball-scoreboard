@@ -28,28 +28,30 @@ if (id&&token) {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
 }
-(function () {
-    'use strict'
-    
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.querySelectorAll('.needs-validation')
-    
-    // Loop over them and prevent submission
-    Array.prototype.slice.call(forms)
-        .forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-                form.classList.add('was-validated')
-            }, false)
-        })
-})()
+const xmlt2 = new XMLHttpRequest();
+xmlt2.open('GET', '/client', true);
+xmlt2.setRequestHeader('Content-Type', 'application/json');
+xmlt2.send();
+xmlt2.onload = function() {
+    if (xmlt2.status === 200) {
+        if (xmlt2.responseText !== "DEMO") {
+            document.getElementById('guestButton').classList.add('d-none');
+            document.getElementById('separator').classList.add('d-none');
+        }
+    }
+}
 function login(username,password){
     if(username==undefined){
         username = document.getElementById('username').value;
         password = document.getElementById('password').value;
+    }
+    if(username==""||password==""){
+        document.getElementsByTagName("form")[0].classList.add("was-validated");
+        document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.";
+        document.getElementById("ErrorMsg").classList.remove("visually-hidden");
+        document.querySelector(`#loginSpin`).classList.add("visually-hidden")
+        document.querySelector(`#loginButton`).classList.remove("disabled")
+        return false;
     }
     var remember = document.getElementById("remember").checked;
     // convert password to base64
@@ -96,10 +98,10 @@ function login(username,password){
                         alert("Errore: "+this.status);
                         break;
                 }
-                document.querySelector(`#guestSpin`).classList.add("visually-hidden")
-                document.querySelector(`#guestButton`).classList.remove("disabled")
                 document.querySelector(`#loginSpin`).classList.add("visually-hidden")
                 document.querySelector(`#loginButton`).classList.remove("disabled")
+                document.querySelector(`#guestSpin`).classList.add("visually-hidden")
+                document.querySelector(`#guestButton`).classList.remove("disabled")
                 console.log(this.responseText);
             }
         }
@@ -112,8 +114,12 @@ function login(username,password){
 
 //lines removed from login.html
 function loginLoadAnim (btnType) {
-    document.querySelector(`#${btnType}Spin`).classList.remove("visually-hidden")
-    document.querySelector(`#${btnType}Button`).classList.add("disabled")
+    try{
+        document.querySelector(`#${btnType}Spin`).classList.remove("visually-hidden")
+        document.querySelector(`#${btnType}Button`).classList.add("disabled")
+    }catch(e){
+        console.log(e);
+    }
 }
 
 function CancelLoginGuest() {

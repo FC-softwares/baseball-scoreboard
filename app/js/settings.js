@@ -124,12 +124,15 @@ function removeUser(id){
 	xmlt.setRequestHeader('Content-Type', 'application/json');
 	xmlt.send(`{"id":"${user}","token":"${token}","user_id":"${id}"}`);
 	xmlt.onload = function() {
+		const response = JSON.parse(xmlt.responseText);
 		if (xmlt.status === 200) {
-			const response = JSON.parse(xmlt.responseText);
 			if (response.ok === true) {
 				document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User deleted successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
 				getCurrentUser();
 			}
+		}else{
+			const error = response.error || response.message || 'Unknown error';
+			document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
 		}
 	};
 }
@@ -148,7 +151,8 @@ function addUser(){
 				document.getElementById('UserAddEmail').value = '';
 			}
 		}else{
-			document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${response.error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+			const error = response.error || response.message || 'Unknown error';
+			document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
 		}
 	};
 }

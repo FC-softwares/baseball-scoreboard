@@ -20,5 +20,10 @@
                 ]
             }
         }
+    ],
+    "conventionalCommits.scopes": [
+        "staff",
+        "scoreUpdating",
+        "overlayStyles"
     ]
 }

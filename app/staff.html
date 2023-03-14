@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/staff.js" async></script>
+    <title>Baseball Scoreboard</title>
+    <script src="/js/all.js"></script>
+    <style>
+        .form-floating>.form-control,
+        .form-floating>.form-control-plaintext {
+        padding: 0rem 0.75rem;
+        }
+
+        .form-floating>.form-control,
+        .form-floating>.form-control-plaintext,
+        .form-floating>.form-select {
+            height: calc(2.25rem + 2px);
+            line-height: 1;
+        }
+
+        .form-floating>label {
+            padding: 0.25rem 1rem;
+        }
+        .form-floating>.form-control:not(:placeholder-shown) {
+            padding-top: 1.25rem;
+            padding-bottom: 0.625rem;
+        }
+    </style>    
+</head>
+<body class="d-flex flex-column vh-100">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <div class="container-md"  style="max-width: 1140px;">
+            <a class="navbar-brand" href="#">Baseball Scoreboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toggleNav" aria-controls="toggleNav" aria-expanded="false" aria-label="Toggle navigation bar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="toggleNav">
+                <ul class="navbar-nav flex-shrink-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="d-lg-none d-xl-inline bi bi-house-fill me-1"></i><span class="d-sm-none d-lg-inline">Home</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="control-center.html"><i class="d-lg-none d-xl-inline bi bi bi-toggles me-1"></i><span class="d-sm-none d-lg-inline">Control Center</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><i class="d-lg-none d-xl-inline bi bi-person-fill-gear me-1"></i><span class="d-sm-none d-lg-inline">Staff Management</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="settings.html"><i class="d-lg-none d-xl-inline bi bi bi-gear-fill me-1"></i><span class="d-sm-none d-lg-inline">Settings</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navScoreboardLinks" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"><i class="d-lg-none d-xl-inline bi bi-2-square-fill me-1"></i><span class="d-sm-none d-lg-inline">Scoreboards</span></a>
+                        <ul class="dropdown-menu mb-2" aria-labelledby="navScoreboardLinks">
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/scoreboard.html',427,80)">Main <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/inning.html',707,120)">Partials <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/pregame.html',631,40)">Pre-game <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/postgame.html',631,40)">Post-game <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/umpires.html',600,250)">Umpires <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/scorers.html',600,200)">Scorers <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/commentator.html',600,100)">Sportscaster <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/technicalComment.html',600,100)">Technical Commentator <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="flex-grow-1"></div>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <span id="profile_plc"><a class="btn btn-primary" href="login.html">Login <i class="bi-box-arrow-in-left"></i></a></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-md"  style="max-width: 1140px;">
+        <div class="d-flex flex-row flex-wrap align-items-center py-2 gap-2">
+            <h1 class="fw-bolder m-0 text-black text-opacity-75 me-auto">Staff Name Management</h1>
+            <div class="hstack gap-3 flex-shrink-0">
+                <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#ModalResetAllData">Reset all data</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg">
+                <div class="bg-body p-3 mb-4 shadow rounded-3 border">
+                    <div class="form-check d-lg-none">
+                        <input class="form-check-input" type="checkbox" value="" id="toggle-umpires" data-bs-toggle="collapse" href="#collapse-umpires" aria-expanded="true" aria-controls="#collapse-umpires" checked>
+                        <label class="form-check-label" for="toggle-umpires">
+                            Umpires
+                        </label>
+                    </div>
+                    <div class="collapse show" id="collapse-umpires">
+                        <hr class="d-lg-none">
+                        <div class="row justify-content-center align-items-center d-none d-lg-flex">
+                            <div class="col d-flex justify-content-between align-items-center flex-column">
+                                <h3 style="width: min-content;">Umpires</h3>
+                            </div>
+                        </div>
+                        <div class="container text-center">
+                            <div class="row my-1 g-2">
+                                <div class="col col-sm-2 d-flex justify-content-center align-items-center">
+                                    <h5>HP</h5>
+                                </div>
+                                <div class="col col-sm-2 d-flex d-sm-block my-auto justify-content-center align-items-center form-switch">
+                                    <input class="form-check-input" type="checkbox" value="" id="hp" data-bs-toggle="collapse" href="#collapse-umpire-hp" aria-expanded="true" aria-controls="#collapse-umpire-hp" checked onclick="checkAndDeCheck('hp')" role="switch">
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="hp-surname" placeholder="Surname" value="">
+                                    <label for="hp-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="hp-name" placeholder="Name" value="">
+                                    <label for="hp-name">Name</label>
+                                </div>
+                            </div>
+                            <div class="row my-1 g-2">
+                                <div class="col col-sm-2 d-flex justify-content-center align-items-center">
+                                    <h5>1B</h5>
+                                </div>
+                                <div class="col col-sm-2 d-flex d-sm-block my-auto justify-content-center align-items-center form-switch">
+                                    <input class="form-check-input" type="checkbox" value="" id="b1" data-bs-toggle="collapse" href="#collapse-umpire-1b" aria-expanded="true" aria-controls="#collapse-umpire-1b" checked onclick="checkAndDeCheck('b1')" role="switch">
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="b1-surname" placeholder="Surname" value="">
+                                    <label for="1b-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="b1-name" placeholder="Name" value="">
+                                    <label for="1b-name">Name</label>
+                                </div>
+                            </div>
+                            <div class="row my-1 g-2">
+                                <div class="col col-sm-2 d-flex justify-content-center align-items-center">
+                                    <h5>2B</h5>
+                                </div>
+                                <div class="col col-sm-2 d-flex d-sm-block my-auto justify-content-center align-items-center form-switch">
+                                    <input class="form-check-input" type="checkbox" value="" id="b2" data-bs-toggle="collapse" href="#collapse-umpire-2b" aria-expanded="true" aria-controls="#collapse-umpire-2b" checked onclick="checkAndDeCheck('b2')" role="switch">
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="b2-surname" placeholder="Surname" value="">
+                                    <label for="2b-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="b2-name" placeholder="Name" value="">
+                                    <label for="2b-name">Name</label>
+                                </div>
+                            </div>
+                            <div class="row my-1 g-2">
+                                <div class="col col-sm-2 d-flex justify-content-center align-items-center">
+                                    <h5>3B</h5>
+                                </div>
+                                <div class="col col-sm-2 d-flex d-sm-block my-auto justify-content-center align-items-center form-switch">
+                                    <input class="form-check-input" type="checkbox" value="" id="b3" data-bs-toggle="collapse" href="#collapse-umpire-3b" aria-expanded="true" aria-controls="#collapse-umpire-3b" checked onclick="checkAndDeCheck('b3')" role="switch">
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="b3-surname" placeholder="Surname" value="">
+                                    <label for="3b-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="b3-name" placeholder="Name" value="">
+                                    <label for="3b-name">Name</label>
+                                </div>
+                            </div>
+                            <hr class="my-2">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-12 d-flex d-sm-block justify-content-center align-items-center">
+                                    <button type="button" class="btn btn-outline-primary w-100" id="btn-umpire-save" onclick="sendUmpires()">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-body p-3 mb-4 shadow rounded-3 border">
+                    <div class="form-check d-lg-none">
+                        <input class="form-check-input" type="checkbox" value="" id="toggle-commentators" data-bs-toggle="collapse" href="#collapse-commentators" aria-expanded="true" aria-controls="#collapse-commentators" checked>
+                        <label class="form-check-label" for="toggle-commentators">
+                            Commentators
+                        </label>
+                    </div>
+                    <div class="collapse show" id="collapse-commentators">
+                        <hr class="d-lg-none">
+                        <div class="row justify-content-center align-items-center d-none d-lg-flex">
+                            <div class="col d-flex justify-content-between align-items-center flex-column">
+                                <h3 style="width: min-content;">Commentators</h3>
+                            </div>
+                        </div>
+                        <div class="container text-center">
+                            <div class="row mb-0">
+                                <div class="col text-start">
+                                    <h5>Main</h5>
+                                </div>
+                            </div>
+                            <div class="row mt-0 mb-2 g-2">
+                                <div class="col-12 col-sm-6 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="Main-surname" placeholder="Surname" value="">
+                                    <label for="hp-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-6 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="Main-name" placeholder="Name" value="">
+                                    <label for="hp-name">Name</label>
+                                </div>
+                            </div>
+                            <div class="row mt-2 mb-0">
+                                <div class="col text-start">
+                                    <h5>Technical Commentator</h5>
+                                </div>
+                            </div>
+                            <div class="row mt-0 mb-1 g-2">
+                                <div class="col-12 col-sm-6 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="TC-surname" placeholder="Surname" value="">
+                                    <label for="TC-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-6 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="TC-name" placeholder="Name" value="">
+                                    <label for="TC-name">Name</label>
+                                </div>
+                            </div>
+                            <hr class="my-2">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-12 d-flex d-sm-block justify-content-center align-items-center">
+                                    <button type="button" class="btn btn-outline-primary w-100" id="btn-umpire-save" onclick="sendSportcasters()">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg">
+                <div class="bg-body p-3 mb-4 shadow rounded-3 border">
+                    <div class="form-check d-lg-none">
+                        <input class="form-check-input" type="checkbox" value="" id="toggle-scorers" data-bs-toggle="collapse" href="#collapse-scorers" aria-expanded="true" aria-controls="#collapse-scorers" checked>
+                        <label class="form-check-label" for="toggle-scorers">
+                            Scorers
+                        </label>
+                    </div>
+                    <div class="collapse show" id="collapse-scorers">
+                        <hr class="d-lg-none">
+                        <div class="row justify-content-center align-items-center d-none d-lg-flex">
+                            <div class="col d-flex justify-content-between align-items-center flex-column">
+                                <h3 style="width: min-content;">Scorers</h3>
+                            </div>
+                        </div>
+                        <div class="container text-center">
+                            <div class="row my-1 g-2">
+                                <div class="col col-sm-2 d-flex justify-content-center align-items-center">
+                                    <h5>Head</h5>
+                                </div>
+                                <div class="col col-sm-2 d-flex d-sm-block my-auto justify-content-center align-items-center form-switch">
+                                    <input class="form-check-input" type="checkbox" value="" id="head" checked onclick="checkAndDeCheck('head')" role="switch">
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="head-surname" placeholder="Surname" value="">
+                                    <label for="hp-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="head-name" placeholder="Name" value="">
+                                    <label for="hp-name">Name</label>
+                                </div>
+                            </div>
+                            <div class="row my-1 g-2">
+                                <div class="col col-sm-2 d-flex justify-content-center align-items-center">
+                                    <h5>2°</h5>
+                                </div>
+                                <div class="col col-sm-2 d-flex d-sm-block my-auto justify-content-center align-items-center form-switch">
+                                    <input class="form-check-input" type="checkbox" value="" id="second" checked onclick="checkAndDeCheck('second')" role="switch">
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="second-surname" placeholder="Surname" value="">
+                                    <label for="1b-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="second-name" placeholder="Name" value="">
+                                    <label for="1b-name">Name</label>
+                                </div>
+                            </div>
+                            <div class="row my-1 g-2">
+                                <div class="col col-sm-2 d-flex justify-content-center align-items-center">
+                                    <h5>3°</h5>
+                                </div>
+                                <div class="col col-sm-2 d-flex d-sm-block my-auto justify-content-center align-items-center form-switch">
+                                    <input class="form-check-input" type="checkbox" value="" id="third" checked onclick="checkAndDeCheck('third')" role="switch">
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="third-surname" placeholder="Surname" value="">
+                                    <label for="2b-surname">Surname</label>
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex d-sm-block my-auto justify-content-center align-items-center form-floating">
+                                    <input type="text" class="form-control" id="third-name" placeholder="Name" value="">
+                                    <label for="2b-name">Name</label>
+                                </div>
+                            </div>
+                            <hr class="my-2">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-12 d-flex d-sm-block justify-content-center align-items-center">
+                                    <button type="button" class="btn btn-outline-primary w-100" id="btn-umpire-save" onclick="sendScorers()">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex-grow-1"></div>
+    <footer class="bg-black bg-opacity-10">
+        <div class="container-md d-flex flex-row flex-wrap align-content-center align-items-center justify-content-center py-2" style="column-gap: .5rem; max-width: 1140px;">
+            <div class="me-sm-auto text-center">
+                <a class="text-decoration-none" type="button" data-bs-toggle="modal" data-bs-target="#licenseModal">
+                    <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px" height="24px" viewBox="5.5 -3.5 64 64" enable-background="new 5.5 -3.5 64 64" xml:space="preserve">
+                        <g>
+                            <circle fill="rgba(0, 0, 0, 0)" cx="37.785" cy="28.501" r="28.836"/>
+                            <path fill="currentColor" d="M37.441-3.5c8.951,0,16.572,3.125,22.857,9.372c3.008,3.009,5.295,6.448,6.857,10.314
+                            c1.561,3.867,2.344,7.971,2.344,12.314c0,4.381-0.773,8.486-2.314,12.313c-1.543,3.828-3.82,7.21-6.828,10.143
+                            c-3.123,3.085-6.666,5.448-10.629,7.086c-3.961,1.638-8.057,2.457-12.285,2.457s-8.276-0.808-12.143-2.429
+                            c-3.866-1.618-7.333-3.961-10.4-7.027c-3.067-3.066-5.4-6.524-7-10.372S5.5,32.767,5.5,28.5c0-4.229,0.809-8.295,2.428-12.2
+                            c1.619-3.905,3.972-7.4,7.057-10.486C21.08-0.394,28.565-3.5,37.441-3.5z M37.557,2.272c-7.314,0-13.467,2.553-18.458,7.657
+                            c-2.515,2.553-4.448,5.419-5.8,8.6c-1.354,3.181-2.029,6.505-2.029,9.972c0,3.429,0.675,6.734,2.029,9.913
+                            c1.353,3.183,3.285,6.021,5.8,8.516c2.514,2.496,5.351,4.399,8.515,5.715c3.161,1.314,6.476,1.971,9.943,1.971
+                            c3.428,0,6.75-0.665,9.973-1.999c3.219-1.335,6.121-3.257,8.713-5.771c4.99-4.876,7.484-10.99,7.484-18.344
+                            c0-3.543-0.648-6.895-1.943-10.057c-1.293-3.162-3.18-5.98-5.654-8.458C50.984,4.844,44.795,2.272,37.557,2.272z M37.156,23.187
+                            l-4.287,2.229c-0.458-0.951-1.019-1.619-1.685-2c-0.667-0.38-1.286-0.571-1.858-0.571c-2.856,0-4.286,1.885-4.286,5.657
+                            c0,1.714,0.362,3.084,1.085,4.113c0.724,1.029,1.791,1.544,3.201,1.544c1.867,0,3.181-0.915,3.944-2.743l3.942,2
+                            c-0.838,1.563-2,2.791-3.486,3.686c-1.484,0.896-3.123,1.343-4.914,1.343c-2.857,0-5.163-0.875-6.915-2.629
+                            c-1.752-1.752-2.628-4.19-2.628-7.313c0-3.048,0.886-5.466,2.657-7.257c1.771-1.79,4.009-2.686,6.715-2.686
+                            C32.604,18.558,35.441,20.101,37.156,23.187z M55.613,23.187l-4.229,2.229c-0.457-0.951-1.02-1.619-1.686-2
+                            c-0.668-0.38-1.307-0.571-1.914-0.571c-2.857,0-4.287,1.885-4.287,5.657c0,1.714,0.363,3.084,1.086,4.113
+                            c0.723,1.029,1.789,1.544,3.201,1.544c1.865,0,3.18-0.915,3.941-2.743l4,2c-0.875,1.563-2.057,2.791-3.541,3.686
+                            c-1.486,0.896-3.105,1.343-4.857,1.343c-2.896,0-5.209-0.875-6.941-2.629c-1.736-1.752-2.602-4.19-2.602-7.313
+                            c0-3.048,0.885-5.466,2.658-7.257c1.77-1.79,4.008-2.686,6.713-2.686C51.117,18.558,53.938,20.101,55.613,23.187z"/>
+                        </g>
+                    </svg>
+                </a>
+                <div class="modal fade" id="licenseModal" tabindex="-1" aria-labelledby="licenseModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-black bg-opacity-10">
+                                <h5 class="modal-title" id="licenseModal">License</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-start">
+                                <div class="d-flex flex-row gap-3 align-items-center">
+                                    <a rel="license" onclick="openExternal('http://creativecommons.org/licenses/by-nc-nd/4.0/')" rel="noopener noreferrer"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"/></a>
+                                    <span>This work is licensed under a <a rel="license" class="text-decoration-none" onclick="openExternal('http://creativecommons.org/licenses/by-nc-nd/4.0/')" rel="noopener noreferrer">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.</span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button rel="license" class="btn btn-primary" rel="noopener noreferrer" onclick="openExternal('http://creativecommons.org/licenses/by-nc-nd/4.0/')">Visit license's website</button>
+                                <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="ModalResetAllData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ModalResetAllDataLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border border-danger">
+                            <div class="modal-header bg-danger bg-opacity-10 gap-1">
+                                <i class="bi-exclamation-triangle-fill fs-3 text-danger"></i>
+                                <h5 class="modal-title" id="ModalResetAllDataLabel">Reset all data</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                You are about to <strong>reset all staff names</strong>.<br>Are you sure?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger" onclick="Reset_All()" data-bs-dismiss="modal">Continue</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <span class="align-text-top">Made by <a class="text-decoration-none" onclick="openExternal('https://github.com/lucafano04')" target="_blank" rel="noopener noreferrer">Luca Facchini</a> and <a class="text-decoration-none" onclick="openExternal('https://github.com/TheTecnoKing')" target="_blank" rel="noopener noreferrer">Kristian Ceribashi</a></span>
+            </div>
+            <div class="d-flex flex-row gap-2">
+                <a class="text-decoration-none fs-3" onclick="openExternal('https://github.com/FC-softwares/baseball-scoreboard')" rel="noopener noreferrer"><i class="bi-github"></i></a>
+                <a class="text-decoration-none fs-3" onclick="openExternal('https://opencollective.com/baseball-scoreboard')" rel="noopener noreferrer"><i class="bi-cash-coin"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

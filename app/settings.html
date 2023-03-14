@@ -13,28 +13,37 @@
     <script src="js/all.js"></script>
 </head>
 <body class="d-flex flex-column vh-100">
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <div class="container-md">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <div class="container-md"  style="max-width: 1140px;">
             <a class="navbar-brand" href="#">Baseball Scoreboard</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toggleNav" aria-controls="toggleNav" aria-expanded="false" aria-label="Toggle navigation bar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="toggleNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav flex-shrink-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
+                        <a class="nav-link" href="index.html"><i class="d-lg-none d-xl-inline bi bi-house-fill me-1"></i><span class="d-sm-none d-lg-inline">Home</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="control-center.html">Control Center</a>
+                        <a class="nav-link" href="control-center.html"><i class="d-lg-none d-xl-inline bi bi bi-toggles me-1"></i><span class="d-sm-none d-lg-inline">Control Center</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="settings.html">Settings</a>
+                        <a class="nav-link" href="staff.html"><i class="d-lg-none d-xl-inline bi bi-person-fill-gear me-1"></i><span class="d-sm-none d-lg-inline">Staff Management</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><i class="d-lg-none d-xl-inline bi bi bi-gear-fill me-1"></i><span class="d-sm-none d-lg-inline">Settings</span></a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navScoreboardLinks" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Scoreboards</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navScoreboardLinks" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"><i class="d-lg-none d-xl-inline bi bi-2-square-fill me-1"></i><span class="d-sm-none d-lg-inline">Scoreboards</span></a>
                         <ul class="dropdown-menu mb-2" aria-labelledby="navScoreboardLinks">
                             <li>
                                 <a class="dropdown-item" onclick="newWindow(window.location.origin+'/scoreboard.html',427,80)">Main <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/inning.html',707,120)">Partials <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
                             </li>
                             <li>
                                 <a class="dropdown-item" onclick="newWindow(window.location.origin+'/pregame.html',631,40)">Pre-game <i class="bi-box-arrow-up-right"></i></a>
@@ -43,7 +52,22 @@
                                 <a class="dropdown-item" onclick="newWindow(window.location.origin+'/postgame.html',631,40)">Post-game <i class="bi-box-arrow-up-right"></i></a>
                             </li>
                             <li>
-                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/inning.html',707,120)">Partials <i class="bi-box-arrow-up-right"></i></a>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/umpires.html',600,250)">Umpires <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/scorers.html',600,200)">Scorers <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/commentator.html',600,100)">Sportscaster <i class="bi-box-arrow-up-right"></i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick="newWindow(window.location.origin+'/technicalComment.html',600,100)">Technical Commentator <i class="bi-box-arrow-up-right"></i></a>
                             </li>
                         </ul>
                     </li>
@@ -57,13 +81,13 @@
             </div>
         </div>
     </nav>
-    <div class="container-md">
+    <div class="container-md"  style="max-width: 1140px;">
         <h1 class="fw-bolder text-black text-opacity-75 pt-2">Settings</h1>
         <div id="Alert"></div>
         <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-4">
                 <div class="bg-body p-3 mb-4 shadow rounded-3 border">
-                    <div class="row row-cols-1 row-cols-sm-3 gap-3 gap-sm-0 justify-content-evenly">
+                    <div class="row row-cols-1 gap-3 gap-sm-0 justify-content-evenly">
                         <div class="col">
                             <h4 class="text-center">Max Inning</h4>
                             <div class="d-flex flex-column align-items-center">
@@ -74,7 +98,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="vr p-0 d-none d-sm-block"></div>
+                    </div>
+                    <div class="row row-cols-1 gap-3 justify-content-evenly mt-3">
                         <div class="col">
                             <h4 class="text-center">Darken Last Inning</h4>
                             <div class="col d-flex flex-column align-items-center">
@@ -85,10 +110,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row row-cols-1 gap-3 justify-content-evenly">
+                    <!-- WIP -->
+                    <div class="row row-cols-1 gap-3 justify-content-evenly mt-3">
                         <div class="col d-flex flex-column align-items-center justify-content-between">
                             <h4 class="text-center">Streaming Resolution</h4>
-                            <select name="res" id="Resolution" class="form-select" aria-label="Select for Resolution of the streaming">
+                            <select name="res" id="Resolution" class="form-select" disabled aria-label="Select for Resolution of the streaming">
                                 <option value="2160">3840 x 2160</option>
                                 <option value="1440">2560 x 1440</option>
                                 <option value="1080">1920 x 1080</option>
@@ -97,6 +123,7 @@
                                 <option value="360">640 x 360</option>
                                 <option value="240">480 x 240</option>
                             </select>
+                            <span class="text-secondary"><i>Work in progress</i></span>
                         </div>
                     </div>
                     <hr>
@@ -107,7 +134,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-8">
                 <div class="bg-body p-3 mb-4 shadow rounded-3 border">
                     <h4 class="text-center">Product Owner</h4>
                     <div class="row row-cols-1 row-cols-sm-3 gap-3 gap-sm-0 justify-content-center">
@@ -152,7 +179,7 @@
     </div>
     <div class="flex-grow-1"></div>
     <footer class="bg-black bg-opacity-10">
-        <div class="container-md d-flex flex-row flex-wrap align-content-center align-items-center justify-content-center py-2" style="column-gap: .5rem;">
+        <div class="container-md d-flex flex-row flex-wrap align-content-center align-items-center justify-content-center py-2" style="column-gap: .5rem; max-width: 1140px;">
             <div class="me-sm-auto text-center">
                 <a class="text-decoration-none" type="button" data-bs-toggle="modal" data-bs-target="#licenseModal">
                     <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px" height="24px" viewBox="5.5 -3.5 64 64" enable-background="new 5.5 -3.5 64 64" xml:space="preserve">
@@ -202,7 +229,7 @@
                 <span class="align-text-top">Made by <a class="text-decoration-none" onclick="openExternal('https://github.com/lucafano04')" target="_blank" rel="noopener noreferrer">Luca Facchini</a> and <a class="text-decoration-none" onclick="openExternal('https://github.com/TheTecnoKing')" target="_blank" rel="noopener noreferrer">Kristian Ceribashi</a></span>
             </div>
             <div class="d-flex flex-row gap-2">
-                <a class="text-decoration-none fs-3" onclick="openExternal('https://github.com/luca-ceri/baseball-scoreboard')" rel="noopener noreferrer"><i class="bi-github"></i></a>
+                <a class="text-decoration-none fs-3" onclick="openExternal('https://github.com/FC-softwares/baseball-scoreboard')" rel="noopener noreferrer"><i class="bi-github"></i></a>
                 <a class="text-decoration-none fs-3" onclick="openExternal('https://opencollective.com/baseball-scoreboard')" rel="noopener noreferrer"><i class="bi-cash-coin"></i></a>
             </div>
         </div>

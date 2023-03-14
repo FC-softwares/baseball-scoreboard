@@ -42,47 +42,65 @@ socket.on('connectData', update);
 socket.on('update', update);
 
 function update(data){
-	document.getElementById('NameAway').value = data.Teams.Away.Name;
-	document.getElementById('NameHome').value = data.Teams.Home.Name;
-	document.getElementById('ColorAway').value = data.Teams.Away.Color;
-	document.getElementById('ColorHome').value = data.Teams.Home.Color;
-	document.getElementById('BallView').value = data.Ball;
-	document.getElementById('StrikeView').value = data.Strike;
-	document.getElementById('OutView').value = data.Out;
-	document.getElementById('InningView').value = data.Inning;
-	document.getElementById('ScoreHView').value = data.Teams.Home.Score;
-	document.getElementById('ScoreAView').value = data.Teams.Away.Score;
-	if (data.Arrow == 1) {
-		document.getElementById("TopView").classList.remove("btn-outline-primary");
-		document.getElementById("TopView").classList.add("btn-primary");
-		document.getElementById("BotView").classList.remove("btn-primary");
-		document.getElementById("BotView").classList.add("btn-outline-primary");
-	}else{
-		document.getElementById("TopView").classList.remove("btn-primary");
-		document.getElementById("TopView").classList.add("btn-outline-primary");
-		document.getElementById("BotView").classList.remove("btn-outline-primary");
-		document.getElementById("BotView").classList.add("btn-primary");
+	if(data?.Teams?.Away?.Name !== undefined)
+		document.getElementById('NameAway').value = data.Teams.Away.Name;
+	if(data?.Teams?.Home?.Name !== undefined)
+		document.getElementById('NameHome').value = data.Teams.Home.Name;
+	if(data?.Teams?.Away?.Color !== undefined)
+		document.getElementById('ColorAway').value = data.Teams.Away.Color;
+	if(data?.Teams?.Home?.Color !== undefined)
+		document.getElementById('ColorHome').value = data.Teams.Home.Color;
+	if(data?.Ball !== undefined)
+		document.getElementById('BallView').value = data.Ball;
+	if(data?.Strike !== undefined)
+		document.getElementById('StrikeView').value = data.Strike;
+	if(data?.Out !== undefined)
+		document.getElementById('OutView').value = data.Out;
+	if(data?.Inning !== undefined)
+		document.getElementById('InningView').value = data.Inning;
+	if(data?.Teams?.Home?.Score !== undefined)
+		document.getElementById('ScoreHView').value = data.Teams.Home.Score;
+	if(data?.Teams?.Away?.Score !== undefined)
+		document.getElementById('ScoreAView').value = data.Teams.Away.Score;
+	if(data?.Arrow !== undefined){
+		if (data.Arrow == 1) {
+			document.getElementById("TopView").classList.remove("btn-outline-primary");
+			document.getElementById("TopView").classList.add("btn-primary");
+			document.getElementById("BotView").classList.remove("btn-primary");
+			document.getElementById("BotView").classList.add("btn-outline-primary");
+		}else{
+			document.getElementById("TopView").classList.remove("btn-primary");
+			document.getElementById("TopView").classList.add("btn-outline-primary");
+			document.getElementById("BotView").classList.remove("btn-outline-primary");
+			document.getElementById("BotView").classList.add("btn-primary");
+		}
 	}
-	if(data.Bases[1]==true){
-		document.getElementById("Base1View").classList.remove("btn-outline-primary");
-		document.getElementById("Base1View").classList.add("btn-primary");
-	}else{
-		document.getElementById("Base1View").classList.remove("btn-primary");
-		document.getElementById("Base1View").classList.add("btn-outline-primary");
+	if(data?.Bases[1] !== undefined){
+		if(data.Bases[1]==true){
+			document.getElementById("Base1View").classList.remove("btn-outline-primary");
+			document.getElementById("Base1View").classList.add("btn-primary");
+		}else{
+			document.getElementById("Base1View").classList.remove("btn-primary");
+			document.getElementById("Base1View").classList.add("btn-outline-primary");
+		}
 	}
-	if(data.Bases[2]==true){
-		document.getElementById("Base2View").classList.remove("btn-outline-primary");
-		document.getElementById("Base2View").classList.add("btn-primary");
-	}else{
-		document.getElementById("Base2View").classList.remove("btn-primary");
-		document.getElementById("Base2View").classList.add("btn-outline-primary");
+	if(data?.Bases[2] !== undefined){
+		if(data.Bases[2]==true){
+			document.getElementById("Base2View").classList.remove("btn-outline-primary");
+			document.getElementById("Base2View").classList.add("btn-primary");
+		}else{
+			document.getElementById("Base2View").classList.remove("btn-primary");
+			document.getElementById("Base2View").classList.add("btn-outline-primary");
+		}
 	}
-	if(data.Bases[3]==true){
-		document.getElementById("Base3View").classList.remove("btn-outline-primary");
-		document.getElementById("Base3View").classList.add("btn-primary");
-	}else{
-		document.getElementById("Base3View").classList.remove("btn-primary");
-		document.getElementById("Base3View").classList.add("btn-outline-primary");
+	if(data?.Bases[3] !== undefined){
+		if(data.Bases[3]==true){
+			document.getElementById("Base3View").classList.remove("btn-outline-primary");
+			document.getElementById("Base3View").classList.add("btn-primary");
+		}else{
+			document.getElementById("Base3View").classList.remove("btn-primary");
+			document.getElementById("Base3View").classList.add("btn-outline-primary");
+		}
 	}
 }
 //To add for all the variables
@@ -162,82 +180,3 @@ function Reset_All(){
 // Animation and Scoreboard controls
 socket.on('updateActive', updateActive);
 socket.on('connectActive', updateActive);
-
-function updateActive(data){
-	const dataObj = JSON.parse(data);
-	Object.entries(dataObj).forEach(([key, value]) => {
-		if(key=="main"){
-			if(value==true){
-				document.getElementById('mainOn').classList.remove("btn-outline-success");
-				document.getElementById('mainOn').classList.add("btn-success");
-				document.getElementById('mainOff').classList.remove("btn-danger");
-				document.getElementById('mainOff').classList.add("btn-outline-danger");
-			}else{
-				document.getElementById('mainOn').classList.remove("btn-success");
-				document.getElementById('mainOn').classList.add("btn-outline-success");
-				document.getElementById('mainOff').classList.remove("btn-outline-danger");
-				document.getElementById('mainOff').classList.add("btn-danger");
-			}
-		}else if (key=="pre") {
-			if(value==true){
-				document.getElementById('preOn').classList.remove("btn-outline-success");
-				document.getElementById('preOn').classList.add("btn-success");
-				document.getElementById('preOff').classList.remove("btn-danger");
-				document.getElementById('preOff').classList.add("btn-outline-danger");
-			}else{
-				document.getElementById('preOn').classList.remove("btn-success");
-				document.getElementById('preOn').classList.add("btn-outline-success");
-				document.getElementById('preOff').classList.remove("btn-outline-danger");
-				document.getElementById('preOff').classList.add("btn-danger");
-			}
-		}else if (key=="post") {
-			if(value==true){
-				document.getElementById('postOn').classList.remove("btn-outline-success");
-				document.getElementById('postOn').classList.add("btn-success");
-				document.getElementById('postOff').classList.remove("btn-danger");
-				document.getElementById('postOff').classList.add("btn-outline-danger");
-			}else{
-				document.getElementById('postOn').classList.remove("btn-success");
-				document.getElementById('postOn').classList.add("btn-outline-success");
-				document.getElementById('postOff').classList.remove("btn-outline-danger");
-				document.getElementById('postOff').classList.add("btn-danger");
-			}
-		}else if (key=="inning") {
-			if(value==true){
-				document.getElementById('inningOn').classList.remove("btn-outline-success");
-				document.getElementById('inningOn').classList.add("btn-success");
-				document.getElementById('inningOff').classList.remove("btn-danger");
-				document.getElementById('inningOff').classList.add("btn-outline-danger");
-			}else{
-				document.getElementById('inningOn').classList.remove("btn-success");
-				document.getElementById('inningOn').classList.add("btn-outline-success");
-				document.getElementById('inningOff').classList.remove("btn-outline-danger");
-				document.getElementById('inningOff').classList.add("btn-danger");
-			}
-		}
-	});
-}
-function main(opr){
-	if(opr!=true&&opr!=false)
-		return null;
-	socket.emit('updateActive',`{"main":${opr}}`);
-	return true;
-}
-function preGame(opr){
-	if(opr!=true&&opr!=false)
-		return null;
-	socket.emit('updateActive',`{"pre":${opr}}`);
-	return true;
-}
-function postGame(opr){
-	if(opr!=true&&opr!=false)
-		return null;
-	socket.emit('updateActive',`{"post":${opr}}`);
-	return true;
-}
-function inning(opr){
-	if(opr!=true&&opr!=false)
-		return null;
-	socket.emit('updateActive',`{"inning":${opr}}`);
-	return true;
-}

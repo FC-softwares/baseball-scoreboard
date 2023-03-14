@@ -3,12 +3,13 @@
 ![insert banner here](file)
 
 <center>
-
+  
 [![CodeFactor](https://www.codefactor.io/repository/github/fc-softwares/baseball-scoreboard/badge/main)](https://www.codefactor.io/repository/github/fc-softwares/baseball-scoreboard/overview/main)
 ![Version](https://img.shields.io/github/package-json/v/FC-softwares/baseball-scoreboard/next)
 [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/aauk.svg)](https://betteruptime.com/?utm_source=status_badge)
 
 </center>
+
 # Baseball Scoreboard
 Un segnapunti del baseball semplice, veloce e leggero, realizzato con Electron.
 Funziona su tutte le applicazioni di streaming con supporto alle sorgenti web.
@@ -34,7 +35,35 @@ Se desideri installare l'applicazione dal codice sorgente, assicurati di aver gi
 4. Esegui `npm start` per avviare il software
 
 ## Uso
-work in progress
+Le scoreboard e il pannello di controllo sono delle pagine web fatte in modo tale da essere aggiunte a OBS o ad altre applicazioni di streaming come sorgente browser. È sufficiente aggiungere la pagina web e inserire l'URL della scoreboard che si desidera utilizzare.
+### Aggiunta Scoreboard a OBS
+1. Avvia l'applicazione OBS o simili
+2. Avvia Baseball-Scoreboard
+3. Aggiungi una nuova fonte browser e inserisci il nome che preferisci
+4. L'indizizzo web da inserire è `http://localhost:2095/nome-scoreboard.html` se esegui Baseball-Scoreboard sulla tua macchina locale, altrimenti è `http://IP-DEL-PC:2095/nome-scoreboard.html` (dove IP-DEL-PC è l'indirizzo IP della macchina su cui è eseguito Baseball-Scoreboard) Il nome della scoreboard segue la tabella sottostante
+
+| Nome scoreboard | Nome file |
+|---|---|
+| Scoreboard Principale | `scoreboard.html` |
+| Pre Game | `pregame.html` |
+| Post Game | `postgame.html` |
+| Parziali / Inning | `inning.html` |
+| Arbitri | `umpires.html` |
+| Classificatori | `scorers.html` |
+| Telecronista | `commentator.html` |
+| Commentatore Tecnico | `technicalComment.html` |
+
+5. Una volta aggiunta la fonte browser, trascinala nella posizione che preferisci e ridimensionala a piacimento (durante il posizionamento si consiglia di attivare la scoreboard dal `Control Center` per vedere il risultato)
+6. Una volta finito, si consiglia di disattivare tutte le altre scoreboard dal `Control Center` per evitare che vengano visualizzate durante la trasmissione
+
+### Aggiunta Pannello di Controllo a OBS (opzionale)
+1. Avvia l'applicazione OBS (Queste istruzioni sono valide per OBS, ma dovrebbero funzionare anche per altre applicazioni di streaming)
+2. Avvia Baseball-Scoreboard
+3. Per aggiungere il pannello di controllo, è necessario creare un nuovo pannello web e inserire l'indirizzo `http://localhost:2095/control-center.html` se Baseball-Scoreboard è eseguito sulla tua macchina locale, altrimenti è `http://IP-DEL-PC:2095/control-center.html` (dove IP-DEL-PC è l'indirizzo IP della macchina su cui è eseguito Baseball-Scoreboard)
+4. Per farlo vai su `Pannelli` > `Pannelli Browser Personalizzati`
+5. Poi aggiungi alla tabella una nuova riga inseredo il nome che preferisci nella colonna `Nome Del Pannello` e l'indirizzo web: `http://localhost:2095/control-center.html` o `http://IP-DEL-PC:2095/control-center.html` (dove IP-DEL-PC è l'indirizzo IP della macchina su cui è eseguito Baseball-Scoreboard) nella colonna `URL`
+6. Conferma premendo `Applica` e poi `Chiudi`
+7. Ora puoi trascinare il nuovo pannello nella posizione che preferisci, ridimensionarlo a piacimento e bloccarlo nella UI di OBS dove preferisci
 
 ## Documentazione
 Probabilmente queste istruzioni non sono state molto esaustive, ma non c'è da preoccuparsi! Per maggiori informazioni, la documentazione è disponibile [qui](https://github.com/FC-softwares/baseball-scoreboard/tree/main/docs/it/)!

@@ -1,0 +1,51 @@
+{
+    "umpires": {
+        "HP": {
+            "surname": "HP Surname",
+            "name": "Name",
+            "active": true
+        },
+        "B1": {
+            "surname": "1B Surname",
+            "name": "Name",
+            "active": true
+        },
+        "B2": {
+            "surname": "2B Surname",
+            "name": "Name",
+            "active": true
+        },
+        "B3": {
+            "surname": "3B Surname",
+            "name": "Name",
+            "active": true
+        }
+    },
+    "scorers": {
+        "head": {
+            "surname": "Head Surname",
+            "name": "Name",
+            "active": true
+        },
+        "second": {
+            "surname": "Second Surname",
+            "name": "Name",
+            "active": true
+        },
+        "third": {
+            "surname": "Third Surname",
+            "name": "Name",
+            "active": true
+        }
+    },
+    "commentators": {
+        "main": {
+            "surname": "Sportcaster Surname",
+            "name": "Name"
+        },
+        "technical": {
+            "surname": "Technical Surname",
+            "name": "Name"
+        }
+    }
+}

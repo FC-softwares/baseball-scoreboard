@@ -117,3 +117,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+# Altro
+app/json/.example.umpiresScorers.json
