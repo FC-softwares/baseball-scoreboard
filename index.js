@@ -488,6 +488,7 @@ app.post('/newWindow',(req,res)=>{
 	const win = new BrowserWindow({
 		width: width,
 		height: height,
+		useContentSize: true,
 		webPreferences: {
 			nodeIntegration: true
 		}

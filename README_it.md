@@ -3,9 +3,9 @@
 ![insert banner here](file)
 
 <center>
-  
+
 [![CodeFactor](https://www.codefactor.io/repository/github/fc-softwares/baseball-scoreboard/badge/main)](https://www.codefactor.io/repository/github/fc-softwares/baseball-scoreboard/overview/main)
-![Version](https://img.shields.io/github/package-json/v/FC-softwares/baseball-scoreboard/next)
+![Version](https://img.shields.io/github/package-json/v/FC-softwares/baseball-scoreboard)
 [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/aauk.svg)](https://betteruptime.com/?utm_source=status_badge)
 
 </center>
@@ -22,7 +22,7 @@ Funziona su tutte le applicazioni di streaming con supporto alle sorgenti web.
 ---
 
 ## Installazione
-### Installazione da file setup 
+### Installazione da file setup
 1. Visita la pagina delle versioni dell'app [(Releases)](https://github.com/FC-softwares/baseball-scoreboard/releases/latest)
 2. Scarica l'ultima versione disponibile per la tua piattaforma
 3. Esegui il file di setup ed installa il software
@@ -72,7 +72,7 @@ Probabilmente queste istruzioni non sono state molto esaustive, ma non c'è da p
 ---
 
 ## Licenza
-[![Licenza Creative Commons](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)  
-Baseball-Scoreboard di [F&C softwares](https://github.com/FC-softwares) è distribuito con Licenza [Creative Commons Attribuzione - Non commerciale - Non opere derivate 4.0 Internazionale](http://creativecommons.org/licenses/by-nc-nd/4.0/).  
-Based on a work at [https://github.com/FC-softwares/baseball-scoreboard](https://github.com/FC-softwares/baseball-scoreboard).  
+[![Licenza Creative Commons](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
+Baseball-Scoreboard di [F&C softwares](https://github.com/FC-softwares) è distribuito con Licenza [Creative Commons Attribuzione - Non commerciale - Non opere derivate 4.0 Internazionale](http://creativecommons.org/licenses/by-nc-nd/4.0/).
+Based on a work at [https://github.com/FC-softwares/baseball-scoreboard](https://github.com/FC-softwares/baseball-scoreboard).
 Permessi ulteriori rispetto alle finalità della presente licenza possono essere disponibili presso [https://github.com/FC-softwares](https://github.com/FC-softwares).
