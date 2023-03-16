@@ -89,9 +89,7 @@ function removeUser(id){
 	xmlt.onload = function() {
 		const response = JSON.parse(xmlt.responseText);
 		const error = response.error || response.message || 'Unknown error';
-		if (xmlt.status !== 200 && this.readyState !== 4)
-			return document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-		if (!response.ok)
+		if (xmlt.status !== 200 && this.readyState !== 4 || !response.ok)
 			return document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
 		document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User deleted successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
 		getCurrentUser();
@@ -107,9 +105,7 @@ function addUser(){
 	xmlt.onload = function() {
 		const response = JSON.parse(xmlt.responseText);
 		const error = response.error || response.message || 'Unknown error';
-		if (xmlt.status !== 200 && this.readyState !== 4)
-			return document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-		if (!response.ok)
+		if (xmlt.status !== 200 && this.readyState !== 4 || !response.ok)
 			return document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
 		document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User added successfully.  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
 		document.getElementById('UserAddEmail').value = '';
