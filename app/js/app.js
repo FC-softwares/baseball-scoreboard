@@ -20,7 +20,7 @@ socket.on('updateSettings', updateSettings);
 socket.on('connectSettings', connectSettings);
 socket.on('connectData', update);
 socket.on('updateActive', updateActive);
-socket.on('connectActive', connectActive);
+socket.on('connectActive', updateActive);
 socket.on('connectOffices', updateOffices);
 socket.on('updateOffices', updateOffices);
 
@@ -250,122 +250,23 @@ function connectSettings(obj) {
 	else if (officials.includes(document.URL.split("/").pop()))
 		socket.emit("getOffices");
 }
-// TODO: make this function WORK with the help of @TheTecnoKing
 function updateActive(json){
 	const obj = JSON.parse(json);
-	if(obj.main!==undefined && document.URL.includes("scoreboard.html")){
-		if(obj.main){
-			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
-			document.querySelector("div.scoreboard").classList.add("disabled");
-		}
-	}
-	if(obj.pre!==undefined && document.URL.includes("pregame.html")){
-		if(obj.pre){
-			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
-			document.querySelector("div.scoreboard").classList.add("disabled");
-		}
-	}
-	if(obj.post!==undefined && document.URL.includes("postgame.html")){
-		if(obj.post){
-			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
-			document.querySelector("div.scoreboard").classList.add("disabled");
-		}
-	}
-	if(obj.inning!==undefined && document.URL.includes("inning.html")){
-		if(obj.inning){
-			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
-			document.querySelector("div.scoreboard").classList.add("disabled");
-		}
-	}
-	if(obj.umpires!==undefined && document.URL.includes("umpires.html")){
-		if(obj.umpires){
-			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
-			document.querySelector("div.scoreboard").classList.add("disabled");
-		}
-	}
-	if(obj.scorers!==undefined && document.URL.includes("scorers.html")){
-		if(obj.scorers){
-			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
-			document.querySelector("div.scoreboard").classList.add("disabled");
-		}
-	}
-	if(obj.commentator!==undefined && document.URL.includes("commentator.html")){
-		if(obj.commentator){
-			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
-			document.querySelector("div.scoreboard").classList.add("disabled");
-		}
-	}
-	if(obj.technicalComment!==undefined && document.URL.includes("technicalComment.html")){
-		if(obj.technicalComment){
-			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
-			document.querySelector("div.scoreboard").classList.add("disabled");
-		}
-	}
+	activeDeactiveScoreboard(obj?.main, 'scoreboard.html');
+	activeDeactiveScoreboard(obj?.pre, 'pregame.html');
+	activeDeactiveScoreboard(obj?.post, 'postgame.html');
+	activeDeactiveScoreboard(obj?.inning, 'inning.html');
+	activeDeactiveScoreboard(obj?.umpires, 'umpires.html');
+	activeDeactiveScoreboard(obj?.scorers, 'scorers.html');
+	activeDeactiveScoreboard(obj?.commentator, 'commentator.html');
+	activeDeactiveScoreboard(obj?.technicalComment, 'technicalComment.html');
 }
 
-function connectActive(json){
-	const obj = JSON.parse(json);
-	if(document.URL.includes("scoreboard.html")){
-		if(obj.main){
+function activeDeactiveScoreboard(data,url){
+	if (data !== undefined && document.URL.includes(url)) {
+		if (data) {
 			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
-			document.querySelector("div.scoreboard").classList.add("disabled");
-		}
-	}
-	if(document.URL.includes("pregame.html")){
-		if(obj.pre){
-			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
-			document.querySelector("div.scoreboard").classList.add("disabled");
-		}
-	}
-	if(document.URL.includes("postgame.html")){
-		if(obj.post){
-			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
-			document.querySelector("div.scoreboard").classList.add("disabled");
-		}
-	}
-	if(document.URL.includes("inning.html")){
-		if(obj.inning){
-			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
-			document.querySelector("div.scoreboard").classList.add("disabled");
-		}
-	}
-	if(document.URL.includes("umpires.html")){
-		if(obj.umpires){
-			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
-			document.querySelector("div.scoreboard").classList.add("disabled");
-		}
-	}
-	if(document.URL.includes("scorers.html")){
-		if(obj.scorers){
-			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
-			document.querySelector("div.scoreboard").classList.add("disabled");
-		}
-	}
-	if(document.URL.includes("commentator.html")){
-		if(obj.commentator){
-			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
-			document.querySelector("div.scoreboard").classList.add("disabled");
-		}
-	}
-	if(document.URL.includes("technicalComment.html")){
-		if(obj.technicalComment){
-			document.querySelector("div.scoreboard").classList.remove("disabled");
-		}else{
+		} else {
 			document.querySelector("div.scoreboard").classList.add("disabled");
 		}
 	}
@@ -377,83 +278,17 @@ function updateOffices(obj){
 	}else if(document.URL.includes("scorers.html")){
 		updateScorer(obj.scorers);
 	}else if(document.URL.includes("commentator.html")){
-		updateCommentators(obj.commentators);
+		updateCommentators(obj.commentators?.main);
 	}else if (document.URL.includes("technicalComment.html")){
-		updateTechnicalComment(obj.commentators);
+		updateCommentators(obj.commentators?.technical);
 	}
 }
 function updateUmpires(obj){
-	const HP = obj?.HP;
-	const B1 = obj?.B1;
-	const B2 = obj?.B2;
-	const B3 = obj?.B3;
-	if(HP !== undefined){
-		HP.surname || HP.surname=="" ? document.querySelector(".name#home > span#surname").innerHTML = HP.surname : null;
-		HP.name || HP.name=="" ? document.querySelector(".name#home > span#name").innerHTML = HP.name : null;
-		if(HP.active){
-			document.querySelector(".name#home").classList.remove("notActive");
-			document.querySelector(".role#home").classList.remove("notActive");
-			document.documentElement.style.setProperty("--h-row-hp", "var(--h-row)");
-			document.documentElement.style.setProperty("--d-HB", "var(--d-standard)");
-			document.documentElement.style.setProperty("--d-d-HB", "var(--d-standard)");
-		}else if (HP?.active === false){
-			document.documentElement.style.setProperty("--h-row-hp", "0");
-			document.querySelector(".name#home").classList.add("notActive");
-			document.querySelector(".role#home").classList.add("notActive");
-			document.documentElement.style.setProperty("--d-HB", "0s");
-			document.documentElement.style.setProperty("--d-d-HB", "0s");
-		}
-	}
-	if(B1 !== undefined){
-		B1.surname || B1.surname=="" ? document.querySelector(".name#B1 > span#surname").innerHTML = B1.surname : null;
-		B1.name || B1.name=="" ? document.querySelector(".name#B1 > span#name").innerHTML = B1.name : null;
-		if(B1.active){
-			document.querySelector(".name#B1").classList.remove("notActive");
-			document.querySelector(".role#B1").classList.remove("notActive");
-			document.documentElement.style.setProperty("--h-row-1B", "var(--h-row)");
-			document.documentElement.style.setProperty("--d-1B", "var(--d-standard)");
-			document.documentElement.style.setProperty("--d-d-1B", "var(--d-standard)");
-		}else if (B1?.active === false){
-			document.documentElement.style.setProperty("--h-row-1B", "0");
-			document.querySelector(".name#B1").classList.add("notActive");
-			document.querySelector(".role#B1").classList.add("notActive");
-			document.documentElement.style.setProperty("--d-1B", "0s");
-			document.documentElement.style.setProperty("--d-d-1B", "0s");
-		}
-	}
-	if(B2 !== undefined){
-		B2.surname || B2.surname=="" ? document.querySelector(".name#B2 > span#surname").innerHTML = B2.surname : null;
-		B2.name || B2.name=="" ? document.querySelector(".name#B2 > span#name").innerHTML = B2.name : null;
-		if(B2.active){
-			document.querySelector(".name#B2").classList.remove("notActive");
-			document.querySelector(".role#B2").classList.remove("notActive");
-			document.documentElement.style.setProperty("--h-row-2B", "var(--h-row)");
-			document.documentElement.style.setProperty("--d-2B", "var(--d-standard)");
-			document.documentElement.style.setProperty("--d-d-2B", "var(--d-standard)");
-		}else if (B2?.active === false){
-			document.documentElement.style.setProperty("--h-row-2B", "0");
-			document.querySelector(".name#B2").classList.add("notActive");
-			document.querySelector(".role#B2").classList.add("notActive");
-			document.documentElement.style.setProperty("--d-2B", "0s");
-			document.documentElement.style.setProperty("--d-d-2B", "0s");
-		}
-	}
-	if(B3 !== undefined){
-		B3.surname || B3.surname=="" ? document.querySelector(".name#B3 > span#surname").innerHTML = B3.surname : null;
-		B3.name || B3.name==""? document.querySelector(".name#B3 > span#name").innerHTML = B3.name : null;
-		if(B3.active){
-			document.querySelector(".name#B3").classList.remove("notActive");
-			document.querySelector(".role#B3").classList.remove("notActive");
-			document.documentElement.style.setProperty("--h-row-3B", "var(--h-row)");
-			document.documentElement.style.setProperty("--d-3B", "var(--d-standard)");
-		}else if (B3?.active === false){
-			document.querySelector(".name#B3").classList.add("notActive");
-			document.querySelector(".role#B3").classList.add("notActive");
-			document.documentElement.style.setProperty("--h-row-3B", "0");
-			document.documentElement.style.setProperty("--d-3B", "0s");
-			document.documentElement.style.setProperty("--d-d-3B", "0s");
-		}
-	}
+	const {HP, B1, B2, B3} = obj;
+	updateUmpire(HP, "HB", "home");
+	updateUmpire(B1, "1B", "B1");
+	updateUmpire(B2, "2B", "B2");
+	updateUmpire(B3, "3B", "B3");
 	document.querySelectorAll(".scoreboard > div").forEach((e) => {
 		e.classList.remove("last");
 	});
@@ -475,61 +310,31 @@ function updateUmpires(obj){
 		});
 	}
 }
+function updateUmpire(umpire, cssID, htmlID) {
+	if (umpire !== undefined) {
+		umpire.surname || umpire.surname == "" ? document.querySelector(".name#"+ htmlID +" > span#surname").innerHTML = umpire.surname : null;
+		umpire.name || umpire.name == "" ? document.querySelector(".name#" + htmlID + " > span#name").innerHTML = umpire.name : null;
+		if (umpire.active) {
+			document.querySelector(".name#"+htmlID).classList.remove("notActive");
+			document.querySelector(".role#"+htmlID).classList.remove("notActive");
+			document.documentElement.style.setProperty("--h-row-"+cssID, "var(--h-row)");
+			document.documentElement.style.setProperty("--d-"+cssID, "var(--d-standard)");
+			document.documentElement.style.setProperty("--d-d-"+cssID, "var(--d-standard)");
+		} else if (umpire?.active === false) {
+			document.documentElement.style.setProperty("--h-row-"+cssID, "0");
+			document.querySelector(".name#"+htmlID).classList.add("notActive");
+			document.querySelector(".role#"+htmlID).classList.add("notActive");
+			document.documentElement.style.setProperty("--d-"+cssID, "0s");
+			document.documentElement.style.setProperty("--d-d-"+cssID, "0s");
+		}
+	}
+}
+
 function updateScorer(obj){
-	const head = obj?.head;
-	const second = obj?.second;
-	const third = obj?.third;
-	console.log(obj);
-	if(head !== undefined){
-		head.surname || head.surname=="" ? document.querySelector(".scorer#head > span#surname").innerHTML = head.surname : null;
-		head.name || head.name=="" ? document.querySelector(".scorer#head > span#name").innerHTML = head.name : null;
-		if(head.active){
-			document.querySelector(".scorer#head").classList.remove("notActive");
-			document.querySelector(".scorer#head").classList.remove("notActive");
-			document.documentElement.style.setProperty("--h-row-head", "var(--h-row)");
-			document.documentElement.style.setProperty("--d-head", "var(--d-standard)");
-			document.documentElement.style.setProperty("--d-d-head", "var(--d-standard)");
-		}else if (head?.active === false){
-			document.documentElement.style.setProperty("--h-row-head", "0");
-			document.querySelector(".scorer#head").classList.add("notActive");
-			document.querySelector(".scorer#head").classList.add("notActive");
-			document.documentElement.style.setProperty("--d-head", "0s");
-			document.documentElement.style.setProperty("--d-d-head", "0s");
-		}
-	}
-	if(second !== undefined){
-		second.surname || second.surname=="" ? document.querySelector(".scorer#second > span#surname").innerHTML = second.surname : null;
-		second.name || second.name=="" ? document.querySelector(".scorer#second > span#name").innerHTML = second.name : null;
-		if(second.active){
-			document.querySelector(".scorer#second").classList.remove("notActive");
-			document.querySelector(".scorer#second").classList.remove("notActive");
-			document.documentElement.style.setProperty("--h-row-second", "var(--h-row)");
-			document.documentElement.style.setProperty("--d-second", "var(--d-standard)");
-			document.documentElement.style.setProperty("--d-d-second", "var(--d-standard)");
-		}else if (second?.active === false){
-			document.documentElement.style.setProperty("--h-row-second", "0");
-			document.querySelector(".scorer#second").classList.add("notActive");
-			document.querySelector(".scorer#second").classList.add("notActive");
-			document.documentElement.style.setProperty("--d-second", "0s");
-			document.documentElement.style.setProperty("--d-d-second", "0s");
-		}
-	}
-	if(third !== undefined){
-		third.surname || third.surname=="" ? document.querySelector(".scorer#third > span#surname").innerHTML = third.surname : null;
-		third.name || third.surname=="" ? document.querySelector(".scorer#third > span#name").innerHTML = third.name : null;
-		if(third.active){
-			document.querySelector(".scorer#third").classList.remove("notActive");
-			document.querySelector(".scorer#third").classList.remove("notActive");
-			document.documentElement.style.setProperty("--h-row-third", "var(--h-row)");
-			document.documentElement.style.setProperty("--d-third", "var(--d-standard)");
-		}else if (third?.active === false){
-			document.querySelector(".scorer#third").classList.add("notActive");
-			document.querySelector(".scorer#third").classList.add("notActive");
-			document.documentElement.style.setProperty("--h-row-third", "0");
-			document.documentElement.style.setProperty("--d-third", "0s");
-			document.documentElement.style.setProperty("--d-d-third", "0s");
-		}
-	}
+	const {head, second, third} = obj;
+	updateSingleScorer(head, "head");
+	updateSingleScorer(second, "second");
+	updateSingleScorer(third, "third");
 	document.querySelectorAll(".scorer").forEach((e) => {
 		e.classList.remove("last");
 	});
@@ -541,19 +346,30 @@ function updateScorer(obj){
 		document.querySelector("#head").classList.add("last");
 }
 
-function updateCommentators(obj){
-	const main = obj?.main;
-	if(main !== undefined){
-		main.surname || main.surname=="" ? document.querySelector(".commentator > span#surname").innerHTML = main.surname : null;
-		main.name || main.name=="" ? document.querySelector(".commentator > span#name").innerHTML = main.name : null;
+function updateSingleScorer(scorer,ID) {
+	if (scorer !== undefined) {
+		scorer.surname || scorer.surname == "" ? document.querySelector(".scorer#"+ID+" > span#surname").innerHTML = scorer.surname : null;
+		scorer.name || scorer.name == "" ? document.querySelector(".scorer#"+ID+" > span#name").innerHTML = scorer.name : null;
+		if (scorer.active) {
+			document.querySelector(".scorer#"+ID).classList.remove("notActive");
+			document.querySelector(".scorer#"+ID).classList.remove("notActive");
+			document.documentElement.style.setProperty("--h-row-"+ID, "var(--h-row)");
+			document.documentElement.style.setProperty("--d-"+ID, "var(--d-standard)");
+			document.documentElement.style.setProperty("--d-d-"+ID, "var(--d-standard)");
+		} else if (scorer?.active === false) {
+			document.documentElement.style.setProperty("--h-row-"+ID, "0");
+			document.querySelector(".scorer#"+ID).classList.add("notActive");
+			document.querySelector(".scorer#"+ID).classList.add("notActive");
+			document.documentElement.style.setProperty("--d-"+ID, "0s");
+			document.documentElement.style.setProperty("--d-d-"+ID, "0s");
+		}
 	}
 }
 
-function updateTechnicalComment(obj){
-	const technical = obj?.technical;
-	if(technical !== undefined){
-		technical.surname || technical.surname=="" ? document.querySelector(".commentator > span#surname").innerHTML = technical.surname : null;
-		technical.name || technical.name=="" ? document.querySelector(".commentator > span#name").innerHTML = technical.name : null;
+function updateCommentators(commentor){
+	if(commentor !== undefined){
+		commentor.surname || commentor.surname=="" ? document.querySelector(".commentator > span#surname").innerHTML = commentor.surname : null;
+		commentor.name || commentor.name=="" ? document.querySelector(".commentator > span#name").innerHTML = commentor.name : null;
 	}
 }
 
