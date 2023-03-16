@@ -31,10 +31,8 @@ function update(obj) {
 		updateTeams(obj.Teams.Away,"away");
 	// Score (for postgame)
 	if(document.URL.includes("postgame.html")){
-		if(obj?.Teams?.Home?.Score !== undefined)
-			try{document.querySelector("div.teamScore#home > span").innerHTML = obj.Teams.Home.Score;}catch(error){console.error(error)}
-		if(obj?.Teams?.Away?.Score !== undefined)
-			try{document.querySelector("div.teamScore#away  > span").innerHTML = obj.Teams.Away.Score;}catch(error){console.error(error)}
+		updateTeamScorePostgame(obj.Teams.Home.Score,"home");
+		updateTeamScorePostgame(obj.Teams.Away.Score,"away");
 	}
 	// Only for scoreboard
 	if (document.URL.includes("scoreboard.html")) {
@@ -45,6 +43,11 @@ function update(obj) {
 		// Total score
 		updateInning(obj);
 	}
+}
+
+function updateTeamScorePostgame(data, team) {
+	if (data !== undefined)
+		try { document.querySelector("div.teamScore#"+team+" > span").innerHTML = data; } catch (error) { console.error(error); }
 }
 
 function updateTeams(data,team) {
@@ -72,16 +75,13 @@ function updateInning(obj) {
 			extraInningScoreAway += obj.Int[i].A;
 			extraInningScoreHome += obj.Int[i].H;
 		} else {
-			if (i < obj.Inning) {
+			if (i < obj.Inning || obj.Int[i].H != 0){
 				activeDeactiveInning(i, 'home',true,obj.Int[i].H);
 				activeDeactiveInning(i, 'away',true,obj.Int[i].A);
 			} else if (obj.Arrow == 2) {
 				activeDeactiveInning(i, 'away',true,obj.Int[i].A);
 				if (obj.Int[i].H != 0)
 					activeDeactiveInning(i, 'home',true,obj.Int[i].H);
-			} else if (obj.Int[i].H != 0) {
-				activeDeactiveInning(i, 'away',true,obj.Int[i].A);
-				activeDeactiveInning(i, 'home',true,obj.Int[i].H);
 			} else if (obj.Int[i].A != 0) {
 				activeDeactiveInning(i, 'away',true,obj.Int[i].A);
 			}
@@ -156,13 +156,9 @@ function updateScoreboard(obj) {
 	try { document.querySelector("div.teamScore#home").innerHTML = obj.Teams.Home.Score; } catch (error) { console.error(error); }
 	try { document.querySelector("div.teamScore#away").innerHTML = obj.Teams.Away.Score; } catch (error) { console.error(error); }
 	// Ball Strike
-	if(obj?.Ball !== undefined)
-		try { document.querySelector("span#ball").innerHTML = obj.Ball; } catch (error) { console.error(error); }
-	if(obj?.Strike !== undefined)
-		try { document.querySelector("span#strike").innerHTML = obj.Strike; } catch (error) { console.error(error); }
-	// Outs
-	if(obj?.Out !== undefined)
-		try { document.querySelector("span#number").innerHTML = obj.Out; } catch (error) { console.error(error); }
+	updateNumber(obj?.Ball, "ball");
+	updateNumber(obj?.Strike, "strike");
+	updateNumber(obj?.Out, "number");
 	// Inning and Top/Bottom
 	try { document.querySelector(".inning > span#number").innerHTML = obj.Inning; } catch (error) { console.error(error); }
 	if(obj?.Arrow !== undefined){
@@ -174,27 +170,24 @@ function updateScoreboard(obj) {
 			try { document.querySelector(".inning > span#down").classList.remove("disabled"); } catch (error) { console.error(error); }
 		}
 	}
-	if(obj?.Bases[1] !== undefined){
-		if (obj.Bases[1]) {
-			try { document.querySelector("div#first").classList.remove("disabled"); } catch (error) { console.error(error); }
+	updateBase(obj?.Bases[1], "first");
+	updateBase(obj?.Bases[2], "second");
+	updateBase(obj?.Bases[3], "third");
+}
+
+function updateBase(base,id) {
+	if (base !== undefined) {
+		if (base) {
+			try { document.querySelector("div#"+id).classList.remove("disabled"); } catch (error) { console.error(error); }
 		} else {
-			try { document.querySelector("div#first").classList.add("disabled"); } catch (error) { console.error(error); }
+			try { document.querySelector("div#"+id).classList.add("disabled"); } catch (error) { console.error(error); }
 		}
 	}
-	if(obj?.Bases[2] !== undefined){
-		if (obj.Bases[2]) {
-			try { document.querySelector("div#second").classList.remove("disabled"); } catch (error) { console.error(error); }
-		} else {
-			try { document.querySelector("div#second").classList.add("disabled"); } catch (error) { console.error(error); }
-		}
-	}
-	if(obj?.Bases[3] !== undefined){
-		if (obj.Bases[3]) {
-			try { document.querySelector("div#third").classList.remove("disabled"); } catch (error) { console.error(error); }
-		} else {
-			try { document.querySelector("div#third").classList.add("disabled"); } catch (error) { console.error(error); }
-		}
-	}
+}
+
+function updateNumber(data, id) {
+	if(data !== undefined)
+		try { document.querySelector("span#" + id).innerHTML = data; } catch (error) { console.error(error); }
 }
 
 function updateSettings(obj){
