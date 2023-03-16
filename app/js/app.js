@@ -24,40 +24,11 @@ socket.on('connectActive', connectActive);
 socket.on('connectOffices', updateOffices);
 socket.on('updateOffices', updateOffices);
 
-function update(obj){
-	// Teams
-	// Away
-	if(obj?.Teams?.Away?.Name !== undefined)
-		try{document.querySelector("div.teamName#away > div > span").innerHTML = obj.Teams.Away.Name;}catch(error){console.error(error)}
-	if(obj?.Teams?.Away?.Color !== undefined){
-		document.documentElement.style.setProperty('--c-away', obj.Teams.Away.Color);
-		if(brightnessByColor(obj.Teams.Away.Color)<60)
-			document.documentElement.style.setProperty('--c-score-away', '#ffffff');
-		else
-			document.documentElement.style.setProperty('--c-score-away', '#000000');
-		try{
-		if(brightnessByColor(obj.Teams.Away.Color)>190)
-			document.querySelector("div.teamName#away > div#bg").classList.add("bg-dark");
-		else
-			document.querySelector("div.teamName#away > div#bg").classList.remove("bg-dark");
-		}catch(error){console.error(error)}
-	}
-	// Home
-	if(obj?.Teams?.Home?.Name !== undefined)
-		try{document.querySelector("div.teamName#home > div > span").innerHTML = obj.Teams.Home.Name;}catch(error){console.error(error)}
-	if(obj?.Teams?.Home?.Color !== undefined){
-		document.documentElement.style.setProperty('--c-home', obj.Teams.Home.Color);
-		if(brightnessByColor(obj.Teams.Home.Color)<60)
-			document.documentElement.style.setProperty('--c-score-home', '#ffffff');
-		else
-			document.documentElement.style.setProperty('--c-score-home', '#000000');
-		try{
-		if(brightnessByColor(obj.Teams.Home.Color)>190)
-			document.querySelector("div.teamName#home > div#bg").classList.add("bg-dark");
-		else
-			document.querySelector("div.teamName#home > div#bg").classList.remove("bg-dark");
-		}catch(error){console.error(error)}
-	}
+function update(obj) {
+	if(obj?.Teams?.Home)
+		updateTeams(obj.Teams.Home,"home");
+	if(obj?.Teams?.Away)
+		updateTeams(obj.Teams.Away,"away");
 	// Score (for postgame)
 	if(document.URL.includes("postgame.html")){
 		if(obj?.Teams?.Home?.Score !== undefined)
@@ -76,7 +47,50 @@ function update(obj){
 	}
 }
 
+function updateTeams(data,team) {
+	if (data?.Name !== undefined)
+		try { document.querySelector("div.teamName#" + team + " > div > span").innerHTML = data.Name; } catch (error) { console.error(error); }
+	if (data?.Color !== undefined) {
+		document.documentElement.style.setProperty('--c-' + team, data.Color);
+		if (brightnessByColor(data.Color) < 60)
+			document.documentElement.style.setProperty('--c-score-' + team, '#ffffff');
+		else
+			document.documentElement.style.setProperty('--c-score-' + team, '#000000');
+		try {
+			if (brightnessByColor(data.Color) > 190)
+				document.querySelector("div.teamName#" + team + " > div#bg").classList.add("bg-dark");
+			else
+				document.querySelector("div.teamName#" + team + " > div#bg").classList.remove("bg-dark");
+		} catch (error) { console.error(error); }
+	}
+}
+
 function updateInning(obj) {
+	let { extraInningScoreAway, extraInningScoreHome } = updateGeneralInning(obj);
+	for (let i = 1; i <= obj.Inning; i++) {
+		if (i > localStorage.getItem("MaxInning")) {
+			extraInningScoreAway += obj.Int[i].A;
+			extraInningScoreHome += obj.Int[i].H;
+		} else {
+			if (i < obj.Inning) {
+				activeDeactiveInning(i, 'home',true,obj.Int[i].H);
+				activeDeactiveInning(i, 'away',true,obj.Int[i].A);
+			} else if (obj.Arrow == 2) {
+				activeDeactiveInning(i, 'away',true,obj.Int[i].A);
+				if (obj.Int[i].H != 0)
+					activeDeactiveInning(i, 'home',true,obj.Int[i].H);
+			} else if (obj.Int[i].H != 0) {
+				activeDeactiveInning(i, 'away',true,obj.Int[i].A);
+				activeDeactiveInning(i, 'home',true,obj.Int[i].H);
+			} else if (obj.Int[i].A != 0) {
+				activeDeactiveInning(i, 'away',true,obj.Int[i].A);
+			}
+		}
+	}
+	maxInning(obj, extraInningScoreAway, extraInningScoreHome);
+}
+
+function updateGeneralInning(obj) {
 	if (obj?.Teams?.Away?.Score !== undefined)
 		try { document.querySelector(".score > #away").innerHTML = obj.Teams.Away.Score; } catch (error) { console.error(error); }
 	if (obj?.Teams?.Home?.Score !== undefined)
@@ -84,77 +98,31 @@ function updateInning(obj) {
 
 	let extraInningScoreAway = 0, extraInningScoreHome = 0;
 	for (let i = 1; i <= localStorage.getItem("MaxInning"); i++) {
-		try {
-			document.querySelector("#i" + i + " > #away").classList.add("disabledinng");
-			document.querySelector("#i" + i + " > #away").innerHTML = "";
-		} catch (error) {
+		activeDeactiveInning(i, 'home',false,0);
+		activeDeactiveInning(i, 'away',false,0);
+	}
+	return { extraInningScoreAway, extraInningScoreHome };
+}
+
+function activeDeactiveInning(i,team,active,score){
+	if(active){
+		try{
+			document.querySelector("#i" + i + " > #"+team).classList.remove("disabledinng");
+			document.querySelector("#i" + i + " > #"+team).innerHTML = score;
+		}catch(error){
 			console.error(error);
 		}
-		try {
-			document.querySelector("#i" + i + " > #home").classList.add("disabledinng");
-			document.querySelector("#i" + i + " > #home").innerHTML = "";
-		} catch (error) {
+	}else{
+		try{
+		document.querySelector("#i" + i + " > #"+team).classList.add("disabledinng");
+		document.querySelector("#i" + i + " > #"+team).innerHTML = "";
+		}catch(error){
 			console.error(error);
 		}
 	}
-	for (let i = 1; i <= obj.Inning; i++) {
-		if (i > localStorage.getItem("MaxInning")) {
-			extraInningScoreAway += obj.Int[i].A;
-			extraInningScoreHome += obj.Int[i].H;
-		} else {
-			if (i < obj.Inning) {
-				try {
-					document.querySelector("#i" + i + " > #home").classList.remove("disabledinng");
-					document.querySelector("#i" + i + " > #home").innerHTML = obj.Int[i].H;
-				} catch (error) {
-					console.error(error);
-				}
-				try {
-					document.querySelector("#i" + i + " > #away").classList.remove("disabledinng");
-					document.querySelector("#i" + i + " > #away").innerHTML = obj.Int[i].A;
-				} catch (error) {
-					console.error(error);
-				}
-			} else {
-				if (obj.Arrow == 2) {
-					try {
-						document.querySelector("#i" + i + " > #away").classList.remove("disabledinng");
-						document.querySelector("#i" + i + " > #away").innerHTML = obj.Int[i].A;
-					} catch (error) {
-						console.error(error);
-					}
-					if (obj.Int[i].H != 0) {
-						try {
-							document.querySelector("#i" + i + " > #home").classList.remove("disabledinng");
-							document.querySelector("#i" + i + " > #home").innerHTML = obj.Int[i].H;
-						} catch (error) {
-							console.error(error);
-						}
-					}
-				} else if (obj.Int[i].H != 0) {
-					try {
-						document.querySelector("#i" + i + " > #away").classList.remove("disabledinng");
-						document.querySelector("#i" + i + " > #away").innerHTML = obj.Int[i].A;
-					} catch (error) {
-						console.error(error);
-					}
-					try {
-						document.querySelector("#i" + i + " > #home").classList.remove("disabledinng");
-						document.querySelector("#i" + i + " > #home").innerHTML = obj.Int[i].H;
-					} catch (error) {
-						console.error(error);
-					}
-				} else if (obj.Int[i].A != 0) {
-					try {
-						document.querySelector("#i" + i + " > #away").classList.remove("disabledinng");
-						document.querySelector("#i" + i + " > #away").innerHTML = obj.Int[i].A;
-					} catch (error) {
-						console.error(error);
-					}
-				}
-			}
-		}
-	}
+}
+
+function maxInning(obj, extraInningScoreAway, extraInningScoreHome) {
 	if (obj.Inning > localStorage.getItem("MaxInning")) {
 		if (obj.Inning > parseInt(localStorage.getItem("MaxInning")) + 1 || obj.Arrow == 2 || extraInningScoreAway != 0 || extraInningScoreHome != 0) {
 			let inning = getComputedStyle(document.documentElement).getPropertyValue('--i-inning');
@@ -164,7 +132,7 @@ function updateInning(obj) {
 						<span class="number">EX</span>
 						<span class="score" id="away">${extraInningScoreAway}</span>
 						<span class="score" id="home">${extraInningScoreHome}</span>
-					</div>`; // waiting for @TheTecnoKing snippet
+					</div>`;
 				try { document.querySelector("div.container").innerHTML += extraInning; } catch (error) { console.error(error); }
 				document.documentElement.style.setProperty('--i-inning', parseInt(localStorage.getItem("MaxInning")) + 1);
 			}
