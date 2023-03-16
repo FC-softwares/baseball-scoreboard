@@ -9,19 +9,14 @@ if (id&&token) {
     xmlt.setRequestHeader('Content-Type', 'application/json');
     xmlt.send(`{"id":"${id}","token":"${token}"}`);
     xmlt.onload = function() {
-        if (xmlt.status === 200) {
-            const response = JSON.parse(xmlt.responseText);
-            if (response.ok === true) {
-                window.location.href = '/control-center.html';
-            }
-        } else {
-            // User is not in a valid session
-            // Redirect to login page
-            if (xmlt.status === 500) {
-                alert('Errore: ' + xmlt.status+"\n"+JSON.parse(xmlt.responseText));
-            }
+        if (xmlt.status !== 200) {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
+            return;
+        }
+        const response = JSON.parse(xmlt.responseText);
+        if (response.ok === true) {
+            window.location.href = '/control-center.html';
         }
     };
 }else{
@@ -80,10 +75,11 @@ function setError(code) {
 function errorReporting(error,status, username) {
     if(status === 500)
         document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>Server error: " + (error ? error : "Unknown");
-    else if((status === 400 || status === 401) && username === "guest")
-        document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>You are trying to login as a guest, <br>please check you are trying to access a demo product.";
-    else
-        document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.<br>Error: " + (error ? error : "Unknown");
+    else if(status === 400 || status === 401)
+        if(username === "guest")
+            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your internet connection and try again.<br>You are trying to login as a guest, <br>please check you are trying to access a demo product.";
+        else
+            document.getElementById("ErrorMsg").innerHTML = "Error during login:<br>Please check your username and password and try again.<br>Error: " + (error ? error : "Unknown");
     return setError();
 }
 
