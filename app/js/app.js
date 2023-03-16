@@ -1,17 +1,5 @@
 var socket = io("http://"+window.location.hostname+":"+location.port);
 
-const scoreboard = [
-	"pregame.html",
-	"scoreboard.html",
-	"postgame.html",
-	"inning.html"
-]
-const officials = [
-	"umpires.html",
-	"scorers.html",
-	"commentator.html",
-	"technicalComment.html"
-]
 socket.emit('getSettings');
 socket.emit('getActive');
 
@@ -21,8 +9,6 @@ socket.on('connectSettings', connectSettings);
 socket.on('connectData', update);
 socket.on('updateActive', updateActive);
 socket.on('connectActive', updateActive);
-socket.on('connectOffices', updateOffices);
-socket.on('updateOffices', updateOffices);
 
 function update(obj) {
 	if(obj?.Teams?.Home)
@@ -91,10 +77,8 @@ function updateInning(obj) {
 }
 
 function updateGeneralInning(obj) {
-	if (obj?.Teams?.Away?.Score !== undefined)
-		try { document.querySelector(".score > #away").innerHTML = obj.Teams.Away.Score; } catch (error) { console.error(error); }
-	if (obj?.Teams?.Home?.Score !== undefined)
-		try { document.querySelector(".score > #home").innerHTML = obj.Teams.Home.Score; } catch (error) { console.error(error); }
+	updateGeneralSccoreInning(obj?.Teams?.Home?.Score,"home");
+	updateGeneralSccoreInning(obj?.Teams?.Away?.Score,"away");
 
 	let extraInningScoreAway = 0, extraInningScoreHome = 0;
 	for (let i = 1; i <= localStorage.getItem("MaxInning"); i++) {
@@ -102,6 +86,11 @@ function updateGeneralInning(obj) {
 		activeDeactiveInning(i, 'away',false,0);
 	}
 	return { extraInningScoreAway, extraInningScoreHome };
+}
+
+function updateGeneralSccoreInning(Score,id) {
+	if (Score !== undefined)
+		try { document.querySelector(".score > #"+id).innerHTML = Score; } catch (error) { console.error(error); }
 }
 
 function activeDeactiveInning(i,team,active,score){
@@ -123,32 +112,23 @@ function activeDeactiveInning(i,team,active,score){
 }
 
 function maxInning(obj, extraInningScoreAway, extraInningScoreHome) {
-	if (obj.Inning > localStorage.getItem("MaxInning")) {
-		if (obj.Inning > parseInt(localStorage.getItem("MaxInning")) + 1 || obj.Arrow == 2 || extraInningScoreAway != 0 || extraInningScoreHome != 0) {
-			let inning = getComputedStyle(document.documentElement).getPropertyValue('--i-inning');
-			if (inning == localStorage.getItem("MaxInning")) {
-				document.documentElement.style.setProperty('--i-inning', inning);
-				let extraInning = `<div class="inning" id="iex">
-						<span class="number">EX</span>
-						<span class="score" id="away">${extraInningScoreAway}</span>
-						<span class="score" id="home">${extraInningScoreHome}</span>
-					</div>`;
-				try { document.querySelector("div.container").innerHTML += extraInning; } catch (error) { console.error(error); }
-				document.documentElement.style.setProperty('--i-inning', parseInt(localStorage.getItem("MaxInning")) + 1);
-			}
-			try { document.querySelector("#iex > #away").innerHTML = extraInningScoreAway; } catch (error) { console.error(error); }
-			try { document.querySelector("#iex > #home").innerHTML = extraInningScoreHome; } catch (error) { console.error(error); }
-		} else {
-			if (getComputedStyle(document.documentElement).getPropertyValue('--i-inning') != localStorage.getItem("MaxInning")) {
-				document.documentElement.style.setProperty('--i-inning', localStorage.getItem("MaxInning"));
-				try { document.querySelector("div.container > #iex.inning").remove(); } catch (error) { console.error(error); }
-			}
+	if (obj.Inning > parseInt(localStorage.getItem("MaxInning")) + 1 || obj.Arrow == 2 || extraInningScoreAway != 0 || extraInningScoreHome != 0) {
+		let inning = getComputedStyle(document.documentElement).getPropertyValue('--i-inning');
+		if (inning == parseInt(localStorage.getItem("MaxInning"))) {
+			document.documentElement.style.setProperty('--i-inning', inning);
+			let extraInning = `<div class="inning" id="iex">
+					<span class="number">EX</span>
+					<span class="score" id="away">${extraInningScoreAway}</span>
+					<span class="score" id="home">${extraInningScoreHome}</span>
+				</div>`;
+			try { document.querySelector("div.container").innerHTML += extraInning; } catch (error) { console.error(error); }
+			document.documentElement.style.setProperty('--i-inning', parseInt(localStorage.getItem("MaxInning")) + 1);
 		}
-	} else {
-		if (getComputedStyle(document.documentElement).getPropertyValue('--i-inning') != localStorage.getItem("MaxInning")) {
-			document.documentElement.style.setProperty('--i-inning', localStorage.getItem("MaxInning"));
-			try { document.querySelector("div.container > #iex.inning").remove(); } catch (error) { console.error(error); }
-		}
+		try { document.querySelector("#iex > #away").innerHTML = extraInningScoreAway; } catch (error) { console.error(error); }
+		try { document.querySelector("#iex > #home").innerHTML = extraInningScoreHome; } catch (error) { console.error(error); }
+	} else if (getComputedStyle(document.documentElement).getPropertyValue('--i-inning') != localStorage.getItem("MaxInning")) {
+		document.documentElement.style.setProperty('--i-inning', localStorage.getItem("MaxInning"));
+		try { document.querySelector("div.container > #iex.inning").remove(); } catch (error) { console.error(error); }
 	}
 }
 
@@ -195,10 +175,6 @@ function updateSettings(obj){
 	const oldMaxInning = parseInt(localStorage.getItem("MaxInning"));
 	localStorage.setItem("MaxInning",obj.MaxInning);
 	localStorage.setItem("BlackenLastInning",obj.BlackenLastInning);
-
-	document.documentElement.style.setProperty('--h-scale', obj.Resolution+"px");
-	document.documentElement.style.setProperty('--w-scale', obj.Resolution*1.78+"px");
-
 	document.documentElement.style.setProperty('--i-inning', obj.MaxInning);
 	// update the container of the innings
 	if(document.URL.includes("inning.html")){
@@ -224,8 +200,6 @@ function connectSettings(obj) {
 	// Settings
 	localStorage.setItem("MaxInning",obj.MaxInning);
 	localStorage.setItem("BlackenLastInning",obj.BlackenLastInning);
-	document.documentElement.style.setProperty('--h-scale', obj.Resolution+"px");
-	document.documentElement.style.setProperty('--w-scale', obj.Resolution*1.78+"px");
 	// Set the container with the innings
 	if(document.URL.includes("inning.html")){
 		document.documentElement.style.setProperty("--i-inning",obj.MaxInning);
@@ -245,10 +219,7 @@ function connectSettings(obj) {
 				</div>`;
 		document.querySelector("div.container").innerHTML = container;
 	}
-	if(scoreboard.includes(document.URL.split("/").pop()))
-		socket.emit("getData");
-	else if (officials.includes(document.URL.split("/").pop()))
-		socket.emit("getOffices");
+	socket.emit("getData");
 }
 function updateActive(json){
 	const obj = JSON.parse(json);
@@ -256,12 +227,7 @@ function updateActive(json){
 	activeDeactiveScoreboard(obj?.pre, 'pregame.html');
 	activeDeactiveScoreboard(obj?.post, 'postgame.html');
 	activeDeactiveScoreboard(obj?.inning, 'inning.html');
-	activeDeactiveScoreboard(obj?.umpires, 'umpires.html');
-	activeDeactiveScoreboard(obj?.scorers, 'scorers.html');
-	activeDeactiveScoreboard(obj?.commentator, 'commentator.html');
-	activeDeactiveScoreboard(obj?.technicalComment, 'technicalComment.html');
 }
-
 function activeDeactiveScoreboard(data,url){
 	if (data !== undefined && document.URL.includes(url)) {
 		if (data) {
@@ -272,111 +238,6 @@ function activeDeactiveScoreboard(data,url){
 	}
 }
 
-function updateOffices(obj){
-	if(document.URL.includes("umpires.html")){
-		updateUmpires(obj.umpires);
-	}else if(document.URL.includes("scorers.html")){
-		updateScorer(obj.scorers);
-	}else if(document.URL.includes("commentator.html")){
-		updateCommentators(obj.commentators?.main);
-	}else if (document.URL.includes("technicalComment.html")){
-		updateCommentators(obj.commentators?.technical);
-	}
-}
-function updateUmpires(obj){
-	const {HP, B1, B2, B3} = obj;
-	updateUmpire(HP, "HB", "home");
-	updateUmpire(B1, "1B", "B1");
-	updateUmpire(B2, "2B", "B2");
-	updateUmpire(B3, "3B", "B3");
-	document.querySelectorAll(".scoreboard > div").forEach((e) => {
-		e.classList.remove("last");
-	});
-	if(document.documentElement.style.getPropertyValue('--h-row-3B') != "0"){
-		document.querySelectorAll("#B3").forEach((e) => {
-			e.classList.add("last")
-		});
-	}else if(document.documentElement.style.getPropertyValue('--h-row-2B') != "0"){
-		document.querySelectorAll("#B2").forEach((e) => {
-			e.classList.add("last")
-		});
-	}else if(document.documentElement.style.getPropertyValue('--h-row-1B') != "0"){
-		document.querySelectorAll("#B1").forEach((e) => {
-			e.classList.add("last")
-		});
-	}else if(document.documentElement.style.getPropertyValue('--h-row-hp') != "0"){
-		document.querySelectorAll("#home").forEach((e) => {
-			e.classList.add("last")
-		});
-	}
-}
-function updateUmpire(umpire, cssID, htmlID) {
-	if (umpire !== undefined) {
-		umpire.surname || umpire.surname == "" ? document.querySelector(".name#"+ htmlID +" > span#surname").innerHTML = umpire.surname : null;
-		umpire.name || umpire.name == "" ? document.querySelector(".name#" + htmlID + " > span#name").innerHTML = umpire.name : null;
-		if (umpire.active) {
-			document.querySelector(".name#"+htmlID).classList.remove("notActive");
-			document.querySelector(".role#"+htmlID).classList.remove("notActive");
-			document.documentElement.style.setProperty("--h-row-"+cssID, "var(--h-row)");
-			document.documentElement.style.setProperty("--d-"+cssID, "var(--d-standard)");
-			document.documentElement.style.setProperty("--d-d-"+cssID, "var(--d-standard)");
-		} else if (umpire?.active === false) {
-			document.documentElement.style.setProperty("--h-row-"+cssID, "0");
-			document.querySelector(".name#"+htmlID).classList.add("notActive");
-			document.querySelector(".role#"+htmlID).classList.add("notActive");
-			document.documentElement.style.setProperty("--d-"+cssID, "0s");
-			document.documentElement.style.setProperty("--d-d-"+cssID, "0s");
-		}
-	}
-}
-
-function updateScorer(obj){
-	const {head, second, third} = obj;
-	updateSingleScorer(head, "head");
-	updateSingleScorer(second, "second");
-	updateSingleScorer(third, "third");
-	document.querySelectorAll(".scorer").forEach((e) => {
-		e.classList.remove("last");
-	});
-	if(document.documentElement.style.getPropertyValue("--h-row-third") != "0")
-		document.querySelector("#third").classList.add("last");
-	else if(document.documentElement.style.getPropertyValue("--h-row-second") != "0")
-		document.querySelector("#second").classList.add("last");
-	else if(document.documentElement.style.getPropertyValue("--h-row-head") != "0")
-		document.querySelector("#head").classList.add("last");
-}
-
-function updateSingleScorer(scorer,ID) {
-	if (scorer !== undefined) {
-		scorer.surname || scorer.surname == "" ? document.querySelector(".scorer#"+ID+" > span#surname").innerHTML = scorer.surname : null;
-		scorer.name || scorer.name == "" ? document.querySelector(".scorer#"+ID+" > span#name").innerHTML = scorer.name : null;
-		if (scorer.active) {
-			document.querySelector(".scorer#"+ID).classList.remove("notActive");
-			document.querySelector(".scorer#"+ID).classList.remove("notActive");
-			document.documentElement.style.setProperty("--h-row-"+ID, "var(--h-row)");
-			document.documentElement.style.setProperty("--d-"+ID, "var(--d-standard)");
-			document.documentElement.style.setProperty("--d-d-"+ID, "var(--d-standard)");
-		} else if (scorer?.active === false) {
-			document.documentElement.style.setProperty("--h-row-"+ID, "0");
-			document.querySelector(".scorer#"+ID).classList.add("notActive");
-			document.querySelector(".scorer#"+ID).classList.add("notActive");
-			document.documentElement.style.setProperty("--d-"+ID, "0s");
-			document.documentElement.style.setProperty("--d-d-"+ID, "0s");
-		}
-	}
-}
-
-function updateCommentators(commentor){
-	if(commentor !== undefined){
-		commentor.surname || commentor.surname=="" ? document.querySelector(".commentator > span#surname").innerHTML = commentor.surname : null;
-		commentor.name || commentor.name=="" ? document.querySelector(".commentator > span#name").innerHTML = commentor.name : null;
-	}
-}
-
-/**
- * @param {String} color
- * @returns Color Brightness from 0 to 255
- */
 function brightnessByColor (color) {
 	var color = "" + color, isHEX = color.indexOf("#") == 0, isRGB = color.indexOf("rgb") == 0;
 	if (isHEX) {
