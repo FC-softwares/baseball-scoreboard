@@ -76,23 +76,17 @@ function getCurrentUser (){
 	xmlt.setRequestHeader('Content-Type', 'application/json');
 	xmlt.send(`{"id":"${user}","token":"${token}"}`);
 	xmlt.onload = function() {
-		if (xmlt.status === 200) {
-			const response = JSON.parse(xmlt.responseText);
-			if (response.ok === true) {
-				if(response.user.isOwner==true){
-					printUsers(response.user);
-					document.getElementById("ProductOwner").value = response.user.name+" "+response.user.surname;
-					document.getElementById("ProductOwnerEmail").value = response.user.email;
-					document.getElementById("ProductOwnerTeam").value = response.user.team;
-				}else{
-					window.location.href = '/control-center.html';
-				}
-			}
-		}else{
-			if (this.readyState === 4) {
-				return false;
-			}
-		}
+		if(xmlt.status !== 200 && this.readyState !== 4)
+			return false;
+		const response = JSON.parse(xmlt.responseText);
+		if (response.ok !== true)
+			return false;
+		if(response.user.isOwner !== true)
+			return window.location.href = '/control-center.html';
+		printUsers(response.user);
+		document.getElementById("ProductOwner").value = response.user.name+" "+response.user.surname;
+		document.getElementById("ProductOwnerEmail").value = response.user.email;
+		document.getElementById("ProductOwnerTeam").value = response.user.team;
 	}
 }
 
@@ -125,15 +119,13 @@ function removeUser(id){
 	xmlt.send(`{"id":"${user}","token":"${token}","user_id":"${id}"}`);
 	xmlt.onload = function() {
 		const response = JSON.parse(xmlt.responseText);
-		if (xmlt.status === 200) {
-			if (response.ok === true) {
-				document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User deleted successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-				getCurrentUser();
-			}
-		}else{
-			const error = response.error || response.message || 'Unknown error';
-			document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-		}
+		const error = response.error || response.message || 'Unknown error';
+		if (xmlt.status !== 200 && this.readyState !== 4)
+			return document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+		if (!response.ok)
+			return document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+		document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User deleted successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+		getCurrentUser();
 	};
 }
 
@@ -145,14 +137,12 @@ function addUser(){
 	xmlt.send(`{"id":"${user}","token":"${token}","email":"${email}"}`);
 	xmlt.onload = function() {
 		const response = JSON.parse(xmlt.responseText);
-		if (xmlt.status === 200) {
-			if (response.ok === true) {
-				document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User added successfully.  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-				document.getElementById('UserAddEmail').value = '';
-			}
-		}else{
-			const error = response.error || response.message || 'Unknown error';
-			document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-		}
+		const error = response.error || response.message || 'Unknown error';
+		if (xmlt.status !== 200 && this.readyState !== 4)
+			return document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+		if (!response.ok)
+			return document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+		document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User added successfully.  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+		document.getElementById('UserAddEmail').value = '';
 	};
 }
