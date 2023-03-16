@@ -24,6 +24,7 @@
     "conventionalCommits.scopes": [
         "staff",
         "scoreUpdating",
-        "overlayStyles"
+        "overlayStyles",
+        "maintainability"
     ]
 }

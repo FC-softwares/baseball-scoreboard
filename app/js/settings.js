@@ -102,20 +102,20 @@ function printUsers(LoggedUser){
 	xmlt.setRequestHeader('Content-Type', 'application/json');
 	xmlt.send(`{"id":"${user}","token":"${token}"}`);
 	xmlt.onload = function() {
-		if (xmlt.status === 200) {
-			const response = JSON.parse(xmlt.responseText);
-			if (response.ok === true) {
-				var UsersHtml = "";
-				for (let i = 0; i < response.users.length; i++) {
-					if(response.users[i].email == LoggedUser.email){
-						UsersHtml += `<li class="list-group-item d-flex"><div class="me-3"><span>${response.users[i].name} ${response.users[i].surname}</span><br><a href="mailto:${response.users[i].email}" class="text-break">${response.users[i].email}</a></div></li>`;
-					}else{
-						UsersHtml += `<li class="list-group-item d-flex"><div class="me-3"><span>${response.users[i].name} ${response.users[i].surname}</span><br><a href="mailto:${response.users[i].email}" class="text-break">${response.users[i].email}</a></div><button class="btn btn-outline-danger ms-auto my-auto p-0 flex-shrink-0" style="width: 2rem; height: 2rem;" onclick="removeUser('${response.users[i].id}')"><i class="bi bi-x-lg"></i></button></li>`;
-					}
-				}
-				document.getElementById('AuthUsersUl').innerHTML = UsersHtml;
+		if (xmlt.status !== 200 && this.readyState !== 4)
+			return false;
+		const response = JSON.parse(xmlt.responseText);
+		if (response.ok !== true)
+			return false;
+		var UsersHtml = "";
+		for (let i = 0; i < response.users.length; i++) {
+			if(response.users[i].email == LoggedUser.email){
+				UsersHtml += `<li class="list-group-item d-flex"><div class="me-3"><span>${response.users[i].name} ${response.users[i].surname}</span><br><a href="mailto:${response.users[i].email}" class="text-break">${response.users[i].email}</a></div></li>`;
+			}else{
+				UsersHtml += `<li class="list-group-item d-flex"><div class="me-3"><span>${response.users[i].name} ${response.users[i].surname}</span><br><a href="mailto:${response.users[i].email}" class="text-break">${response.users[i].email}</a></div><button class="btn btn-outline-danger ms-auto my-auto p-0 flex-shrink-0" style="width: 2rem; height: 2rem;" onclick="removeUser('${response.users[i].id}')"><i class="bi bi-x-lg"></i></button></li>`;
 			}
 		}
+		document.getElementById('AuthUsersUl').innerHTML = UsersHtml;
 	}
 }
 function removeUser(id){
