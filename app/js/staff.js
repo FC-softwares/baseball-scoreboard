@@ -29,29 +29,31 @@ function checkAndDeCheck(id){
     }
 }
 function update(obj){
-    const umpires = obj.umpires;
-    if(obj.umpires !== undefined){
-        Object.keys(umpires).forEach(function(key) {
-            updateOfficer(key.toLowerCase(), umpires[key]);
-        });
-    }
-    const scorers = obj.scorers;
-    if(obj.scorers !== undefined){
-        Object.keys(scorers).forEach(function(key) {
-            updateOfficer(key.toLowerCase(), scorers[key]);
-        });
-    }
+    const {umpires, scorers} = obj;
+    checkObj(umpires);
+    checkObj(scorers);
     const commentators = obj.commentators;
     if(obj.commentators !== undefined){
         Object.keys(commentators).forEach(function(key) {
             const key2 = key=="main"?"Main":key=="technical"?"TC":null;
-            if(commentators[key]?.surname !== undefined)
-                document.getElementById(key2+"-surname").value = commentators[key].surname;
-            if(commentators[key]?.name !== undefined)
-                document.getElementById(key2+"-name").value = commentators[key].name;
+            updateSingleParameter(commentators[key].surname, "surname", key2);
+            updateSingleParameter(commentators[key].name, "name", key2);
         });
     }
 }
+function checkObj(umpires) {
+    if (umpires !== undefined) {
+        Object.keys(umpires).forEach(function (key) {
+            updateOfficer(key.toLowerCase(), umpires[key]);
+        });
+    }
+}
+
+function updateSingleParameter(value,parameter, key) {
+    if (value !== undefined && document.getElementById(key + "-" + parameter).disabled === false)
+        document.getElementById(key + "-" + parameter).value = value
+}
+
 function updateOfficer(key, officer){
     if (officer?.active) {
         document.getElementById(key).checked = true;
@@ -64,10 +66,8 @@ function updateOfficer(key, officer){
         document.getElementById(key + "-name").disabled = true;
         document.getElementById(key + "-name").value = "";
     }
-    if (officer?.surname !== undefined && document.getElementById(key + "-surname").disabled === false)
-        document.getElementById(key + "-surname").value = officer.surname;
-    if (officer?.name !== undefined && document.getElementById(key + "-name").disabled === false)
-        document.getElementById(key + "-name").value = officer.name;
+    updateSingleParameter(officer?.surname, "surname", key);
+    updateSingleParameter(officer?.name, "name", key);
 }
 
 function sendUmpires(){
