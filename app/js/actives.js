@@ -12,24 +12,20 @@ function updateActive(data){
 	});
 }
 function updateButton(value, id) {
-    if (value == true) {
-        try {
+    try{
+        if (value) {
             document.getElementById(id + "On").classList.remove("btn-outline-success");
             document.getElementById(id + "On").classList.add("btn-success");
             document.getElementById(id + "Off").classList.remove("btn-danger");
             document.getElementById(id + "Off").classList.add("btn-outline-danger");
-        } catch (e) {
-            console.log(e);
-        }
-    } else {
-        try {
+        } else {
             document.getElementById(id + "On").classList.remove("btn-success");
             document.getElementById(id + "On").classList.add("btn-outline-success");
             document.getElementById(id + "Off").classList.remove("btn-outline-danger");
             document.getElementById(id + "Off").classList.add("btn-danger");
-        } catch (e) {
-            console.log(e);
         }
+    }catch(err){
+        console.log(err);
     }
 }
 
