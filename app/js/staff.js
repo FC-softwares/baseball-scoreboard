@@ -32,43 +32,13 @@ function update(obj){
     const umpires = obj.umpires;
     if(obj.umpires !== undefined){
         Object.keys(umpires).forEach(function(key) {
-            const key2 = key.toLowerCase();
-            if(umpires[key]?.active){
-                document.getElementById(key2).checked = true;
-                document.getElementById(key2+"-surname").disabled = false;
-                if(umpires[key]?.surname !== undefined)
-                    document.getElementById(key2+"-surname").value = umpires[key].surname;
-                document.getElementById(key2+"-name").disabled = false;
-                if(umpires[key]?.name !== undefined)
-                    document.getElementById(key2+"-name").value = umpires[key].name;
-            }else if (umpires[key]?.active === false){
-                document.getElementById(key2).checked = false;
-                document.getElementById(key2+"-surname").disabled = true;
-                document.getElementById(key2+"-surname").value = "";
-                document.getElementById(key2+"-name").disabled = true;
-                document.getElementById(key2+"-name").value = "";
-            }
+            updateOfficer(key.toLowerCase(), umpires[key]);
         });
     }
     const scorers = obj.scorers;
     if(obj.scorers !== undefined){
         Object.keys(scorers).forEach(function(key) {
-            const key2 = key.toLowerCase();
-            if(scorers[key]?.active){
-                document.getElementById(key2).checked = true;
-                document.getElementById(key2+"-surname").disabled = false;
-                if(scorers[key]?.surname !== undefined)
-                    document.getElementById(key2+"-surname").value = scorers[key].surname;
-                document.getElementById(key2+"-name").disabled = false;
-                if(scorers[key]?.name !== undefined)
-                    document.getElementById(key2+"-name").value = scorers[key].name;
-            }else if (scorers[key]?.active === false){
-                document.getElementById(key2).checked = false;
-                document.getElementById(key2+"-surname").disabled = true;
-                document.getElementById(key2+"-surname").value = "";
-                document.getElementById(key2+"-name").disabled = true;
-                document.getElementById(key2+"-name").value = "";
-            }
+            updateOfficer(key.toLowerCase(), scorers[key]);
         });
     }
     const commentators = obj.commentators;
@@ -82,6 +52,24 @@ function update(obj){
         });
     }
 }
+function updateOfficer(key, officer){
+    if (officer?.active) {
+        document.getElementById(key).checked = true;
+        document.getElementById(key + "-surname").disabled = false;
+        document.getElementById(key + "-name").disabled = false;
+    } else if (officer?.active === false) {
+        document.getElementById(key).checked = false;
+        document.getElementById(key + "-surname").disabled = true;
+        document.getElementById(key + "-surname").value = "";
+        document.getElementById(key + "-name").disabled = true;
+        document.getElementById(key + "-name").value = "";
+    }
+    if (officer?.surname !== undefined && document.getElementById(key + "-surname").disabled === false)
+        document.getElementById(key + "-surname").value = officer.surname;
+    if (officer?.name !== undefined && document.getElementById(key + "-name").disabled === false)
+        document.getElementById(key + "-name").value = officer.name;
+}
+
 function sendUmpires(){
     let umpires = {};
     let umpire = {};
