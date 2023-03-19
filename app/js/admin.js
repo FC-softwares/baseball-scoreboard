@@ -11,90 +11,67 @@ socket.on('connectData', update);
 socket.on('update', update);
 
 function update(data){
-	if(data?.Teams?.Away?.Name !== undefined)
-		document.getElementById('NameAway').value = data.Teams.Away.Name;
-	if(data?.Teams?.Home?.Name !== undefined)
-		document.getElementById('NameHome').value = data.Teams.Home.Name;
-	if(data?.Teams?.Away?.Color !== undefined)
-		document.getElementById('ColorAway').value = data.Teams.Away.Color;
-	if(data?.Teams?.Home?.Color !== undefined)
-		document.getElementById('ColorHome').value = data.Teams.Home.Color;
-	if(data?.Ball !== undefined)
-		document.getElementById('BallView').value = data.Ball;
-	if(data?.Strike !== undefined)
-		document.getElementById('StrikeView').value = data.Strike;
-	if(data?.Out !== undefined)
-		document.getElementById('OutView').value = data.Out;
-	if(data?.Inning !== undefined)
-		document.getElementById('InningView').value = data.Inning;
-	if(data?.Teams?.Home?.Score !== undefined)
-		document.getElementById('ScoreHView').value = data.Teams.Home.Score;
-	if(data?.Teams?.Away?.Score !== undefined)
-		document.getElementById('ScoreAView').value = data.Teams.Away.Score;
+	setNumberView(data?.Teams?.Away?.Name, "NameAway");
+	setNumberView(data?.Teams?.Home?.Name, "NameHome");
+	setNumberView(data?.Teams?.Away?.Color, "ColorAway");
+	setNumberView(data?.Teams?.Home?.Color, "ColorHome");
+	setNumberView(data?.Teams?.Home?.Score, "ScoreH");
+	setNumberView(data?.Teams?.Away?.Score, "ScoreA");
+	setNumberView(data?.Ball, "Ball");
+	setNumberView(data?.Strike, "Strike");
+	setNumberView(data?.Out, "Out");
+	setNumberView(data?.Inning, "Inning");
 	if(data?.Arrow !== undefined){
 		if (data.Arrow == 1) {
-			document.getElementById("TopView").classList.remove("btn-outline-primary");
-			document.getElementById("TopView").classList.add("btn-primary");
-			document.getElementById("BotView").classList.remove("btn-primary");
-			document.getElementById("BotView").classList.add("btn-outline-primary");
+			setArrowPart("Top",true);
+			setArrowPart("Bot",false);
 		}else{
-			document.getElementById("TopView").classList.remove("btn-primary");
-			document.getElementById("TopView").classList.add("btn-outline-primary");
-			document.getElementById("BotView").classList.remove("btn-outline-primary");
-			document.getElementById("BotView").classList.add("btn-primary");
+			setArrowPart("Top",false);
+			setArrowPart("Bot",true);
 		}
 	}
-	if(data?.Bases[1] !== undefined){
-		if(data.Bases[1]==true){
-			document.getElementById("Base1View").classList.remove("btn-outline-primary");
-			document.getElementById("Base1View").classList.add("btn-primary");
-		}else{
-			document.getElementById("Base1View").classList.remove("btn-primary");
-			document.getElementById("Base1View").classList.add("btn-outline-primary");
-		}
+	if(data?.Bases !== undefined){
+		setViewBase(data?.Bases[1],"Base1View");
+		setViewBase(data?.Bases[2],"Base2View");
+		setViewBase(data?.Bases[3],"Base3View");
 	}
-	if(data?.Bases[2] !== undefined){
-		if(data.Bases[2]==true){
-			document.getElementById("Base2View").classList.remove("btn-outline-primary");
-			document.getElementById("Base2View").classList.add("btn-primary");
-		}else{
-			document.getElementById("Base2View").classList.remove("btn-primary");
-			document.getElementById("Base2View").classList.add("btn-outline-primary");
-		}
+}
+function setArrowPart(part,active) {
+	if (active){
+		document.getElementById(part+"View").classList.remove("btn-outline-primary");
+		document.getElementById(part+"View").classList.add("btn-primary");
+	}else {
+		document.getElementById(part+"View").classList.remove("btn-primary");
+		document.getElementById(part+"View").classList.add("btn-outline-primary");
 	}
-	if(data?.Bases[3] !== undefined){
-		if(data.Bases[3]==true){
-			document.getElementById("Base3View").classList.remove("btn-outline-primary");
-			document.getElementById("Base3View").classList.add("btn-primary");
-		}else{
-			document.getElementById("Base3View").classList.remove("btn-primary");
-			document.getElementById("Base3View").classList.add("btn-outline-primary");
+}
+
+function setNumberView(number,id) {
+	try{
+		if (number !== undefined)
+			document.getElementById(id+'View').value = number;
+	}catch(err){
+		console.log(err, id);
+	}
+}
+
+function setViewBase(base,id) {
+	if (base !== undefined) {
+		if (base == true) {
+			document.getElementById(id).classList.remove("btn-outline-primary");
+			document.getElementById(id).classList.add("btn-primary");
+		} else {
+			document.getElementById(id).classList.remove("btn-primary");
+			document.getElementById(id).classList.add("btn-outline-primary");
 		}
 	}
 }
+
 //To add for all the variables
-function Ball(opr){
+function updateNumber(opr, id){
 	if(opr!="+"&&opr!="-"&&opr!="0")
 		return null;
-	socket.emit('update_data', `{"Ball":"${opr}"}`);
-	return true;
-}
-function Strike(opr){
-	if(opr!="+"&&opr!="-"&&opr!="0")
-		return null;
-	socket.emit('update_data', `{"Strike":"${opr}"}`);
-	return true;
-}
-function Out(opr){
-	if(opr!="+"&&opr!="-"&&opr!="0")
-		return null;
-	socket.emit('update_data', `{"Out":"${opr}"}`);
-	return true;
-}
-function Inning(opr){
-	if(opr!="+"&&opr!="-"&&opr!="0")
-		return null;
-	socket.emit('update_data', `{"Inning":"${opr}"}`);
+	socket.emit('update_data', `{"${id}":"${opr}"}`);
 	return true;
 }
 function TopBot(opr){
@@ -110,18 +87,6 @@ function Base(base){
 	if(base!="1"&&base!="2"&&base!="3")
 		return null;
 	socket.emit('update_data', `{"${base}":"toggle"}`);
-	return true;
-}
-function ScoreHome(opr){
-	if(opr!="+"&&opr!="-"&&opr!="0")
-		return null;
-	socket.emit('update_data', `{"Teams.Home.Score":"${opr}"}`);
-	return true;
-}
-function ScoreAway(opr){
-	if(opr!="+"&&opr!="-"&&opr!="0")
-		return null;
-	socket.emit('update_data', `{"Teams.Away.Score":"${opr}"}`);
 	return true;
 }
 function Update_Data(){

@@ -112,9 +112,9 @@
                                         <div class="d-flex flex-sm-column gap-2 gap-sm-0" style="width: min-content;">
                                             <input id="BallView" class="form-control text-center mb-0 mb-sm-2" style="min-width: 3.5rem;" type="text" value="#" readonly>
                                             <div class="btn-group" role="group" aria-label="Controls">
-                                                <button type="button" class="btn btn-outline-primary" onclick="Ball('-')"><i class="bi bi-dash-lg"></i></button>
-                                                <button type="button" class="btn btn-outline-danger z-3" onclick="Ball('0')"><i class="bi bi-arrow-repeat"></i></button>
-                                                <button type="button" class="btn btn-outline-primary" onclick="Ball('+')"><i class="bi bi-plus-lg"></i></button>
+                                                <button type="button" class="btn btn-outline-primary" onclick="updateNumber('-','Ball')"><i class="bi bi-dash-lg"></i></button>
+                                                <button type="button" class="btn btn-outline-danger z-3" onclick="updateNumber('0','Ball')"><i class="bi bi-arrow-repeat"></i></button>
+                                                <button type="button" class="btn btn-outline-primary" onclick="updateNumber('+','Ball')"><i class="bi bi-plus-lg"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -127,9 +127,9 @@
                                         <div class="d-flex flex-sm-column gap-2 gap-sm-0" style="width: min-content;">
                                             <input id="StrikeView" class="form-control text-center mb-0 mb-sm-2" style="min-width: 3.5rem;" type="text" value="#" readonly>
                                             <div class="btn-group" role="group" aria-label="Controls">
-                                                <button type="button" class="btn btn-outline-primary" onclick="Strike('-')"><i class="bi bi-dash-lg"></i></button>
-                                                <button type="button" class="btn btn-outline-danger z-3" onclick="Strike('0')"><i class="bi bi-arrow-repeat"></i></button>
-                                                <button type="button" class="btn btn-outline-primary" onclick="Strike('+')"><i class="bi bi-plus-lg"></i></button>
+                                                <button type="button" class="btn btn-outline-primary" onclick="updateNumber('-','Strike')"><i class="bi bi-dash-lg"></i></button>
+                                                <button type="button" class="btn btn-outline-danger z-3" onclick="updateNumber('0','Strike')"><i class="bi bi-arrow-repeat"></i></button>
+                                                <button type="button" class="btn btn-outline-primary" onclick="updateNumber('+','Strike')"><i class="bi bi-plus-lg"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -142,9 +142,9 @@
                                         <div class="d-flex flex-sm-column gap-2 gap-sm-0" style="width: min-content;">
                                             <input id="OutView" class="form-control text-center mb-0 mb-sm-2" style="min-width: 3.5rem;" type="text" value="#" readonly>
                                             <div class="btn-group" role="group" aria-label="Controls">
-                                                <button type="button" class="btn btn-outline-primary" onclick="Out('-')"><i class="bi bi-dash-lg"></i></button>
-                                                <button type="button" class="btn btn-outline-danger z-3" onclick="Out('0')"><i class="bi bi-arrow-repeat"></i></button>
-                                                <button type="button" class="btn btn-outline-primary" onclick="Out('+')"><i class="bi bi-plus-lg"></i></button>
+                                                <button type="button" class="btn btn-outline-primary" onclick="updateNumber('-','Out')"><i class="bi bi-dash-lg"></i></button>
+                                                <button type="button" class="btn btn-outline-danger z-3" onclick="updateNumber('0','Out')"><i class="bi bi-arrow-repeat"></i></button>
+                                                <button type="button" class="btn btn-outline-primary" onclick="updateNumber('+','Out')"><i class="bi bi-plus-lg"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -176,9 +176,9 @@
                                         <div class="d-flex flex-sm-column gap-2 gap-sm-0" style="width: min-content;">
                                             <input id="InningView" class="form-control text-center mb-0 mb-sm-2" style="min-width: 3.5rem;" type="text" value="#" readonly>
                                             <div class="btn-group" role="group" aria-label="Controls">
-                                                <button type="button" class="btn btn-outline-primary" onclick="Inning('-')"><i class="bi bi-dash-lg"></i></button>
-                                                <button type="button" class="btn btn-outline-danger z-3" onclick="Inning('0')"><i class="bi bi-arrow-repeat"></i></button>
-                                                <button type="button" class="btn btn-outline-primary" onclick="Inning('+')"><i class="bi bi-plus-lg"></i></button>
+                                                <button type="button" class="btn btn-outline-primary" onclick="updateNumber('-','Inning')"><i class="bi bi-dash-lg"></i></button>
+                                                <button type="button" class="btn btn-outline-danger z-3" onclick="updateNumber('0','Inning')"><i class="bi bi-arrow-repeat"></i></button>
+                                                <button type="button" class="btn btn-outline-primary" onclick="updateNumber('+','Inning')"><i class="bi bi-plus-lg"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -237,9 +237,9 @@
                                             <div class="d-flex flex-column gap-2" style="width: min-content;">
                                                 <input id="ScoreAView" class="form-control text-center mb-0" style="min-width: 3.5rem;" type="text" value="#" readonly>
                                                 <div class="btn-group" role="group" aria-label="Controls">
-                                                    <button type="button" class="btn btn-outline-primary" onclick="ScoreAway('-')"><i class="bi bi-dash-lg"></i></button>
-                                                    <button type="button" class="btn btn-outline-danger z-3" onclick="ScoreAway('0')"><i class="bi bi-arrow-repeat"></i></button>
-                                                    <button type="button" class="btn btn-outline-primary" onclick="ScoreAway('+')"><i class="bi bi-plus-lg"></i></button>
+                                                    <button type="button" class="btn btn-outline-primary" onclick="updateNumber('-','Teams.Away.Score')"><i class="bi bi-dash-lg"></i></button>
+                                                    <button type="button" class="btn btn-outline-danger z-3" onclick="updateNumber('0','Teams.Away.Score')"><i class="bi bi-arrow-repeat"></i></button>
+                                                    <button type="button" class="btn btn-outline-primary" onclick="updateNumber('+','Teams.Away.Score')"><i class="bi bi-plus-lg"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -247,11 +247,11 @@
                                 </div>
                                 <div class="mb-2 d-flex flex-column align-items-center">
                                     <label for="NameAway" class="form-label h5 fw-normal">Name</label>
-                                    <input type="text" class="form-control form-control-sm" id="NameAway">
+                                    <input type="text" class="form-control form-control-sm" id="NameAwayView">
                                 </div>
                                 <div class="d-flex flex-column align-items-center">
                                     <label for="ColorAway" class="form-label h5 fw-normal">Color</label>
-                                    <input type="color" class="form-control form-control-sm" id="ColorAway">
+                                    <input type="color" class="form-control form-control-sm" id="ColorAwayView">
                                 </div>
                             </div>
                             <div class="vr p-0 d-none d-sm-block"></div> <!--unico problema è che non se lo schermo è xs, le metà ci saranno ugualmente, ma la divisione scomparirà-->
@@ -264,9 +264,9 @@
                                             <div class="d-flex flex-column gap-2" style="width: min-content;">
                                                 <input id="ScoreHView" class="form-control text-center mb-0" style="min-width: 3.5rem;" type="text" value="#" readonly>
                                                 <div class="btn-group" role="group" aria-label="Controls">
-                                                    <button type="button" class="btn btn-outline-primary" onclick="ScoreHome('-')"><i class="bi bi-dash-lg"></i></button>
-                                                    <button type="button" class="btn btn-outline-danger z-3" onclick="ScoreHome('0')"><i class="bi bi-arrow-repeat"></i></button>
-                                                    <button type="button" class="btn btn-outline-primary" onclick="ScoreHome('+')"><i class="bi bi-plus-lg"></i></button>
+                                                    <button type="button" class="btn btn-outline-primary" onclick="updateNumber('-','Teams.Home.Score')"><i class="bi bi-dash-lg"></i></button>
+                                                    <button type="button" class="btn btn-outline-danger z-3" onclick="updateNumber('0','Teams.Home.Score')"><i class="bi bi-arrow-repeat"></i></button>
+                                                    <button type="button" class="btn btn-outline-primary" onclick="updateNumber('+','Teams.Home.Score')"><i class="bi bi-plus-lg"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -274,11 +274,11 @@
                                 </div>
                                 <div class="mb-2 d-flex flex-column align-items-center">
                                     <label for="NameHome" class="form-label h5 fw-normal">Name</label>
-                                    <input type="text" class="form-control form-control-sm" id="NameHome">
+                                    <input type="text" class="form-control form-control-sm" id="NameHomeView">
                                 </div>
                                 <div class="d-flex flex-column align-items-center">
                                     <label for="ColorHome" class="form-label h5 fw-normal">Color</label>
-                                    <input type="color" class="form-control form-control-sm" id="ColorHome">
+                                    <input type="color" class="form-control form-control-sm" id="ColorHomeView">
                                 </div>
                             </div>
                         </div>
