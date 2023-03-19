@@ -106,13 +106,11 @@ function updateSingleScorer(scorer,ID) {
 		scorer.name || scorer.name == "" ? document.querySelector(".scorer#"+ID+" > span#name").innerHTML = scorer.name : null;
 		if (scorer.active) {
 			document.querySelector(".scorer#"+ID).classList.remove("notActive");
-			document.querySelector(".scorer#"+ID).classList.remove("notActive");
 			document.documentElement.style.setProperty("--h-row-"+ID, "var(--h-row)");
 			document.documentElement.style.setProperty("--d-"+ID, "var(--d-standard)");
 			document.documentElement.style.setProperty("--d-d-"+ID, "var(--d-standard)");
 		} else if (scorer?.active === false) {
 			document.documentElement.style.setProperty("--h-row-"+ID, "0");
-			document.querySelector(".scorer#"+ID).classList.add("notActive");
 			document.querySelector(".scorer#"+ID).classList.add("notActive");
 			document.documentElement.style.setProperty("--d-"+ID, "0s");
 			document.documentElement.style.setProperty("--d-d-"+ID, "0s");

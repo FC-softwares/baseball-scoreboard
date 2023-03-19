@@ -14,6 +14,7 @@
     "type": "git",
     "url": "git+https://github.com/FC-Softwares/baseball-scoreboard.git"
   },
+  "type": "commonjs",
   "keywords": [
     "live-streming",
     "live",
