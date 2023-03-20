@@ -17,14 +17,8 @@ function updateData(data,socket){
 				zeroChanges(indx, data_old_obj, toBeSent);
 			} else if (element === 'toggle') {
 				({ data_old_obj, toBeSent } = toggleChanges(indx, data_old_obj, toBeSent));
-			} else if (indx === 'Teams.Away.Name'){
-				({data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, 'Away', 'Name'));
-			}else if (indx === 'Teams.Home.Name'){
-				({data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, 'Home', 'Name'));
-			}else if (indx === 'Teams.Away.Color'){
-				({data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, 'Away', 'Color'));
-			}else if (indx === 'Teams.Home.Color'){
-				({data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, 'Home', 'Color'));
+			} else if (indx === 'Teams.Away.Name' || indx == 'Teams.Home.Name' || indx == 'Teams.Away.Color' || indx == 'Teams.Home.Color') {
+				({ data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, indx.split('.')[1] + '.' + indx.split('.')[2]));
 			}else{
 				data_old_obj[indx] = element;
 				toBeSent[indx] = element;
@@ -55,7 +49,8 @@ function updateData(data,socket){
 	});
 }
 
-function nameColorChange(data_old_obj, element, toBeSent, team, nameOrColor) {
+function nameColorChange(data_old_obj, element, toBeSent, mix) {
+	const [team, nameOrColor] = mix.split('.');
 	data_old_obj.Teams[team][nameOrColor] = element;
 	if (toBeSent.Teams === undefined)
 		toBeSent.Teams = {};
@@ -76,24 +71,26 @@ function plusChanges(indx, data_old_obj, toBeSent) {
 		data_old_obj[indx]++;
 		toBeSent.Out = data_old_obj.Out;
 	} else if (indx === 'Teams.Away.Score') {
-		data_old_obj.Int[data_old_obj.Inning].A++;
-		var ScoreATmp = 0;
-		for (var i = 1; i <= data_old_obj.Inning; i++) {
-			ScoreATmp += data_old_obj.Int[i].A;
-		}
-		data_old_obj.Teams.Away.Score = ScoreATmp;
+		var { i, ScoreATmp } = scorePlus(data_old_obj, 'Away','A');
 	} else if (indx === 'Teams.Home.Score') {
-		data_old_obj.Int[data_old_obj.Inning].H++;
-		var ScoreHTmp = 0;
-		for (var i = 1; i <= data_old_obj.Inning; i++) {
-			ScoreHTmp += data_old_obj.Int[i].H;
-		}
+		var { i, ScoreHTmp } = scorePlus(data_old_obj, 'Home','H');
 		data_old_obj.Teams.Home.Score = ScoreHTmp;
 	} else if (indx === 'Inning') {
 		data_old_obj.Inning++;
 		data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 };
 	}
 	return { ScoreATmp, ScoreHTmp, i };
+}
+
+function scorePlus(data_old_obj, team,short) {
+	data_old_obj.Int[data_old_obj.Inning][short]++;
+	var ScoreATmp = 0;
+	for (var i = 1; i <= data_old_obj.Inning; i++) {
+		ScoreATmp += data_old_obj.Int[i][short];
+	}
+	data_old_obj.Teams[team].Score = ScoreATmp;
+	let ScoreHTmp = ScoreATmp;
+	return { i, ScoreATmp, ScoreHTmp };
 }
 
 function minusChanges(indx, data_old_obj, toBeSent) {
@@ -128,46 +125,35 @@ function zeroChanges(indx, data_old_obj, toBeSent) {
 		data_old_obj.Int = { 1: { A: 0, H: 0 } };
 		data_old_obj.Teams.Away.Score = 0;
 		data_old_obj.Teams.Home.Score = 0;
-
 		toBeSent.Int = data_old_obj.Int;
-		toBeSent.Teams = {
-			...toBeSent?.Teams,
-			Away: {
-				...toBeSent?.Teams?.Away,
-				Score: 0
-			},
-			Home: {
-				...toBeSent?.Teams?.Home,
-				Score: 0
-			}
-		};
+		toBeSent.Teams = {...toBeSent?.Teams,Away: {...toBeSent?.Teams?.Away,Score: 0},Home: {...toBeSent?.Teams?.Home,Score: 0}};
 		toBeSent.Inning = data_old_obj.Inning;
 	} else if (indx === 'Teams.Away.Score') {
-		data_old_obj.Teams.Away.Score = 0;
-		for (var i = 1; i <= data_old_obj.Inning; i++)
-			data_old_obj.Int[i].A = 0;
+		zeroScore(data_old_obj, 'Away', 'A');
 	} else if (indx === 'Teams.Home.Score') {
-		data_old_obj.Teams.Home.Score = 0;
-		for (var i = 1; i <= data_old_obj.Inning; i++)
-			data_old_obj.Int[i].H = 0;
+		zeroScore(data_old_obj, 'Home', 'H');
 	} else {
 		data_old_obj[indx] = 0;
 		toBeSent[indx] = data_old_obj[indx];
 	}
-	return i;
+	return;
+}
+
+function zeroScore(data_old_obj, team, short) {
+	data_old_obj.Teams[team].Score = 0;
+	for (var i = 1; i <= data_old_obj.Inning; i++)
+		data_old_obj.Int[i][short] = 0;
+	return;
 }
 
 function toggleChanges(indx, data_old_obj, toBeSent) {
 	if((indx === '1' || indx === '2' || indx === '3') && toBeSent.Bases === undefined) toBeSent.Bases = {};
 	if (indx === '1') {
-		data_old_obj.Bases[1] = !data_old_obj.Bases[1];
-		toBeSent.Bases[1] = data_old_obj.Bases[1];
+		toggleBase(data_old_obj, toBeSent, 1);
 	} else if (indx === '2') {
-		data_old_obj.Bases[2] = !data_old_obj.Bases[2];
-		toBeSent.Bases[2] = data_old_obj.Bases[2];
+		toggleBase(data_old_obj, toBeSent, 2);
 	} else if (indx === '3') {
-		data_old_obj.Bases[3] = !data_old_obj.Bases[3];
-		toBeSent.Bases[3] = data_old_obj.Bases[3];
+		toggleBase(data_old_obj, toBeSent, 3);
 	} else if (indx === 'Auto_Change_Inning') {
 		data_old_obj.Bases[1] = false;
 		data_old_obj.Bases[2] = false;
@@ -198,6 +184,11 @@ function toggleChanges(indx, data_old_obj, toBeSent) {
 		toBeSent = data_old_obj;
 	}
 	return { data_old_obj, toBeSent };
+}
+
+function toggleBase(data_old_obj, toBeSent, indx) {
+	data_old_obj.Bases[indx] = !data_old_obj.Bases[indx];
+	toBeSent.Bases[indx] = data_old_obj.Bases[indx];
 }
 
 function updateSettings(data,socket) {

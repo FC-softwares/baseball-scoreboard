@@ -112,7 +112,10 @@ function activeDeactiveInning(i,team,active,score){
 }
 
 function maxInning(obj, extraInningScoreAway, extraInningScoreHome) {
-	if (obj.Inning > parseInt(localStorage.getItem("MaxInning")) + 1 || obj.Arrow == 2 || extraInningScoreAway != 0 || extraInningScoreHome != 0) {
+	if( obj.Inning <= parseInt(localStorage.getItem("MaxInning"))){
+		document.documentElement.style.setProperty('--i-inning', localStorage.getItem("MaxInning"));
+		try{document.querySelector("div.container > div#iex").remove();}catch(error){console.log(error);}
+	}else if (obj.Inning > parseInt(localStorage.getItem("MaxInning")) + 1 || (obj.Arrow == 2&&obj.Inning == parseInt(localStorage.getItem("MaxInning")+1)) || extraInningScoreAway != 0 || extraInningScoreHome != 0) {
 		let inning = getComputedStyle(document.documentElement).getPropertyValue('--i-inning');
 		if (inning == parseInt(localStorage.getItem("MaxInning"))) {
 			document.documentElement.style.setProperty('--i-inning', inning);
