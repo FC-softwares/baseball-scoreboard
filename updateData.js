@@ -18,33 +18,13 @@ function updateData(data,socket){
 			} else if (element === 'toggle') {
 				({ data_old_obj, toBeSent } = toggleChanges(indx, data_old_obj, toBeSent));
 			} else if (indx === 'Teams.Away.Name'){
-				data_old_obj.Teams.Away.Name = element;
-				if(toBeSent.Teams === undefined)
-					toBeSent.Teams = {};
-				if(toBeSent.Teams.Away === undefined)
-					toBeSent.Teams.Away = {};
-				toBeSent.Teams.Away.Name = element;
+				({data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, 'Away', 'Name'));
 			}else if (indx === 'Teams.Home.Name'){
-				data_old_obj.Teams.Home.Name = element;
-				if(toBeSent.Teams === undefined)
-					toBeSent.Teams = {};
-				if(toBeSent.Teams.Home === undefined)
-					toBeSent.Teams.Home = {};
-				toBeSent.Teams.Home.Name = element;
+				({data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, 'Home', 'Name'));
 			}else if (indx === 'Teams.Away.Color'){
-				data_old_obj.Teams.Away.Color = element;
-				if(toBeSent.Teams === undefined)
-					toBeSent.Teams = {};
-				if(toBeSent.Teams.Away === undefined)
-					toBeSent.Teams.Away = {};
-				toBeSent.Teams.Away.Color = element;
+				({data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, 'Away', 'Color'));
 			}else if (indx === 'Teams.Home.Color'){
-				data_old_obj.Teams.Home.Color = element;
-				if(toBeSent.Teams === undefined)
-					toBeSent.Teams = {};
-				if(toBeSent.Teams.Home === undefined)
-					toBeSent.Teams.Home = {};
-				toBeSent.Teams.Home.Color = element;
+				({data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, 'Home', 'Color'));
 			}else{
 				data_old_obj[indx] = element;
 				toBeSent[indx] = element;
@@ -73,6 +53,16 @@ function updateData(data,socket){
 		socket.emit('update', toBeSent);
 		socket.broadcast.emit('update', toBeSent);
 	});
+}
+
+function nameColorChange(data_old_obj, element, toBeSent, team, nameOrColor) {
+	data_old_obj.Teams[team][nameOrColor] = element;
+	if (toBeSent.Teams === undefined)
+		toBeSent.Teams = {};
+	if (toBeSent.Teams[team] === undefined)
+		toBeSent.Teams[team] = {};
+	toBeSent.Teams[team][nameOrColor] = element;
+	return { data_old_obj, toBeSent };
 }
 
 function plusChanges(indx, data_old_obj, toBeSent) {

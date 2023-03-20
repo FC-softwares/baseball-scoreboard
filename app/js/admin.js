@@ -90,10 +90,10 @@ function Base(base){
 	return true;
 }
 function Update_Data(){
-	NameA = document.getElementById('NameAway').value;
-	NameH = document.getElementById('NameHome').value;
-	ColorA = document.getElementById('ColorAway').value;
-	ColorH = document.getElementById('ColorHome').value;
+	NameA = document.getElementById('NameAwayView').value;
+	NameH = document.getElementById('NameHomeView').value;
+	ColorA = document.getElementById('ColorAwayView').value;
+	ColorH = document.getElementById('ColorHomeView').value;
 
 	socket.emit('update_data',`{"Teams.Away.Name":"${NameA}","Teams.Home.Name":"${NameH}","Teams.Away.Color":"${ColorA}","Teams.Home.Color":"${ColorH}"}`);
 	return true;
