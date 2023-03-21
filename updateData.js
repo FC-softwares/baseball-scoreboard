@@ -61,23 +61,26 @@ function nameColorChange(data_old_obj, element, toBeSent, mix) {
 }
 
 function plusChanges(indx, data_old_obj, toBeSent) {
-	if (indx === 'Ball' && data_old_obj.Ball < 3) {
-		data_old_obj[indx] = data_old_obj[indx] + 1;
-		toBeSent.Ball = data_old_obj.Ball;
-	} else if (indx === 'Strike' && data_old_obj.Strike < 2) {
-		data_old_obj[indx]++;
-		toBeSent.Strike = data_old_obj.Strike;
-	} else if (indx === 'Out' && data_old_obj.Out < 2) {
-		data_old_obj[indx]++;
-		toBeSent.Out = data_old_obj.Out;
-	} else if (indx === 'Teams.Away.Score') {
-		var { i, ScoreATmp } = scorePlus(data_old_obj, 'Away','A');
-	} else if (indx === 'Teams.Home.Score') {
-		var { i, ScoreHTmp } = scorePlus(data_old_obj, 'Home','H');
-		data_old_obj.Teams.Home.Score = ScoreHTmp;
-	} else if (indx === 'Inning') {
-		data_old_obj.Inning++;
-		data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 };
+	switch(indx) {
+		case 'Ball':
+			if (data_old_obj.Ball < 3) data_old_obj[indx]++, toBeSent.Ball = data_old_obj.Ball;
+			break;
+		case 'Strike':
+			if (data_old_obj.Strike < 2) data_old_obj[indx]++, toBeSent.Strike = data_old_obj.Strike;
+			break;
+		case 'Out':
+			if (data_old_obj.Out < 2) data_old_obj[indx]++, toBeSent.Out = data_old_obj.Out;
+			break;
+		case 'Teams.Away.Score':
+			var { i, ScoreATmp } = scorePlus(data_old_obj, 'Away','A');
+			break;
+		case 'Teams.Home.Score':
+			var { i, ScoreHTmp } = scorePlus(data_old_obj, 'Home','H');
+			data_old_obj.Teams.Home.Score = ScoreHTmp;
+			break;
+		case 'Inning':
+			data_old_obj.Inning++, data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 };
+			break;
 	}
 	return { ScoreATmp, ScoreHTmp, i };
 }
@@ -94,30 +97,28 @@ function scorePlus(data_old_obj, team,short) {
 }
 
 function minusChanges(indx, data_old_obj, toBeSent) {
-	if (indx === 'Teams.Home.Score' && data_old_obj.Int[data_old_obj.Inning].H > 0) {
-		data_old_obj.Int[data_old_obj.Inning].H--;
-		data_old_obj.Teams.Home.Score--;
-	} else if (indx === 'Teams.Away.Score' && data_old_obj.Int[data_old_obj.Inning].A > 0) {
-		data_old_obj.Int[data_old_obj.Inning].A--;
-		data_old_obj.Teams.Away.Score--;
-	} else if (indx === 'Inning') {
-		if (data_old_obj.Inning > 1) {
-			delete data_old_obj.Int[data_old_obj.Inning];
-			data_old_obj.Inning--;
-			var ScoreATmp = 0, ScoreHTmp = 0;
-			for (var i = 1; i <= data_old_obj.Inning; i++) {
-				ScoreATmp += data_old_obj.Int[i].A;
-				ScoreHTmp += data_old_obj.Int[i].H;
+	var i, ScoreATmp = 0, ScoreHTmp = 0;
+	switch(indx) {
+		case 'Teams.Home.Score':
+			if (data_old_obj.Int[data_old_obj.Inning].H > 0) data_old_obj.Int[data_old_obj.Inning].H--, data_old_obj.Teams.Home.Score--;
+			break;
+		case 'Teams.Away.Score':
+			if (data_old_obj.Int[data_old_obj.Inning].A > 0) data_old_obj.Int[data_old_obj.Inning].A--, data_old_obj.Teams.Away.Score--;
+			break;
+		case 'Inning':
+			if (data_old_obj.Inning > 1) {
+				delete data_old_obj.Int[data_old_obj.Inning], data_old_obj.Inning--;
+				for (i = 1; i <= data_old_obj.Inning; i++) ScoreATmp += data_old_obj.Int[i].A, ScoreHTmp += data_old_obj.Int[i].H;
+				data_old_obj.Teams.Away.Score = ScoreATmp, data_old_obj.Teams.Home.Score = ScoreHTmp;
 			}
-			data_old_obj.Teams.Away.Score = ScoreATmp;
-			data_old_obj.Teams.Home.Score = ScoreHTmp;
-		}
-	} else if (data_old_obj[indx] > 0) {
-		data_old_obj[indx]--;
-		toBeSent[indx] = data_old_obj[indx];
+			break;
+		default:
+			if (data_old_obj[indx] > 0) data_old_obj[indx]--, toBeSent[indx] = data_old_obj[indx];
+			break;
 	}
 	return { ScoreATmp, ScoreHTmp, i };
 }
+
 
 function zeroChanges(indx, data_old_obj, toBeSent) {
 	if (indx === 'Inning') {
@@ -147,44 +148,34 @@ function zeroScore(data_old_obj, team, short) {
 }
 
 function toggleChanges(indx, data_old_obj, toBeSent) {
-	if((indx === '1' || indx === '2' || indx === '3') && toBeSent.Bases === undefined) toBeSent.Bases = {};
-	if (indx === '1') {
-		toggleBase(data_old_obj, toBeSent, 1);
-	} else if (indx === '2') {
-		toggleBase(data_old_obj, toBeSent, 2);
-	} else if (indx === '3') {
-		toggleBase(data_old_obj, toBeSent, 3);
-	} else if (indx === 'Auto_Change_Inning') {
-		data_old_obj.Bases[1] = false;
-		data_old_obj.Bases[2] = false;
-		data_old_obj.Bases[3] = false;
-		data_old_obj.Ball = 0;
-		data_old_obj.Strike = 0;
-		data_old_obj.Out = 0;
-		if (data_old_obj.Arrow == 1) {
-			data_old_obj.Arrow = 2;
-		} else {
-			data_old_obj.Arrow = 1;
-			data_old_obj.Inning++;
-			data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 };
-		}
-		if (toBeSent.Bases === undefined)
-			toBeSent.Bases = {};
-		toBeSent.Bases[1] = data_old_obj.Bases[1];
-		toBeSent.Bases[2] = data_old_obj.Bases[2];
-		toBeSent.Bases[3] = data_old_obj.Bases[3];
-		toBeSent.Ball = data_old_obj.Ball;
-		toBeSent.Strike = data_old_obj.Strike;
-		toBeSent.Out = data_old_obj.Out;
-		toBeSent.Arrow = data_old_obj.Arrow;
-		toBeSent.Inning = data_old_obj.Inning;
-		toBeSent.Int = data_old_obj.Int;
-	} else if (indx === 'Reset_All') {
-		data_old_obj = { "Teams": { "Away": { "Name": "AWAY", "Score": 0, "Color": "#000000" }, "Home": { "Name": "HOME", "Score": 0, "Color": "#000000" } }, "Ball": 0, "Strike": 0, "Out": 0, "Inning": 1, "Arrow": 1, "Bases": { "1": false, "2": false, "3": false }, "Int": { "1": { "A": 0, "H": 0 } } };
-		toBeSent = data_old_obj;
+	if (['1', '2', '3'].includes(indx) && toBeSent.Bases === undefined)
+		toBeSent.Bases = {};
+	switch (indx) {
+		case '1':
+		case '2':
+		case '3':
+			toggleBase(data_old_obj, toBeSent, indx);
+		break;
+		case 'Auto_Change_Inning':
+			data_old_obj = { ...data_old_obj, Bases: { 1: false, 2: false, 3: false }, Ball: 0, Strike: 0, Out: 0};
+			if (data_old_obj.Arrow === 1) {
+				data_old_obj.Arrow = 2;
+			} else {
+				data_old_obj.Arrow = 1;
+				data_old_obj.Inning++;
+				data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 };
+			}
+			toBeSent = { ...toBeSent, Bases: { 1: false, 2: false, 3: false }, Ball: 0, Strike: 0, Out: 0, Arrow: data_old_obj.Arrow, Inning: data_old_obj.Inning, Int: data_old_obj.Int };
+		break;
+		case 'Reset_All':
+			data_old_obj = {Teams: {Away: { Name: 'AWAY', Score: 0, Color: '#000000' },Home: { Name: 'HOME', Score: 0, Color: '#000000' },},Ball: 0,Strike: 0,Out: 0,Inning: 1,Arrow: 1,Bases: { 1: false, 2: false, 3: false },Int: { 1: { A: 0, H: 0 } },};
+			toBeSent = data_old_obj;
+		break;
+		default: break;
 	}
 	return { data_old_obj, toBeSent };
 }
+
 
 function toggleBase(data_old_obj, toBeSent, indx) {
 	data_old_obj.Bases[indx] = !data_old_obj.Bases[indx];
@@ -213,74 +204,65 @@ function updateSettings(data,socket) {
 		socket.broadcast.emit('updateSettings', data_old_obj);
 	});
 }
-function updateActive(data,socket) {
-	fs.readFile(__dirname + '/app/json/scoreboards.json', 'utf8', (err, scoreboard_old) => {
-		if (err) {
-			console.error(err);
-			return;
-		}
-		var jsonOld = {};
-		var changes = {};
-		if(JSON.parse(data).AllOff == true){
-			jsonOld = { main: false, pre: false,post: false,inning: false,umpires: false,scorers: false,commentator: false,technicalComment: false}
-			changes = jsonOld;
-		}else{
-			var json = JSON.parse(data);
-			jsonOld = JSON.parse(scoreboard_old);
-			changes = {};
-			// Compare The Old Scoreboard With The New Scoreboard and save the changes
-			Object.entries(json).forEach(entry => {
-				const [indx, element] = entry;
-				if (element == true) {
-					jsonOld[indx] = true;
-					changes[indx] = true;
-				} else {
-					jsonOld[indx] = false;
-					changes[indx] = false;
-				}
+function updateActive(data, socket) {
+	const filepath = __dirname + '/app/json/scoreboards.json';
+	fs.readFile(filepath, 'utf8', (err, scoreboard_old) => {
+		if (err) return console.error(err);
+		const jsonOld = JSON.parse(scoreboard_old);
+		const changes = {};
+		if (JSON.parse(data).AllOff == true) {
+			Object.keys(jsonOld).forEach((indx) => {
+				jsonOld[indx] = false;
+				changes[indx] = false;
+			});
+		} else {
+			const json = JSON.parse(data);
+			Object.entries(json).forEach(([indx, element]) => {
+				jsonOld[indx] = element;
+				changes[indx] = element;
 			});
 		}
-		fs.writeFile(__dirname + '/app/json/scoreboards.json', JSON.stringify(jsonOld, null, 4), (err) => {
-			if (err)
-				throw err;
+		fs.writeFile(filepath, JSON.stringify(jsonOld, null, 4), (err) => {
+			if (err) throw err;
 			const changesJson = JSON.stringify(changes);
 			socket.emit('updateActive', changesJson);
 			socket.broadcast.emit('updateActive', changesJson);
 		});
 	});
 }
-function updateOfficial(data,socket) {
+
+function updateOfficial(data, socket) {
 	fs.readFile(__dirname + '/app/json/umpiresScorers.json', 'utf8', (err, umpiresScorers_old) => {
 		if (err) {
 			console.error(err);
 			return;
 		}
-		var jsonOld = JSON.parse(umpiresScorers_old);
-		var changes = {};
-		// Compare The Old offices list With The New offices list and save the changes
-		Object.entries(data).forEach(entry => {
-			const [indx, element] = entry;
-			Object.entries(element).forEach(entry2 => {
-				const [indx2, element2] = entry2;
-				Object.entries(element2).forEach(entry3 => {
-					const [indx3, element3] = entry3;
-					if (jsonOld[indx][indx2][indx3] != element3) {
-						jsonOld[indx][indx2][indx3] = element3;
-						if (!changes[indx])
-							changes[indx] = {};
-						if (!changes[indx][indx2])
-							changes[indx][indx2] = {};
-						changes[indx][indx2][indx3] = element3;
+		const jsonOld = JSON.parse(umpiresScorers_old);
+		const changes = {};
+		Object.entries(data).forEach(([index, element]) => {
+			Object.entries(element).forEach(([index2, element2]) => {
+				Object.entries(element2).forEach(([index3, element3]) => {
+					if (jsonOld[index][index2][index3] !== element3) {
+						jsonOld[index][index2][index3] = element3;
+						if (!changes[index])
+							changes[index] = {};
+						if (!changes[index][index2])
+							changes[index][index2] = {};
+						changes[index][index2][index3] = element3;
 					}
 				});
 			});
 		});
-		fs.writeFile(__dirname + '/app/json/umpiresScorers.json', JSON.stringify(jsonOld, null, 4), (err) => {
-			if (err)
-				throw err;
-			socket.emit('updateOffices', changes);
-			socket.broadcast.emit('updateOffices', changes);
-		});
+		writeToFile(jsonOld, socket, changes);
+	});
+}
+
+function writeToFile(jsonOld, socket, changes) {
+	fs.writeFile(__dirname + '/app/json/umpiresScorers.json', JSON.stringify(jsonOld, null, 4), (err) => {
+		if (err)
+			throw err;
+		socket.emit('updateOffices', changes);
+		socket.broadcast.emit('updateOffices', changes);
 	});
 }
 
@@ -291,12 +273,7 @@ function resetAllStaff(socket) {
 			return;
 		}
 		const json = { umpires: { HP: { surname: "HP Surname", name: "Name", active: true },B1: {surname: "1B Surname",name: "Name",active: true },B2: {surname: "2B Surname", name: "Name",active: true }, B3: {surname: "3B Surname", name: "Name",active: true}},"scorers": {"head": { surname: "Head Surname", name: "Name", active: true},"second": { surname: "Second Surname", name: "Name", active: true},"third": { surname: "Third Surname", name: "Name", active: true}},"commentators": {"main": { surname: "Sportcaster Surname", name: "Name"},"technical": { surname: "Technical Surname", name: "Name"}}}
-		fs.writeFile(__dirname + '/app/json/umpiresScorers.json', JSON.stringify(json, null, 4), (err) => {
-			if (err)
-				throw err;
-			socket.emit('updateOffices', json);
-			socket.broadcast.emit('updateOffices', json);
-		});
+		writeToFile(json, socket, json);
 	});
 }
 exports.updateActive = updateActive;
