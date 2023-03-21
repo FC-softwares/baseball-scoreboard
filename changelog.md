@@ -1,4 +1,37 @@
 # UPDATE LOG (English)
+## V2.0.0
+We have completely reworked the software, and now it is more stable and has more features.
+
+Nowadays the software passed from a simple web-based scoreboard to a full desktop removing all the complications due to the installation of third-party software (Apache, PHP, etc..) and the need for a web server. Also, the application is compatible with OBS Studio and other streaming software.
+
+All of these changes along with the new features, new style, and new code base, made the software more stable and easier to use at any resolution and/or PC specifications. (see the below list of new features)
+### New Features:
+* Changed completely the style of the software
+  * changed the front-end style to a more modern and clean one that is responsive and compatible with any resolution screen so you can control the scoreboard from any device that is on the same network or directly from a dock into OBS Studio or other streaming software
+  * changed the overlay style with a new modern and cleaner one. Now the overlays are compatible with any resolution.
+* Added animations and scoreboard control
+  * Added a panel on `control-center.html` to turn on/off the scoreboard and trigger the respective animations. Note: if the scoreboard is turned off you can still control the overlays from the control panel but the scoreboard will not be visible.
+  * For convenience a reset button has been added to "deactivate" all overlays.
+* Added new overlays
+  * `umpires.html` for the umpires display divided by roles (Home Plate, First Base, Second Base, Third Base)
+  * `scorers.html` for the scorers display without distinction of roles but in the order (Head scorer, second scorer, third scorer)
+  * `commentator.html` for the commentator display
+  * `technicalComment.html` for the technical commentator display
+  * For controlling these overlays you can have to use the new page `staff.html` where you can change the names and the roles of the staff
+* Switched from PHP to node.js and using socket.io
+  * Improved the communication between the control panel and the scoreboard
+  * Is possible to control the scoreboard from multiple devices at the same time all of them will be synchronized in real-time.
+    * As an example you can have the PC running the game and the scoreboard and control the overlays from your phone or tablet, it's your choice.
+    * All the devices must be on the same network and the host PC must have not set up any firewall on port 2095 (default port).
+* Changed the authentication system and licensing system
+  * Now to sign in into the control panel, or any administration page, you need to use your email and a password by registering on our website temporarily located at [https://www.facchini-pu.it/](https://www.facchini-pu.it/)
+  * You can use the software with the demo version for evaluation purposes, but if you want to use it for a real game and stream/record it you need to buy a license for the software by purchasing it on our website.
+  * From the page `settings.html` you can add/remove the authorized users for the control panel with their email. (if the user is not registered on our website he will be asked to complete the registration)
+### Known Bugs:
+* As usual, we haven't found any bugs yet. If you find any, please notify us or open an issue on GitHub!
+
+That's it for now, we hope you enjoy the new version of the software and if you have any suggestions or you want to report a bug please contact us on our website or open an issue on GitHub. Thank you for using our software!
+New features will be added in the future, so stay tuned!
 ## V1.3.1
 ### New Features:
 * Password auth in back-end
@@ -12,7 +45,7 @@
   * The default password is "baseball", is recommended to change before using the software.
   * The password is asked for access into: `auth.html` `admin.html` `admin_obs.html`.
   * A valid token is required to use the API: `update.php` `update_pass.php` `update_token.php` `settings.php`.
-* Fixed the bug found on #8 
+* Fixed the bug found on #8
 * Some Bugfixes
 ### Known bugs:
 * We haven't found any bugs yet. If you find any, please notify us!
@@ -83,6 +116,40 @@
 * Scoreboard don't update live yo have to wait minus then 5s
 * we don't find any other bug if you find please advise me
 # Update Log (Italiano)
+# REGISTRO DI AGGIORNAMENTO (inglese)
+## V2.0.0
+Abbiamo completamente rielaborato il software e ora è più stabile e ha più funzionalità.
+
+Oggi il software è passato da un semplice tabellone web-based ad un software desktop completo eliminando tutte le complicazioni dovute all'installazione di software di terze parti (Apache, PHP, ecc..) e alla necessità di un web server. Inoltre, l'applicazione è compatibile con OBS Studio e altri software di streaming.
+
+Tutti questi cambiamenti insieme alle nuove funzionalità, al nuovo stile e alla nuova base di codice, hanno reso il software più stabile e più facile da usare con qualsiasi risoluzione e/o specifica del PC. (vedi sotto l'elenco delle nuove funzionalità)
+### Nuove Funzioni:
+* Cambiato completamente lo stile del software
+   * cambiato lo stile front-end in uno più moderno e pulito, reattivo e compatibile con qualsiasi schermo di risoluzione in modo da poter controllare il tabellone segnapunti da qualsiasi dispositivo che si trova sulla stessa rete o direttamente da un dock in OBS Studio o altro software di streaming
+   * cambiato lo stile di sovrapposizione con uno nuovo moderno e più pulito. Ora gli overlay sono compatibili con qualsiasi risoluzione.
+* Aggiunte animazioni e controllo del tabellone
+   * Aggiunto un pannello su `control-center.html` per attivare/disattivare la classifica e attivare le rispettive animazioni. Nota: se il tabellone è disattivato puoi comunque controllare le overlay dal pannello di controllo ma il tabellone non sarà visibile.
+   * Per comodità è stato aggiunto un pulsante di ripristino per "disattivare" tutti gli overlay.
+* Aggiunte nuove overlay
+   * `umpires.html` per la visualizzazione degli arbitri divisi per ruoli (Casa Base, Prima Base, Seconda Base, Terza Base)
+   * `scorers.html` per i classificatori visualizzati senza distinzione di ruoli ma nell'ordine (Capo Classificatore, secondo classificatore, terzo classificatore)
+   * `commentator.html` per la visualizzazione del commentatore
+   * `technicalComment.html` per la visualizzazione del commentatore tecnico
+   * Per il controllo di questi overlay bisognerà utilizzare la nuova pagina `staff.html` dove è possibile modificare i nomi e i ruoli di tutti.
+* Passato da PHP a node.js e utilizzando socket.io
+   * Migliorata la comunicazione tra il pannello di controllo e il tabellone
+   * È possibile controllare il tabellone da più dispositivi contemporaneamente, tutti saranno sincronizzati in tempo reale.
+     * Ad esempio puoi avere il PC che esegue OBS e le overlay e controllare gli overlay dal tuo telefono o tablet, è una tua scelta.
+     * Tutti i dispositivi devono essere sulla stessa rete e il PC host non deve aver impostato alcun firewall sulla porta 2095 (porta predefinita).
+* Modificato il sistema di autenticazione e il sistema di licenze
+   * Ora per accedere al pannello di controllo, o a qualsiasi pagina di amministrazione, è necessario utilizzare la propria email e una password registrandosi sul nostro sito temporaneamente situato all'indirizzo [https://www.facchini-pu.it/](https:/ /www.facchini-pu.it/)
+   * È possibile utilizzare il software con la versione demo a scopo di valutazione, ma se si desidera utilizzarlo per un gioco reale e riprodurlo in streaming/registrarlo è necessario acquistare una licenza per il software acquistandolo sul nostro sito web.
+   * Dalla pagina `settings.html` puoi aggiungere/rimuovere gli utenti autorizzati a entrare nel pannello di controllo con la loro email. (se l'utente non è registrato sul nostro sito web gli verrà chiesto di completare la registrazione)
+### Bug noti:
+* Come al solito, non abbiamo ancora trovato alcun bug. Se ne trovi qualcuno, ti preghiamo di avvisarci o aprire un problema su GitHub!
+
+Per ora è tutto, speriamo che la nuova versione del software ti piaccia e se hai qualche suggerimento o vuoi segnalare un bug, contattaci sul nostro sito web o apri un problema su GitHub. Grazie per aver utilizzato il nostro software!
+Nuove funzionalità verranno aggiunte in futuro, quindi rimanete sintonizzati!
 ## V1.3.1
 ### Nuove caratteristiche:
 * Autenticazione password nel back-end
@@ -97,7 +164,7 @@
    * Viene richiesta la password per accedere a: `auth.html` `admin.html` `admin_obs.html`.
    * Per utilizzare l'API è necessario un token valido: `update.php` `update_pass.php` `update_token.php` `settings.php`.
 * Risolto il bug trovato su #8
-* Alcuni bug risolti 
+* Alcuni bug risolti
 ### Bug noti:
 * non abbiamo trovato nessun altro bug se trovi per favore avvisami
 ## V1.2.1
@@ -146,7 +213,7 @@
 ## V1.0.1
 ### Nuove Funzioni:
 * SEGNAPUNTI LIVE: ora il segnapunti si aggiorna in live
-* Sovrapposizioni pre-partita e post-partita utilizzate per non lasciare vuota la telecamera, verranno regolate con nome, colore e punteggio (solo dopo la partita)
+* overlay pre-partita e post-partita utilizzate per non lasciare vuota la telecamera, verranno regolate con nome, colore e punteggio (solo dopo la partita)
 * Risolto il problema con la cache con tutti i file ora il browser non memorizzerà i file nella cache
 * Freccia inning più reattiva (prima il trattino aveva problemi)
 * Rimosso il debug log nella console del browser
