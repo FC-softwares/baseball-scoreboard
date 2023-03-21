@@ -61,7 +61,7 @@ app.post('/logout', (req, res) => {
 	const { id, token } = req.body;
 	if (!checkIDToken(id, res, token))
 		return;
-	if (id == 'guest' && token == 'guest') {
+	if (id == 'guest' && token == 'guest' && CLIENT == 'DEMO') {
 		res.status(200).json({ ok: true, message: 'guest' });
 		return;
 	}
@@ -120,10 +120,7 @@ app.post("/addAuthUser", (req, res) => {
 		res.status(400).json({ ok: false, message: 'missing email' });
 		return;
 	}
-	if (id == 'guest' && token == 'guest') {
-		res.status(400).json({ ok: false, message: 'You can not change the authorized user on the DEMO version' });
-		return;
-	}
+	if(!guestDeny(id, token, res)) return;
 	const req_option = {
 		hostname: API,
 		port: 443,
@@ -159,10 +156,7 @@ app.post("/removeAuthUser", (req, res) => {
 		res.status(400).json({ ok: false, message: 'missing user_id' });
 		return;
 	}
-	if (id == 'guest' && token == 'guest') {
-		res.status(400).json({ ok: false, message: 'You can not change the authorized user on the DEMO version' });
-		return;
-	}
+	if(!guestDeny(id, token, res)) return;
 	const req_option = {
 		hostname: API,
 		port: 443,
@@ -228,6 +222,13 @@ const createWindow = () => {
 	});
 };
 AppElectron.whenReady().then(createWindow);
+function guestDeny(id, token, res) {
+	if (id == 'guest' && token == 'guest') {
+		res.status(400).json({ ok: false, message: 'You can not change the authorized user on the DEMO version' });
+		return false;
+	}
+	return true;
+}
 function requestActions(res_post, res, req_post) {
 	res_post.on('data', (data) => {
 		const data_obj = JSON.parse(data);
