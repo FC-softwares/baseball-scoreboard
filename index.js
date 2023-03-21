@@ -140,14 +140,7 @@ app.post("/addAuthUser", (req, res) => {
 });
 app.post("/removeAuthUser", (req, res) => {
 	const { id, token, user_id } = req.body;
-	if (!id) {
-		res.status(400).json({ ok: false, message: 'missing ID' });
-		return;
-	}
-	if (!token) {
-		res.status(400).json({ ok: false, message: 'missing token' });
-		return;
-	}
+	if (!checkIDToken(id, res, token)) return;
 	if (!user_id) {
 		res.status(400).json({ ok: false, message: 'missing user_id' });
 		return;
