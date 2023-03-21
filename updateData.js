@@ -13,8 +13,7 @@ function updateData(data,socket){
 			case '0':zeroChanges(indx, data_old_obj, toBeSent);break;
 			case 'toggle':({ data_old_obj, toBeSent } = toggleChanges(indx, data_old_obj, toBeSent));break;
 			default:
-				if (indx.startsWith('Teams.') && indx.endsWith('.Name')) ({ data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, indx.split('.')[1] + '.' + indx.split('.')[2]));
-				else if (indx.startsWith('Teams.') && indx.endsWith('.Color')) ({ data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, indx.split('.')[1] + '.' + indx.split('.')[2]));
+				if (indx.startsWith('Teams.') && (indx.endsWith('.Name')||indx.endsWith('.Color'))) ({ data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, indx.split('.')[1] + '.' + indx.split('.')[2]));
 				else {
 				data_old_obj[indx] = element;
 				toBeSent[indx] = element;
