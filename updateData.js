@@ -1,49 +1,28 @@
 const fs = require('fs');
+const { updateActive, updateOfficial, updateSettings, resetAllStaff } = require("./updateActive");
 
 function updateData(data,socket){
 	fs.readFile(__dirname + '/app/json/data.json', 'utf8', (err, data_old) => {
-		if (err)
-			throw err;
-		var json = JSON.parse(data);
-		var data_old_obj = JSON.parse(data_old);
-		var toBeSent = {};
+		if (err) throw err;
+		var json = JSON.parse(data), data_old_obj = JSON.parse(data_old), toBeSent = {};
 		Object.entries(json).forEach(entry => {
 			const [indx, element] = entry;
-			if (element === '+') {
-				plusChanges(indx, data_old_obj, toBeSent);
-			} else if (element === '-') {
-				minusChanges(indx, data_old_obj, toBeSent);
-			} else if (element === '0') {
-				zeroChanges(indx, data_old_obj, toBeSent);
-			} else if (element === 'toggle') {
-				({ data_old_obj, toBeSent } = toggleChanges(indx, data_old_obj, toBeSent));
-			} else if (indx === 'Teams.Away.Name' || indx == 'Teams.Home.Name' || indx == 'Teams.Away.Color' || indx == 'Teams.Home.Color') {
-				({ data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, indx.split('.')[1] + '.' + indx.split('.')[2]));
-			}else{
+			switch (element) {
+			case '+':plusChanges(indx, data_old_obj, toBeSent);break;
+			case '-':minusChanges(indx, data_old_obj, toBeSent);break;
+			case '0':zeroChanges(indx, data_old_obj, toBeSent);break;
+			case 'toggle':({ data_old_obj, toBeSent } = toggleChanges(indx, data_old_obj, toBeSent));break;
+			default:
+				if (indx.startsWith('Teams.') && indx.endsWith('.Name')) ({ data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, indx.split('.')[1] + '.' + indx.split('.')[2]));
+				else if (indx.startsWith('Teams.') && indx.endsWith('.Color')) ({ data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, indx.split('.')[1] + '.' + indx.split('.')[2]));
+				else {
 				data_old_obj[indx] = element;
 				toBeSent[indx] = element;
+				}
 			}
 		});
-		toBeSent = {
-			...toBeSent,
-			Teams: {
-				...toBeSent?.Teams,
-				Away: {
-					...toBeSent?.Teams?.Away,
-					Score: data_old_obj.Teams.Away.Score,
-				},
-				Home: {
-					...toBeSent?.Teams?.Home,
-					Score: data_old_obj.Teams.Home.Score,
-				},
-			},
-			Int: data_old_obj.Int,
-			Inning: data_old_obj.Inning,
-		}
-		fs.writeFile(__dirname + '/app/json/data.json', JSON.stringify(data_old_obj, null, 4), (err) => {
-			if (err)
-				throw err;
-		});
+		toBeSent = {...toBeSent,Teams: {...toBeSent?.Teams,Away: {...toBeSent?.Teams?.Away,Score: data_old_obj.Teams.Away.Score,},Home: {...toBeSent?.Teams?.Home,Score: data_old_obj.Teams.Home.Score,},},Int: data_old_obj.Int,Inning: data_old_obj.Inning,}
+		fs.writeFile(__dirname + '/app/json/data.json', JSON.stringify(data_old_obj, null, 4), (err) => {if (err)  throw err;});
 		socket.emit('update', toBeSent);
 		socket.broadcast.emit('update', toBeSent);
 	});
@@ -100,10 +79,10 @@ function minusChanges(indx, data_old_obj, toBeSent) {
 	var i, ScoreATmp = 0, ScoreHTmp = 0;
 	switch(indx) {
 		case 'Teams.Home.Score':
-			if (data_old_obj.Int[data_old_obj.Inning].H > 0) data_old_obj.Int[data_old_obj.Inning].H--, data_old_obj.Teams.Home.Score--;
+			minusScore(data_old_obj, 'Home', 'H', toBeSent);
 			break;
 		case 'Teams.Away.Score':
-			if (data_old_obj.Int[data_old_obj.Inning].A > 0) data_old_obj.Int[data_old_obj.Inning].A--, data_old_obj.Teams.Away.Score--;
+			minusScore(data_old_obj, 'Away', 'A', toBeSent);
 			break;
 		case 'Inning':
 			if (data_old_obj.Inning > 1) {
@@ -119,6 +98,13 @@ function minusChanges(indx, data_old_obj, toBeSent) {
 	return { ScoreATmp, ScoreHTmp, i };
 }
 
+
+function minusScore(data_old_obj, team, short) {
+	if (data_old_obj.Int[data_old_obj.Inning][short] > 0) {
+		data_old_obj.Int[data_old_obj.Inning][short]--
+		data_old_obj.Teams[team].Score--;
+	}
+}
 
 function zeroChanges(indx, data_old_obj, toBeSent) {
 	if (indx === 'Inning') {
@@ -154,8 +140,7 @@ function toggleChanges(indx, data_old_obj, toBeSent) {
 		case '1':
 		case '2':
 		case '3':
-			toggleBase(data_old_obj, toBeSent, indx);
-		break;
+			toggleBase(data_old_obj, toBeSent, indx);break;
 		case 'Auto_Change_Inning':
 			data_old_obj = { ...data_old_obj, Bases: { 1: false, 2: false, 3: false }, Ball: 0, Strike: 0, Out: 0};
 			if (data_old_obj.Arrow === 1) {
@@ -176,106 +161,11 @@ function toggleChanges(indx, data_old_obj, toBeSent) {
 	return { data_old_obj, toBeSent };
 }
 
-
 function toggleBase(data_old_obj, toBeSent, indx) {
 	data_old_obj.Bases[indx] = !data_old_obj.Bases[indx];
 	toBeSent.Bases[indx] = data_old_obj.Bases[indx];
 }
 
-function updateSettings(data,socket) {
-	fs.readFile(__dirname + '/app/json/settings.json', 'utf8', (err, data_old) => {
-		if (err)
-			throw err;
-		var json = JSON.parse(data);
-		var data_old_obj = JSON.parse(data_old);
-		Object.entries(json).forEach(entry => {
-			const [indx, element] = entry;
-			switch (element) {
-				default:
-					data_old_obj[indx] = element;
-					break;
-			}
-		});
-		fs.writeFile(__dirname + '/app/json/settings.json', JSON.stringify(data_old_obj, null, 4), (err) => {
-			if (err)
-				throw err;
-		});
-		socket.emit('updateSettings', data_old_obj);
-		socket.broadcast.emit('updateSettings', data_old_obj);
-	});
-}
-function updateActive(data, socket) {
-	const filepath = __dirname + '/app/json/scoreboards.json';
-	fs.readFile(filepath, 'utf8', (err, scoreboard_old) => {
-		if (err) return console.error(err);
-		const jsonOld = JSON.parse(scoreboard_old);
-		const changes = {};
-		if (JSON.parse(data).AllOff == true) {
-			Object.keys(jsonOld).forEach((indx) => {
-				jsonOld[indx] = false;
-				changes[indx] = false;
-			});
-		} else {
-			const json = JSON.parse(data);
-			Object.entries(json).forEach(([indx, element]) => {
-				jsonOld[indx] = element;
-				changes[indx] = element;
-			});
-		}
-		fs.writeFile(filepath, JSON.stringify(jsonOld, null, 4), (err) => {
-			if (err) throw err;
-			const changesJson = JSON.stringify(changes);
-			socket.emit('updateActive', changesJson);
-			socket.broadcast.emit('updateActive', changesJson);
-		});
-	});
-}
-
-function updateOfficial(data, socket) {
-	fs.readFile(__dirname + '/app/json/umpiresScorers.json', 'utf8', (err, umpiresScorers_old) => {
-		if (err) {
-			console.error(err);
-			return;
-		}
-		const jsonOld = JSON.parse(umpiresScorers_old);
-		const changes = {};
-		Object.entries(data).forEach(([index, element]) => {
-			Object.entries(element).forEach(([index2, element2]) => {
-				Object.entries(element2).forEach(([index3, element3]) => {
-					if (jsonOld[index][index2][index3] !== element3) {
-						jsonOld[index][index2][index3] = element3;
-						if (!changes[index])
-							changes[index] = {};
-						if (!changes[index][index2])
-							changes[index][index2] = {};
-						changes[index][index2][index3] = element3;
-					}
-				});
-			});
-		});
-		writeToFile(jsonOld, socket, changes);
-	});
-}
-
-function writeToFile(jsonOld, socket, changes) {
-	fs.writeFile(__dirname + '/app/json/umpiresScorers.json', JSON.stringify(jsonOld, null, 4), (err) => {
-		if (err)
-			throw err;
-		socket.emit('updateOffices', changes);
-		socket.broadcast.emit('updateOffices', changes);
-	});
-}
-
-function resetAllStaff(socket) {
-	fs.readFile(__dirname + '/app/json/umpiresScorers.json', 'utf8', (err, ) => {
-		if (err) {
-			console.error(err);
-			return;
-		}
-		const json = { umpires: { HP: { surname: "HP Surname", name: "Name", active: true },B1: {surname: "1B Surname",name: "Name",active: true },B2: {surname: "2B Surname", name: "Name",active: true }, B3: {surname: "3B Surname", name: "Name",active: true}},"scorers": {"head": { surname: "Head Surname", name: "Name", active: true},"second": { surname: "Second Surname", name: "Name", active: true},"third": { surname: "Third Surname", name: "Name", active: true}},"commentators": {"main": { surname: "Sportcaster Surname", name: "Name"},"technical": { surname: "Technical Surname", name: "Name"}}}
-		writeToFile(json, socket, json);
-	});
-}
 exports.updateActive = updateActive;
 exports.updateData = updateData;
 exports.updateOfficial = updateOfficial;
