@@ -38,12 +38,11 @@ app.post('/login', (req, res) => {
 });
 app.post('/checkstat', (req, res) => {
 	const { id, token } = req.body;
-	if (!checkIDToken(id, res, token))
-		return;
+	if (!checkIDToken(id, res, token)) return;
 	if (id == 'guest' && token == 'guest' && CLIENT == 'DEMO') {
 		res.status(200).json({ ok: true, message: 'guest', user: { email: 'guest@guest.com', name: 'guest', surname: "", isOwner: true } });
 		return;
-	} else if (id == 'guest' && token == 'guest' && CLIENT != 'DEMO') {
+	} else if (CLIENT !== 'DEMO'&&id == 'guest' && token == 'guest') {
 		res.status(400).json({ ok: false, message: 'invalid token' });
 		return;
 	}
@@ -59,9 +58,8 @@ app.post('/checkstat', (req, res) => {
 });
 app.post('/logout', (req, res) => {
 	const { id, token } = req.body;
-	if (!checkIDToken(id, res, token))
-		return;
-	if (id == 'guest' && token == 'guest' && CLIENT == 'DEMO') {
+	if (!checkIDToken(id, res, token)) return;
+	if (id == 'guest' && token == 'guest' && CLIENT === 'DEMO') {
 		res.status(200).json({ ok: true, message: 'guest' });
 		return;
 	}
@@ -86,8 +84,7 @@ app.post('/logout', (req, res) => {
 });
 app.post("/getAuthUsers", (req, res) => {
 	const { id, token } = req.body;
-	if (!checkIDToken(id, res, token))
-		return;
+	if (!checkIDToken(id, res, token)) return;
 	if (id == 'guest' && token == 'guest') {
 		res.status(200).json({ ok: true, message: 'guest', users: [{ id: '0', name: "guest", surname: "guest", email: "guest@guest.com" }] });
 		return;
@@ -114,8 +111,7 @@ app.post("/getAuthUsers", (req, res) => {
 });
 app.post("/addAuthUser", (req, res) => {
 	const { id, token, email } = req.body;
-	if (!checkIDToken(id, res, token))
-		return;
+	if (!checkIDToken(id, res, token)) return;
 	if (!email) {
 		res.status(400).json({ ok: false, message: 'missing email' });
 		return;
