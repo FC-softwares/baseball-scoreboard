@@ -178,8 +178,15 @@ app.post('/openExternal', (req, res) => {
 	const { url } = req.body;
 	if (!checkURL(url, res))
 		return;
-	shell.openExternal(url);
-	res.status(200).json({ ok: true, message: 'ok' });
+	// Check that the URL is a pattern we expect
+	if (!url.match(/^https?:\/\/(www\.)?facchini-pu\.it/)) {
+		res.status(400).json({ok:false,message:'invalid url'});
+		return;
+	}
+	// convert the url to a redirect free url (remove the redirect query param)
+	const redirectFreeUrl = url.replace(/redirect=1&?/,'');
+	shell.openExternal(redirectFreeUrl);
+	res.status(200).json({ok:true,message:'ok'});
 });
 app.post('/newWindow', (req, res) => {
 	const { url, width, height } = req.body;
