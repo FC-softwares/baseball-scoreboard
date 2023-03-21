@@ -1,7 +1,7 @@
 const https = require('https');
 const { shell } = require('electron');
 const crypto = require('crypto');
-const { app, CLIENT, API, reqOption, BrowserWindow, server, PORT, AppElectron } = require("./socketAndOther.js");
+const { app, CLIENT, API, reqOption, BrowserWindow, server, PORT, AppElectron } = require("./socket.js");
 
 app.post('/login', (req, res) => {
 	const { username, password, remember } = req.body;
@@ -32,21 +32,9 @@ app.post('/login', (req, res) => {
 	});
 	//make a request to remote APIs
 	const req_post = https.request(req_option, (res_post) => {
-		res_post.on('data', (data) => {
-			const data_obj = JSON.parse(data);
-			if (data_obj.ok === true) {
-				res.status(200).send(data_obj);
-			} else {
-				res.status(res_post.statusCode).send(data_obj);
-			}
-		});
+		requestActions(res_post, res, req_post);
 	});
-	req_post.on('error', (e) => {
-		console.error(e);
-		res.status(500).json({ ok: false, message: 'internal server error, please try again later and check your internet connection' });
-	});
-	req_post.write(req_data);
-	req_post.end();
+	req_post.end(req_data);
 });
 app.post('/checkstat', (req, res) => {
 	const { id, token } = req.body;
@@ -65,21 +53,9 @@ app.post('/checkstat', (req, res) => {
 	});
 	//make a request to remote APIs
 	const req_post = https.request(reqOption.checkstat, (res_post) => {
-		res_post.on('data', (data) => {
-			const data_obj = JSON.parse(data);
-			if (data_obj.ok === true) {
-				res.status(200).send(data_obj);
-			} else {
-				res.status(res_post.statusCode).send(data_obj);
-			}
-		});
+		requestActions(res_post, res, req_post);
 	});
-	req_post.on('error', (e) => {
-		console.error(e);
-		res.status(500).json({ ok: false, message: 'internal server error, please try again later and check your internet connection' });
-	});
-	req_post.write(req_data);
-	req_post.end();
+	req_post.end(req_data);
 });
 app.post('/logout', (req, res) => {
 	const { id, token } = req.body;
@@ -104,23 +80,9 @@ app.post('/logout', (req, res) => {
 	});
 	//make a request to remote APIs
 	const req_post = https.request(req_option, (res_post) => {
-		res_post.on('data', (data) => {
-			const data_obj = JSON.parse(data);
-			if (data_obj.ok === true) {
-				res.status(200).send(data_obj);
-			} else {
-				res.status(res_post.statusCode).send(data_obj);
-			}
-		});
-	}
-	);
-	req_post.on('error', (e) => {
-		console.error(e);
-		res.status(500).json({ ok: false, message: 'internal server error, please try again later and check your internet connection' });
-	}
-	);
-	req_post.write(req_data);
-	req_post.end();
+		requestActions(res_post, res, req_post);
+	});
+	req_post.end(req_data);
 });
 app.post("/getAuthUsers", (req, res) => {
 	const { id, token } = req.body;
@@ -146,22 +108,9 @@ app.post("/getAuthUsers", (req, res) => {
 	});
 	//make a request to remote APIs
 	const req_post = https.request(req_option, (res_post) => {
-		res_post.on('data', (data) => {
-			const data_obj = JSON.parse(data);
-			if (data_obj.ok === true) {
-				res.status(200).send(data_obj);
-			} else {
-				res.status(res_post.statusCode).send(data_obj);
-			}
-		});
+		requestActions(res_post, res, req_post);
 	});
-	req_post.on('error', (e) => {
-		console.error(e);
-		res.status(500).json({ ok: false, message: 'internal server error, please try again later and check your internet connection' });
-	}
-	);
-	req_post.write(req_data);
-	req_post.end();
+	req_post.end(req_data);
 });
 app.post("/addAuthUser", (req, res) => {
 	const { id, token, email } = req.body;
@@ -192,21 +141,9 @@ app.post("/addAuthUser", (req, res) => {
 	});
 	//make a request to remote APIs
 	const req_post = https.request(req_option, (res_post) => {
-		res_post.on('data', (data) => {
-			const data_obj = JSON.parse(data);
-			if (data_obj.ok === true) {
-				res.status(200).send(data_obj);
-			} else {
-				res.status(res_post.statusCode).send(data_obj);
-			}
-		});
+		requestActions(res_post, res, req_post);
 	});
-	req_post.on('error', (e) => {
-		console.error(e);
-		res.status(500).json({ ok: false, message: 'internal server error, please try again later and check your internet connection' });
-	});
-	req_post.write(req_data);
-	req_post.end();
+	req_post.end(req_data);
 });
 app.post("/removeAuthUser", (req, res) => {
 	const { id, token, user_id } = req.body;
@@ -243,22 +180,9 @@ app.post("/removeAuthUser", (req, res) => {
 	});
 	//make a request to remote APIs
 	const req_post = https.request(req_option, (res_post) => {
-		res_post.on('data', (data) => {
-			const data_obj = JSON.parse(data);
-			if (data_obj.ok === true) {
-				res.status(200).send(data_obj);
-			} else {
-				res.status(res_post.statusCode).send(data_obj);
-			}
-		});
+		requestActions(res_post, res, req_post);
 	});
-	req_post.on('error', (e) => {
-		console.error(e);
-		res.status(500).json({ ok: false, message: 'internal server error, please try again later and check your internet connection' });
-	}
-	);
-	req_post.write(req_data);
-	req_post.end();
+	req_post.end(req_data);
 });
 app.post('/openExternal', (req, res) => {
 	const { url } = req.body;
@@ -304,6 +228,21 @@ const createWindow = () => {
 	});
 };
 AppElectron.whenReady().then(createWindow);
+function requestActions(res_post, res, req_post) {
+	res_post.on('data', (data) => {
+		const data_obj = JSON.parse(data);
+		if (data_obj.ok === true) {
+			res.status(200).send(data_obj);
+		} else {
+			res.status(res_post.statusCode).send(data_obj);
+		}
+	});
+	req_post.on('error', (e) => {
+		console.error(e);
+		res.status(500).json({ ok: false, message: 'internal server error, please try again later and check your internet connection' });
+	});
+}
+
 function checkIDToken(id, res, token) {
 	if (!id) {
 		res.status(400).json({ ok: false, message: 'missing ID or email' });
