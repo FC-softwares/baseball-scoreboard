@@ -22,6 +22,9 @@
     --g-def: linear-gradient(0deg, rgba(233,233,233,1) 0%, rgba(255,255,255,1) 100%);
     /* Misc */
     --c-disabled: rgb(214, 214, 214);
+    /* Code to be reviewed by @TheTecnoKing*/
+    --w-scale: 1920px;
+    --h-scale: 1080px;
 }
 
 /* Standards */
@@ -33,9 +36,73 @@ body {
     margin: 0;
     width: fit-content;
     overflow: hidden;
+    /* Code to be reviewed by @TheTecnoKing
+    width: var(--w-scale);
+    height: var(--h-scale);
+    */
 }
 div {
     display: grid;
+}
+
+/* Transitions */
+.scoreboard > div#away{
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    transform: none;
+}
+.scoreboard.disabled > div#away{
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
+    transform: translateX(-750px);
+}
+.scoreboard > div#home{
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    transition-delay: 0.1s;
+    transform: none;
+}
+.scoreboard.disabled > div#home{
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
+    transition-delay: 0.1s;
+    transform: translateX(-750px);
+}
+.scoreboard > div.bases {
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    transition-delay: 0.2s;
+    transform: none;
+}
+.scoreboard.disabled > div.bases {
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
+    transition-delay: 0.2s;
+    transform: translateY(750px);
+}
+.scoreboard > div.ballStrike {
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    transition-delay: 0.3s;
+    transform: none;
+}
+.scoreboard.disabled > div.ballStrike {
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
+    transition-delay: 0.4s;
+    transform: translateY(750px);
+}
+.scoreboard > div.out {
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    transition-delay: 0.4s;
+    transform: none;
+}
+.scoreboard.disabled > div.out {
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
+    transition-delay: 0.3s;
+    transform: translateY(750px);
+}
+.scoreboard > div.inning {
+    transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    transition-delay: 0.5s;
+    transform: none;
+}
+.scoreboard.disabled > div.inning {
+    transition: cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
+    transition-delay: 0.5s;
+    transform: translateY(750px);
 }
 
 /* Scoreboard & defaults */
@@ -99,12 +166,14 @@ div {
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
+    text-transform: uppercase;
 }
 .teamName#away > #bg > span {
     background: var(--g-away);
     color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
+    text-transform: uppercase;
 }
 
 /* Team score */

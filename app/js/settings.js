@@ -1,37 +1,6 @@
 const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
 
-if (token && user) {
-	const xmlt = new XMLHttpRequest();
-	xmlt.open('POST', '/checkstat', true);
-	xmlt.setRequestHeader('Content-Type', 'application/json');
-	xmlt.send(`{"id":"${user}","token":"${token}"}`);
-	xmlt.onload = function() {
-		if (xmlt.status === 200) {
-			const response = JSON.parse(xmlt.responseText);
-			if (response.ok === false) {
-				window.location.href = '/login.html';
-				localStorage.removeItem('token');
-				localStorage.removeItem('user');
-			}
-            socket.emit('getSettings');
-			getCurrentUser();
-		} else {
-			// User is not in a valid session
-			// Redirect to login page
-			if (xmlt.status === 500) {
-				alert('Errore: ' + xmlt.status+"\n"+JSON.parse(xmlt.responseText));
-			}
-			window.location.href = '/login.html';
-			localStorage.removeItem('token');
-			localStorage.removeItem('user');
-		}
-	}
-}else{
-	//redirect to login page
-	window.location.href = '/login.html';
-}
-
 const socket = io({
 	auth: {
 		id: user,
@@ -55,10 +24,12 @@ function updateSettings(data){
 		document.getElementById("BlackenLastInningFalse").classList.remove("btn-outline-primary");
 		document.getElementById("BlackenLastInningFalse").classList.add("btn-primary");
 	}
+	document.getElementById('Resolution').value = data.Resolution;
 }
 function UpdateSettings(){
 	const MaxInning = document.getElementById('MaxInning').value;
-	socket.emit('updateSettings',`{"MaxInning":${MaxInning}}`);
+	const Resolution = document.getElementById('Resolution').value;
+	socket.emit('updateSettings',`{"MaxInning":${MaxInning},"Resolution":${Resolution}}`);
 }
 function BlackenLastInning(value){
 	if(value){
@@ -74,23 +45,17 @@ function getCurrentUser (){
 	xmlt.setRequestHeader('Content-Type', 'application/json');
 	xmlt.send(`{"id":"${user}","token":"${token}"}`);
 	xmlt.onload = function() {
-		if (xmlt.status === 200) {
-			const response = JSON.parse(xmlt.responseText);
-			if (response.ok === true) {
-				if(response.user.isOwner==true){
-					printUsers(response.user);
-					document.getElementById("ProductOwner").value = response.user.name+" "+response.user.surname;
-					document.getElementById("ProductOwnerEmail").value = response.user.email;
-					document.getElementById("ProductOwnerTeam").value = response.user.team;
-				}else{
-					window.location.href = '/control-center.html';
-				}
-			}
-		}else{
-			if (this.readyState === 4) {
-				return false;
-			}
-		}
+		if(xmlt.status !== 200 && this.readyState !== 4)
+			return false;
+		const response = JSON.parse(xmlt.responseText);
+		if (response.ok !== true)
+			return false;
+		if(response.user.isOwner !== true)
+			return window.location.href = '/control-center.html';
+		printUsers(response.user);
+		document.getElementById("ProductOwner").value = response.user.name+" "+response.user.surname;
+		document.getElementById("ProductOwnerEmail").value = response.user.email;
+		document.getElementById("ProductOwnerTeam").value = response.user.team;
 	}
 }
 
@@ -100,20 +65,20 @@ function printUsers(LoggedUser){
 	xmlt.setRequestHeader('Content-Type', 'application/json');
 	xmlt.send(`{"id":"${user}","token":"${token}"}`);
 	xmlt.onload = function() {
-		if (xmlt.status === 200) {
-			const response = JSON.parse(xmlt.responseText);
-			if (response.ok === true) {
-				var UsersHtml = "";
-				for (let i = 0; i < response.users.length; i++) {
-					if(response.users[i].email == LoggedUser.email){
-						UsersHtml += `<li class="list-group-item d-flex"><div class="me-3"><span>${response.users[i].name} ${response.users[i].surname}</span><br><a href="mailto:${response.users[i].email}" class="text-break">${response.users[i].email}</a></div></li>`;
-					}else{
-						UsersHtml += `<li class="list-group-item d-flex"><div class="me-3"><span>${response.users[i].name} ${response.users[i].surname}</span><br><a href="mailto:${response.users[i].email}" class="text-break">${response.users[i].email}</a></div><button class="btn btn-outline-danger ms-auto my-auto p-0 flex-shrink-0" style="width: 2rem; height: 2rem;" onclick="removeUser('${response.users[i].id}')"><i class="bi bi-x-lg"></i></button></li>`;
-					}
-				}
-				document.getElementById('AuthUsersUl').innerHTML = UsersHtml;
+		if (xmlt.status !== 200 && this.readyState !== 4)
+			return false;
+		const response = JSON.parse(xmlt.responseText);
+		if (response.ok !== true)
+			return false;
+		var UsersHtml = "";
+		for (let i = 0; i < response.users.length; i++) {
+			if(response.users[i].email == LoggedUser.email){
+				UsersHtml += `<li class="list-group-item d-flex"><div class="me-3"><span>${response.users[i].name} ${response.users[i].surname}</span><br><a href="mailto:${response.users[i].email}" class="text-break">${response.users[i].email}</a></div></li>`;
+			}else{
+				UsersHtml += `<li class="list-group-item d-flex"><div class="me-3"><span>${response.users[i].name} ${response.users[i].surname}</span><br><a href="mailto:${response.users[i].email}" class="text-break">${response.users[i].email}</a></div><button class="btn btn-outline-danger ms-auto my-auto p-0 flex-shrink-0" style="width: 2rem; height: 2rem;" onclick="removeUser('${response.users[i].id}')"><i class="bi bi-x-lg"></i></button></li>`;
 			}
 		}
+		document.getElementById('AuthUsersUl').innerHTML = UsersHtml;
 	}
 }
 function removeUser(id){
@@ -122,13 +87,12 @@ function removeUser(id){
 	xmlt.setRequestHeader('Content-Type', 'application/json');
 	xmlt.send(`{"id":"${user}","token":"${token}","user_id":"${id}"}`);
 	xmlt.onload = function() {
-		if (xmlt.status === 200) {
-			const response = JSON.parse(xmlt.responseText);
-			if (response.ok === true) {
-				document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User deleted successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-				getCurrentUser();
-			}
-		}
+		const response = JSON.parse(xmlt.responseText);
+		const error = response.error || response.message || 'Unknown error';
+		if (xmlt.status !== 200 && this.readyState !== 4 || !response.ok)
+			return document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+		document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User deleted successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+		getCurrentUser();
 	};
 }
 
@@ -140,13 +104,10 @@ function addUser(){
 	xmlt.send(`{"id":"${user}","token":"${token}","email":"${email}"}`);
 	xmlt.onload = function() {
 		const response = JSON.parse(xmlt.responseText);
-		if (xmlt.status === 200) {
-			if (response.ok === true) {
-				document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User added successfully.  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-				document.getElementById('UserAddEmail').value = '';
-			}
-		}else{
-			document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${response.error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-		}
+		const error = response.error || response.message || 'Unknown error';
+		if (xmlt.status !== 200 && this.readyState !== 4 || !response.ok)
+			return document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+		document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User added successfully.  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+		document.getElementById('UserAddEmail').value = '';
 	};
 }

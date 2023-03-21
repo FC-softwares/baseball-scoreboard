@@ -4,11 +4,11 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css">
+        <link href="css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+        <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         <script src="/js/login.js" async></script>
-        <script async src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        <title>Baseball Scoreboard - Bootstrap</title>
+        <title>Baseball Scoreboard</title>
     </head>
 <body class="d-flex flex-column vh-100">
     <div class="flex-grow-1"></div>
@@ -19,7 +19,7 @@
             <h3 class="fw-light mb-3">Log in to proceed</h3>
             <div class="alert alert-danger visually-hidden flex-row" role="alert" id="ErrorMsg"></div>
             <div class="form-floating mb-2 w-100">
-                <input type="text" class="form-control" id="username" placeholder="guest" required>
+                <input type="text" class="form-control" id="username" placeholder="guest" required />
                 <label for="username">Username</label>
                 <div class="invalid-feedback text-start">
                     <i class="bi bi-chevron-up"></i>
@@ -43,14 +43,14 @@
                 </div>
                 <a class="text-decoration-none" href="#">Need help?</a>
             </div>
-            <div class="hstack gap-2 w-100 mb-1">
+            <div class="hstack gap-2 w-100">
                 <button class="btn btn-primary order-2 w-100" onclick="loginLoadAnim(`login`)" id="loginButton">
                     <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true" id="loginSpin"></span>
                     Log in
                 </button>
                 <a class="btn btn-secondary order-1 w-100" href="index.html">Cancel</a>
             </div>
-            <div class="hstack gap-1 w-100 mb-1">
+            <div class="hstack gap-1 w-100 mb-1 mt-1" id="separator">
                 <hr class="w-100">
                 <span class="text-secondary fw-light">OR</span>
                 <hr class="w-100">
@@ -134,9 +134,10 @@
                 <span class="align-text-top">Made by <a class="text-decoration-none" href="https://github.com/lucafano04" target="_blank" rel="noopener noreferrer">Luca Facchini</a> and <a class="text-decoration-none" href="https://github.com/TheTecnoKing" target="_blank" rel="noopener noreferrer">Kristian Ceribashi</a></span>
             </div>
             <div class="d-flex flex-row gap-2">
-                <a class="text-decoration-none fs-3" href="https://github.com/luca-ceri/baseball-scoreboard" target="_blank" rel="noopener noreferrer"><i class="bi-github"></i></a>
+                <a class="text-decoration-none fs-3" href="https://github.com/FC-softwares/baseball-scoreboard" target="_blank" rel="noopener noreferrer"><i class="bi-github"></i></a>
                 <a class="text-decoration-none fs-3" href="https://opencollective.com/baseball-scoreboard" target="_blank" rel="noopener noreferrer"><i class="bi-cash-coin"></i></a>
             </div>
         </div>
     </footer>
 </body>
+</html>

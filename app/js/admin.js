@@ -1,116 +1,82 @@
 const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
 
-if (token && user) {
-	const xmlt = new XMLHttpRequest();
-	xmlt.open('POST', '/checkstat', true);
-	xmlt.setRequestHeader('Content-Type', 'application/json');
-	xmlt.send(`{"id":"${user}","token":"${token}"}`);
-	xmlt.onload = function() {
-		if (xmlt.status === 200) {
-			const response = JSON.parse(xmlt.responseText);
-			if (response.ok === false) {
-				window.location.href = '/login.html';
-				localStorage.removeItem('token');
-				localStorage.removeItem('user');
-			}
-			socket.emit("getData");
-		} else {
-			// User is not in a valid session
-			// Redirect to login page
-			if (xmlt.status === 500) {
-				alert('Errore: ' + xmlt.status+"\n"+JSON.parse(xmlt.responseText));
-			}
-			window.location.href = '/login.html';
-			localStorage.removeItem('token');
-			localStorage.removeItem('user');
-		}
-	}
-}else{
-	//redirect to login page
-	window.location.href = '/login.html';
-}
-
 const socket = io({
 	auth: {
-	  id: user,
-	  token: token
-  	}
+		id: user,
+		token: token
+	}
 });
 socket.on('connectData', update);
 socket.on('update', update);
 
 function update(data){
-	document.getElementById('NameAway').value = data.Teams.Away.Name;
-	document.getElementById('NameHome').value = data.Teams.Home.Name;
-	document.getElementById('ColorAway').value = data.Teams.Away.Color;
-	document.getElementById('ColorHome').value = data.Teams.Home.Color;
-	document.getElementById('BallView').value = data.Ball;
-	document.getElementById('StrikeView').value = data.Strike;
-	document.getElementById('OutView').value = data.Out;
-	document.getElementById('InningView').value = data.Inning;
-	document.getElementById('ScoreHView').value = data.Teams.Home.Score;
-	document.getElementById('ScoreAView').value = data.Teams.Away.Score;
-	if (data.Arrow == 1) {
-		document.getElementById("TopView").classList.remove("btn-outline-primary");
-		document.getElementById("TopView").classList.add("btn-primary");
-		document.getElementById("BotView").classList.remove("btn-primary");
-		document.getElementById("BotView").classList.add("btn-outline-primary");
-	}else{
-		document.getElementById("TopView").classList.remove("btn-primary");
-		document.getElementById("TopView").classList.add("btn-outline-primary");
-		document.getElementById("BotView").classList.remove("btn-outline-primary");
-		document.getElementById("BotView").classList.add("btn-primary");
+	setNumberView(data?.Teams?.Away?.Name, "NameAway");
+	setNumberView(data?.Teams?.Home?.Name, "NameHome");
+	setNumberView(data?.Teams?.Away?.Color, "ColorAway");
+	setNumberView(data?.Teams?.Home?.Color, "ColorHome");
+	setNumberView(data?.Teams?.Home?.Score, "ScoreH");
+	setNumberView(data?.Teams?.Away?.Score, "ScoreA");
+	setNumberView(data?.Ball, "Ball");
+	setNumberView(data?.Strike, "Strike");
+	setNumberView(data?.Out, "Out");
+	setNumberView(data?.Inning, "Inning");
+	if(data?.Arrow !== undefined){
+		if (data.Arrow == 1) {
+			setArrowPart("Top",true);
+			setArrowPart("Bot",false);
+		}else{
+			setArrowPart("Top",false);
+			setArrowPart("Bot",true);
+		}
 	}
-	if(data.Bases[1]==true){
-		document.getElementById("Base1View").classList.remove("btn-outline-primary");
-		document.getElementById("Base1View").classList.add("btn-primary");
-	}else{
-		document.getElementById("Base1View").classList.remove("btn-primary");
-		document.getElementById("Base1View").classList.add("btn-outline-primary");
-	}
-	if(data.Bases[2]==true){
-		document.getElementById("Base2View").classList.remove("btn-outline-primary");
-		document.getElementById("Base2View").classList.add("btn-primary");
-	}else{
-		document.getElementById("Base2View").classList.remove("btn-primary");
-		document.getElementById("Base2View").classList.add("btn-outline-primary");
-	}
-	if(data.Bases[3]==true){
-		document.getElementById("Base3View").classList.remove("btn-outline-primary");
-		document.getElementById("Base3View").classList.add("btn-primary");
-	}else{
-		document.getElementById("Base3View").classList.remove("btn-primary");
-		document.getElementById("Base3View").classList.add("btn-outline-primary");
+	if(data?.Bases !== undefined){
+		setViewBase(data?.Bases[1],"Base1View");
+		setViewBase(data?.Bases[2],"Base2View");
+		setViewBase(data?.Bases[3],"Base3View");
 	}
 }
+function setArrowPart(part,active) {
+	if (active){
+		document.getElementById(part+"View").classList.remove("btn-outline-primary");
+		document.getElementById(part+"View").classList.add("btn-primary");
+	}else {
+		document.getElementById(part+"View").classList.remove("btn-primary");
+		document.getElementById(part+"View").classList.add("btn-outline-primary");
+	}
+}
+
+function setNumberView(number,id) {
+	try{
+		if (number !== undefined)
+			document.getElementById(id+'View').value = number;
+	}catch(err){
+		console.log(err, id);
+	}
+}
+
+function setViewBase(base,id) {
+	if (base !== undefined) {
+		if (base == true) {
+			document.getElementById(id).classList.remove("btn-outline-primary");
+			document.getElementById(id).classList.add("btn-primary");
+		} else {
+			document.getElementById(id).classList.remove("btn-primary");
+			document.getElementById(id).classList.add("btn-outline-primary");
+		}
+	}
+}
+
 //To add for all the variables
-function Ball(opr){
+function updateNumber(opr, id){
 	if(opr!="+"&&opr!="-"&&opr!="0")
-		return NaN;
-	socket.emit('update_data', `{"Ball":"${opr}"}`);
-	return true;
-}
-function Strike(opr){
-	if(opr!="+"&&opr!="-"&&opr!="0")
-		return NaN;
-	socket.emit('update_data', `{"Strike":"${opr}"}`);
-	return true;
-}
-function Out(opr){
-	if(opr!="+"&&opr!="-"&&opr!="0")
-		return NaN;
-	socket.emit('update_data', `{"Out":"${opr}"}`);
-	return true;
-}
-function Inning(opr){
-	if(opr!="+"&&opr!="-"&&opr!="0")
-		return NaN;
-	socket.emit('update_data', `{"Inning":"${opr}"}`);
+		return null;
+	socket.emit('update_data', `{"${id}":"${opr}"}`);
 	return true;
 }
 function TopBot(opr){
-	if(opr!="top"&&opr!="bot") return NaN;
+	if(opr!="top"&&opr!="bot")
+		return null;
 	if(opr=="top")
 		socket.emit('update_data', `{"Arrow":1}`);
 	else
@@ -119,27 +85,15 @@ function TopBot(opr){
 }
 function Base(base){
 	if(base!="1"&&base!="2"&&base!="3")
-		return NaN;
+		return null;
 	socket.emit('update_data', `{"${base}":"toggle"}`);
 	return true;
 }
-function ScoreHome(opr){
-	if(opr!="+"&&opr!="-"&&opr!="0")
-		return NaN;
-	socket.emit('update_data', `{"Teams.Home.Score":"${opr}"}`);
-	return true;
-}
-function ScoreAway(opr){
-	if(opr!="+"&&opr!="-"&&opr!="0")
-		return NaN;
-	socket.emit('update_data', `{"Teams.Away.Score":"${opr}"}`);
-	return true;
-}
 function Update_Data(){
-	NameA = document.getElementById('NameAway').value;
-	NameH = document.getElementById('NameHome').value;
-	ColorA = document.getElementById('ColorAway').value;
-	ColorH = document.getElementById('ColorHome').value;
+	NameA = document.getElementById('NameAwayView').value;
+	NameH = document.getElementById('NameHomeView').value;
+	ColorA = document.getElementById('ColorAwayView').value;
+	ColorH = document.getElementById('ColorHomeView').value;
 
 	socket.emit('update_data',`{"Teams.Away.Name":"${NameA}","Teams.Home.Name":"${NameH}","Teams.Away.Color":"${ColorA}","Teams.Home.Color":"${ColorH}"}`);
 	return true;
@@ -156,3 +110,7 @@ function Reset_All(){
 	socket.emit('update_data',`{"Reset_All":"toggle"}`);
 	return true;
 }
+
+// Animation and Scoreboard controls
+socket.on('updateActive', updateActive);
+socket.on('connectActive', updateActive);

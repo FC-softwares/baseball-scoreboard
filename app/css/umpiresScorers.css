@@ -1,0 +1,341 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+/* Global variables */
+:root {
+    /* Scoreboard widths */
+    --w-role: 100px;
+    --w-name: 500px;
+    --w-column: calc(var(--w-role) + var(--w-name));
+    /* Scoreboard row height */
+    --h-row: 50px;
+    /* Umpires row height */
+    --h-row-HB: var(--h-row);
+    --h-row-1B: var(--h-row);
+    --h-row-2B: var(--h-row);
+    --h-row-3B: var(--h-row);
+    /* Scorers row height */
+    --h-row-head: var(--h-row);
+    --h-row-second: var(--h-row);
+    --h-row-third: var(--h-row);
+    /* Gradients (please don't edit them) */
+    --g-def-w: linear-gradient(0deg, rgba(213,213,213,1) 0%, rgba(255,255,255,1) 100%);
+    --g-def-b: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(255,255,255,0.4) 100%), rgb(0, 0, 0);
+    /* Delays */
+    --d-standard: 0.75s;
+    /* Deactivasion delays Umpires */
+    --d-d-3B: 0s;
+    --d-d-2B: var(--d-standard);
+    --d-d-2B-calc: calc(var(--d-d-2B) + var(--d-d-3B));
+    --d-d-1B: var(--d-standard);
+    --d-d-1B-calc: calc(var(--d-d-1B) + var(--d-d-2B-calc));
+    --d-d-HB: var(--d-standard);
+    --d-d-HB-calc: calc(var(--d-d-HB) + var(--d-d-1B-calc));
+    --d-d-header: var(--d-standard);
+    --d-d-header-calc: calc(var(--d-d-header) + var(--d-d-HB-calc));
+
+    /* Activation delays Umpires */
+    --d-header: 0s;
+    --d-HB: var(--d-standard);
+    --d-HB-calc: calc(var(--d-HB) + var(--d-header));
+    --d-1B: var(--d-standard);
+    --d-1B-calc: calc(var(--d-1B) + var(--d-HB));
+    --d-2B: var(--d-standard);
+    --d-2B-calc: calc(var(--d-2B) + var(--d-1B-calc));
+    --d-3B: var(--d-standard);
+    --d-3B-calc: calc(var(--d-3B) + var(--d-2B-calc));
+
+    /* Deactivasion delays Scorers */
+    --d-d-third: 0s;
+    --d-d-second: var(--d-standard);
+    --d-d-second-calc: calc(var(--d-d-second) + var(--d-d-third));
+    --d-d-head: var(--d-standard);
+    --d-d-head-calc: calc(var(--d-d-head) + var(--d-d-second-calc));
+    --d-d-header-s: var(--d-standard);
+    --d-d-header-s-calc: calc(var(--d-d-header-s) + var(--d-d-head-calc));
+
+    /* Activation delays Scorers */
+    --d-header-s: 0s;
+    --d-head: var(--d-standard);
+    --d-head-calc: calc(var(--d-head) + var(--d-header-s));
+    --d-second: var(--d-standard);
+    --d-second-calc: calc(var(--d-second) + var(--d-head-calc));
+    --d-third: var(--d-standard);
+    --d-third-calc: calc(var(--d-third) + var(--d-second-calc));
+}
+
+/* Standards */
+html {
+    width: min-content;
+    background-color: transparent;
+}
+body {
+    margin: 0;
+    width: fit-content;
+    overflow: hidden;
+}
+div {
+    display: grid;
+}
+
+.scoreboard {
+    font-family: 'Poppins', sans-serif;
+    font-size: calc(var(--h-row) * 0.6);
+}
+
+.scoreboard#umpires {
+    grid-template-rows: var(--h-row) var(--h-row-HB) var(--h-row-1B) var(--h-row-2B) var(--h-row-3B);
+    grid-template-columns: var(--w-role) var(--w-name);
+    display: grid;
+    grid-template-areas:
+        "Header Header"
+        "RoleHB NameHB"
+        "Role1B Name1B"
+        "Role2B Name2B"
+        "Role3B Name3B";
+    width: var(--w-column);
+    height: calc(var(--h-row) + var(--h-row-HB) + var(--h-row-1B) + var(--h-row-2B) + var(--h-row-3B));
+}
+.scoreboard#scorers {
+    grid-template-columns: calc(var(--w-role) + var(--w-name));
+    grid-template-rows:  var(--h-row) var(--h-row-head) var(--h-row-second) var(--h-row-third);
+    display: grid;
+    grid-template-areas:
+        "Header"
+        "Head"
+        "Second"
+        "Third";
+    width: var(--w-column);
+    height: calc(var(--h-row) + var(--h-row-head) + var(--h-row-second) + var(--h-row-third));
+}
+
+.scoreboard#commentator {
+    grid-template-columns: var(--w-column);
+    grid-template-rows:  var(--h-row);
+    display: grid;
+    grid-template-areas:
+        "Header"
+        "Commentator";
+    width: var(--w-column);
+    height: calc(var(--h-row) + var(--h-row));
+}
+
+.scoreboard > div {
+    align-items: center;
+    text-align: center;
+}
+
+/* Team name */
+.scoreboard > .header {
+    background: var(--g-def-b);
+    color: white;
+    width: fit-parent;
+    width: var(--w-column);
+    height: var(--h-row);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-area: Header;
+    border-radius: 7px 7px 0 0;
+    transition: transform cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    transform: none;
+    position: relative;
+    z-index: 5;
+}
+.scoreboard.disabled > .header, .scoreboard.disabled > .role, .scoreboard.disabled > .name, .scoreboard.disabled > .scorer {
+    transform: translateY(-350px);
+    transition: transform cubic-bezier(0.67, 0, 0.82, 0.11) 1s;
+}
+.scoreboard > .role {
+    background: var(--g-def-w);
+    width: fit-parent;
+    width: var(--w-role);
+    height: var(--h-row);
+    display: flex;
+    align-items: right;
+    justify-content: center;
+    transform: none;
+    transition: transform cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    position: relative;
+}
+.scoreboard > .name {
+    background: var(--g-def-w);
+    width: calc(var(--w-name) - 20px);
+    height: var(--h-row);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    transform: none;
+    transition: transform cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    position: relative;
+}
+.scoreboard > .role#home {
+    grid-area: RoleHB;
+    z-index: 4;
+    height: var(--h-row-HB);
+}
+.scoreboard > .role#B1 {
+    grid-area: Role1B;
+    z-index: 3;
+    height: var(--h-row-1B);
+}
+.scoreboard > .role#B2 {
+    grid-area: Role2B;
+    z-index: 2;
+    height: var(--h-row-2B);
+}
+.scoreboard > .role#B3 {
+    grid-area: Role3B;
+    z-index: 1;
+    height: var(--h-row-3B);
+}
+.scoreboard > .name#home {
+    grid-area: NameHB;
+    z-index: 4;
+    height: var(--h-row-HB);
+}
+.scoreboard > .name#B1 {
+    grid-area: Name1B;
+    z-index: 3;
+    height: var(--h-row-1B);
+}
+.scoreboard > .name#B2 {
+    grid-area: Name2B;
+    z-index: 2;
+    height: var(--h-row-2B);
+}
+.scoreboard > .name#B3 {
+    grid-area: Name3B;
+    z-index: 1;
+    height: var(--h-row-3B);
+}
+.scoreboard.disabled > .header{
+    transition-delay: var(--d-d-header-calc);
+}
+.scoreboard.disabled > #home{
+    transition-delay: var(--d-d-HB-calc);
+}
+.scoreboard.disabled > #B1{
+    transition-delay: var(--d-d-1B-calc);
+}
+.scoreboard.disabled > #B2{
+    transition-delay: var(--d-d-2B-calc);
+}
+.scoreboard.disabled > #B3{
+    transition-delay: var(--d-d-3B);
+}
+.scoreboard > .header {
+    transition-delay: var(--d-header);
+}
+.scoreboard > #home {
+    transition-delay: var(--d-HB-calc);
+}
+.scoreboard > #B1 {
+    transition-delay: var(--d-1B-calc);
+}
+.scoreboard > #B2 {
+    transition-delay: var(--d-2B-calc);
+}
+.scoreboard > #B3 {
+    transition-delay: var(--d-3B-calc);
+}
+.scoreboard > .name.notActive, .scoreboard > .role.notActive {
+    display: none;
+}
+.scoreboard > .role.last {
+    border-radius: 0 0 0 7px;
+}
+.scoreboard > .name.last {
+    border-radius: 0 0 7px;
+}
+
+/* Scorers */
+.scoreboard > .scorer {
+    background: var(--g-def-w);
+    width: fit-parent;
+    width: calc(var(--w-column) - 20px);
+    height: var(--h-row);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    transform: none;
+    transition: transform cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    position: relative;
+}
+.scoreboard > .scorer#head {
+    grid-area: Head;
+    transition-delay: var(--d-head-calc);
+    z-index: 3;
+}
+.scoreboard > .scorer#second {
+    grid-area: Second;
+    transition-delay: var(--d-second-calc);
+    z-index: 2;
+}
+.scoreboard > .scorer#third {
+    grid-area: Third;
+    transition-delay: var(--d-third-calc);
+    z-index: 1;
+}
+.scoreboard#scorers > .header {
+    transition-delay: var(--d-header-s);
+}
+.scoreboard.disabled#scorers > .header {
+    transition-delay: var(--d-d-header-s-calc);
+}
+.scoreboard.disabled > .scorer#head {
+    transition-delay: var(--d-d-head-calc);
+}
+.scoreboard.disabled > .scorer#second {
+    transition-delay: var(--d-d-second-calc);
+}
+.scoreboard.disabled > .scorer#third {
+    transition-delay: var(--d-d-third);
+}
+.scoreboard > .scorer.notActive {
+    display: none;
+}
+
+.scoreboard > .scorer.last{
+    border-radius: 0 0 7px 7px;
+}
+
+/* Commentators */
+.scoreboard#commentator > .commentator {
+    background: var(--g-def-w);
+    width: calc(var(--w-column) - 20px);
+    height: var(--h-row);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    grid-area: Commentator;
+    z-index: 0;
+    transition: transform cubic-bezier(0.18, 0.89, 0.33, 1) 1s;
+    transition-delay: var(--d-standard) !important;
+    transform: none;
+    position: static;
+}
+.scoreboard.disabled#commentator > .commentator{
+    transition: transform cubic-bezier(0.67, 0, 0.82, 0.11) 1s !important;
+    transition-delay: 0s !important;
+    transform: translateY(-500%) !important;
+    border-radius: 0 0 7px 7px;
+}
+
+.scoreboard#commentator > .header {
+    transition-delay: 0s;
+}
+.scoreboard.disabled#commentator > .header {
+    transition-delay: var(--d-standard);
+}
+
+.scoreboard > #bg > span {
+    background: var(--g-def-w);
+    color: black;
+    background-clip: text;
+}
