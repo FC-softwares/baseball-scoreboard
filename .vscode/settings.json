@@ -25,6 +25,7 @@
         "staff",
         "scoreUpdating",
         "overlayStyles",
-        "maintainability"
+        "maintainability",
+        "changelog"
     ]
 }
