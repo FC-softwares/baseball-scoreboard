@@ -116,7 +116,6 @@ New features will be added in the future, so stay tuned!
 * Scoreboard don't update live yo have to wait minus then 5s
 * we don't find any other bug if you find please advise me
 # Update Log (Italiano)
-# REGISTRO DI AGGIORNAMENTO (inglese)
 ## V2.0.0
 Abbiamo completamente rielaborato il software, e ora è più stabile e ha più funzionalità.
 
