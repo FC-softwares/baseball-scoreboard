@@ -1,32 +1,32 @@
-# UPDATE LOG (English)
+# Changelog (English)
 ## V2.0.0
 We have completely reworked the software, and now it is more stable and has more features.
 
-The software passed from a simple web-based scoreboard to a full desktop removing all the complications due to the installation of third-party software (Apache, PHP, etc..) and the need for a web server. Also, the application is compatible with OBS Studio and other streaming software.
+The software passed from a simple web-based scoreboard to a full desktop application removing all the complications due to the installation of third-party software (Apache, PHP, etc..) and the need for a web server. Also, the application is still compatible with OBS Studio and other streaming software.
 
-All of these changes along with the new features, new style, and new code base, made the software more stable and easier to use at any resolution and/or PC specifications. (See the below list of new features)
+All of these changes - along with the new features, new style, and new code base - made the software more stable and easier to use at any resolution and/or PC specifications. (See below the list of new features)
 ### New Features:
-* Changed completely the style of the software
-  * Changed the front-end style to a more modern and cleaner one that is responsive and compatible with any resolution screen so you can control the scoreboard from any device that is on the same network or directly from a dock into OBS Studio or other streaming software
-  * Changed the overlay style with a new modern and cleaner one. Now the overlays are compatible with any resolution.
-* Added animations and scoreboard control (#18)
+* Revamped the software's look and feel, mainly built with Bootstrap 5:
+  * Remade the front-end with a more modern and cleaner style, with great responsiveness and compatibility across devices and screen sizes. You can now easily control the scoreboard from any device that is on the same network or directly from a dock into OBS Studio or other streaming software
+  * Remade the overlay with a new modern and cleaner style. Now the overlays are compatible with any resolution.
+* Added animations and toggles to show or hide scoreboards (#18)
   * Added a panel on `control-center.html` to turn on/off the scoreboard and trigger the respective animations. Note: if the scoreboard is turned off you can still control the overlays from the control panel but the scoreboard will not be visible.
-  * For convenience a reset button has been added to "deactivate" all overlays.
+  * For convenience a reset button has been added to hide all overlays.
 * Added new overlays (#19)
-  * `umpires.html` for the umpires display divided by roles (Home Plate, First Base, Second Base, Third Base)
-  * `scorers.html` for the scorers display without distinction of roles but in the order (Head scorer, second scorer, third scorer)
-  * `commentator.html` for the commentator display
-  * `technicalComment.html` for the technical commentator display
-  * For controlling these overlays, you can have to use the new page `staff.html` where you can change the names and the roles of the staff
-* Switched from PHP to node.js and using socket.io
+  * `umpires.html` for the umpires display divided by roles and ordered as follows: Home Plate, First Base, Second Base, Third Base;
+  * `scorers.html` for the scorers display. There is no role distinction, and they are ordered as follows: head scorer, second scorer, third scorer;
+  * `commentator.html` for the commentator display;
+  * `technicalComment.html` for the technical commentator display.
+  * For controlling these overlays, you will have to use the new page `staff.html` where you can change the staff's names and roles.
+* Switched from PHP to node.js and socket.io:
   * Improved the communication between the control panel and the scoreboard
-  * Is possible to control the scoreboard from multiple devices at the same time all of them will be synchronized in real-time.
+  * It is now possible to control the scoreboard from multiple devices at the same time and keeping them always synchronized.
     * As an example, you can have the PC running the game and the scoreboard and control the overlays from your phone or tablet, it's your choice.
-    * All the devices must be on the same network and the host PC must have not set up any firewall on port 2095 (default port).
+    * All the devices must be on the same network and port 2095 (default port) has to be whitelisted on the host PC's firewall.
 * Changed the authentication system and licensing system
-  * Now to sign in to the control panel, or any administration page, you need to use your email and a password by registering on our website temporarily located at [https://www.facchini-pu.it/](https://www.facchini-pu.it/)
+  * You now need to use your email and password to sign into the control panel. You can register an account by visiting our website temporarily located at [https://www.facchini-pu.it/](https://www.facchini-pu.it/)
   * You can use the software with the demo version for evaluation purposes, but if you want to use it for a real game and stream/record it you need to buy a license for the software by purchasing it on our website.
-  * From the page `settings.html` you can add/remove the authorized users for the control panel with their email. (If the user is not registered on our website, he will be asked to complete the registration)
+  * From the page `settings.html` you can now add/remove authorized users to share access to the control panel. (If the user is not registered on our website, they will be invited to create an account).
 ### Known Bugs:
 * As usual, we haven't found any bugs yet. If you find any, please notify us or open an issue on GitHub!
 
