@@ -52,32 +52,6 @@ io.on('connection', (socket) => {
 		id: socket.handshake.auth.id,
 		token: socket.handshake.auth.token
 	});
-	if(socket.handshake.auth.id && socket.handshake.auth.token){
-		if(socket.handshake.auth.id == 'guest' && socket.handshake.auth.token == 'guest' && CLIENT == 'DEMO'){
-			socket.emit('auth', { ok: true, message: 'authorized' });
-			authorizedSessions.push(socket.id);
-			console.log('Authorized session', socket.id, authorizedSessions);
-		}else{
-			https.request(reqOption.checkstat, (ver_res) => {
-				ver_res.on('data', (d) => {
-					//process.stdout.write(d);
-					res_data = JSON.parse(d);
-					if (res_data.ok === true) {
-						socket.emit('auth', { ok: true, message: 'authorized' });
-						authorizedSessions.push(socket.id);
-						console.log('Authorized session', socket.id, authorizedSessions);
-					} else {
-						socket.emit('auth', { ok: false, message: 'not authorized' });
-					}
-				});
-			}).on('error', (e) => {
-				console.error(e);
-			}).end(ver_data);
-		}
-	}else{
-		socket.emit('auth', { ok: false, message: 'not authorized' });
-		console.log('Unauthorized session', socket.id, authorizedSessions);
-	}
 	socket.on('update_data', (data) => {
 		if(authorizedSessions.includes(socket.id))
 			updateData(data,socket);
@@ -133,5 +107,32 @@ io.on('connection', (socket) => {
 	});
 	socket.on('disconnect', () => {
 		console.log('user disconnected\tID: '+socket.id);
+		authorizedSessions = authorizedSessions.filter((item) => item !== socket.id);
 	});
+	if(socket.handshake.auth.id && socket.handshake.auth.token){
+		if(socket.handshake.auth.id == 'guest' && socket.handshake.auth.token == 'guest' && CLIENT == 'DEMO'){
+			socket.emit('auth', { ok: true, message: 'authorized' });
+			authorizedSessions.push(socket.id);
+			console.log('Authorized session', socket.id, authorizedSessions);
+		}else{
+			https.request(reqOption.checkstat, (ver_res) => {
+				ver_res.on('data', (d) => {
+					//process.stdout.write(d);
+					res_data = JSON.parse(d);
+					if (res_data.ok === true) {
+						socket.emit('auth', { ok: true, message: 'authorized' });
+						authorizedSessions.push(socket.id);
+						console.log('Authorized session', socket.id, authorizedSessions);
+					} else {
+						socket.emit('auth', { ok: false, message: 'not authorized' });
+					}
+				});
+			}).on('error', (e) => {
+				console.error(e);
+			}).end(ver_data);
+		}
+	}else{
+		socket.emit('auth', { ok: false, message: 'not authorized' });
+		console.log('Unauthorized session', socket.id, authorizedSessions);
+	}
 });
