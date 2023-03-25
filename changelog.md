@@ -4,9 +4,9 @@ We have completely reworked the software, and now it is more stable and has more
 
 The software passed from a simple web-based scoreboard to a full desktop application removing all the complications due to the installation of third-party software (Apache, PHP, etc..) and the need for a web server. Also, the application is still compatible with OBS Studio and other streaming software.
 
-All of these changes - along with the new features, new style, and new code base - made the software more stable and easier to use at any resolution and/or PC specifications. (See below the list of new features)
+All of these changes - along with the new features, new style, and new code base - made the software more stable and easier to use at any resolution and/or PC specifications. All the new features are listed below.
 ### New Features:
-* Revamped the software's look and feel, mainly built with Bootstrap 5:
+* Revamped the software's look and feel, built with Bootstrap 5:
   * Remade the front-end with a more modern and cleaner style, with great responsiveness and compatibility across devices and screen sizes. You can now easily control the scoreboard from any device that is on the same network or directly from a dock into OBS Studio or other streaming software
   * Remade the overlay with a new modern and cleaner style. Now the overlays are compatible with any resolution.
 * Added animations and toggles to show or hide scoreboards (#18)
@@ -32,6 +32,7 @@ All of these changes - along with the new features, new style, and new code base
 
 That's it for now, we hope you enjoy the new version of the software and if you have any suggestions or you want to report a bug, please contact us on our website or open an issue on GitHub. Thank you for using our software!
 New features will be added in the future, so stay tuned!
+
 ## V1.3.1
 ### New Features:
 * Password auth in back-end
@@ -115,40 +116,42 @@ New features will be added in the future, so stay tuned!
 * initial cache about ALL BROWSERS (Just repeat the action for 3/4 times and it's gone)
 * Scoreboard don't update live yo have to wait minus then 5s
 * we don't find any other bug if you find please advise me
-# Update Log (Italiano)
+
+# Changelog (Italiano)
 ## V2.0.0
-Abbiamo completamente rielaborato il software, e ora è più stabile e ha più funzionalità.
+Abbiamo completamente riscritto il software, e ora è più stabile e ricco di funzionalità.
 
-Il software è passato da un insieme di semplici overlays HTML ad un software desktop completo eliminando tutte le complicazioni dovute all'installazione di software di terze parti (Apache, PHP, ecc.) e alla necessità di un server web. Inoltre, l'applicazione è compatibile con OBS Studio e altri software di streaming.
+Il software è passato da un insieme di semplici overlay HTML ad un software desktop completo eliminando tutte le complicazioni dovute all'installazione di software di terze parti (Apache, PHP, ecc.) e alla necessità di un server web. Inoltre, l'applicazione è compatibile con OBS Studio e altri software di streaming.
 
-Tutte queste modifiche insieme alle nuove funzionalità, al nuovo stile e alla nuova base di codice, hanno reso il software più stabile e più facile da usare a qualsiasi risoluzione e / o specifiche del PC. (Vedi l'elenco sottostante delle nuove funzionalità)
+Tutte queste modifiche - insieme alle nuove funzionalità, al nuovo stile e alla nuova base di codice - hanno reso il software più stabile e facile da usare a qualsiasi risoluzione e / o specifiche del PC. Tutte le nuove funzionalità sono descritte di seguito.
 ### Nuove Funzioni:
-* Cambiato completamente lo stile del software
-  * Cambiato lo stile front-end in uno più moderno e pulito, reattivo e compatibile con qualsiasi schermo di risoluzione in modo da poter controllare il tabellone da qualsiasi dispositivo che si trova sulla stessa rete o direttamente da un dock in OBS Studio o altri software di streaming
-  * Cambiato lo stile degli overlays con uno nuovo moderno e più pulito. Ora le sovrapposizioni sono compatibili con qualsiasi risoluzione.
-* Aggiunte animazioni e controllo del tabellone (#18)
-  * Aggiunto un pannello su `control-center.html` per attivare / disattivare l-overlay e attivare le rispettive animazioni. Nota: se l-overlay è spenta, è comunque possibile controllarle dal pannello di controllo, ma il tabellone non sarà visibile.
-  * Per comodità è stato aggiunto un pulsante di reset per "disattivare" tutte le sovrapposizioni.
-* Aggiunte nuove sovrapposizioni (#19)
+* Cambiato completamente il design del software, realizzato con Bootstrap 5
+  * Rifatto il front-end con un design più moderno e pulito, reattivo e compatibile con qualsiasi schermo e dispositivo. Si può ora controllare il tabellone da qualsiasi dispositivo che si trova sulla stessa rete o direttamente da un dock in OBS Studio o altri software di streaming.
+  * Cambiato lo stile degli overlay, rendendoli moderni e più puliti. Ora gli overlay sono compatibili con qualsiasi risoluzione.
+* Aggiunte animazioni e gestione dei tabelloni (#18)
+  * Aggiunto un pannello su `control-center.html` per attivare/disattivare gli overlay, animandone la transizione. Nota: se un overlay è spento, è comunque possibile controllarlo dal pannello di controllo, ma esso non sarà visibile.
+  * Per comodità è stato aggiunto un pulsante di reset per nascondere tutti gli overlay.
+* Aggiunti nuovi overlay (#19)
   * `umpires.html` per la visualizzazione degli arbitri divisi per ruoli (Casa Base, Prima Base, Seconda Base, Terza Base)
-  * `scorers.html` per i classificatori visualizzati senza distinzione di ruoli ma nell'ordine (Capo Classificatore, Secondo Classificatore, Terzo Classificatore)
+  * `scorers.html` per i classificatori visualizzati senza distinzione di ruoli ma nell'ordine: Capo Classificatore, Secondo Classificatore, Terzo Classificatore
   * `commentator.html` per la visualizzazione del commentatore
   * `technicalComment.html` per la visualizzazione del commentatore tecnico
-  * Per controllare queste sovrapposizioni, dovrai utilizzare la nuova pagina `staff.html` da dove potrai cambiare i nomi e i ruoli del personale.
+  * Per controllare questi overlay, potrai utilizzare la nuova pagina `staff.html` da dove potrai cambiare i nomi e i ruoli del personale.
 * Passato da PHP a node.js usando la libreria socket.io
   * Migliorata la comunicazione tra il pannello di controllo e il tabellone
-  * È possibile controllare il tabellone da più dispositivi contemporaneamente, tutti sincronizzati in tempo reale.
-    * Ad esempio, puoi avere il PC che esegue il OBS e il tabellone metre controllare le sovrapposizioni dal tuo telefono o tablet, è una tua scelta.
-    * Tutti i dispositivi devono essere sulla stessa rete e il PC host non deve aver impostato alcun firewall sulla porta 2095 (porta predefinita).
+  * È possibile controllare il tabellone da più dispositivi contemporaneamente, mantenendoli sincronizzati in tempo reale.
+    * Ad esempio, puoi avere il PC che esegue OBS e il tabellone, mentre puoi controllare gli overlay dal tuo telefono o tablet. A te la scelta.
+    * Tutti i dispositivi devono essere sulla stessa rete e il firewall del PC host dev'essere configurato in modo tale da abilitare la porta 2095 (porta predefinita).
 * Modificato il sistema di autenticazione e il sistema di licenze
-  * Ora per accedere al pannello di controllo, o qualsiasi pagina di amministrazione, è necessario utilizzare la propria e-mail e una password registrandosi sul nostro sito Web temporaneamente situato a [https://www.facchini-pu.it/](https://www.facchini-pu.it/)
-  * È possibile utilizzare il software con la versione demo a scopo di valutazione, ma se si desidera utilizzarlo per un gioco reale e trasmetterlo in streaming e/o registrarlo è necessario acquistare una licenza per il software acquistandolo sul nostro sito Web.
-  * Dalla pagina `settings.html` è possibile aggiungere/rimuovere gli utenti autorizzati ad accedere al pannello di controllo con la loro email. (Se l'utente non è registrato sul nostro sito web, gli verrà inviata una email chiedendogli di completare la registrazione)
+  * Per accedere al pannello di controllo, o qualsiasi pagina di amministrazione, è necessario registrarsi sul nostro sito Web temporaneamente situato a [https://www.facchini-pu.it/](https://www.facchini-pu.it/) ed accedere poi con le stesse credenziali
+  * È possibile utilizzare il software con la versione demo a scopi di valutazione, ma se si desidera usarlo in una partita registrata o trasmessa in streaming è necessario acquistare una licenza per il software, disponibile sul nostro sito Web.
+  * Dalla pagina `settings.html` è possibile condividere l'accesso al pannello di controllo, aggiungendo o rimuovendo gli utenti autorizzati tramite la loro email. Se l'utente non è registrato, riceverà un invito per registrarsi sul nostro sito web.
 ### Bug noti:
-* Come al solito, non abbiamo ancora trovato alcun bug. Se ne trovi, avvisaci o apri un problema su GitHub!
+* Come al solito, non abbiamo ancora trovato alcun bug. Se ne trovi, avvisaci o apri una issue su GitHub!
 
-Per ora è tutto, speriamo che ti piaccia la nuova versione del software e se hai suggerimenti o vuoi segnalare un bug, contattaci sul nostro sito Web o apri una issue su GitHub. Grazie per aver scelto il nostro software!
-Nuove funzionalità verranno aggiunte in futuro, quindi rimanete sintonizzati!
+Per ora è tutto, ci auguriamo che la nuova versione del software ti piaccia. Se hai suggerimenti o vuoi segnalare un bug, contattaci sul nostro sito Web o apri una issue su GitHub. Grazie per aver scelto il nostro software!
+Nuove funzionalità verranno aggiunte in futuro. Seguici su GitHub per rimanere aggiornato sulle future versioni!
+
 ## V1.3.1
 ### Nuove caratteristiche:
 * Autenticazione password nel back-end

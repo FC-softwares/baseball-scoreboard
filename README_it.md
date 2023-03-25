@@ -1,13 +1,13 @@
 <center>
 
-![insert banner here](file)
+<!-- ![insert banner here](file) -->
 
 <center>
 
 [![CodeFactor](https://www.codefactor.io/repository/github/fc-softwares/baseball-scoreboard/badge/main)](https://www.codefactor.io/repository/github/fc-softwares/baseball-scoreboard/overview/main)
-![Version](https://img.shields.io/github/package-json/v/FC-softwares/baseball-scoreboard)
 [![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/aauk.svg)](https://betteruptime.com/?utm_source=status_badge)
 [![Maintainability](https://api.codeclimate.com/v1/badges/60d1dc20274d613c67db/maintainability)](https://codeclimate.com/github/FC-softwares/baseball-scoreboard/maintainability)
+![GitHub All Releases](https://img.shields.io/github/downloads/FC-softwares/baseball-scoreboard/total)
 
 </center>
 
