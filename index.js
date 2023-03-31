@@ -40,7 +40,7 @@ app.post('/checkstat', (req, res) => {
 	const { id, token } = req.body;
 	if (!checkIDToken(id, res, token)) return;
 	if (id == 'guest' && token == 'guest' && CLIENT == 'DEMO') {
-		res.status(200).json({ ok: true, message: 'guest', user: { email: 'guest@guest.com', name: 'guest', surname: "", isOwner: true } });
+		res.status(200).json({ ok: true, message: 'guest', user: { email: '', name: 'guest', surname: "", isOwner: true, team: "DEMO" } });
 		return;
 	} else if (CLIENT !== 'DEMO'&&id == 'guest' && token == 'guest') {
 		res.status(400).json({ ok: false, message: 'invalid token' });
@@ -86,7 +86,7 @@ app.post("/getAuthUsers", (req, res) => {
 	const { id, token } = req.body;
 	if (!checkIDToken(id, res, token)) return;
 	if (id == 'guest' && token == 'guest') {
-		res.status(200).json({ ok: true, message: 'guest', users: [{ id: '0', name: "guest", surname: "guest", email: "guest@guest.com" }] });
+		res.status(200).json({ ok: true, message: 'guest', users: [{ id: '0', name: "guest", surname: "guest", email: "", team: "DEMO"}] });
 		return;
 	}
 	const req_option = {

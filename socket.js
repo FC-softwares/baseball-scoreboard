@@ -87,8 +87,20 @@ io.on('connection', (socket) => {
 	});
 	socket.on('getData',()=>{
 		fs.readFile(__dirname + '/app/json/data.json', 'utf8', (err, json) => {
-			const obj = JSON.parse(json);
-			socket.emit('connectData',obj);
+			if(err)
+				return console.error(err);
+			fs.readFile(__dirname + '/app/img/AwayLogo.json' , 'utf8', (err, logoA) => {
+				if(err)
+					return console.error(err);
+				fs.readFile(__dirname + '/app/img/HomeLogo.json' , 'utf8', (err, logoH) => {
+					if(err)
+						return console.error(err);
+					let obj = JSON.parse(json);
+					obj.Teams.Away.Logo = logoA;
+					obj.Teams.Home.Logo = logoH;
+					socket.emit('connectData',obj);
+				});
+			});
 		})
 	});
 	socket.on('getActive',()=>{

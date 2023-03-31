@@ -26,6 +26,7 @@
         "scoreUpdating",
         "overlayStyles",
         "maintainability",
-        "changelog"
+        "changelog",
+        "teamLogo"
     ]
 }

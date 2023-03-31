@@ -4,7 +4,10 @@ const { updateActive, updateOfficial, updateSettings, resetAllStaff } = require(
 function updateData(data,socket){
 	fs.readFile(__dirname + '/app/json/data.json', 'utf8', (err, data_old) => {
 		if (err) throw err;
-		var json = JSON.parse(data), data_old_obj = JSON.parse(data_old), toBeSent = {};
+		var json;
+		if (typeof data === 'string') json = JSON.parse(data)
+		else json = data
+		var data_old_obj = JSON.parse(data_old), toBeSent = {};
 		Object.entries(json).forEach(entry => {
 			const [indx, element] = entry;
 			switch (element) {
@@ -14,9 +17,12 @@ function updateData(data,socket){
 			case 'toggle':({ data_old_obj, toBeSent } = toggleChanges(indx, data_old_obj, toBeSent));break;
 			default:
 				if (indx.startsWith('Teams.') && (indx.endsWith('.Name')||indx.endsWith('.Color'))) ({ data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, indx.split('.')[1] + '.' + indx.split('.')[2]));
-				else {
-				data_old_obj[indx] = element;
-				toBeSent[indx] = element;
+				else if (indx.startsWith('Teams.') && indx.endsWith('.Logo')) {
+					fs.writeFile(__dirname + '/app/img/' + indx.split('.')[1] + 'Logo.json', JSON.stringify(element, null, 4), (err) => {if (err)  throw err;});
+					data_old_obj.Teams[indx.split('.')[1]].Logo = element;
+				}else{
+					data_old_obj[indx] = element;
+					toBeSent[indx] = element;
 				}
 			}
 		});

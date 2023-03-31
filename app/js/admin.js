@@ -35,6 +35,11 @@ function update(data){
 		setViewBase(data?.Bases[2],"Base2View");
 		setViewBase(data?.Bases[3],"Base3View");
 	}
+	if(data?.Teams?.Away?.Logo !== undefined){
+		try{ document.getElementById("LogoAwayView").src = data?.Teams?.Away?.Logo?.replaceAll(/[\n'"]/g,'')} catch(err){console.log(err)};
+	}
+	if(data?.Teams?.Home?.Logo !== undefined)
+		try{ document.getElementById("LogoHomeView").src = data?.Teams?.Home?.Logo?.replaceAll(/[\n'"]/g,'')} catch(err){console.log(err)};
 }
 function setArrowPart(part,active) {
 	if (active){
@@ -89,14 +94,40 @@ function Base(base){
 	socket.emit('update_data', `{"${base}":"toggle"}`);
 	return true;
 }
-function Update_Data(){
+async function Update_Data(){
 	NameA = document.getElementById('NameAwayView').value;
 	NameH = document.getElementById('NameHomeView').value;
 	ColorA = document.getElementById('ColorAwayView').value;
 	ColorH = document.getElementById('ColorHomeView').value;
-
-	socket.emit('update_data',`{"Teams.Away.Name":"${NameA}","Teams.Home.Name":"${NameH}","Teams.Away.Color":"${ColorA}","Teams.Home.Color":"${ColorH}"}`);
+	let obj = {
+		"Teams.Away.Name":NameA,
+		"Teams.Home.Name":NameH,
+		"Teams.Away.Color":ColorA,
+		"Teams.Home.Color":ColorH
+	}
+	if(document.getElementById('LogoAway')?.files[0] !== undefined)
+		obj["Teams.Away.Logo"] = await fileToBase64(document.getElementById('LogoAway').files[0]);
+	if(document.getElementById('LogoHome')?.files[0] !== undefined)
+		obj["Teams.Home.Logo"] = await fileToBase64(document.getElementById('LogoHome').files[0]);
+	socket.emit('update_data', obj);
 	return true;
+}
+function setImageSrcFromInput(input, image) {
+	const file = input.files[0];
+	const reader = new FileReader();
+	reader.onload = () => {
+		try{document.getElementById(image).src = reader.result;}catch(err){console.log(err)}
+	};
+	reader.readAsDataURL(file);
+}
+
+function fileToBase64(file) {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = () => resolve(reader.result);
+		reader.onerror = error => reject(error);
+	});
 }
 function New_Batter(){
 	socket.emit('update_data',`{"Ball":"0","Strike":"0"}`);
