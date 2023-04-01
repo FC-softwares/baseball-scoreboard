@@ -9,19 +9,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/actives.js"></script>
-    <script src="js/admin.js" async></script>
+    <script defer src="js/admin.js" async></script>
     <title>Baseball Scoreboard</title>
     <script src="/js/all.js"></script>
     <script src="js/redVerSess.js" defer></script>
-    <style>
-        .responsive-max-width {
-            content: ""
-        }
-    </style>
 </head>
 <body class="d-flex flex-column vh-100">
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <div class="container-md responsive-max-width" style="max-width: 1140px;">
+        <div class="container-md" style="max-width: 1140px;">
             <a class="navbar-brand" href="#">Baseball Scoreboard</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toggleNav" aria-controls="toggleNav" aria-expanded="false" aria-label="Toggle navigation bar">
                 <span class="navbar-toggler-icon"></span>
@@ -249,9 +244,24 @@
                                     <label for="NameAway" class="form-label h5 fw-normal">Name</label>
                                     <input type="text" class="form-control form-control-sm" id="NameAwayView">
                                 </div>
-                                <div class="d-flex flex-column align-items-center">
+                                <div class="mb-2 d-flex flex-column align-items-center">
                                     <label for="ColorAway" class="form-label h5 fw-normal">Color</label>
                                     <input type="color" class="form-control form-control-sm" id="ColorAwayView">
+                                </div>
+                                <div class="d-flex flex-column align-items-center">
+                                    <span class="form-label h5 fw-normal">Logo</span>
+                                    <div class="gap-2 d-flex flex-column align-items-center">
+                                        <div>
+                                            <div class="btn-group" role="group" aria-label="Controls">
+                                                <label for="LogoAway" class="btn btn-outline-dark ">Upload file</label>
+                                                <button type="button" class="btn btn-outline-danger" onclick="setImageSrcFromInput(this, 'LogoAwayView')" id="LogoAwayClear"><i class="bi bi-x-circle"></i></button>
+                                            </div>
+                                            <input type="file" id="LogoAway" style="display: none;" accept="image/*" onchange="setImageSrcFromInput(this, 'LogoAwayView')" multiple="false">
+                                        </div>
+                                        <div>
+                                            <img src="" style="height: 50px;aspect-ratio: 1;" id="LogoAwayView" alt="Logo Away">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="vr p-0 d-none d-sm-block"></div> <!--unico problema è che non se lo schermo è xs, le metà ci saranno ugualmente, ma la divisione scomparirà-->
@@ -279,6 +289,21 @@
                                 <div class="d-flex flex-column align-items-center">
                                     <label for="ColorHome" class="form-label h5 fw-normal">Color</label>
                                     <input type="color" class="form-control form-control-sm" id="ColorHomeView">
+                                </div>
+                                <div class="d-flex flex-column align-items-center">
+                                    <span class="form-label h5 fw-normal">Logo</span>
+                                    <div class="gap-2 d-flex flex-column align-items-center">
+                                        <div>
+                                            <div class="btn-group" role="group" aria-label="Controls">
+                                                <label for="LogoHome" class="btn btn-outline-dark ">Upload file</label>
+                                                <button type="button" class="btn btn-outline-danger" onclick="setImageSrcFromInput(this, 'LogoHomeView')" id="LogoHomeClear"><i class="bi bi-x-circle"></i></button>
+                                            </div>
+                                            <input type="file" id="LogoHome" style="display: none;" accept="image/*" onchange="setImageSrcFromInput(this, 'LogoHomeView')" multiple="false">
+                                        </div>
+                                        <div>
+                                            <img src="" style="height: 50px;aspect-ratio: 1;" id="LogoHomeView" alt="Logo Home">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
