@@ -96,8 +96,8 @@ io.on('connection', (socket) => {
 					if(err)
 						return console.error(err);
 					let obj = JSON.parse(json);
-					obj.Teams.Away.Logo = logoA;
-					obj.Teams.Home.Logo = logoH;
+					obj.Teams.Away.Logo = JSON.parse(logoA);
+					obj.Teams.Home.Logo = JSON.parse(logoH);
 					socket.emit('connectData',obj);
 				});
 			});

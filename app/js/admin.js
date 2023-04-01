@@ -10,6 +10,11 @@ const socket = io({
 socket.on('connectData', update);
 socket.on('update', update);
 
+// Constant URL to not set logo image to be used by @TheTecnoKing soon
+// @TheTecnoKing if you are reading this, please delete this comment and add the URL to the image you want to use
+// This dose not mean this is the image displayed on the scoreboard, this is just a placeholder for the control panel
+const notSetLogoURL = "https://dummyimage.com/100x100/000000/ffffff.png&text=LOGO+NON+IMPOSTATO";
+
 function update(data){
 	setNumberView(data?.Teams?.Away?.Name, "NameAway");
 	setNumberView(data?.Teams?.Home?.Name, "NameHome");
@@ -35,11 +40,14 @@ function update(data){
 		setViewBase(data?.Bases[2],"Base2View");
 		setViewBase(data?.Bases[3],"Base3View");
 	}
-	if(data?.Teams?.Away?.Logo !== undefined){
-		try{ document.getElementById("LogoAwayView").src = data?.Teams?.Away?.Logo?.replaceAll(/[\n'"]/g,'')} catch(err){console.log(err)};
-	}
-	if(data?.Teams?.Home?.Logo !== undefined)
-		try{ document.getElementById("LogoHomeView").src = data?.Teams?.Home?.Logo?.replaceAll(/[\n'"]/g,'')} catch(err){console.log(err)};
+	if(data?.Teams?.Away?.Logo !== undefined && data?.Teams?.Away?.Logo !== "")
+		try{ document.getElementById("LogoAwayView").src = data?.Teams?.Away?.Logo?.replaceAll(/[\n'"]/g,'')} catch(err){console.log(err)}
+	else if (data?.Teams?.Away?.Logo !== undefined)
+		try{ document.getElementById("LogoAwayView").src = notSetLogoURL;} catch(err){console.log(err)};
+	if(data?.Teams?.Home?.Logo !== undefined && data?.Teams?.Home?.Logo !== "")
+		try{ document.getElementById("LogoHomeView").src = data?.Teams?.Home?.Logo?.replaceAll(/[\n'"]/g,'')} catch(err){console.log(err)}
+	else if (data?.Teams?.Home?.Logo !== undefined)
+		try{ document.getElementById("LogoHomeView").src = notSetLogoURL;} catch(err){console.log(err)};
 }
 function setArrowPart(part,active) {
 	if (active){
@@ -109,14 +117,25 @@ async function Update_Data(){
 		obj["Teams.Away.Logo"] = await fileToBase64(document.getElementById('LogoAway').files[0]);
 	if(document.getElementById('LogoHome')?.files[0] !== undefined)
 		obj["Teams.Home.Logo"] = await fileToBase64(document.getElementById('LogoHome').files[0]);
+	if(document.getElementById('LogoAwayClear')?.value == "remove")
+		obj["Teams.Away.Logo"] = "";
+	if(document.getElementById('LogoHomeClear')?.value == "remove")
+		obj["Teams.Home.Logo"] = "";
 	socket.emit('update_data', obj);
 	return true;
 }
 function setImageSrcFromInput(input, image) {
+	if(input?.files === undefined){
+		try{document.getElementById(image).src = notSetLogoURL;}catch(err){console.log(err)}
+		try{document.getElementById(image.replace("View","")).value = "";}catch(err){console.log(err)}
+		try{input.value = "remove";}catch(err){console.log(err)}
+		return;
+	}
 	const file = input.files[0];
 	const reader = new FileReader();
 	reader.onload = () => {
 		try{document.getElementById(image).src = reader.result;}catch(err){console.log(err)}
+		try{document.getElementById(image.replace("View","")+"Clear").value = "";}catch(err){console.log(err)}
 	};
 	reader.readAsDataURL(file);
 }

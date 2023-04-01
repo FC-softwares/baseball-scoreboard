@@ -20,6 +20,7 @@ function updateData(data,socket){
 				else if (indx.startsWith('Teams.') && indx.endsWith('.Logo')) {
 					fs.writeFile(__dirname + '/app/img/' + indx.split('.')[1] + 'Logo.json', JSON.stringify(element, null, 4), (err) => {if (err)  throw err;});
 					data_old_obj.Teams[indx.split('.')[1]].Logo = element;
+					toBeSent.Teams = {...toBeSent.Teams,[indx.split('.')[1]]: {...toBeSent.Teams[indx.split('.')[1]],Logo: element,},};
 				}else{
 					data_old_obj[indx] = element;
 					toBeSent[indx] = element;
