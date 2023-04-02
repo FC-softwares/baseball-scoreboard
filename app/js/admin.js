@@ -23,29 +23,28 @@ function update(data){
 	setNumberView(data?.Strike, "Strike");
 	setNumberView(data?.Out, "Out");
 	setNumberView(data?.Inning, "Inning");
-	if(data?.Arrow !== undefined){
-		if (data.Arrow == 1) {
+	if(data?.Arrow !== undefined && data.Arrow == 1) {
 			setArrowPart("Top",true);
 			setArrowPart("Bot",false);
-		}else{
-			setArrowPart("Top",false);
-			setArrowPart("Bot",true);
-		}
+	}else if (data?.Arrow !== undefined) {
+		setArrowPart("Top",false);
+		setArrowPart("Bot",true);
 	}
 	if(data?.Bases !== undefined){
 		setViewBase(data?.Bases[1],"Base1View");
 		setViewBase(data?.Bases[2],"Base2View");
 		setViewBase(data?.Bases[3],"Base3View");
 	}
-	if(data?.Teams?.Away?.Logo !== undefined && data?.Teams?.Away?.Logo !== "")
-		try{ document.getElementById("LogoAwayView").src = data?.Teams?.Away?.Logo?.replaceAll(/[\n'"]/g,'')} catch(err){console.log(err)}
-	else if (data?.Teams?.Away?.Logo !== undefined)
-		try{ document.getElementById("LogoAwayView").src = notSetLogoURL;} catch(err){console.log(err)};
-	if(data?.Teams?.Home?.Logo !== undefined && data?.Teams?.Home?.Logo !== "")
-		try{ document.getElementById("LogoHomeView").src = data?.Teams?.Home?.Logo?.replaceAll(/[\n'"]/g,'')} catch(err){console.log(err)}
-	else if (data?.Teams?.Home?.Logo !== undefined)
-		try{ document.getElementById("LogoHomeView").src = notSetLogoURL;} catch(err){console.log(err)};
+	updateLogo(data?.Teams?.Away?.Logo, "LogoAwayView");
+	updateLogo(data?.Teams?.Home?.Logo, "LogoHomeView");
 }
+function updateLogo(logo, id){
+	if (logo !== undefined && logo !== "")
+		try { document.getElementById(id).src = logo?.replaceAll(/[\n'"]/g, ''); } catch (err) { console.log(err); }
+	else if (logo !== undefined)
+		try { document.getElementById(id).src = notSetLogoURL; } catch (err) { console.log(err); };
+}
+
 function setArrowPart(part,active) {
 	if (active){
 		document.getElementById(part+"View").classList.remove("btn-outline-primary");
@@ -123,16 +122,20 @@ async function Update_Data(){
 }
 function setImageSrcFromInput(input, image) {
 	if(input?.files === undefined){
-		try{document.getElementById(image).src = notSetLogoURL;}catch(err){console.log(err)}
-		try{document.getElementById(image.replace("View","")).value = "";}catch(err){console.log(err)}
-		try{input.value = "remove";}catch(err){console.log(err)}
+		try{
+			document.getElementById(image).src = notSetLogoURL;
+			document.getElementById(image.replace("View","")).value = "";
+			input.value = "remove";
+		}catch(err){console.log(err)}
 		return;
 	}
 	const file = input.files[0];
 	const reader = new FileReader();
 	reader.onload = () => {
-		try{document.getElementById(image).src = reader.result;}catch(err){console.log(err)}
-		try{document.getElementById(image.replace("View","")+"Clear").value = "";}catch(err){console.log(err)}
+		try{
+			document.getElementById(image).src = reader.result;
+			document.getElementById(image.replace("View","")+"Clear").value = "";
+		}catch(err){console.log(err)}
 	};
 	reader.readAsDataURL(file);
 }

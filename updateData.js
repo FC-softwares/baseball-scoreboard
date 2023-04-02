@@ -17,14 +17,8 @@ function updateData(data,socket){
 			case 'toggle':({ data_old_obj, toBeSent } = toggleChanges(indx, data_old_obj, toBeSent));break;
 			default:
 				if (indx.startsWith('Teams.') && (indx.endsWith('.Name')||indx.endsWith('.Color'))) ({ data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, indx.split('.')[1] + '.' + indx.split('.')[2]));
-				else if (indx.startsWith('Teams.') && indx.endsWith('.Logo')) {
-					fs.writeFile(__dirname + '/app/img/' + indx.split('.')[1] + 'Logo.json', JSON.stringify(element, null, 4), (err) => {if (err)  throw err;});
-					data_old_obj.Teams[indx.split('.')[1]].Logo = element;
-					toBeSent.Teams = {...toBeSent.Teams,[indx.split('.')[1]]: {...toBeSent.Teams[indx.split('.')[1]],Logo: element,},};
-				}else{
-					data_old_obj[indx] = element;
-					toBeSent[indx] = element;
-				}
+				else if (indx.startsWith('Teams.') && indx.endsWith('.Logo')) updateLogo(indx, element, data_old_obj, toBeSent)
+				else {data_old_obj[indx] = element;toBeSent[indx] = element;}
 			}
 		});
 		toBeSent = {...toBeSent,Teams: {...toBeSent?.Teams,Away: {...toBeSent?.Teams?.Away,Score: data_old_obj.Teams.Away.Score,},Home: {...toBeSent?.Teams?.Home,Score: data_old_obj.Teams.Home.Score,},},Int: data_old_obj.Int,Inning: data_old_obj.Inning,}
@@ -32,6 +26,15 @@ function updateData(data,socket){
 		socket.emit('update', toBeSent);
 		socket.broadcast.emit('update', toBeSent);
 	});
+}
+
+function updateLogo(indx, element, data_old_obj, toBeSent) {
+	fs.writeFile(__dirname + '/app/img/' + indx.split('.')[1] + 'Logo.json', JSON.stringify(element, null, 4), (err) => {
+		if (err)
+			throw err;
+	});
+	data_old_obj.Teams[indx.split('.')[1]].Logo = element;
+	toBeSent.Teams = { ...toBeSent.Teams, [indx.split('.')[1]]: { ...toBeSent.Teams[indx.split('.')[1]], Logo: element, }, };
 }
 
 function nameColorChange(data_old_obj, element, toBeSent, mix) {

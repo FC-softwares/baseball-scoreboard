@@ -31,7 +31,6 @@ function update(obj) {
 	}
 	updateLogo(obj?.Teams?.Home?.Logo,".teamLogo#home>img");
 	updateLogo(obj?.Teams?.Away?.Logo,".teamLogo#away>img");
-
 }
 
 function updateTeamScorePostgame(data, team) {
@@ -162,11 +161,12 @@ function updateScoreboard(obj) {
 
 }
 function updateLogo(logo, id) {
-	if (logo !== undefined){
-		try { document.querySelector(id).src = logo.replaceAll(/[\n'"]/g,'')}catch(error){console.error(error);}
-	} if (logo !== undefined && logo == "") {
-		try { document.querySelector(id).src = "img/baseball-ball.png"; } catch (error) { console.error(error); }
-	}
+	try {
+		if (logo !== undefined)
+			document.querySelector(id).src = logo.replaceAll(/[\n'"]/g,'')
+		else if (logo !== undefined && logo == "")
+			document.querySelector(id).src = "img/baseball-ball.png";
+	} catch (error) { console.error(error); }
 }
 
 function updateBase(base,id) {
