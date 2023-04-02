@@ -4,7 +4,8 @@
 :root {
     /* Scoreboard widths */
     --w-teamcolor: 7px;
-    --w-teamname: 150px;
+    --w-teamname: 110px;
+    --w-teamlogo: 40px;
     --w-inning: 50px;
     --w-score: 100px;
     /* Scoreboard row height */
@@ -39,11 +40,11 @@ div {
 }
 
 /* Transitions */
-.scoreboard > .teamColor, .scoreboard > .teamName {
+.scoreboard > .teamColor, .scoreboard > .teamName, .scoreboard > .teamLogo {
     transition: cubic-bezier(0.18, 0.89, 0.33, 1) 1.5s;
     transform: none;
 }
-.scoreboard.disabled > .teamColor, .scoreboard.disabled > .teamName {
+.scoreboard.disabled > .teamColor, .scoreboard.disabled > .teamName, .scoreboard.disabled > .teamLogo {
     transition: cubic-bezier(0.67, 0, 0.82, 0.11) 2s;
     transform: translateX(-1000px);
 }
@@ -130,12 +131,12 @@ div {
     font-family: 'Poppins', sans-serif;
     font-size: 25px;
     grid-template-rows: repeat(3, var(--h-row));
-    grid-template-columns: var(--w-teamcolor) var(--w-teamname) auto var(--w-score);
+    grid-template-columns: var(--w-teamcolor) var(--w-teamlogo) var(--w-teamname) auto var(--w-score);
     grid-auto-flow: column;
     grid-template-areas:
-        "empty empty container score"
-        "colorAway nameAway container score"
-        "colorHome nameHome container score";
+        "empty empty empty container score"
+        "colorAway logoAway nameAway container score"
+        "colorHome logoHome nameHome container score";
 }
 div:not(.teamName, .scoreboard) {
     text-align: center;
@@ -174,9 +175,19 @@ div:not(.teamName, .scoreboard) {
     background: var(--g-home)
 }
 
+/* Team logo */
+.teamLogo#away {grid-area: logoAway;}
+.teamLogo#home {grid-area: logoHome;}
+.teamLogo > img {
+    padding-left: calc(var(--w-teamlogo) * 0.2);
+    width: calc(var(--w-teamlogo) * 0.8);
+    height: calc(var(--w-teamlogo) * 0.8);
+    object-fit: contain;
+}
+
 /* Team name */
 .teamName {
-    padding-left: 10px;
+    padding-left: 8px;
     padding-right: 10px;
 }
 .teamName#away > #bg > span {
@@ -193,7 +204,7 @@ div:not(.teamName, .scoreboard) {
     background-clip: text;
     text-transform: uppercase;
 }
-.teamName, .inning > .number, .score > .inning > .total {
+.teamName, .inning > .number, .score > .inning > .total, .teamLogo {
     background: var(--g-def);
 }
 

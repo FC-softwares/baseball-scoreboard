@@ -4,7 +4,7 @@
 :root {
     /* Scoreboard widths */
     --w-teamcolor: 7px;
-    --w-teamname: 120px;
+    --w-teamname: 110px;
     --w-teamlogo: 40px;
     --w-score: 50px;
     --w-bases: 80px;
@@ -184,7 +184,7 @@ div {
     padding-left: calc(var(--w-teamlogo) * 0.2);
     width: calc(var(--w-teamlogo) * 0.8);
     height: calc(var(--w-teamlogo) * 0.8);
-    object-fit: cover;
+    object-fit: contain;
 }
 
 /* Team score */
