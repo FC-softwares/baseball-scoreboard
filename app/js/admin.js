@@ -39,10 +39,12 @@ function update(data){
 	updateLogo(data?.Teams?.Home?.Logo, "LogoHomeView");
 }
 function updateLogo(logo, id){
-	if (logo !== undefined && logo !== "")
-		try { document.getElementById(id).src = logo?.replaceAll(/[\n'"]/g, ''); } catch (err) { console.log(err); }
-	else if (logo !== undefined)
-		try { document.getElementById(id).src = notSetLogoURL; } catch (err) { console.log(err); };
+	try{
+		if (logo !== undefined && logo !== "")
+			document.getElementById(id).src = logo?.replaceAll(/[\n'"]/g, '');
+		else if (logo !== undefined)
+			document.getElementById(id).src = notSetLogoURL;
+	} catch (err) { console.log(err); };
 }
 
 function setArrowPart(part,active) {
