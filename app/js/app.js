@@ -29,6 +29,9 @@ function update(obj) {
 		// Total score
 		updateInning(obj);
 	}
+	updateLogo(obj?.Teams?.Home?.Logo,".teamLogo#home>img");
+	updateLogo(obj?.Teams?.Away?.Logo,".teamLogo#away>img");
+
 }
 
 function updateTeamScorePostgame(data, team) {
@@ -153,9 +156,17 @@ function updateScoreboard(obj) {
 			try { document.querySelector(".inning > span#down").classList.remove("disabled"); } catch (error) { console.error(error); }
 		}
 	}
-	updateBase(obj?.Bases[1], "first");
-	updateBase(obj?.Bases[2], "second");
-	updateBase(obj?.Bases[3], "third");
+	try{updateBase(obj?.Bases[1], "first")}catch(error){console.error(error);}
+	try{updateBase(obj?.Bases[2], "second")}catch(error){console.error(error);}
+	try{updateBase(obj?.Bases[3], "third");}catch(error){console.error(error);}
+
+}
+function updateLogo(logo, id) {
+	if (logo !== undefined){
+		try { document.querySelector(id).src = logo.replaceAll(/[\n'"]/g,'')}catch(error){console.error(error);}
+	} if (logo !== undefined && logo == "") {
+		try { document.querySelector(id).src = "img/baseball-ball.png"; } catch (error) { console.error(error); }
+	}
 }
 
 function updateBase(base,id) {

@@ -10,7 +10,7 @@ const socket = io({
 socket.on('connectData', update);
 socket.on('update', update);
 
-const notSetLogoURL = "";
+const notSetLogoURL = "img/baseball-ball.png";
 
 function update(data){
 	setNumberView(data?.Teams?.Away?.Name, "NameAway");
