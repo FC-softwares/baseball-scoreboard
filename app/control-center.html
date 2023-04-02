@@ -259,7 +259,7 @@
                                             <input type="file" id="LogoAway" style="display: none;" accept="image/*" onchange="setImageSrcFromInput(this, 'LogoAwayView')" multiple="false">
                                         </div>
                                         <div>
-                                            <img src="" style="height: 50px;aspect-ratio: 1;" id="LogoAwayView" alt="Logo Away">
+                                            <img src="" onerror="this.src = 'img/baseball-ball.png';" style="height: 50px; aspect-ratio: 1; object-fit: cover;" id="LogoAwayView" alt="Logo Away">
                                         </div>
                                     </div>
                                 </div>
@@ -286,7 +286,7 @@
                                     <label for="NameHome" class="form-label h5 fw-normal">Name</label>
                                     <input type="text" class="form-control form-control-sm" id="NameHomeView">
                                 </div>
-                                <div class="d-flex flex-column align-items-center">
+                                <div class="mb-2 d-flex flex-column align-items-center">
                                     <label for="ColorHome" class="form-label h5 fw-normal">Color</label>
                                     <input type="color" class="form-control form-control-sm" id="ColorHomeView">
                                 </div>
@@ -301,7 +301,7 @@
                                             <input type="file" id="LogoHome" style="display: none;" accept="image/*" onchange="setImageSrcFromInput(this, 'LogoHomeView')" multiple="false">
                                         </div>
                                         <div>
-                                            <img src="" style="height: 50px;aspect-ratio: 1;" id="LogoHomeView" alt="Logo Home">
+                                            <img src="" onerror="this.src = 'img/baseball-ball.png';" style="height: 50px; aspect-ratio: 1; object-fit: cover;" id="LogoHomeView" alt="Logo Home">
                                         </div>
                                     </div>
                                 </div>
@@ -387,7 +387,7 @@
                         <hr>
                         <div class="row mt-3 justify-content-center">
                             <div class="col-auto">
-                                <button type="button" class="btn btn-outline-danger" onclick="allOff()">Reset</button>
+                                <button type="button" class="btn btn-outline-danger" onclick="allOff()">Disable all</button>
                             </div>
                         </div>
                     </div>
@@ -466,7 +466,7 @@
             </div>
             <div class="d-flex flex-row gap-2">
                 <a class="text-decoration-none fs-3" onclick="openExternal('https://github.com/FC-softwares/baseball-scoreboard')" rel="noopener noreferrer"><i class="bi-github"></i></a>
-                <a class="text-decoration-none fs-3" onclick="openExternal('https://opencollective.com/baseball-scoreboard')" rel="noopener noreferrer"><i class="bi-cash-coin"></i></a>
+                <a class="text-decoration-none fs-3" onclick="openExternal('https://www.fc-software.it/products')" rel="noopener noreferrer"><i class="bi-cash-coin"></i></a>
             </div>
         </div>
     </footer>

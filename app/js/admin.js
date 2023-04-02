@@ -10,10 +10,7 @@ const socket = io({
 socket.on('connectData', update);
 socket.on('update', update);
 
-// Constant URL to not set logo image to be used by @TheTecnoKing soon
-// @TheTecnoKing if you are reading this, please delete this comment and add the URL to the image you want to use
-// This dose not mean this is the image displayed on the scoreboard, this is just a placeholder for the control panel
-const notSetLogoURL = "https://dummyimage.com/100x100/000000/ffffff.png&text=LOGO+NON+IMPOSTATO";
+const notSetLogoURL = "";
 
 function update(data){
 	setNumberView(data?.Teams?.Away?.Name, "NameAway");
