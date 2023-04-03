@@ -164,6 +164,10 @@ function toggleChanges(indx, data_old_obj, toBeSent) {
 		case 'Reset_All':
 			data_old_obj = {Teams: {Away: { Name: 'AWAY', Score: 0, Color: '#000000', Short: "AWY" },Home: { Name: 'HOME', Score: 0, Color: '#000000', Short: "HME" },},Ball: 0,Strike: 0,Out: 0,Inning: 1,Arrow: 1,Bases: { 1: false, 2: false, 3: false },Int: { 1: { A: 0, H: 0 } },};
 			toBeSent = data_old_obj;
+			toBeSent.Teams.Away.Logo = "";
+			toBeSent.Teams.Home.Logo = "";
+			fs.writeFileSync(__dirname + '/app/img/AwayLogo.json', JSON.stringify(""));
+			fs.writeFileSync(__dirname + '/app/img/HomeLogo.json', JSON.stringify(""));
 		break;
 		default: break;
 	}
