@@ -1,3 +1,5 @@
+import {io} from '/socket.io/socket.io.esm.min.js';
+import { allOff,buttonOpr,updateActive } from './actives.js';
 const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
 
@@ -9,16 +11,13 @@ const socket = io({
 });
 socket.on('connectData', update);
 socket.on('update', update);
+socket.emit('getData');
+socket.emit('getActive');
 
 const notSetLogoURL = "img/baseball-ball.png";
 
 function update(data){
-	setNumberView(data?.Teams?.Away?.Name, "NameAway");
-	setNumberView(data?.Teams?.Home?.Name, "NameHome");
-	setNumberView(data?.Teams?.Away?.Color, "ColorAway");
-	setNumberView(data?.Teams?.Home?.Color, "ColorHome");
-	setNumberView(data?.Teams?.Home?.Score, "ScoreH");
-	setNumberView(data?.Teams?.Away?.Score, "ScoreA");
+	updateTeams(data);
 	setNumberView(data?.Ball, "Ball");
 	setNumberView(data?.Strike, "Strike");
 	setNumberView(data?.Out, "Out");
@@ -38,6 +37,17 @@ function update(data){
 	updateLogo(data?.Teams?.Away?.Logo, "LogoAwayView");
 	updateLogo(data?.Teams?.Home?.Logo, "LogoHomeView");
 }
+function updateTeams(data) {
+	setNumberView(data?.Teams?.Away?.Name, "NameAway");
+	setNumberView(data?.Teams?.Home?.Name, "NameHome");
+	setNumberView(data?.Teams?.Away?.Short, "ShortAway");
+	setNumberView(data?.Teams?.Home?.Short, "ShortHome");
+	setNumberView(data?.Teams?.Away?.Color, "ColorAway");
+	setNumberView(data?.Teams?.Home?.Color, "ColorHome");
+	setNumberView(data?.Teams?.Home?.Score, "ScoreH");
+	setNumberView(data?.Teams?.Away?.Score, "ScoreA");
+}
+
 function updateLogo(logo, id){
 	try{
 		if (logo !== undefined && logo !== "")
@@ -101,15 +111,19 @@ function Base(base){
 	return true;
 }
 async function Update_Data(){
-	NameA = document.getElementById('NameAwayView').value;
-	NameH = document.getElementById('NameHomeView').value;
-	ColorA = document.getElementById('ColorAwayView').value;
-	ColorH = document.getElementById('ColorHomeView').value;
+	let NameA = document.getElementById('NameAwayView').value;
+	let NameH = document.getElementById('NameHomeView').value;
+	let ColorA = document.getElementById('ColorAwayView').value;
+	let ColorH = document.getElementById('ColorHomeView').value;
+	let ShortA = document.getElementById('ShortAwayView').value;
+	let ShortH = document.getElementById('ShortHomeView').value;
 	let obj = {
 		"Teams.Away.Name":NameA,
 		"Teams.Home.Name":NameH,
 		"Teams.Away.Color":ColorA,
-		"Teams.Home.Color":ColorH
+		"Teams.Home.Color":ColorH,
+		"Teams.Away.Short":ShortA,
+		"Teams.Home.Short":ShortH
 	}
 	if(document.getElementById('LogoAway')?.files[0] !== undefined)
 		obj["Teams.Away.Logo"] = await fileToBase64(document.getElementById('LogoAway').files[0]);
@@ -166,3 +180,26 @@ function Reset_All(){
 // Animation and Scoreboard controls
 socket.on('updateActive', updateActive);
 socket.on('connectActive', updateActive);
+
+const exports = {
+	updateActive,
+	updateTeams,
+	updateLogo,
+	setArrowPart,
+	setNumberView,
+	setViewBase,
+	updateNumber,
+	TopBot,
+	Base,
+	Update_Data,
+	setImageSrcFromInput,
+	fileToBase64,
+	New_Batter,
+	Auto_Change_Inning,
+	Reset_All,
+	buttonOpr,
+	allOff,
+	socket
+};
+export default exports;
+export { updateActive, updateTeams, updateLogo, setArrowPart, setNumberView, setViewBase, updateNumber, TopBot, Base, Update_Data, setImageSrcFromInput, fileToBase64, New_Batter, Auto_Change_Inning, Reset_All, buttonOpr, allOff, socket };

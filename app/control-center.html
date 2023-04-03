@@ -7,12 +7,30 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="js/actives.js"></script>
-    <script defer src="js/admin.js" async></script>
+    <script defer type="module">
+        import {updateActive,updateTeams,updateLogo,setArrowPart,setNumberView,setViewBase,updateNumber,TopBot,Base,Update_Data,setImageSrcFromInput,fileToBase64,New_Batter,Auto_Change_Inning,Reset_All, buttonOpr,allOff,socket }from "./js/admin.js"
+        window.updateActive=updateActive
+        window.updateTeams=updateTeams
+        window.updateLogo=updateLogo
+        window.setArrowPart=setArrowPart
+        window.setNumberView=setNumberView
+        window.setViewBase=setViewBase
+        window.updateNumber=updateNumber
+        window.TopBot=TopBot
+        window.Base=Base
+        window.Update_Data=Update_Data
+        window.setImageSrcFromInput=setImageSrcFromInput
+        window.fileToBase64=fileToBase64
+        window.New_Batter=New_Batter
+        window.Auto_Change_Inning=Auto_Change_Inning
+        window.Reset_All=Reset_All
+        window.buttonOpr=buttonOpr
+        window.allOff=allOff
+        window.socket=socket
+    </script>
     <title>Baseball Scoreboard</title>
     <script src="/js/all.js"></script>
-    <script src="js/redVerSess.js" defer></script>
+    <script src="js/redVerSess.js" async></script>
 </head>
 <body class="d-flex flex-column vh-100">
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
@@ -241,11 +259,15 @@
                                     </div>
                                 </div>
                                 <div class="mb-2 d-flex flex-column align-items-center">
-                                    <label for="NameAway" class="form-label h5 fw-normal">Name</label>
+                                    <label for="NameAwayView" class="form-label h5 fw-normal">Name</label>
                                     <input type="text" class="form-control form-control-sm" id="NameAwayView">
                                 </div>
                                 <div class="mb-2 d-flex flex-column align-items-center">
-                                    <label for="ColorAway" class="form-label h5 fw-normal">Color</label>
+                                    <label for="ShortAwayView" class="form-label h5 fw-normal">Short Name</label>
+                                    <input type="text" class="form-control form-control-sm" id="ShortAwayView" maxlength="3">
+                                </div>
+                                <div class="mb-2 d-flex flex-column align-items-center">
+                                    <label for="ColorAwayView" class="form-label h5 fw-normal">Color</label>
                                     <input type="color" class="form-control form-control-sm" id="ColorAwayView">
                                 </div>
                                 <div class="d-flex flex-column align-items-center">
@@ -283,11 +305,15 @@
                                     </div>
                                 </div>
                                 <div class="mb-2 d-flex flex-column align-items-center">
-                                    <label for="NameHome" class="form-label h5 fw-normal">Name</label>
+                                    <label for="NameHomeView" class="form-label h5 fw-normal">Name</label>
                                     <input type="text" class="form-control form-control-sm" id="NameHomeView">
                                 </div>
                                 <div class="mb-2 d-flex flex-column align-items-center">
-                                    <label for="ColorHome" class="form-label h5 fw-normal">Color</label>
+                                    <label for="ShortHomeView" class="form-label h5 fw-normal">Short Name</label>
+                                    <input type="text" class="form-control form-control-sm" id="ShortHomeView" maxlength="3">
+                                </div>
+                                <div class="mb-2 d-flex flex-column align-items-center">
+                                    <label for="ColorHomeView" class="form-label h5 fw-normal">Color</label>
                                     <input type="color" class="form-control form-control-sm" id="ColorHomeView">
                                 </div>
                                 <div class="d-flex flex-column align-items-center">

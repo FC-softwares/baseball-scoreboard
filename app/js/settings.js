@@ -1,3 +1,5 @@
+import {io} from '/socket.io/socket.io.esm.min.js';
+
 const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
 
@@ -10,6 +12,9 @@ const socket = io({
 
 socket.on('updateSettings', updateSettings);
 socket.on('connectSettings',updateSettings);
+
+socket.emit('getSettings');
+getCurrentUser();
 
 function updateSettings(data){
 	document.getElementById('MaxInning').value = data.MaxInning;
@@ -111,3 +116,7 @@ function addUser(){
 		document.getElementById('UserAddEmail').value = '';
 	};
 }
+
+const exports = {updateSettings, UpdateSettings, BlackenLastInning, getCurrentUser, printUsers, removeUser, addUser};
+export default exports;
+export {updateSettings, UpdateSettings, BlackenLastInning, getCurrentUser, printUsers, removeUser, addUser};

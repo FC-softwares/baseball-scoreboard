@@ -39,8 +39,10 @@ function updateTeamScorePostgame(data, team) {
 }
 
 function updateTeams(data,team) {
-	if (data?.Name !== undefined)
+	if (data?.Name !== undefined && (document.URL.includes("pregame.html") || document.URL.includes("postgame.html")))
 		try { document.querySelector("div.teamName#" + team + " > div > span").innerHTML = data.Name; } catch (error) { console.error(error); }
+	if (data?.Short !== undefined && (document.URL.includes("scoreboard.html") || document.URL.includes("inning.html")))
+		try { document.querySelector("div.teamName#" + team + " > div > span").innerHTML = data.Short; } catch (error) { console.error(error); }
 	if (data?.Color !== undefined) {
 		document.documentElement.style.setProperty('--c-' + team, data.Color);
 		if (brightnessByColor(data.Color) < 60)
@@ -118,8 +120,8 @@ function maxInning(obj, extraInningScoreAway, extraInningScoreHome) {
 		document.documentElement.style.setProperty('--i-inning', localStorage.getItem("MaxInning"));
 		try{document.querySelector("div.container > div#iex").remove();}catch(error){console.log(error);}
 	}else if (obj.Inning > parseInt(localStorage.getItem("MaxInning")) + 1 || (obj.Arrow == 2&&obj.Inning == parseInt(localStorage.getItem("MaxInning")+1)) || extraInningScoreAway != 0 || extraInningScoreHome != 0) {
-		let inning = getComputedStyle(document.documentElement).getPropertyValue('--i-inning');
-		if (inning == parseInt(localStorage.getItem("MaxInning"))) {
+		let inning = getComputedStyle(document.documentElement).getPropertyValue('--i-inning');container
+		if (inning == parseInt(localStorage.getItem("MaxInning")) && document.querySelector("div. > div#iex") == null) {
 			document.documentElement.style.setProperty('--i-inning', inning);
 			let extraInning = `<div class="inning" id="iex">
 					<span class="number">EX</span>
@@ -193,13 +195,15 @@ function updateSettings(obj){
 	// update the container of the innings
 	if(document.URL.includes("inning.html")){
 		if(obj.MaxInning>oldMaxInning){
+			// Try to remove the extra inning
+			try{document.querySelector("div.container").removeChild(document.querySelector("div.container > div#iex.inning"));}catch(error){console.error(error);}
 			for(let i=oldMaxInning+1;i<=obj.MaxInning;i++){
 				let inning = `<div class="inning" id="i${i}">
 				<span class="number">${i}</span>
 				<span class="score disabled" id="away">0</span>
 				<span class="score disabled" id="home">0</span>
 			</div>`;
-				try{document.querySelector("div.container").innerHTML += inning;}catch(error){console.error(error);}
+				try{document.querySelector("div.container").appendChild(document.createRange().createContextualFragment(inning));}catch(error){console.error(error);}
 			}
 		}else if(obj.MaxInning<oldMaxInning){
 			// TODO remove excess innings
@@ -207,6 +211,7 @@ function updateSettings(obj){
 				try{document.querySelector("div.container").removeChild(document.querySelector(`#i${i}.inning`));}catch(error){console.error(error);}
 			}
 		}
+		socket.emit("getData");
 	}
 }
 

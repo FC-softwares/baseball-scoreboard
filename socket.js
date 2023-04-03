@@ -55,9 +55,6 @@ io.on('connection', (socket) => {
 	socket.on('update_data', (data) => {
 		if(authorizedSessions.includes(socket.id))
 			updateData(data,socket);
-		else{
-			console.log('Unauthorized update data', socket.id, authorizedSessions);
-		}
 	});
 	socket.on('updateSettings', (data) => {
 		if(authorizedSessions.includes(socket.id))

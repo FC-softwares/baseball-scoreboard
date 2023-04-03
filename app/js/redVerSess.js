@@ -17,20 +17,6 @@ function redVerSess() {
             localStorage.removeItem('user');
             return false;
         }
-        switchDoc();
     }
 }
 redVerSess();
-
-function switchDoc() {
-    if (document.URL.includes('control-center.html')) {
-        socket.emit('getData');
-        socket.emit('getActive');
-    } else if (document.URL.includes('settings.html')) {
-        socket.emit('getSettings');
-        getCurrentUser();
-    } else if (document.URL.includes('staff.html')) {
-        socket.emit('getOffices');
-    }
-}
-

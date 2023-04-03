@@ -1,3 +1,5 @@
+import {io} from '/socket.io/socket.io.esm.min.js';
+
 const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
 
@@ -9,7 +11,7 @@ const socket = io({
 	}
 });
 socket.emit("getActive");
-
+socket.emit("getOffices");
 socket.on('connectOffices', update);
 socket.on('updateOffices', update);
 
@@ -129,3 +131,6 @@ function sendSportcasters(){
 function Reset_All(){
     socket.emit("Reset_all_staff");
 }
+const exports = {sendUmpires, sendScorers, sendSportcasters, Reset_All, checkAndDeCheck};
+export default exports;
+export {sendUmpires, sendScorers, sendSportcasters, Reset_All, checkAndDeCheck};

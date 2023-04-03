@@ -7,8 +7,14 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="js/staff.js" async></script>
+    <script type="module" defer>
+        import {sendUmpires, sendScorers, sendSportcasters, Reset_All, checkAndDeCheck} from '/js/staff.js';
+        window.sendUmpires = sendUmpires;
+        window.sendScorers = sendScorers;
+        window.sendSportcasters = sendSportcasters;
+        window.Reset_All = Reset_All;
+        window.checkAndDeCheck = checkAndDeCheck;
+    </script>
     <title>Baseball Scoreboard</title>
     <script src="/js/all.js"></script>
     <script src="js/redVerSess.js" defer></script>

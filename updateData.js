@@ -16,7 +16,7 @@ function updateData(data,socket){
 			case '0':zeroChanges(indx, data_old_obj, toBeSent);break;
 			case 'toggle':({ data_old_obj, toBeSent } = toggleChanges(indx, data_old_obj, toBeSent));break;
 			default:
-				if (indx.startsWith('Teams.') && (indx.endsWith('.Name')||indx.endsWith('.Color'))) ({ data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, indx.split('.')[1] + '.' + indx.split('.')[2]));
+				if (indx.startsWith('Teams.') && (indx.endsWith('.Name')||indx.endsWith('.Color')||indx.endsWith(".Short"))) ({ data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, indx.split('.')[1] + '.' + indx.split('.')[2]));
 				else if (indx.startsWith('Teams.') && indx.endsWith('.Logo')) updateLogo(indx, element, data_old_obj, toBeSent)
 				else {data_old_obj[indx] = element;toBeSent[indx] = element;}
 			}
@@ -162,7 +162,7 @@ function toggleChanges(indx, data_old_obj, toBeSent) {
 			toBeSent = { ...toBeSent, Bases: { 1: false, 2: false, 3: false }, Ball: 0, Strike: 0, Out: 0, Arrow: data_old_obj.Arrow, Inning: data_old_obj.Inning, Int: data_old_obj.Int };
 		break;
 		case 'Reset_All':
-			data_old_obj = {Teams: {Away: { Name: 'AWAY', Score: 0, Color: '#000000' },Home: { Name: 'HOME', Score: 0, Color: '#000000' },},Ball: 0,Strike: 0,Out: 0,Inning: 1,Arrow: 1,Bases: { 1: false, 2: false, 3: false },Int: { 1: { A: 0, H: 0 } },};
+			data_old_obj = {Teams: {Away: { Name: 'AWAY', Score: 0, Color: '#000000', Short: "AWY" },Home: { Name: 'HOME', Score: 0, Color: '#000000', Short: "HME" },},Ball: 0,Strike: 0,Out: 0,Inning: 1,Arrow: 1,Bases: { 1: false, 2: false, 3: false },Int: { 1: { A: 0, H: 0 } },};
 			toBeSent = data_old_obj;
 		break;
 		default: break;
