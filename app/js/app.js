@@ -39,10 +39,8 @@ function updateTeamScorePostgame(data, team) {
 }
 
 function updateTeams(data,team) {
-	if (data?.Name !== undefined && (document.URL.includes("pregame.html") || document.URL.includes("postgame.html")))
-		try { document.querySelector("div.teamName#" + team + " > div > span").innerHTML = data.Name; } catch (error) { console.error(error); }
-	if (data?.Short !== undefined && (document.URL.includes("scoreboard.html") || document.URL.includes("inning.html")))
-		try { document.querySelector("div.teamName#" + team + " > div > span").innerHTML = data.Short; } catch (error) { console.error(error); }
+	setName(data?.Name, team, ["pregame","postgame"]);
+	setName(data?.Short, team, ["scoreboard","inning"]);
 	if (data?.Color !== undefined) {
 		document.documentElement.style.setProperty('--c-' + team, data.Color);
 		if (brightnessByColor(data.Color) < 60)
@@ -56,6 +54,11 @@ function updateTeams(data,team) {
 				document.querySelector("div.teamName#" + team + " > div#bg").classList.remove("bg-dark");
 		} catch (error) { console.error(error); }
 	}
+}
+
+function setName(data, team, scoreboards) {
+	if (data !== undefined && scoreboards.includes(document.URL.split("/").pop().split(".")[0]))
+		try { document.querySelector("div.teamName#" + team + " > div > span").innerHTML = data; } catch (error) { console.error(error); }
 }
 
 function updateInning(obj) {
