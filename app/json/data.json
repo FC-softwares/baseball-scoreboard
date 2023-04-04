@@ -3,12 +3,14 @@
         "Away": {
             "Name": "AWAY",
             "Score": 0,
-            "Color": "#000000"
+            "Color": "#000000",
+            "Short": "AWY"
         },
         "Home": {
             "Name": "HOME",
             "Score": 0,
-            "Color": "#000000"
+            "Color": "#000000",
+            "Short": "HME"
         }
     },
     "Ball": 0,
