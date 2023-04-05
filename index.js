@@ -3,6 +3,8 @@ const { shell } = require('electron');
 const crypto = require('crypto');
 const { app, CLIENT, API, reqOption, BrowserWindow, server, PORT, AppElectron } = require("./socket.js");
 
+if(require('electron-squirrel-startup')) return AppElectron.quit();
+
 app.post('/login', (req, res) => {
 	const { username, password, remember } = req.body;
 	if (!checkIDToken(username, res, password))
