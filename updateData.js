@@ -143,18 +143,14 @@ function zeroScore(data_old_obj, team, short) {
 }
 
 function toggleChanges(indx, data_old_obj, toBeSent) {
-	if (['1', '2', '3'].includes(indx) && toBeSent.Bases === undefined)
-		toBeSent.Bases = {};
+	if (['1', '2', '3'].includes(indx) && toBeSent.Bases === undefined) toBeSent.Bases = {};
 	switch (indx) {
-		case '1':
-		case '2':
-		case '3':
-			toggleBase(data_old_obj, toBeSent, indx);break;
+		case '1': case '2': case '3': toggleBase(data_old_obj, toBeSent, indx);break;
 		case 'Auto_Change_Inning':
 			data_old_obj = { ...data_old_obj, Bases: { 1: false, 2: false, 3: false }, Ball: 0, Strike: 0, Out: 0};
-			if (data_old_obj.Arrow === 1) {
+			if (data_old_obj.Arrow === 1)
 				data_old_obj.Arrow = 2;
-			} else {
+			else {
 				data_old_obj.Arrow = 1;
 				data_old_obj.Inning++;
 				data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 };
