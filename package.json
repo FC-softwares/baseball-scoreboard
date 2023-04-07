@@ -25,7 +25,7 @@
     "baseball-scoreboard",
     "node.js"
   ],
-  "author": "Luca Facchini & Kristian Ceribashi",
+  "author": "F&C softwares",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/FC-Softwares/baseball-scoreboard/issues"
@@ -57,15 +57,19 @@
           "name": "@electron-forge/maker-squirrel",
           "config": {
             "name": "baseball-scoreboard",
+            "title": "Baseball Scoreboard",
             "author": "F&C softwares",
             "exe": "baseball-scoreboard.exe",
             "loadingGif": "./assets/loading.gif",
+            "setupIcon": "./assets/icon.ico",
             "owners": [
-              "FC-Softwares"
+              "FC-Softwares",
+              "Luca Facchini",
+              "Kristian Ceribashi"
             ],
             "uninstallerName": "baseball_scoreboard_uninstaller.exe",
             "setupExe": "baseball_scoreboard_setup.exe",
-            "title": "Baseball Scoreboard"
+            "setupMsi": "baseball_scoreboard_setup.msi"
           }
         },
         {
@@ -83,10 +87,10 @@
             "options": {
               "category": "Utility",
               "genericName": "Streaming Overlay",
-              "homepage": "https://facchini-pu.it",
+              "homepage": "https://www.fc-software.it",
               "name": "Baseball Scoreboard",
               "priority": "optional",
-              "productDescription": "Baseball Scoreboard for youtube LIVE. You can use this tool as an overlay for your baseball live stream. In this tool, you can find four different overlays for four different baseball match phases: Pre-game, In-game, Between Innings and Post-Game.",
+              "productDescription": "Baseball Scoreboard for youtube LIVE. You can use this tool as an overlay for your baseball live stream. In this tool, you can find four different overlays professional looking with oppening and closing animations",
               "productName": "Baseball Scoreboard",
               "section": "utils"
             }
@@ -94,7 +98,18 @@
         },
         {
           "name": "@electron-forge/maker-rpm",
-          "config": {}
+          "config": {
+            "options": {
+              "category": "Utility",
+              "genericName": "Streaming Overlay",
+              "homepage": "https://www.fc-software.it",
+              "name": "Baseball Scoreboard",
+              "priority": "optional",
+              "productDescription": "Baseball Scoreboard for youtube LIVE. You can use this tool as an overlay for your baseball live stream. In this tool, you can find four different overlays professional looking with oppening and closing animations",
+              "productName": "Baseball Scoreboard",
+              "section": "utils"
+            }
+          }
         }
       ]
     }
