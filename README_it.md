@@ -5,7 +5,7 @@
 <center>
 
 [![CodeFactor](https://www.codefactor.io/repository/github/fc-softwares/baseball-scoreboard/badge/main)](https://www.codefactor.io/repository/github/fc-softwares/baseball-scoreboard/overview/main)
-[![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/aauk.svg)](https://betteruptime.com/?utm_source=status_badge)
+[![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/aauk.svg)](https://status.fc-software.it)
 [![Maintainability](https://api.codeclimate.com/v1/badges/60d1dc20274d613c67db/maintainability)](https://codeclimate.com/github/FC-softwares/baseball-scoreboard/maintainability)
 ![GitHub All Releases](https://img.shields.io/github/downloads/FC-softwares/baseball-scoreboard/total)
 
@@ -66,6 +66,8 @@ Le scoreboard e il pannello di controllo sono delle pagine web fatte in modo tal
 6. Conferma premendo `Applica` e poi `Chiudi`
 7. Ora puoi trascinare il nuovo pannello nella posizione che preferisci, ridimensionarlo a piacimento e bloccarlo nella UI di OBS dove preferisci
 
+### Uso con licenza già acquistata
+Nel caso in cui si abbia già acquistato una licenza, è possibile utilizzare Baseball-Scoreboard liberamente ma bisognerà inseririre un file: `.env.json` nella
 ## Documentazione
 Probabilmente queste istruzioni non sono state molto esaustive, ma non c'è da preoccuparsi! Per maggiori informazioni, la documentazione è disponibile [qui](https://github.com/FC-softwares/baseball-scoreboard/tree/main/docs/it/)!
 > **ATTENZIONE**: la documentazione in italiano è ancora WIP! Nel mentre, si può consultare la documentazione in lingua inglese [qui](https://github.com/FC-softwares/baseball-scoreboard/tree/main/docs/en/)!
@@ -73,7 +75,36 @@ Probabilmente queste istruzioni non sono state molto esaustive, ma non c'è da p
 ---
 
 ## Licenza
-[![Licenza Creative Commons](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
-Baseball-Scoreboard di [F&C softwares](https://github.com/FC-softwares) è distribuito con Licenza [Creative Commons Attribuzione - Non commerciale - Non opere derivate 4.0 Internazionale](http://creativecommons.org/licenses/by-nc-nd/4.0/).
-Based on a work at [https://github.com/FC-softwares/baseball-scoreboard](https://github.com/FC-softwares/baseball-scoreboard).
-Permessi ulteriori rispetto alle finalità della presente licenza possono essere disponibili presso [https://github.com/FC-softwares](https://github.com/FC-softwares).
+Copyright [2023] [F&C software]
+
+Tutti i diritti riservati.
+
+Il software Baseball-Scoreboard di [F&C software] ("Software") è protetto da copyright ed è di proprietà esclusiva di [F&C software]. Il Software è concesso in licenza, non venduto.
+
+SOGGETTI ALL'ACQUISTO DI UNA LICENZA:
+
+L'utilizzo del Software è consentito solo ai sensi dei termini e delle condizioni stabiliti in una licenza valida per il Software, che deve essere acquistata presso https://www.fc-software.it/.
+
+UTILIZZO PER SCOPI DI TESTING:
+
+Nonostante quanto sopra indicato, è consentito l'utilizzo del Software per scopi di testing senza acquistare una licenza per la modifica e/o vendita, a condizione che tale utilizzo sia limitato al solo scopo di testare e valutare il Software e non a scopi commerciali o di distribuzione. Questa licenza va richiesta all'indirizzo mail help@fc-software.it
+
+VIETATO L'UTILIZZO SENZA LICENZA:
+
+Salvo quanto previsto dal presente accordo, non è consentito l'utilizzo, la copia, la modifica, la distribuzione o la commercializzazione del Software senza l'acquisto di una licenza valida da parte di [F&C software].
+
+DIRITTI DI PROPRIETÀ INTELLETTUALE:
+
+Il Software è protetto da copyright e da altre leggi sulla proprietà intellettuale. [F&C software] conserva tutti i diritti, titoli e interessi sul Software, inclusi tutti i diritti di proprietà intellettuale.
+
+LIMITAZIONE DELLA RESPONSABILITÀ:
+
+[F&C software] non sarà responsabile per danni di qualsiasi tipo derivanti dall'utilizzo del Software, anche se [F&C software] è stata informata della possibilità di tali danni.
+
+LEGGE APPLICABILE:
+
+Il presente accordo è regolato dalle leggi dello Stato in cui ha sede [F&C software] e deve essere interpretato in conformità con tali leggi.
+
+ACCETTAZIONE DEI TERMINI:
+
+L'utilizzo del Software implica l'accettazione dei termini e delle condizioni del presente accordo.
