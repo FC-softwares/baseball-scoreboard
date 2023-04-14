@@ -5,7 +5,7 @@
 <center>
 
 [![CodeFactor](https://www.codefactor.io/repository/github/fc-softwares/baseball-scoreboard/badge/main)](https://www.codefactor.io/repository/github/fc-softwares/baseball-scoreboard/overview/main)
-[![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/aauk.svg)](https://betteruptime.com/?utm_source=status_badge)
+[![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/aauk.svg)](https://status.fc-software.it)
 [![Maintainability](https://api.codeclimate.com/v1/badges/60d1dc20274d613c67db/maintainability)](https://codeclimate.com/github/FC-softwares/baseball-scoreboard/maintainability)
 ![GitHub All Releases](https://img.shields.io/github/downloads/FC-softwares/baseball-scoreboard/total)
 
@@ -73,7 +73,36 @@ Probably these instructions weren't that clear. If that's the case, don't panic!
 ---
 
 ## License
-[![Creative Commons License](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
-Baseball Scoreboard by [F&C software](https://github.com/FC-softwares/) is licensed under a [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License](http://creativecommons.org/licenses/by-nc-nd/4.0/).
-Based on a work at [https://github.com/FC-softwares/baseball-scoreboard](https://github.com/FC-softwares/baseball-scoreboard).
-Permissions beyond the scope of this license may be available at [https://github.com/FC-softwares/](https://github.com/FC-softwares/).
+Copyright [2023] [F&C software]
+
+All rights reserved.
+
+The Baseball-Scoreboard software from [F&C software] ("Software") is protected by copyright and is the exclusive property of [F&C software]. The Software is licensed, not sold.
+
+SUBJECT TO LICENSE PURCHASE:
+
+Use of the Software is only permitted under the terms and conditions set forth in a valid license for the Software, which must be purchased at https://www.fc-software.it/.
+
+UNAUTHORIZED USAGE:
+
+Except as provided in this Agreement, it is not permitted to use and/or copy the Software for private or commercial purposes without the purchase of a valid license from [F&C software]. Distribution and marketing rights are given only with a special grant, which must be requested by emailing help@fc-software.it
+
+USE FOR TESTING AND DEVELOPMENT PURPOSES:
+
+Use and copy of the Software for evaluation or development purposes is permitted without purchasing a license, provided that such use is limited to testing, evaluating and modifying the Software. Unauthorized usage terms still apply. Modifications must not change or violate the terms and conditions of this Agreement.
+
+INTELLECTUAL PROPERTY RIGHTS:
+
+The Software is protected by copyright and other intellectual property laws. [F&C software] retains all rights, titles, and interests in the Software, including all intellectual property rights.
+
+LIMITATION OF LIABILITY:
+
+[F&C software] shall not be liable for any damages of any kind arising from the use of the Software, even if [F&C software] has been advised of the possibility of such damages.
+
+APPLICABLE LAW:
+
+This Agreement shall be governed by the laws of the state in which [F&C software] is located and shall be interpreted in accordance with such laws.
+
+ACCEPTANCE OF TERMS:
+
+Use of the Software implies acceptance of the terms and conditions of this Agreement.
