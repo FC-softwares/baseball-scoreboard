@@ -85,13 +85,13 @@ SOGGETTI ALL'ACQUISTO DI UNA LICENZA:
 
 L'utilizzo del Software è consentito solo ai sensi dei termini e delle condizioni stabiliti in una licenza valida per il Software, che deve essere acquistata presso https://www.fc-software.it/.
 
-UTILIZZO PER SCOPI DI TESTING:
+UTILIZZO NON AUTORIZZATO:
 
-Nonostante quanto sopra indicato, è consentito l'utilizzo del Software per scopi di testing senza acquistare una licenza per la modifica e/o vendita, a condizione che tale utilizzo sia limitato al solo scopo di testare e valutare il Software e non a scopi commerciali o di distribuzione. Questa licenza va richiesta all'indirizzo mail help@fc-software.it
+Salvo quanto previsto dal presente accordo, la copia del Software è severamente vietata, e non è consentito l'utilizzo del Software per motivi privati o commerciali senza l'acquisto di una licenza valida fornita da [F&C software]. Diritti di distribuzione e vendita sono concessi solo tramite un permesso speciale, che può essere richiesto contattando via mail help@fc-software.it
 
-VIETATO L'UTILIZZO SENZA LICENZA:
+UTILIZZO PER SCOPI DI TESTING E SVILUPPO:
 
-Salvo quanto previsto dal presente accordo, non è consentito l'utilizzo, la copia, la modifica, la distribuzione o la commercializzazione del Software senza l'acquisto di una licenza valida da parte di [F&C software].
+È consentito l'utilizzo e la copia del Software per scopi di testing e sviluppo senza acquistare una licenza, a condizione che tale utilizzo sia limitato al solo scopo di testare, valutare e modificare il Software. I termini di utilizzo non autorizzato si applicano anche in questo caso. Sono vietate eventuali modifiche al Software che alterino o violino i termini e le condizioni d'uso di questo accordo.
 
 DIRITTI DI PROPRIETÀ INTELLETTUALE:
 

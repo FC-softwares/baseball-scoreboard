@@ -83,13 +83,13 @@ SUBJECT TO LICENSE PURCHASE:
 
 Use of the Software is only permitted under the terms and conditions set forth in a valid license for the Software, which must be purchased at https://www.fc-software.it/.
 
-USE FOR TESTING PURPOSES:
+UNAUTHORIZED USAGE:
 
-Notwithstanding the above, use of the Software for testing purposes is permitted without purchasing a license for modification and/or sale, provided that such use is limited to testing and evaluating the Software and not for commercial or distribution purposes. This license must be requested at the email address help@fc-software.it.
+Except as provided in this Agreement, it is not permitted to use and/or copy the Software for private or commercial purposes without the purchase of a valid license from [F&C software]. Distribution and marketing rights are given only with a special grant, which must be requested by emailing help@fc-software.it
 
-UNAUTHORIZED USE PROHIBITED:
+USE FOR TESTING AND DEVELOPMENT PURPOSES:
 
-Except as provided in this Agreement, it is not permitted to use, copy, modify, distribute, or market the Software without the purchase of a valid license from [F&C software].
+Use and copy of the Software for evaluation or development purposes is permitted without purchasing a license, provided that such use is limited to testing, evaluating and modifying the Software. Unauthorized usage terms still apply. Modifications must not change or violate the terms and conditions of this Agreement.
 
 INTELLECTUAL PROPERTY RIGHTS:
 
