@@ -138,24 +138,18 @@ async function Update_Data(){
 }
 function setImageSrcFromInput(input, image) {
 	if(input?.files === undefined){
-		try{
 			document.getElementById(image).src = notSetLogoURL;
 			document.getElementById(image.replace("View","")).value = "";
 			input.value = "remove";
-		}catch(err){console.log(err)}
 		return;
 	}
 	const file = input.files[0];
-	// Check if the file is bigger than 5MB
-	if (file.size > 5 * 1024 * 1024) {
+	if (file.size > 5 * 1024 * 1024) // 5MB
 		return handleTooBig(input);
-	}
 	const reader = new FileReader();
 	reader.onload = () => {
-		try{
-			document.getElementById(image).src = reader.result;
-			document.getElementById(image.replace("View","")+"Clear").value = "";
-		}catch(err){console.log(err)}
+		document.getElementById(image).src = reader.result;
+		document.getElementById(image.replace("View","")+"Clear").value = "";
 	};
 	reader.readAsDataURL(file);
 }

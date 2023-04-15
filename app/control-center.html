@@ -281,9 +281,9 @@
                                         <div class="d-flex flex-column align-items-center">
                                             <div class="btn-group" role="group" aria-label="Controls">
                                                 <label for="LogoAway" class="btn btn-outline-dark ">Upload file</label>
-                                                <button type="button" class="btn btn-outline-danger" onclick="setImageSrcFromInput(this, 'LogoAwayView')" id="LogoAwayClear"><i class="bi bi-x-circle"></i></button>
+                                                <button type="button" class="btn btn-outline-danger" onclick="try{setImageSrcFromInput(this, 'LogoAwayView')}catch(err){console.log(err)}" id="LogoAwayClear"><i class="bi bi-x-circle"></i></button>
                                             </div>
-                                            <input type="file" id="LogoAway" style="display: none;" accept="image/*" onchange="setImageSrcFromInput(this, 'LogoAwayView')" multiple="false">
+                                            <input type="file" id="LogoAway" style="display: none;" accept="image/*" onchange="try{setImageSrcFromInput(this, 'LogoAwayView')}catch(err){console.log(err)}" multiple="false">
                                             <span class="form-text text-secondary"><i>Max file size: 5MB</i></span>
                                         </div>
                                         <div style="outline: 2px dashed lightgray;">
@@ -328,10 +328,10 @@
                                         <div class="d-flex flex-column align-items-center">
                                             <div class="btn-group" role="group" aria-label="Controls">
                                                 <label for="LogoHome" class="btn btn-outline-dark ">Upload file</label>
-                                                <button type="button" class="btn btn-outline-danger" onclick="setImageSrcFromInput(this, 'LogoHomeView')" id="LogoHomeClear"><i class="bi bi-x-circle"></i></button>
+                                                <button type="button" class="btn btn-outline-danger" onclick="try{setImageSrcFromInput(this, 'LogoHomeView')}catch(err){console.log(err)}" id="LogoHomeClear"><i class="bi bi-x-circle"></i></button>
                                             </div>
                                             <span class="form-text text-secondary"><i>Max file size: 5MB</i></span>
-                                            <input type="file" id="LogoHome" style="display: none;" accept="image/*" onchange="setImageSrcFromInput(this, 'LogoHomeView')" multiple="false">
+                                            <input type="file" id="LogoHome" style="display: none;" accept="image/*" onchange="try{setImageSrcFromInput(this, 'LogoHomeView')}catch(err){console.log(err)}" multiple="false">
                                         </div>
                                         <div style="outline: 2px dashed lightgray;">
                                             <img src="" onerror="this.src = 'img/baseball-ball.png';" style="height: 50px; aspect-ratio: 1; object-fit: contain;" id="LogoHomeView" alt="Logo Home">
