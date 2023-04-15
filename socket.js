@@ -11,7 +11,11 @@ const {updateActive,updateOfficial,updateSettings,resetAllStaff,updateData} = re
 const app = express();
 process.env = env
 const server = http.createServer(app);
-const io = new Server(server);
+// Initialize the Socket.io server instance with the express server and a option object
+// In the option object we can define the maximum allowed http payload size will be 5MB
+const io = new Server(server, {
+	maxHttpBufferSize: 1e7
+});
 //definitions of constaints
 const PORT = process.argv[2]|| process.env.PORT || 2095;
 const API = process.env.API || 'api.facchini-pu.it';

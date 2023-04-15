@@ -29,9 +29,11 @@ function updateData(data,socket){
 }
 
 function updateLogo(indx, element, data_old_obj, toBeSent) {
+	console.log(indx, element, data_old_obj, toBeSent);
 	fs.writeFile(__dirname + '/app/img/' + indx.split('.')[1] + 'Logo.json', JSON.stringify(element, null, 4), (err) => {
 		if (err)
 			throw err;
+		console.log('The file has been saved!');
 	});
 	data_old_obj.Teams[indx.split('.')[1]].Logo = element;
 	toBeSent.Teams = { ...toBeSent.Teams, [indx.split('.')[1]]: { ...toBeSent.Teams[indx.split('.')[1]], Logo: element, }, };

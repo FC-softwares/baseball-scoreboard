@@ -146,6 +146,17 @@ function setImageSrcFromInput(input, image) {
 		return;
 	}
 	const file = input.files[0];
+	// Check if the file is bigger than 5MB
+	if (file.size > 5 * 1024 * 1024) {
+		input.value = "";
+		console.log('File is too big!');
+		document.querySelector('#error > span > strong').textContent = 'File is too big!';
+		document.querySelector('#error').classList.add('show');
+		setTimeout(() => {
+			document.querySelector('#error').classList.remove('show');
+		}, 5000);
+		return;
+	}
 	const reader = new FileReader();
 	reader.onload = () => {
 		try{
