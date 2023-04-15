@@ -148,14 +148,7 @@ function setImageSrcFromInput(input, image) {
 	const file = input.files[0];
 	// Check if the file is bigger than 5MB
 	if (file.size > 5 * 1024 * 1024) {
-		input.value = "";
-		console.log('File is too big!');
-		document.querySelector('#error > span > strong').textContent = 'File is too big!';
-		document.querySelector('#error').classList.add('show');
-		setTimeout(() => {
-			document.querySelector('#error').classList.remove('show');
-		}, 5000);
-		return;
+		return handleTooBig(input);
 	}
 	const reader = new FileReader();
 	reader.onload = () => {
@@ -165,6 +158,17 @@ function setImageSrcFromInput(input, image) {
 		}catch(err){console.log(err)}
 	};
 	reader.readAsDataURL(file);
+}
+
+function handleTooBig(input) {
+	input.value = "";
+	console.log('File is too big!');
+	document.querySelector('#error > span > strong').textContent = 'File is too big!';
+	document.querySelector('#error').classList.add('show');
+	setTimeout(() => {
+		document.querySelector('#error').classList.remove('show');
+	}, 5000);
+	return;
 }
 
 function fileToBase64(file) {
