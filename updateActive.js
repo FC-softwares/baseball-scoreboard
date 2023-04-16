@@ -7,7 +7,7 @@ function updateSettings(data, socket) {
 		var json = JSON.parse(data);
 		var data_old_obj = JSON.parse(data_old);
 		Object.entries(json).forEach(entry => {
-			const [indx, element] = entry;
+			let [indx, element] = entry;
 			switch (element) {
 				default:
 					if(indx == "MaxInning" && element<1) element = 1;
