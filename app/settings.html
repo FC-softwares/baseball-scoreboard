@@ -20,11 +20,26 @@
     <title>Baseball Scoreboard</title>
     <script src="js/all.js"></script>
     <script src="js/redVerSess.js" defer></script>
+    <script>
+        function toggleCustomScaling(select) {
+            if (select.options[select.selectedIndex].value == 'custom') {
+                document.getElementById('custom-scaling').classList.remove('d-none');
+            } else {
+                document.getElementById('custom-scaling').classList.add('d-none');
+            }
+        }
+    </script>
     <style>
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
+        /* Chrome, Safari, Edge, Opera */
+        input.no-arrows::-webkit-outer-spin-button,
+        input.no-arrows::-webkit-inner-spin-button {
             -webkit-appearance: none;
-            display: none;
+            margin: 0;
+        }
+        /* Firefox */
+        input.no-arrows[type=number] {
+            -moz-appearance: textfield;
+            appearance: textfield;
         }
     </style>
 </head>
@@ -103,34 +118,30 @@
         <div class="row">
             <div class="col-12 col-lg-4">
                 <div class="bg-body p-3 mb-4 shadow rounded-3 border">
-                    <div class="row row-cols-1 gap-3 gap-sm-0 justify-content-evenly">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-1 row-gap-3 justify-content-evenly">
                         <div class="col">
                             <h4 class="text-center">Max Inning</h4>
                             <div class="d-flex flex-column align-items-center">
                                 <div class="btn-group" role="group" aria-label="Inning Controls">
                                     <button type="button" class="btn btn-outline-primary" onclick="if (document.getElementById('MaxInning').value < 2) { } else { document.getElementById('MaxInning').value-- }"><i class="bi bi-dash-lg"></i></button>
-                                    <input id="MaxInning" class="form-control text-center rounded-0" style="width: 3rem;" type="number" min="1" value="9" onchange="if (document.getElementById('MaxInning').value < 1) { document.getElementById('MaxInning').value = 1 }">
+                                    <input id="MaxInning" class="form-control text-center rounded-0 no-arrows" style="width: 3rem;" type="number" min="1" value="9" onchange="if (document.getElementById('MaxInning').value < 1) { document.getElementById('MaxInning').value = 1 }">
                                     <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('MaxInning').value++"><i class="bi bi-plus-lg"></i></button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row row-cols-1 gap-3 justify-content-evenly mt-3">
                         <div class="col">
                             <h4 class="text-center">Darken Last Inning</h4>
                             <div class="col d-flex flex-column align-items-center">
                                 <div class="btn-group" role="group" aria-label="Controls">
-                                    <button id="BlackenLastInningTrue" type="button" class="btn btn-outline-primary" onclick="BlackenLastInning(true)">Yes</button>
-                                    <button id="BlackenLastInningFalse" type="button" class="btn btn-outline-primary" onclick="BlackenLastInning(false)">No</button>
+                                    <button id="BlackenLastInningTrue" type="button" class="btn btn-outline-success" onclick="BlackenLastInning(true)">Yes</button>
+                                    <button id="BlackenLastInningFalse" type="button" class="btn btn-outline-danger" onclick="BlackenLastInning(false)">No</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- WIP -->
-                    <div class="row row-cols-1 gap-3 justify-content-evenly mt-3">
-                        <div class="col d-flex flex-column align-items-center justify-content-between">
+                        <div class="col d-flex flex-column align-items-center" style="max-width: 20rem;">
                             <h4 class="text-center">Streaming Resolution</h4>
-                            <select name="res" id="Resolution" class="form-select" disabled aria-label="Select for Resolution of the streaming">
+                            <select name="res" id="Resolution" class="form-select" aria-label="Select the streaming's resolution" onchange="toggleCustomScaling(this)">
+                                <option value="custom" disabled>Custom scaling</option>
                                 <option value="2160">3840 x 2160</option>
                                 <option value="1440">2560 x 1440</option>
                                 <option value="1080">1920 x 1080</option>
@@ -139,7 +150,11 @@
                                 <option value="360">640 x 360</option>
                                 <option value="240">480 x 240</option>
                             </select>
-                            <span class="text-secondary"><i>Work in progress</i></span>
+                            <div class="input-group mt-2 d-none" id="custom-scaling">
+                                <label for="scale-factor" class="input-group-text">Scale factor</label>
+                                <input type="number" class="form-control" id="scale-factor" step="0.1">
+                            </div>
+                            <span class="text-secondary"><i>Work in progress!</i></span>
                         </div>
                     </div>
                     <hr>
@@ -173,18 +188,21 @@
                         <div class="col">
                             <h4 class="text-center">Auth Users</h4>
                             <div class="d-flex flex-row align-items-center justify-content-center">
-                                <ul class="list-group w-100" id="AuthUsersUl">
+                                <ul class="list-group w-100" id="AuthUsersUl" style="max-width: 20rem;">
                                 </ul>
                             </div>
                         </div>
-                        <hr class="d-sm-none my-3">
+                        <div class="col d-sm-none">
+                            <hr class="my-3">
+                        </div>
                         <div class="col">
                             <h4 class="text-center">Add new user</h4>
                             <div class="w-100 justify-content-center">
                                 <div class="d-flex flex-column align-items-center">
-                                    <h5 class="text-center fw-normal">Email address</h5>
-                                    <input id="UserAddEmail" class="form-control text-center mb-3" style="max-width: 20rem;" type="email" value="">
-                                    <button type="button" class="btn btn-outline-primary mx-auto" onclick="addUser()">Add User</button>
+                                    <div class="input-group" style="max-width: 20rem;">
+                                        <input id="UserAddEmail" class="form-control" type="email" value="" placeholder="Email address">
+                                        <button type="button" class="btn btn-outline-primary" onclick="addUser()"><i class="bi bi-person-plus"></i></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

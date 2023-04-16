@@ -19,15 +19,15 @@ getCurrentUser();
 function updateSettings(data){
 	document.getElementById('MaxInning').value = data.MaxInning;
 	if(data.BlackenLastInning){
-		document.getElementById("BlackenLastInningTrue").classList.remove("btn-outline-primary");
-		document.getElementById("BlackenLastInningTrue").classList.add("btn-primary");
-		document.getElementById("BlackenLastInningFalse").classList.remove("btn-primary");
-		document.getElementById("BlackenLastInningFalse").classList.add("btn-outline-primary");
+		document.getElementById("BlackenLastInningTrue").classList.remove("btn-outline-success");
+		document.getElementById("BlackenLastInningTrue").classList.add("btn-success");
+		document.getElementById("BlackenLastInningFalse").classList.remove("btn-danger");
+		document.getElementById("BlackenLastInningFalse").classList.add("btn-outline-danger");
 	}else{
-		document.getElementById("BlackenLastInningTrue").classList.remove("btn-primary");
-		document.getElementById("BlackenLastInningTrue").classList.add("btn-outline-primary");
-		document.getElementById("BlackenLastInningFalse").classList.remove("btn-outline-primary");
-		document.getElementById("BlackenLastInningFalse").classList.add("btn-primary");
+		document.getElementById("BlackenLastInningTrue").classList.remove("btn-success");
+		document.getElementById("BlackenLastInningTrue").classList.add("btn-outline-success");
+		document.getElementById("BlackenLastInningFalse").classList.remove("btn-outline-danger");
+		document.getElementById("BlackenLastInningFalse").classList.add("btn-danger");
 	}
 	document.getElementById('Resolution').value = data.Resolution;
 }
