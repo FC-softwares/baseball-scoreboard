@@ -10,6 +10,7 @@ function updateSettings(data, socket) {
 			const [indx, element] = entry;
 			switch (element) {
 				default:
+					if(indx == "MaxInning" && element<1) element = 1;
 					data_old_obj[indx] = element;
 					break;
 			}

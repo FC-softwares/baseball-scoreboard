@@ -29,7 +29,6 @@ function updateData(data,socket){
 }
 
 function updateLogo(indx, element, data_old_obj, toBeSent) {
-	console.log(indx, element, data_old_obj, toBeSent);
 	fs.writeFile(__dirname + '/app/img/' + indx.split('.')[1] + 'Logo.json', JSON.stringify(element, null, 4), (err) => {
 		if (err)
 			throw err;

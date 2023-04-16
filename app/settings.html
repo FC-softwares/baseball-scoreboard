@@ -20,6 +20,13 @@
     <title>Baseball Scoreboard</title>
     <script src="js/all.js"></script>
     <script src="js/redVerSess.js" defer></script>
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            display: none;
+        }
+    </style>
 </head>
 <body class="d-flex flex-column vh-100">
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
@@ -102,7 +109,7 @@
                             <div class="d-flex flex-column align-items-center">
                                 <div class="btn-group" role="group" aria-label="Inning Controls">
                                     <button type="button" class="btn btn-outline-primary" onclick="if (document.getElementById('MaxInning').value < 2) { } else { document.getElementById('MaxInning').value-- }"><i class="bi bi-dash-lg"></i></button>
-                                    <input id="MaxInning" class="form-control text-center rounded-0" style="width: 3rem;" type="num" value="">
+                                    <input id="MaxInning" class="form-control text-center rounded-0" style="width: 3rem;" type="number" min="1" value="9" onchange="if (document.getElementById('MaxInning').value < 1) { document.getElementById('MaxInning').value = 1 }">
                                     <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('MaxInning').value++"><i class="bi bi-plus-lg"></i></button>
                                 </div>
                             </div>
