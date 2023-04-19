@@ -94,8 +94,7 @@ function removeUser(id){
 	xmlt.onload = function() {
 		const response = JSON.parse(xmlt.responseText);
 		const error = response.error || response.message || 'Unknown error';
-		if (xmlt.status !== 200 && this.readyState !== 4 || !response.ok)
-			return openAlert(`<strong>Error!</strong> ${error}`, 'alert-danger');
+		if(checkError(this, xmlt, response, error)) return;
 		openAlert('User removed successfully.', 'alert-success');
 		getCurrentUser();
 	};
@@ -110,12 +109,19 @@ function addUser(){
 	xmlt.onload = function() {
 		const response = JSON.parse(xmlt.responseText);
 		const error = response.error || response.message || 'Unknown error';
-		if (xmlt.status !== 200 && this.readyState !== 4 || !response.ok)
-			return openAlert(`<strong>Error!</strong> ${error}`, 'alert-danger');
+		if(checkError(this, xmlt, response, error)) return;
 		openAlert('User added successfully.','alert-success');
 		document.getElementById('UserAddEmail').value = '';
 		getCurrentUser();
 	};
+}
+
+function checkError(that, xmlt, response, error) {
+	if (xmlt.status !== 200 && that.readyState !== 4 || !response.ok){
+		openAlert(`<strong>Error!</strong> ${error}`, 'alert-danger');
+		return true;
+	}
+	return false;
 }
 
 function openAlert(message, className){
