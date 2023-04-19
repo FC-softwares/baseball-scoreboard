@@ -87,7 +87,7 @@ function printUsers(LoggedUser){
 	}
 }
 function removeUser(id){
-	xmlt = new XMLHttpRequest();
+	const xmlt = new XMLHttpRequest();
 	xmlt.open('POST', '/removeAuthUser', true);
 	xmlt.setRequestHeader('Content-Type', 'application/json');
 	xmlt.send(`{"id":"${user}","token":"${token}","user_id":"${id}"}`);
@@ -95,15 +95,15 @@ function removeUser(id){
 		const response = JSON.parse(xmlt.responseText);
 		const error = response.error || response.message || 'Unknown error';
 		if (xmlt.status !== 200 && this.readyState !== 4 || !response.ok)
-			return document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-		document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User deleted successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+			return openAlert(`<strong>Error!</strong> ${error}`, 'alert-danger');
+		openAlert('User removed successfully.', 'alert-success');
 		getCurrentUser();
 	};
 }
 
 function addUser(){
 	const email = document.getElementById('UserAddEmail').value;
-	xmlt = new XMLHttpRequest();
+	const xmlt = new XMLHttpRequest();
 	xmlt.open('POST', '/addAuthUser', true);
 	xmlt.setRequestHeader('Content-Type', 'application/json');
 	xmlt.send(`{"id":"${user}","token":"${token}","email":"${email}"}`);
@@ -111,12 +111,23 @@ function addUser(){
 		const response = JSON.parse(xmlt.responseText);
 		const error = response.error || response.message || 'Unknown error';
 		if (xmlt.status !== 200 && this.readyState !== 4 || !response.ok)
-			return document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-		document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User added successfully.  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+			return openAlert(`<strong>Error!</strong> ${error}`, 'alert-danger');
+		openAlert('User added successfully.','alert-success');
 		document.getElementById('UserAddEmail').value = '';
+		getCurrentUser();
 	};
 }
 
+function openAlert(message, className){
+	document.getElementById('Alert').innerHTML = message;
+	document.getElementById('Alert').classList.add(className);
+	document.getElementById('Alert').classList.add('show');
+	return setTimeout(() => {
+		document.getElementById('Alert').innerHTML = '';
+		document.getElementById('Alert').classList.remove('show');
+		document.getElementById('Alert').classList.remove(className);
+	}, 5000);
+}
 const exports = {updateSettings, UpdateSettings, BlackenLastInning, getCurrentUser, printUsers, removeUser, addUser};
 export default exports;
 export {updateSettings, UpdateSettings, BlackenLastInning, getCurrentUser, printUsers, removeUser, addUser};

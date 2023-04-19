@@ -27,6 +27,7 @@
         "overlayStyles",
         "maintainability",
         "changelog",
-        "teamLogo"
+        "teamLogo",
+        "settings"
     ]
 }
