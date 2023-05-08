@@ -1,7 +1,10 @@
 const https = require('https');
 const { shell } = require('electron');
 const crypto = require('crypto');
-const { app, CLIENT, API, reqOption, BrowserWindow, server, PORT, AppElectron } = require("./socket.js");
+const { app, CLIENT, API, reqOption, BrowserWindow, server, PORT, AppElectron, io } = require("./socket.js");
+const fs  = require('fs');
+
+const idFIBS = "105226" //FIBS ID (TEST) will be removed in production and added a new field in settings.json
 
 if(require('electron-squirrel-startup')) return AppElectron.quit();
 
@@ -207,7 +210,143 @@ app.get("/client", (req, res) => {
 });
 server.listen(PORT, '0.0.0.0', () => {
 	console.log('listening on http://localhost:' + PORT);
+	if(idFIBS){
+		console.log('live update on ' + idFIBS);
+		liveUpdate(idFIBS);
+	}
 });
+
+// Live Updates with FIBS (myBallClub) Private API
+function liveUpdate(IDfibs) {
+	let lastPlay = 1;
+	// Open the JSON file containing the last play
+	fs.readFile('lastPlay.json', (err, data) => {
+		if (err){
+			// Create the file if it does not exist
+			fs.writeFile('lastPlay.json', '0', (err) => {
+				if (err) throw err;
+				console.log('lastPlay.json created');
+			});
+		}
+		lastPlay = JSON.parse(data);
+	});
+	// Make the request to the FIBS API
+	const req_option = {
+		hostname: 's3-eu-west-1.amazonaws.com',
+		port: 443,
+		path: '/game.wbsc.org/gamedata/' + IDfibs + '/latest.json',
+		method: 'GET'
+	};
+	const req = https.request(req_option, (res) => {
+		// If the request is successful update the last play (if it is different from the previous one) and request the new data
+		if (res.statusCode == 200) {
+			res.on('data', (data) => {
+				const data_obj = JSON.parse(data);
+				if (data_obj != lastPlay) {
+					fs.writeFile('lastPlay.json', JSON.stringify(data_obj), (err) => {
+						if (err) throw err;
+						console.log('lastPlay.json updated');
+					});
+					requestData(IDfibs, data_obj);
+				}
+			});
+		}else{
+			console.log('FIBS update error: ' + res.statusCode);
+		}
+	});
+	req.end();
+	setTimeout(liveUpdate, 1000, IDfibs);
+}
+
+function requestData(IDfibs, lastPlay) {
+	// Make the request to the FIBS API
+	const req_option = {
+		hostname: 's3-eu-west-1.amazonaws.com',
+		port: 443,
+		path: '/game.wbsc.org/gamedata/' + IDfibs + '/play' + lastPlay + '.json',
+		method: 'GET'
+	};
+	const req = https.request(req_option, (res) => {
+		if(res.statusCode == 200){
+			console.log('FIBS data updated');
+			let data = '';
+			res.on('data', (data2) => {
+				data += data2;
+			});
+			res.on('end', () => {
+				// Update the last play
+				const data_obj = JSON.parse(data);
+				const sitaution = data_obj.situation;
+				const AwayRuns = data_obj.linescore.awaytotals.R;
+				const HomeRuns = data_obj.linescore.hometotals.R;
+				// Remove the index 0 on the arrays
+				const awayRunsParz = data_obj.linescore.awayruns
+				const homeRunsParz = data_obj.linescore.homeruns
+				const bases = {
+					1: sitaution.runner1 ? true : false,
+					2: sitaution.runner2 ? true : false,
+					3: sitaution.runner3 ? true : false,
+				}
+				// The currentinning is in the fortmat {[TOP|BOT] #} take the number
+				const inning = parseInt(sitaution.currentinning.split(" ")[1]);
+				// The arrow is 1 on TOP and 2 on BOT
+				const arrow = sitaution.currentinning.split(" ")[0] == "TOP" ? 1:2;
+				// Destructuring the play and creating the new format for app/json/data.json
+				var int = {};
+				for(let i=1;i<=inning;i++){
+					int[i] = {
+						A: awayRunsParz[i]!=undefined ? awayRunsParz[i]:0,
+						H: homeRunsParz[i]!=undefined ? homeRunsParz[i]:0
+					}
+				}
+				console.log(int,int.equals({}));
+				fs.readFile(__dirname + '/app/json/data.json', (err,data)=>{
+					if(err) throw err;
+					const oldData = JSON.parse(data);
+					const objToSend = {
+						Teams:{
+							Away:{
+								Name: oldData.Teams.Away.Name,
+								Score: AwayRuns,
+								Color: oldData.Teams.Away.Color,
+								Short: oldData.Teams.Away.Short,
+							},
+							Home:{
+								Name: oldData.Teams.Home.Name,
+								Score: HomeRuns,
+								Color: oldData.Teams.Home.Color,
+								Short: oldData.Teams.Home.Short,
+							}
+						},
+						Ball: sitaution.balls ? sitaution.balls : oldData.Ball,
+						Strike: sitaution.strikes ? sitaution.strikes : oldData.Strike,
+						Out: sitaution.outs ? sitaution.outs : oldData.Out,
+						Bases: bases,
+						Inning: inning ? inning : oldData.Inning,
+						Arrow: arrow ? inning : oldData.Arrow,
+						Bases: bases,
+						Int: Object.keys(int).length ? int : oldData.Int
+					}
+					fs.writeFile(__dirname + '/app/json/data.json', JSON.stringify(objToSend,null,4), (err) =>{
+						if (err) return console.error("Error writing to data.json" + err);
+						io.emit('update',objToSend);
+					});
+				});
+			});
+		}else{
+			console.log('FIBS data update error: ' + res.statusCode);
+			let chunk = '';
+			res.on('data', (data) => {
+				chunk += data;
+			});
+			res.on('end', () => {
+				console.log(chunk);
+			});
+		}
+	});
+	req.end();
+}
+
 const createWindow = () => {
 	const win = new BrowserWindow({
 		width: 800,

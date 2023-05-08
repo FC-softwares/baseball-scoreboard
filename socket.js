@@ -149,3 +149,5 @@ io.on('connection', (socket) => {
 		console.log('Unauthorized session', socket.id, authorizedSessions);
 	}
 });
+
+exports.io = io;
