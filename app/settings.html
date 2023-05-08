@@ -128,6 +128,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row row-cols-1 gap-3 justify-content-evenly mt-3">
+                        <div class="col">
+                            <h4 class="text-center">Override with WSBC</h4>
+                            <div class="form-check form-switch d-flex flex-row justify-content-center mb-2">
+                                <input type="checkbox" name="enableWSBC" id="enableWSBC" class="form-check-input me-1" onchange="if (document.getElementById('enableWSBC').checked) { document.getElementById('WSBCID').disabled = false } else { document.getElementById('WSBCID').disabled = true;document.getElementById('WSBCID').value = '' }">
+                                <label for="enableWSBC"><abbr title="Override your data with WSBC (MyBallClub) data">Ovverride with WSBC data</abbr></label>
+                            </div>
+                            <input type="number" name="WSBCID" id="WSBCID" class="form-control" placeholder="WSBC ID" disabled>
+                        </div>
+                    </div>
                     <!-- WIP -->
                     <div class="row row-cols-1 gap-3 justify-content-evenly mt-3">
                         <div class="col d-flex flex-column align-items-center justify-content-between">

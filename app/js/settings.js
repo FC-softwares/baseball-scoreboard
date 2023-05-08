@@ -30,11 +30,21 @@ function updateSettings(data){
 		document.getElementById("BlackenLastInningFalse").classList.add("btn-primary");
 	}
 	document.getElementById('Resolution').value = data.Resolution;
+	document.getElementById('enableWSBC').checked = data.fibsStreaming;
+	document.getElementById('WSBCID').disabled = !data.fibsStreaming;
+	document.getElementById('WSBCID').value = data.fibsStreamingCode;
 }
 function UpdateSettings(){
 	const MaxInning = document.getElementById('MaxInning').value;
 	const Resolution = document.getElementById('Resolution').value;
-	socket.emit('updateSettings',`{"MaxInning":${MaxInning},"Resolution":${Resolution}}`);
+	const enableWSBC = document.getElementById('enableWSBC').checked;
+	const WSBCID = document.getElementById('WSBCID').value;
+	socket.emit('updateSettings',JSON.stringify({
+		MaxInning:MaxInning,
+		Resolution:Resolution,
+		fibsStreaming:enableWSBC,
+		fibsStreamingCode:WSBCID
+	}));
 }
 function BlackenLastInning(value){
 	if(value){

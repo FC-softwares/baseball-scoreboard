@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-function updateSettings(data, socket) {
+function updateSettings(data, socket, liveUpdate) {
 	fs.readFile(__dirname + '/app/json/settings.json', 'utf8', (err, data_old) => {
 		if (err)
 			throw err;
@@ -15,6 +15,8 @@ function updateSettings(data, socket) {
 					break;
 			}
 		});
+		if(json?.fibsStreaming && data_old_obj?.fibsStreamingCode != "")
+			liveUpdate();
 		fs.writeFile(__dirname + '/app/json/settings.json', JSON.stringify(data_old_obj, null, 4), (err) => {
 			if (err)
 				throw err;
