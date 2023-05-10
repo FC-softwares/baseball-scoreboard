@@ -30,20 +30,20 @@ function updateSettings(data){
 		document.getElementById("BlackenLastInningFalse").classList.add("btn-primary");
 	}
 	document.getElementById('Resolution').value = data.Resolution;
-	document.getElementById('enableWSBC').checked = data.fibsStreaming;
-	document.getElementById('WSBCID').disabled = !data.fibsStreaming;
-	document.getElementById('WSBCID').value = data.fibsStreamingCode;
+	document.getElementById('enableWBSC').checked = data.fibsStreaming;
+	document.getElementById('WBSCID').disabled = !data.fibsStreaming;
+	document.getElementById('WBSCID').value = data.fibsStreamingCode;
 }
 function UpdateSettings(){
 	const MaxInning = document.getElementById('MaxInning').value;
 	const Resolution = document.getElementById('Resolution').value;
-	const enableWSBC = document.getElementById('enableWSBC').checked;
-	const WSBCID = document.getElementById('WSBCID').value;
+	const enableWBSC = document.getElementById('enableWBSC').checked;
+	const WBSCID = document.getElementById('WBSCID').value;
 	socket.emit('updateSettings',JSON.stringify({
 		MaxInning:MaxInning,
 		Resolution:Resolution,
-		fibsStreaming:enableWSBC,
-		fibsStreamingCode:WSBCID
+		fibsStreaming:enableWBSC,
+		fibsStreamingCode:WBSCID
 	}));
 }
 function BlackenLastInning(value){

@@ -29,6 +29,7 @@
         "changelog",
         "teamLogo",
         "settings",
-        "FIBSupdates"
+        "FIBSupdates",
+        "refactor"
     ]
 }
