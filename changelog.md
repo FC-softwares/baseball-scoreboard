@@ -24,7 +24,7 @@ All of these changes - along with the new features, new style, and new code base
     * As an example, you can have the PC running the game and the scoreboard and control the overlays from your phone or tablet, it's your choice.
     * All the devices must be on the same network and port 2095 (default port) has to be whitelisted on the host PC's firewall.
 * Changed the authentication system and licensing system
-  * You now need to use your email and password to sign into the control panel. You can register an account by visiting our website at [https://www.fc-sofftware.it/](https://www.fc-sofftware.it/)
+  * You now need to use your email and password to sign into the control panel. You can register an account by visiting our website at [https://www.fc-software.it/](https://www.fc-software.it/)
   * You can use the software with the demo version for evaluation purposes, but if you want to use it for a real game and stream/record it you need to buy a license for the software by purchasing it on our website.
   * From the page `settings.html` you can now add/remove authorized users to share access to the control panel. (If the user is not registered on our website, they will be invited to create an account).
 ### Known Bugs:
@@ -143,7 +143,7 @@ Tutte queste modifiche - insieme alle nuove funzionalità, al nuovo stile e alla
     * Ad esempio, puoi avere il PC che esegue OBS e il tabellone, mentre puoi controllare gli overlay dal tuo telefono o tablet. A te la scelta.
     * Tutti i dispositivi devono essere sulla stessa rete e il firewall del PC host dev'essere configurato in modo tale da abilitare la porta 2095 (porta predefinita).
 * Modificato il sistema di autenticazione e il sistema di licenze
-  * Per accedere al pannello di controllo, o qualsiasi pagina di amministrazione, è necessario registrarsi sul nostro sito Web [https://www.fc-sofftware.it/](https://www.fc-sofftware.it/) ed accedere poi con le stesse credenziali
+  * Per accedere al pannello di controllo, o qualsiasi pagina di amministrazione, è necessario registrarsi sul nostro sito Web [https://www.fc-software.it/](https://www.fc-software.it/) ed accedere poi con le stesse credenziali
   * È possibile utilizzare il software con la versione demo a scopi di valutazione, ma se si desidera usarlo in una partita registrata o trasmessa in streaming è necessario acquistare una licenza per il software, disponibile sul nostro sito Web.
   * Dalla pagina `settings.html` è possibile condividere l'accesso al pannello di controllo, aggiungendo o rimuovendo gli utenti autorizzati tramite la loro email. Se l'utente non è registrato, riceverà un invito per registrarsi sul nostro sito web.
 ### Bug noti:
