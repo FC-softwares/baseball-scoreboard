@@ -1,5 +1,7 @@
 {
-    "MaxInning": 9,
+    "MaxInning": "9",
     "BlackenLastInning": true,
-    "Resolution": 2160
+    "Resolution": "2160",
+    "fibsStreaming": false,
+    "fibsStreamingCode": ""
 }

@@ -33,12 +33,23 @@ function updateSettings(data){
 		document.getElementById("BlackenLastInningFalse").classList.remove("btn-outline-danger");
 		document.getElementById("BlackenLastInningFalse").classList.add("btn-danger");
 	}
-	document.getElementById('Resolution').value = data.Resolution;
+	if(document.getElementById('Resolution'))
+		document.getElementById('Resolution').value = data.Resolution;
+	document.getElementById('enableWBSC').checked = data.fibsStreaming;
+	document.getElementById('WBSCID').disabled = !data.fibsStreaming;
+	document.getElementById('WBSCID').value = data.fibsStreamingCode;
 }
 function UpdateSettings(){
 	const MaxInning = document.getElementById('MaxInning').value;
-	const Resolution = document.getElementById('Resolution').value;
-	socket.emit('updateSettings',`{"MaxInning":${MaxInning},"Resolution":${Resolution}}`);
+	const Resolution = document.getElementById('Resolution')?.value || 2160;
+	const enableWBSC = document.getElementById('enableWBSC').checked;
+	const WBSCID = document.getElementById('WBSCID').value;
+	socket.emit('updateSettings',JSON.stringify({
+		MaxInning:MaxInning,
+		Resolution:Resolution,
+		fibsStreaming:enableWBSC,
+		fibsStreamingCode:WBSCID
+	}));
 }
 function BlackenLastInning(value){
 	if(value){

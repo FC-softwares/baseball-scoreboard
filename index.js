@@ -1,7 +1,10 @@
 const https = require('https');
 const { shell } = require('electron');
 const crypto = require('crypto');
-const { app, CLIENT, API, reqOption, BrowserWindow, server, PORT, AppElectron } = require("./socket.js");
+const { app, CLIENT, API, reqOption, BrowserWindow, server, PORT, AppElectron, liveUpdate } = require("./socket.js");
+const fs  = require('fs');
+
+const idFIBS = "105226" //FIBS ID (TEST) will be removed in production and added a new field in settings.json
 
 if(require('electron-squirrel-startup')) return AppElectron.quit();
 
@@ -207,7 +210,17 @@ app.get("/client", (req, res) => {
 });
 server.listen(PORT, '0.0.0.0', () => {
 	console.log('listening on http://localhost:' + PORT);
+	fs.readFile(__dirname + '/app/json/settings.json', (err, data) => {
+		if (err) {
+			console.log(err);
+			return;
+		}
+		const settings = JSON.parse(data);
+		if(settings.fibsStreaming&&settings.fibsStreamingCode != '')
+			liveUpdate();
+	});
 });
+
 const createWindow = () => {
 	const win = new BrowserWindow({
 		width: 800,
