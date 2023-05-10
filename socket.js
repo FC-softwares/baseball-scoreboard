@@ -177,20 +177,22 @@ function liveUpdate() {
 }
 
 function lastPlayCheck(res, lastPlay, IDfibs) {
-	if (res.statusCode == 200) {
-		res.on('data', (data) => {
-			const data_obj = JSON.parse(data);
-			if (data_obj != lastPlay) {
-				fs.writeFile('lastPlay.json', JSON.stringify(data_obj), (err) => {
-					if (err)
-						throw err;
-					console.log('lastPlay.json updated');
-				});
-				requestData(IDfibs, data_obj);
-			}
-		});
-	} else
-		console.log('FIBS update error: ' + res.statusCode);
+	try {
+		if (res.statusCode == 200) {
+			res.on('data', (data) => {
+				const data_obj = JSON.parse(data);
+				if (data_obj != lastPlay) {
+					fs.writeFile('lastPlay.json', JSON.stringify(data_obj), (err) => {
+						if (err)
+							throw err;
+						console.log('lastPlay.json updated');
+					});
+					requestData(IDfibs, data_obj);
+				}
+			});
+		} else
+			console.log('FIBS update error: ' + res.statusCode);
+	} catch (error) { console.log('FIBS update error: ' + error) }
 }
 
 function requestData(IDfibs) {
