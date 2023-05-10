@@ -183,8 +183,10 @@ function liveUpdate() {
 function lastPlayCheck(res, lastPlay, IDfibs) {
 	try {
 		if (res.statusCode == 200) {
-			res.on('data', (data) => {
-				const data_obj = JSON.parse(data);
+			let chunks = '';
+			res.on('data', (data) => { chunks += data; });
+			res.on('end', () => {
+				const data_obj = JSON.parse(chunks);
 				if (data_obj != lastPlay) {
 					fs.writeFile('lastPlay.json', JSON.stringify(data_obj), (err) => {
 						if (err)
