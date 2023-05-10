@@ -16,27 +16,32 @@ socket.on('connectSettings',updateSettings);
 socket.emit('getSettings');
 getCurrentUser();
 
+document.getElementById("UserAddEmail").addEventListener('keydown', (event) => {
+	if (event.key == "Enter") addUser();
+}) 
+
 function updateSettings(data){
 	document.getElementById('MaxInning').value = data.MaxInning;
 	if(data.BlackenLastInning){
-		document.getElementById("BlackenLastInningTrue").classList.remove("btn-outline-primary");
-		document.getElementById("BlackenLastInningTrue").classList.add("btn-primary");
-		document.getElementById("BlackenLastInningFalse").classList.remove("btn-primary");
-		document.getElementById("BlackenLastInningFalse").classList.add("btn-outline-primary");
+		document.getElementById("BlackenLastInningTrue").classList.remove("btn-outline-success");
+		document.getElementById("BlackenLastInningTrue").classList.add("btn-success");
+		document.getElementById("BlackenLastInningFalse").classList.remove("btn-danger");
+		document.getElementById("BlackenLastInningFalse").classList.add("btn-outline-danger");
 	}else{
-		document.getElementById("BlackenLastInningTrue").classList.remove("btn-primary");
-		document.getElementById("BlackenLastInningTrue").classList.add("btn-outline-primary");
-		document.getElementById("BlackenLastInningFalse").classList.remove("btn-outline-primary");
-		document.getElementById("BlackenLastInningFalse").classList.add("btn-primary");
+		document.getElementById("BlackenLastInningTrue").classList.remove("btn-success");
+		document.getElementById("BlackenLastInningTrue").classList.add("btn-outline-success");
+		document.getElementById("BlackenLastInningFalse").classList.remove("btn-outline-danger");
+		document.getElementById("BlackenLastInningFalse").classList.add("btn-danger");
 	}
-	document.getElementById('Resolution').value = data.Resolution;
+	if(document.getElementById('Resolution'))
+		document.getElementById('Resolution').value = data.Resolution;
 	document.getElementById('enableWBSC').checked = data.fibsStreaming;
 	document.getElementById('WBSCID').disabled = !data.fibsStreaming;
 	document.getElementById('WBSCID').value = data.fibsStreamingCode;
 }
 function UpdateSettings(){
 	const MaxInning = document.getElementById('MaxInning').value;
-	const Resolution = document.getElementById('Resolution').value;
+	const Resolution = document.getElementById('Resolution')?.value || 2160;
 	const enableWBSC = document.getElementById('enableWBSC').checked;
 	const WBSCID = document.getElementById('WBSCID').value;
 	socket.emit('updateSettings',JSON.stringify({
