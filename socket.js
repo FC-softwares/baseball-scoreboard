@@ -211,26 +211,26 @@ function requestData(IDfibs) {
 exports.liveUpdate = liveUpdate;
 
 function updateDataByWBSC(data) {
-	const data_obj = JSON.parse(data); // JSON object containing the data
-	const AwayRuns = data_obj?.awaytotals?.R; const HomeRuns = data_obj?.hometotals?.R; // Runs
-	const { awayruns, homeruns } = data_obj; // Runs by inning
-	const bases = { 1: data_obj.runner[1] ? true : false, 2: data_obj.runner[2] ? true : false, 3: data_obj.runner[3] ? true : false, }; // Bases
-	const inning = parseInt(data_obj.inning); // Inning
-	const arrow = data_obj.home == 0 ? 1 : 2; // Arrow (1 = away/TOP, 2 = home/BOT)
-	var int = {};
-	awayruns.forEach((run, i) => { if(i!==0&&run!=undefined) int[i] = { A: run, H: homeruns[i] != undefined ? homeruns[i] : 0 }; });
-	getAndUpdateJSON();
-	function getAndUpdateJSON() {
-		fs.readFile(__dirname + '/app/json/data.json', (err, data) => {
-			if (err)
-				return console.error(err);
-			const oldData = JSON.parse(data);
-			const objToSend = { Teams: { Away: { Name: oldData.Teams.Away.Name, Score: AwayRuns !== undefined ? AwayRuns : oldData.Teams.Away.Score, Color: oldData.Teams.Away.Color, Short: oldData.Teams.Away.Short, }, Home: { Name: oldData.Teams.Home.Name, Score: HomeRuns !== undefined ? HomeRuns : oldData.Teams.Home.Score, Color: oldData.Teams.Home.Color, Short: oldData.Teams.Home.Short, } }, Ball: data_obj.balls !== undefined ? data_obj.balls : oldData.Ball, Strike: data_obj.strikes !== undefined ? data_obj.strikes : oldData.Strike, Out: data_obj.outs !== undefined ? data_obj.outs : oldData.Out, Bases: bases, Inning: inning ? inning : oldData.Inning, Arrow: arrow ? arrow : oldData.Arrow, Bases: bases, Int: Object.keys(int).length ? int : oldData.Int };
-			fs.writeFile(__dirname + '/app/json/data.json', JSON.stringify(objToSend, null, 4), (err) => {
-				if (err)
-					return console.error("Error writing to data.json" + err);
-				io.emit('update', objToSend);
+	try{
+		const data_obj = JSON.parse(data); // JSON object containing the data
+		const AwayRuns = data_obj?.awaytotals?.R; const HomeRuns = data_obj?.hometotals?.R; // Runs
+		const { awayruns, homeruns } = data_obj; // Runs by inning
+		const bases = { 1: data_obj.runner[1] ? true : false, 2: data_obj.runner[2] ? true : false, 3: data_obj.runner[3] ? true : false, }; // Bases
+		const inning = parseInt(data_obj.inning); // Inning
+		const arrow = data_obj.home == 0 ? 1 : 2; // Arrow (1 = away/TOP, 2 = home/BOT)
+		var int = {};
+		awayruns.forEach((run, i) => { if(i!==0&&run!=undefined) int[i] = { A: run, H: homeruns[i] != undefined ? homeruns[i] : 0 }; });
+		getAndUpdateJSON();
+		function getAndUpdateJSON() {
+			fs.readFile(__dirname + '/app/json/data.json', (err, data) => {
+				if (err) return console.error(err);
+				const oldData = JSON.parse(data);
+				const objToSend = { Teams: { Away: { Name: oldData.Teams.Away.Name, Score: AwayRuns !== undefined ? AwayRuns : oldData.Teams.Away.Score, Color: oldData.Teams.Away.Color, Short: oldData.Teams.Away.Short, }, Home: { Name: oldData.Teams.Home.Name, Score: HomeRuns !== undefined ? HomeRuns : oldData.Teams.Home.Score, Color: oldData.Teams.Home.Color, Short: oldData.Teams.Home.Short, } }, Ball: data_obj.balls !== undefined ? data_obj.balls : oldData.Ball, Strike: data_obj.strikes !== undefined ? data_obj.strikes : oldData.Strike, Out: data_obj.outs !== undefined ? data_obj.outs : oldData.Out, Bases: bases, Inning: inning ? inning : oldData.Inning, Arrow: arrow ? arrow : oldData.Arrow, Bases: bases, Int: Object.keys(int).length ? int : oldData.Int };
+				fs.writeFile(__dirname + '/app/json/data.json', JSON.stringify(objToSend, null, 4), (err) => {
+					if (err) return console.error("Error writing to data.json" + err);
+					io.emit('update', objToSend);
+				});
 			});
-		});
-	}
+		}
+	}catch(e){ console.log('Error updating data.json: ' + e); }
 }
