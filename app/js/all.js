@@ -37,7 +37,7 @@ function CheckSession(){
 		if (response.ok !== true)
 			return false;
 		const { name, surname} = response.user;
-		document.getElementById('profile_plc').innerHTML = `<a class="dropdown-toggle text-dark text-decoration-none pe-0" href="#" id="navUserLinks" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Hi <strong><span class="me-1">${name}</span><span class="d-sm-none d-md-inline d-lg-none d-xl-inline">${surname}</span></strong></a><ul class="dropdown-menu dropdown-menu-end mb-2" aria-labelledby="navUserLinks"><li><a class="dropdown-item" onclick="openExternal('https://www.fc-sofftware.it/profile')" target="_blank">Manage profile <i class="bi-box-arrow-up-right"></i></a></li><li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="#" title="logout" onclick="LogOut();return false;">Logout</a></li></ul>`;
+		document.getElementById('profile_plc').innerHTML = `<a class="dropdown-toggle text-dark text-decoration-none pe-0" href="#" id="navUserLinks" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Hi <strong><span class="me-1">${name}</span><span class="d-sm-none d-md-inline">${surname}</span></strong></a><ul class="dropdown-menu dropdown-menu-end mb-2" aria-labelledby="navUserLinks"><li><a class="dropdown-item" onclick="openExternal('https://www.fc-software.it/profile')" target="_blank">Manage profile <i class="bi-box-arrow-up-right"></i></a></li><li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="#" title="logout" onclick="LogOut();return false;">Logout</a></li></ul>`;
 		return true;
 	}
 }
