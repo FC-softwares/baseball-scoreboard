@@ -152,28 +152,32 @@ io.on('connection', (socket) => {
 
 // Live Updates with FIBS (myBallClub) Private API
 function liveUpdate() {
-	fs.readFile(__dirname + '/app/json/settings.json', 'utf8', (err, json) => {
-		if(err) return console.error(err);
-		const obj = JSON.parse(json);
-		if(obj.fibsStreaming == false) return console.log('FIBS Streaming is disabled');
-		if(obj.fibsStreamingCode == '') return console.log('FIBS Streaming Code is empty');
-		const IDfibs = obj.fibsStreamingCode;
-		let lastPlay = 1;
-		// Open the JSON file containing the last play
-		fs.readFile('lastPlay.json', (err, data) => {
-			if (err) return fs.writeFile('lastPlay.json', '0', (err) => { if (err) throw err; console.log('lastPlay.json created')}); // If the file doesn't exist create it and set the last play to 0
-			lastPlay = JSON.parse(data);
+	try {
+		fs.readFile(__dirname + '/app/json/settings.json', 'utf8', (err, json) => {
+			if(err) return console.log(err);
+			const obj = JSON.parse(json);
+			if(obj.fibsStreaming == false) return console.log('FIBS Streaming is disabled');
+			if(obj.fibsStreamingCode == '') return console.log('FIBS Streaming Code is empty');
+			const IDfibs = obj.fibsStreamingCode;
+			let lastPlay = 1;
+			// Open the JSON file containing the last play
+			fs.readFile('lastPlay.json', (err, data) => {
+				if (err) return fs.writeFile('lastPlay.json', '0', (err) => { if (err) throw err; console.log('lastPlay.json created')}); // If the file doesn't exist create it and set the last play to 0
+				lastPlay = JSON.parse(data);
+			});
+			// Make the request to the FIBS API
+			const req_option = { hostname: 's3-eu-west-1.amazonaws.com', port: 443, path: '/game.wbsc.org/gamedata/mbc/' + IDfibs +'t.json', method: 'GET' };
+			const req = https.request(req_option, (res) => {
+				// If the request is successful update the last play (if it is different from the previous one) and request the new data
+				lastPlayCheck(res, lastPlay, IDfibs);
+			});
+			req.end();
+			req.on('error', (e) => { console.log('FIBS update error: ' + e) });
+			setTimeout(liveUpdate, 1000);
 		});
-		// Make the request to the FIBS API
-		const req_option = { hostname: 's3-eu-west-1.amazonaws.com', port: 443, path: '/game.wbsc.org/gamedata/mbc/' + IDfibs +'t.json', method: 'GET' };
-		const req = https.request(req_option, (res) => {
-			// If the request is successful update the last play (if it is different from the previous one) and request the new data
-			lastPlayCheck(res, lastPlay, IDfibs);
-		});
-		req.end();
-		req.on('error', (e) => { console.log('FIBS update error: ' + e) });
-		setTimeout(liveUpdate, 1000);
-	});
+	} catch (error) {
+		console.log('FIBS update error: ' + error);
+	}
 }
 
 function lastPlayCheck(res, lastPlay, IDfibs) {
@@ -225,7 +229,7 @@ function updateDataByWBSC(data) {
 		getAndUpdateJSON();
 		function getAndUpdateJSON() {
 			fs.readFile(__dirname + '/app/json/data.json', (err, data) => {
-				if (err) return console.error(err);
+				if (err) return console.log(err);
 				const oldData = JSON.parse(data);
 				const objToSend = { Teams: { Away: { Name: oldData.Teams.Away.Name, Score: AwayRuns !== undefined ? AwayRuns : oldData.Teams.Away.Score, Color: oldData.Teams.Away.Color, Short: oldData.Teams.Away.Short, }, Home: { Name: oldData.Teams.Home.Name, Score: HomeRuns !== undefined ? HomeRuns : oldData.Teams.Home.Score, Color: oldData.Teams.Home.Color, Short: oldData.Teams.Home.Short, } }, Ball: data_obj.balls !== undefined ? data_obj.balls : oldData.Ball, Strike: data_obj.strikes !== undefined ? data_obj.strikes : oldData.Strike, Out: data_obj.outs !== undefined ? data_obj.outs : oldData.Out, Bases: bases, Inning: inning ? inning : oldData.Inning, Arrow: arrow ? arrow : oldData.Arrow, Bases: bases, Int: Object.keys(int).length ? int : oldData.Int };
 				fs.writeFile(__dirname + '/app/json/data.json', JSON.stringify(objToSend, null, 4), (err) => {
