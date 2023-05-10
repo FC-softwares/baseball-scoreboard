@@ -218,17 +218,19 @@ function updateDataByWBSC(data) {
 	const inning = parseInt(data_obj.inning); // Inning
 	const arrow = data_obj.home == 0 ? 1 : 2; // Arrow (1 = away/TOP, 2 = home/BOT)
 	var int = {};
-	for (let i = 1; i <= inning; i++)
-		int[i] = { A: awayruns[i] != undefined ? awayruns[i] : 0, H: homeruns[i] != undefined ? homeruns[i] : 0 };
-	fs.readFile(__dirname + '/app/json/data.json', (err, data) => {
-		if (err)
-			throw err;
-		const oldData = JSON.parse(data);
-		const objToSend = { Teams: { Away: { Name: oldData.Teams.Away.Name, Score: AwayRuns !== undefined ? AwayRuns : oldData.Teams.Away.Score, Color: oldData.Teams.Away.Color, Short: oldData.Teams.Away.Short, }, Home: { Name: oldData.Teams.Home.Name, Score: HomeRuns !== undefined ? HomeRuns : oldData.Teams.Home.Score, Color: oldData.Teams.Home.Color, Short: oldData.Teams.Home.Short, } }, Ball: data_obj.balls !== undefined ? data_obj.balls : oldData.Ball, Strike: data_obj.strikes !== undefined ? data_obj.strikes : oldData.Strike, Out: data_obj.outs !== undefined ? data_obj.outs : oldData.Out, Bases: bases, Inning: inning ? inning : oldData.Inning, Arrow: arrow ? arrow : oldData.Arrow, Bases: bases, Int: Object.keys(int).length ? int : oldData.Int };
-		fs.writeFile(__dirname + '/app/json/data.json', JSON.stringify(objToSend, null, 4), (err) => {
+	awayruns.forEach((run, i) => { if(i!==0&&run!=undefined) int[i] = { A: run, H: homeruns[i] != undefined ? homeruns[i] : 0 }; });
+	getAndUpdateJSON();
+	function getAndUpdateJSON() {
+		fs.readFile(__dirname + '/app/json/data.json', (err, data) => {
 			if (err)
-				return console.error("Error writing to data.json" + err);
-			io.emit('update', objToSend);
+				return console.error(err);
+			const oldData = JSON.parse(data);
+			const objToSend = { Teams: { Away: { Name: oldData.Teams.Away.Name, Score: AwayRuns !== undefined ? AwayRuns : oldData.Teams.Away.Score, Color: oldData.Teams.Away.Color, Short: oldData.Teams.Away.Short, }, Home: { Name: oldData.Teams.Home.Name, Score: HomeRuns !== undefined ? HomeRuns : oldData.Teams.Home.Score, Color: oldData.Teams.Home.Color, Short: oldData.Teams.Home.Short, } }, Ball: data_obj.balls !== undefined ? data_obj.balls : oldData.Ball, Strike: data_obj.strikes !== undefined ? data_obj.strikes : oldData.Strike, Out: data_obj.outs !== undefined ? data_obj.outs : oldData.Out, Bases: bases, Inning: inning ? inning : oldData.Inning, Arrow: arrow ? arrow : oldData.Arrow, Bases: bases, Int: Object.keys(int).length ? int : oldData.Int };
+			fs.writeFile(__dirname + '/app/json/data.json', JSON.stringify(objToSend, null, 4), (err) => {
+				if (err)
+					return console.error("Error writing to data.json" + err);
+				io.emit('update', objToSend);
+			});
 		});
-	});
+	}
 }
