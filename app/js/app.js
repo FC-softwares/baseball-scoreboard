@@ -262,9 +262,8 @@ function activeDeactiveScoreboard(data,url){
 
 function brightnessByColor(color) {
 	const match = color.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i) || color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)/);
-	if (!match) {
+	if (!match)
 		return null;
-	}
 	const [r, g, b] = match.slice(1).map(val => parseInt(val, match[1] ? 16 : 10));
 	return (r * 299 + g * 587 + b * 114) / 1000;
 } 

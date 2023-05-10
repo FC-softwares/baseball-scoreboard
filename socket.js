@@ -198,6 +198,9 @@ function liveUpdate() {
 			}
 		});
 		req.end();
+		req.on('error', (e) => {
+			console.log('FIBS update error: ' + e);
+		});
 		setTimeout(liveUpdate, 1000);
 	});
 }
@@ -253,6 +256,9 @@ function requestData(IDfibs, lastPlay) {
 				console.log(chunk);
 			});
 		}
+	});
+	req.on('error', (e) => {
+		console.log('FIBS data update error: ' + e);
 	});
 	req.end();
 }
