@@ -174,7 +174,7 @@ app.post('/openExternal', (req, res) => {
 	if (!checkURL(url, res))
 		return;
 	// Check that the URL is a pattern we expect
-	if (!url.match(/^https?:\/\/(www\.)?facchini-pu\.it/)) {
+	if (!url.match(/^https?:\/\/(www\.)?fc-software\.it/)) {
 		res.status(400).json({ok:false,message:'invalid url'});
 		return;
 	}

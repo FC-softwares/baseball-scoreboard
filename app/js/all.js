@@ -49,7 +49,6 @@ function openExternal(url){
 	xmlt.open('POST', `/openExternal`, true);
 	xmlt.setRequestHeader('Content-Type', 'application/json');
 	xmlt.send(`{"url":"${url}"}`);
-	xmlt.send();
 }
 
 function newWindow(url,width,height){
@@ -58,7 +57,6 @@ function newWindow(url,width,height){
 	xmlt.open('POST', `/newWindow`, true);
 	xmlt.setRequestHeader('Content-Type', 'application/json');
 	xmlt.send(`{"url":"${url}","width":${width},"height":${height}}`);
-	xmlt.send();
 }
 function checkElectron(url){
 	if (navigator.userAgent.toLowerCase().indexOf(' electron/')== -1) {
