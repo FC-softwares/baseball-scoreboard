@@ -4,7 +4,8 @@
 :root {
     /* Scoreboard widths */
     --w-teamcolor: 7px;
-    --w-teamname: 250px;
+    --w-teamname: 210px;
+    --w-teamlogo: 40px;
     --w-score: 55px;
     --w-div: 7px;
     /* Scoreboard row height */
@@ -35,13 +36,13 @@ div {
 }
 
 /* Transitions */
-.scoreboard > div.teamName#home, .scoreboard > div.teamName#away, .scoreboard > div.teamColor#home, .scoreboard > div.teamColor#away {
+.scoreboard > div.teamName, .scoreboard > div.teamColor, .scoreboard > div.teamLogo {
     transition: cubic-bezier(0.18, 0.89, 0.33, 1.0) 1s;
     transition-delay: 1s;
     transform: scaleX(1);
     z-index: 0;
 }
-.scoreboard.disabled > div.teamName#home, .scoreboard.disabled > div.teamName#away, .scoreboard.disabled > div.teamColor#home, .scoreboard.disabled > div.teamColor#away {
+.scoreboard.disabled > div.teamName, .scoreboard.disabled > div.teamColor, .scoreboard.disabled > div.teamColor, .scoreboard.disabled > div.teamLogo {
     transition: cubic-bezier(0.18, 0.89, 0.33, 1.0) 1s;
     transform: scaleX(0);
 }
@@ -60,11 +61,24 @@ div {
 .scoreboard > div.teamName#home {
     transform-origin: left;
 }
+.scoreboard > div.teamLogo#away {
+    transform-origin: calc(270px - 7px); /* do not question why we use these numbers */
+    margin-right: -300px;
+    z-index: -1;
+}
+.scoreboard > div.teamLogo#home {
+    transform-origin: 70px; /* same deal here */
+    margin-left: -300px;
+    z-index: -1;
+}
+.scoreboard > div.teamLogo#home > img {
+    margin-left: auto;
+}
 .scoreboard > div.teamColor#away {
-    transform-origin: 270px
+    transform-origin: 270px;
 }
 .scoreboard > div.teamColor#home {
-    transform-origin: -270px
+    transform-origin: -270px;
 }
 .scoreboard#postgame > div.teamScore#away {
     transform: skew(-30deg);
@@ -84,6 +98,15 @@ div {
     transform: none;
     transform-origin: left;
 }
+.scoreboard#postgame > div.teamLogo#away {
+    transform: none;
+    transform-origin: left;
+    margin-right: 0;
+}
+.scoreboard.disabled#postgame > div.teamLogo#away {
+    transform: translateX(-350px);
+}
+
 .scoreboard.disabled#postgame > div.teamName#away {
     transform: translateX(-350px);
 }
@@ -92,6 +115,14 @@ div {
     transform-origin: right;
 }
 .scoreboard.disabled#postgame > div.teamName#home {
+    transform: translateX(350px);
+}
+.scoreboard#postgame > div.teamLogo#home {
+    transform: none;
+    transform-origin: right;
+    margin-left: 0;
+}
+.scoreboard.disabled#postgame > div.teamLogo#home {
     transform: translateX(350px);
 }
 .scoreboard#postgame > div.teamColor#away {
@@ -135,10 +166,10 @@ div {
     grid-template-rows: var(--h-row);
 }
 .scoreboard#pregame {
-    grid-template-columns: var(--w-teamcolor) var(--w-teamname) calc((var(--w-score) * 2) + var(--w-div)) var(--w-teamname) var(--w-teamcolor);
+    grid-template-columns: var(--w-teamcolor) var(--w-teamlogo) var(--w-teamname) calc((var(--w-score) * 2) + var(--w-div)) var(--w-teamname) var(--w-teamlogo) var(--w-teamcolor);
 }
 .scoreboard#postgame {
-    grid-template-columns: var(--w-teamcolor) var(--w-teamname) var(--w-score) var(--w-div) var(--w-score) var(--w-teamname) var(--w-teamcolor);
+    grid-template-columns: var(--w-teamcolor) var(--w-teamlogo) var(--w-teamname) var(--w-score) var(--w-div) var(--w-score) var(--w-teamname) var(--w-teamlogo) var(--w-teamcolor);
 }
 .scoreboard > div {
     align-items: center;
@@ -186,18 +217,35 @@ div {
     background: var(--g-home);
 }
 
+/* Team logo */
+.teamLogo {
+    background: var(--g-def);
+}
+.teamLogo > img {
+    width: calc(var(--w-teamlogo) * 0.8);
+    height: calc(var(--w-teamlogo) * 0.8);
+    object-fit: contain;
+}
+.teamLogo#away > img {
+    padding-left: calc(var(--w-teamlogo) * 0.2);
+}
+.teamLogo#home > img {
+    padding-right: calc(var(--w-teamlogo) * 0.2);
+}
+
 /* Team name */
 .teamName {
     background: var(--g-def);
-    padding-left: 10px;
     padding-right: 10px;
 }
 .teamName#home {
     margin-left: -20px;
     justify-content: end;
+    padding-right: 8px;
 }
 .teamName#away {
     margin-right: -20px;
+    padding-left: 8px;
 }
 .teamName#home > #bg > span {
     background: var(--g-home);

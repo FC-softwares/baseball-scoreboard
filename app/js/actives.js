@@ -40,3 +40,4 @@ function allOff(){
     socket.emit('updateActive',`{"AllOff":true}`);
     return true;
 }
+export {updateActive, buttonOpr, allOff};

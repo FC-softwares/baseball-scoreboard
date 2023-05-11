@@ -7,11 +7,41 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="js/settings.js" async></script>
+    <script type="module" defer>
+        import {updateSettings, UpdateSettings, BlackenLastInning, getCurrentUser, printUsers, removeUser, addUser} from './js/settings.js';
+        window.updateSettings = updateSettings;
+        window.UpdateSettings = UpdateSettings;
+        window.BlackenLastInning = BlackenLastInning;
+        window.getCurrentUser = getCurrentUser;
+        window.printUsers = printUsers;
+        window.removeUser = removeUser;
+        window.addUser = addUser;
+    </script>
     <title>Baseball Scoreboard</title>
     <script src="js/all.js"></script>
     <script src="js/redVerSess.js" defer></script>
+    <script>
+        function toggleCustomScaling(select) {
+            if (select.options[select.selectedIndex].value == 'custom') {
+                document.getElementById('custom-scaling').classList.remove('d-none');
+            } else {
+                document.getElementById('custom-scaling').classList.add('d-none');
+            }
+        }
+    </script>
+    <style>
+        /* Chrome, Safari, Edge, Opera */
+        input.no-arrows::-webkit-outer-spin-button,
+        input.no-arrows::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* Firefox */
+        input.no-arrows[type=number] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+    </style>
 </head>
 <body class="d-flex flex-column vh-100">
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
@@ -83,39 +113,50 @@
         </div>
     </nav>
     <div class="container-md"  style="max-width: 1140px;">
+        <div class="position-relative w-100 d-flex justify-content-center">
+            <div id="Alert" class="mt-2 position-absolute alert fade"></div>
+        </div>
         <h1 class="fw-bolder text-black text-opacity-75 pt-2">Settings</h1>
-        <div id="Alert"></div>
         <div class="row">
             <div class="col-12 col-lg-4">
                 <div class="bg-body p-3 mb-4 shadow rounded-3 border">
-                    <div class="row row-cols-1 gap-3 gap-sm-0 justify-content-evenly">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-1 row-gap-3 justify-content-evenly">
                         <div class="col">
                             <h4 class="text-center">Max Inning</h4>
                             <div class="d-flex flex-column align-items-center">
                                 <div class="btn-group" role="group" aria-label="Inning Controls">
                                     <button type="button" class="btn btn-outline-primary" onclick="if (document.getElementById('MaxInning').value < 2) { } else { document.getElementById('MaxInning').value-- }"><i class="bi bi-dash-lg"></i></button>
-                                    <input id="MaxInning" class="form-control text-center rounded-0" style="width: 3rem;" type="num" value="">
+                                    <input id="MaxInning" class="form-control text-center rounded-0 no-arrows" style="width: 3rem;" type="number" min="1" value="9" onchange="if (document.getElementById('MaxInning').value < 1) { document.getElementById('MaxInning').value = 1 }">
                                     <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('MaxInning').value++"><i class="bi bi-plus-lg"></i></button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row row-cols-1 gap-3 justify-content-evenly mt-3">
                         <div class="col">
                             <h4 class="text-center">Darken Last Inning</h4>
                             <div class="col d-flex flex-column align-items-center">
                                 <div class="btn-group" role="group" aria-label="Controls">
-                                    <button id="BlackenLastInningTrue" type="button" class="btn btn-outline-primary" onclick="BlackenLastInning(true)">Yes</button>
-                                    <button id="BlackenLastInningFalse" type="button" class="btn btn-outline-primary" onclick="BlackenLastInning(false)">No</button>
+                                    <button id="BlackenLastInningTrue" type="button" class="btn btn-outline-success" onclick="BlackenLastInning(true)">Yes</button>
+                                    <button id="BlackenLastInningFalse" type="button" class="btn btn-outline-danger" onclick="BlackenLastInning(false)">No</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- WIP -->
                     <div class="row row-cols-1 gap-3 justify-content-evenly mt-3">
-                        <div class="col d-flex flex-column align-items-center justify-content-between">
+                        <div class="col d-flex flex-column align-items-center" style="max-width: 20rem;">
+                            <h4 class="text-center">Override with WBSC</h4>
+                            <div class="form-check form-switch d-flex flex-row justify-content-center mb-2">
+                                <input type="checkbox" name="enableWBSC" id="enableWBSC" class="form-check-input me-1" onchange="if (document.getElementById('enableWBSC').checked) { document.getElementById('WBSCID').disabled = false } else { document.getElementById('WBSCID').disabled = true;document.getElementById('WBSCID').value = '' }">
+                                <label for="enableWBSC"><abbr title="Override your data with WBSC (MyBallClub) data">Override with WBSC data</abbr></label>
+                            </div>
+                            <input type="number" name="WBSCID" id="WBSCID" class="form-control" placeholder="WBSC ID" disabled>
+                        </div>
+                    </div>
+                    <!-- WIP -->
+                    <!-- <div class="row row-cols-1 gap-3 justify-content-evenly mt-3">
+                        <div class="col d-flex flex-column align-items-center" style="max-width: 20rem;">
                             <h4 class="text-center">Streaming Resolution</h4>
-                            <select name="res" id="Resolution" class="form-select" disabled aria-label="Select for Resolution of the streaming">
+                            <select name="res" id="Resolution" class="form-select" aria-label="Select the streaming's resolution" onchange="toggleCustomScaling(this)">
+                                <option value="custom">Custom scaling</option>
                                 <option value="2160">3840 x 2160</option>
                                 <option value="1440">2560 x 1440</option>
                                 <option value="1080">1920 x 1080</option>
@@ -124,9 +165,13 @@
                                 <option value="360">640 x 360</option>
                                 <option value="240">480 x 240</option>
                             </select>
-                            <span class="text-secondary"><i>Work in progress</i></span>
+                            <div class="input-group mt-2 d-none" id="custom-scaling">
+                                <label for="scale-factor" class="input-group-text">Scale factor</label>
+                                <input type="number" class="form-control" id="scale-factor" step="0.1">
+                            </div>
+                            <span class="text-secondary"><i>Work in progress!</i></span>
                         </div>
-                    </div>
+                    </div> -->
                     <hr>
                     <div class="row mt-3 justify-content-center">
                         <div class="col-auto">
@@ -158,18 +203,21 @@
                         <div class="col">
                             <h4 class="text-center">Auth Users</h4>
                             <div class="d-flex flex-row align-items-center justify-content-center">
-                                <ul class="list-group w-100" id="AuthUsersUl">
+                                <ul class="list-group w-100" id="AuthUsersUl" style="max-width: 20rem;">
                                 </ul>
                             </div>
                         </div>
-                        <hr class="d-sm-none my-3">
+                        <div class="col d-sm-none">
+                            <hr class="my-3">
+                        </div>
                         <div class="col">
                             <h4 class="text-center">Add new user</h4>
                             <div class="w-100 justify-content-center">
                                 <div class="d-flex flex-column align-items-center">
-                                    <h5 class="text-center fw-normal">Email address</h5>
-                                    <input id="UserAddEmail" class="form-control text-center mb-3" style="max-width: 20rem;" type="email" value="">
-                                    <button type="button" class="btn btn-outline-primary mx-auto" onclick="addUser()">Add User</button>
+                                    <div class="input-group" style="max-width: 20rem;">
+                                        <input id="UserAddEmail" class="form-control" type="email" value="" placeholder="Email address">
+                                        <button type="button" class="btn btn-outline-primary" onclick="addUser()"><i class="bi bi-person-plus"></i></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -181,30 +229,10 @@
     <div class="flex-grow-1"></div>
     <footer class="bg-black bg-opacity-10">
         <div class="container-md d-flex flex-row flex-wrap align-content-center align-items-center justify-content-center py-2" style="column-gap: .5rem; max-width: 1140px;">
-            <div class="me-sm-auto text-center">
+            <div class="text-center">
                 <a class="text-decoration-none" type="button" data-bs-toggle="modal" data-bs-target="#licenseModal">
-                    <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px" height="24px" viewBox="5.5 -3.5 64 64" enable-background="new 5.5 -3.5 64 64" xml:space="preserve">
-                        <g>
-                            <circle fill="rgba(0, 0, 0, 0)" cx="37.785" cy="28.501" r="28.836"/>
-                            <path fill="currentColor" d="M37.441-3.5c8.951,0,16.572,3.125,22.857,9.372c3.008,3.009,5.295,6.448,6.857,10.314
-                            c1.561,3.867,2.344,7.971,2.344,12.314c0,4.381-0.773,8.486-2.314,12.313c-1.543,3.828-3.82,7.21-6.828,10.143
-                            c-3.123,3.085-6.666,5.448-10.629,7.086c-3.961,1.638-8.057,2.457-12.285,2.457s-8.276-0.808-12.143-2.429
-                            c-3.866-1.618-7.333-3.961-10.4-7.027c-3.067-3.066-5.4-6.524-7-10.372S5.5,32.767,5.5,28.5c0-4.229,0.809-8.295,2.428-12.2
-                            c1.619-3.905,3.972-7.4,7.057-10.486C21.08-0.394,28.565-3.5,37.441-3.5z M37.557,2.272c-7.314,0-13.467,2.553-18.458,7.657
-                            c-2.515,2.553-4.448,5.419-5.8,8.6c-1.354,3.181-2.029,6.505-2.029,9.972c0,3.429,0.675,6.734,2.029,9.913
-                            c1.353,3.183,3.285,6.021,5.8,8.516c2.514,2.496,5.351,4.399,8.515,5.715c3.161,1.314,6.476,1.971,9.943,1.971
-                            c3.428,0,6.75-0.665,9.973-1.999c3.219-1.335,6.121-3.257,8.713-5.771c4.99-4.876,7.484-10.99,7.484-18.344
-                            c0-3.543-0.648-6.895-1.943-10.057c-1.293-3.162-3.18-5.98-5.654-8.458C50.984,4.844,44.795,2.272,37.557,2.272z M37.156,23.187
-                            l-4.287,2.229c-0.458-0.951-1.019-1.619-1.685-2c-0.667-0.38-1.286-0.571-1.858-0.571c-2.856,0-4.286,1.885-4.286,5.657
-                            c0,1.714,0.362,3.084,1.085,4.113c0.724,1.029,1.791,1.544,3.201,1.544c1.867,0,3.181-0.915,3.944-2.743l3.942,2
-                            c-0.838,1.563-2,2.791-3.486,3.686c-1.484,0.896-3.123,1.343-4.914,1.343c-2.857,0-5.163-0.875-6.915-2.629
-                            c-1.752-1.752-2.628-4.19-2.628-7.313c0-3.048,0.886-5.466,2.657-7.257c1.771-1.79,4.009-2.686,6.715-2.686
-                            C32.604,18.558,35.441,20.101,37.156,23.187z M55.613,23.187l-4.229,2.229c-0.457-0.951-1.02-1.619-1.686-2
-                            c-0.668-0.38-1.307-0.571-1.914-0.571c-2.857,0-4.287,1.885-4.287,5.657c0,1.714,0.363,3.084,1.086,4.113
-                            c0.723,1.029,1.789,1.544,3.201,1.544c1.865,0,3.18-0.915,3.941-2.743l4,2c-0.875,1.563-2.057,2.791-3.541,3.686
-                            c-1.486,0.896-3.105,1.343-4.857,1.343c-2.896,0-5.209-0.875-6.941-2.629c-1.736-1.752-2.602-4.19-2.602-7.313
-                            c0-3.048,0.885-5.466,2.658-7.257c1.77-1.79,4.008-2.686,6.713-2.686C51.117,18.558,53.938,20.101,55.613,23.187z"/>
-                        </g>
+                    <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                        <g><path xmlns="http://www.w3.org/2000/svg" d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z" fill="#0d6efd" data-original="#0D6EFD" /></g>
                     </svg>
                 </a>
                 <div class="modal fade" id="licenseModal" tabindex="-1" aria-labelledby="licenseModal" aria-hidden="true">
@@ -216,22 +244,38 @@
                             </div>
                             <div class="modal-body text-start">
                                 <div class="d-flex flex-row gap-3 align-items-center">
-                                    <a rel="license" onclick="openExternal('http://creativecommons.org/licenses/by-nc-nd/4.0/')" rel="noopener noreferrer"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"/></a>
-                                    <span>This work is licensed under a <a rel="license" class="text-decoration-none" onclick="openExternal('http://creativecommons.org/licenses/by-nc-nd/4.0/')" rel="noopener noreferrer">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.</span>
+                                    <div class="d-flex flex-column gap-1">
+                                        <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="5rem" height="5rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                                            <g><path xmlns="http://www.w3.org/2000/svg" d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z" fill="#000000" data-original="#000000" /></g>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        All rights reserved 2023 <a class="text-decoration-none" onclick="openExternal('https://fc-software.it/terms/')">F&C Software</a>
+                                        <br>
+                                        Made by <a class="text-decoration-none" onclick="openExternal('https://github.com/lucafano04')" target="_blank" rel="noopener noreferrer">Facchini Luca</a> and <a class="text-decoration-none" onclick="openExternal('https://github.com/TheTecnoKing')" target="_blank" rel="noopener noreferrer">Ceribashi Kristian</a>
+                                        <br />
+                                        Working for <a class="text-decoration-none" onclick="openExternal('https://fc-software.it')" target="_blank" rel="noopener noreferrer">F&C Software</a>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button rel="license" class="btn btn-primary" rel="noopener noreferrer" onclick="openExternal('http://creativecommons.org/licenses/by-nc-nd/4.0/')">Visit license's website</button>
+                                <button rel="license" class="btn btn-primary" rel="noopener noreferrer" onclick="openExternal('https://fc-software.it/terms/')">Visit license's website</button>
                                 <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <span class="align-text-top">Made by <a class="text-decoration-none" onclick="openExternal('https://github.com/lucafano04')" target="_blank" rel="noopener noreferrer">Luca Facchini</a> and <a class="text-decoration-none" onclick="openExternal('https://github.com/TheTecnoKing')" target="_blank" rel="noopener noreferrer">Kristian Ceribashi</a></span>
+            </div>
+            <div class="d-inline-flex flex-row gap-2 flex-column me-sm-auto">
+                <span class="align-text-top">
+                    All rights reserved 2023 <a class="text-decoration-none" onclick="openExternal('https://fc-software.it')" target="_blank" rel="noopener noreferrer">F&C Software</a>
+                    <br />
+                    Made by <a class="text-decoration-none" onclick="openExternal('https://github.com/lucafano04')" target="_blank" rel="noopener noreferrer">Luca Facchini</a> and <a class="text-decoration-none" onclick="openExternal('https://github.com/TheTecnoKing')" target="_blank" rel="noopener noreferrer">Kristian Ceribashi</a>
+                </span>
             </div>
             <div class="d-flex flex-row gap-2">
                 <a class="text-decoration-none fs-3" onclick="openExternal('https://github.com/FC-softwares/baseball-scoreboard')" rel="noopener noreferrer"><i class="bi-github"></i></a>
-                <a class="text-decoration-none fs-3" onclick="openExternal('https://opencollective.com/baseball-scoreboard')" rel="noopener noreferrer"><i class="bi-cash-coin"></i></a>
+                <a class="text-decoration-none fs-3" onclick="openExternal('https://www.fc-software.it/products')" rel="noopener noreferrer"><i class="bi-cash-coin"></i></a>
             </div>
         </div>
     </footer>

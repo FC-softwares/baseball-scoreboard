@@ -1,3 +1,5 @@
+import {io} from '/socket.io/socket.io.esm.min.js';
+
 const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
 
@@ -11,25 +13,43 @@ const socket = io({
 socket.on('updateSettings', updateSettings);
 socket.on('connectSettings',updateSettings);
 
+socket.emit('getSettings');
+getCurrentUser();
+
+document.getElementById("UserAddEmail").addEventListener('keydown', (event) => {
+	if (event.key == "Enter") addUser();
+}) 
+
 function updateSettings(data){
 	document.getElementById('MaxInning').value = data.MaxInning;
 	if(data.BlackenLastInning){
-		document.getElementById("BlackenLastInningTrue").classList.remove("btn-outline-primary");
-		document.getElementById("BlackenLastInningTrue").classList.add("btn-primary");
-		document.getElementById("BlackenLastInningFalse").classList.remove("btn-primary");
-		document.getElementById("BlackenLastInningFalse").classList.add("btn-outline-primary");
+		document.getElementById("BlackenLastInningTrue").classList.remove("btn-outline-success");
+		document.getElementById("BlackenLastInningTrue").classList.add("btn-success");
+		document.getElementById("BlackenLastInningFalse").classList.remove("btn-danger");
+		document.getElementById("BlackenLastInningFalse").classList.add("btn-outline-danger");
 	}else{
-		document.getElementById("BlackenLastInningTrue").classList.remove("btn-primary");
-		document.getElementById("BlackenLastInningTrue").classList.add("btn-outline-primary");
-		document.getElementById("BlackenLastInningFalse").classList.remove("btn-outline-primary");
-		document.getElementById("BlackenLastInningFalse").classList.add("btn-primary");
+		document.getElementById("BlackenLastInningTrue").classList.remove("btn-success");
+		document.getElementById("BlackenLastInningTrue").classList.add("btn-outline-success");
+		document.getElementById("BlackenLastInningFalse").classList.remove("btn-outline-danger");
+		document.getElementById("BlackenLastInningFalse").classList.add("btn-danger");
 	}
-	document.getElementById('Resolution').value = data.Resolution;
+	if(document.getElementById('Resolution'))
+		document.getElementById('Resolution').value = data.Resolution;
+	document.getElementById('enableWBSC').checked = data.fibsStreaming;
+	document.getElementById('WBSCID').disabled = !data.fibsStreaming;
+	document.getElementById('WBSCID').value = data.fibsStreamingCode;
 }
 function UpdateSettings(){
 	const MaxInning = document.getElementById('MaxInning').value;
-	const Resolution = document.getElementById('Resolution').value;
-	socket.emit('updateSettings',`{"MaxInning":${MaxInning},"Resolution":${Resolution}}`);
+	const Resolution = document.getElementById('Resolution')?.value || 2160;
+	const enableWBSC = document.getElementById('enableWBSC').checked;
+	const WBSCID = document.getElementById('WBSCID').value;
+	socket.emit('updateSettings',JSON.stringify({
+		MaxInning:MaxInning,
+		Resolution:Resolution,
+		fibsStreaming:enableWBSC,
+		fibsStreamingCode:WBSCID
+	}));
 }
 function BlackenLastInning(value){
 	if(value){
@@ -82,32 +102,53 @@ function printUsers(LoggedUser){
 	}
 }
 function removeUser(id){
-	xmlt = new XMLHttpRequest();
+	const xmlt = new XMLHttpRequest();
 	xmlt.open('POST', '/removeAuthUser', true);
 	xmlt.setRequestHeader('Content-Type', 'application/json');
 	xmlt.send(`{"id":"${user}","token":"${token}","user_id":"${id}"}`);
 	xmlt.onload = function() {
 		const response = JSON.parse(xmlt.responseText);
 		const error = response.error || response.message || 'Unknown error';
-		if (xmlt.status !== 200 && this.readyState !== 4 || !response.ok)
-			return document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-		document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User deleted successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+		if(checkError(this, xmlt, response, error)) return;
+		openAlert('User removed successfully.', 'alert-success');
 		getCurrentUser();
 	};
 }
 
 function addUser(){
 	const email = document.getElementById('UserAddEmail').value;
-	xmlt = new XMLHttpRequest();
+	const xmlt = new XMLHttpRequest();
 	xmlt.open('POST', '/addAuthUser', true);
 	xmlt.setRequestHeader('Content-Type', 'application/json');
 	xmlt.send(`{"id":"${user}","token":"${token}","email":"${email}"}`);
 	xmlt.onload = function() {
 		const response = JSON.parse(xmlt.responseText);
 		const error = response.error || response.message || 'Unknown error';
-		if (xmlt.status !== 200 && this.readyState !== 4 || !response.ok)
-			return document.getElementById('Alert').innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Error!</strong> ${error} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-		document.getElementById('Alert').innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success!</strong> User added successfully.  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+		if(checkError(this, xmlt, response, error)) return;
+		openAlert('User added successfully.','alert-success');
 		document.getElementById('UserAddEmail').value = '';
+		getCurrentUser();
 	};
 }
+
+function checkError(that, xmlt, response, error) {
+	if (xmlt.status !== 200 && that.readyState !== 4 || !response.ok){
+		openAlert(`<strong>Error!</strong> ${error}`, 'alert-danger');
+		return true;
+	}
+	return false;
+}
+
+function openAlert(message, className){
+	document.getElementById('Alert').innerHTML = message;
+	document.getElementById('Alert').classList.add(className);
+	document.getElementById('Alert').classList.add('show');
+	return setTimeout(() => {
+		document.getElementById('Alert').innerHTML = '';
+		document.getElementById('Alert').classList.remove('show');
+		document.getElementById('Alert').classList.remove(className);
+	}, 5000);
+}
+const exports = {updateSettings, UpdateSettings, BlackenLastInning, getCurrentUser, printUsers, removeUser, addUser};
+export default exports;
+export {updateSettings, UpdateSettings, BlackenLastInning, getCurrentUser, printUsers, removeUser, addUser};

@@ -11,7 +11,11 @@ const {updateActive,updateOfficial,updateSettings,resetAllStaff,updateData} = re
 const app = express();
 process.env = env
 const server = http.createServer(app);
-const io = new Server(server);
+// Initialize the Socket.io server instance with the express server and a option object
+// In the option object we can define the maximum allowed http payload size will be 5MB
+const io = new Server(server, {
+	maxHttpBufferSize: 1.5e7
+});
 //definitions of constaints
 const PORT = process.argv[2]|| process.env.PORT || 2095;
 const API = process.env.API || 'api.facchini-pu.it';
@@ -55,13 +59,10 @@ io.on('connection', (socket) => {
 	socket.on('update_data', (data) => {
 		if(authorizedSessions.includes(socket.id))
 			updateData(data,socket);
-		else{
-			console.log('Unauthorized update data', socket.id, authorizedSessions);
-		}
 	});
 	socket.on('updateSettings', (data) => {
 		if(authorizedSessions.includes(socket.id))
-			updateSettings(data,socket);
+			updateSettings(data,socket, liveUpdate);
 	});
 	socket.on('updateActive',(data)=>{
 		if(authorizedSessions.includes(socket.id))
@@ -87,8 +88,20 @@ io.on('connection', (socket) => {
 	});
 	socket.on('getData',()=>{
 		fs.readFile(__dirname + '/app/json/data.json', 'utf8', (err, json) => {
-			const obj = JSON.parse(json);
-			socket.emit('connectData',obj);
+			if(err)
+				return console.error(err);
+			fs.readFile(__dirname + '/app/img/AwayLogo.json' , 'utf8', (err, logoA) => {
+				if(err)
+					return console.error(err);
+				fs.readFile(__dirname + '/app/img/HomeLogo.json' , 'utf8', (err, logoH) => {
+					if(err)
+						return console.error(err);
+					let obj = JSON.parse(json);
+					obj.Teams.Away.Logo = JSON.parse(logoA);
+					obj.Teams.Home.Logo = JSON.parse(logoH);
+					socket.emit('connectData',obj);
+				});
+			});
 		})
 	});
 	socket.on('getActive',()=>{
@@ -136,3 +149,96 @@ io.on('connection', (socket) => {
 		console.log('Unauthorized session', socket.id, authorizedSessions);
 	}
 });
+
+// Live Updates with FIBS (myBallClub) Private API
+function liveUpdate() {
+	try {
+		fs.readFile(__dirname + '/app/json/settings.json', 'utf8', (err, json) => {
+			if(err) return console.log(err);
+			const obj = JSON.parse(json);
+			if(obj.fibsStreaming == false) return console.log('FIBS Streaming is disabled');
+			if(obj.fibsStreamingCode == '') return console.log('FIBS Streaming Code is empty');
+			const IDfibs = obj.fibsStreamingCode;
+			let lastPlay = 1;
+			// Open the JSON file containing the last play
+			fs.readFile('lastPlay.json', (err, data) => {
+				if (err) return fs.writeFile('lastPlay.json', '0', (err) => { if (err) throw err; console.log('lastPlay.json created')}); // If the file doesn't exist create it and set the last play to 0
+				lastPlay = JSON.parse(data);
+			});
+			// Make the request to the FIBS API
+			const req_option = { hostname: 's3-eu-west-1.amazonaws.com', port: 443, path: '/game.wbsc.org/gamedata/mbc/' + IDfibs +'t.json', method: 'GET' };
+			const req = https.request(req_option, (res) => {
+				// If the request is successful update the last play (if it is different from the previous one) and request the new data
+				lastPlayCheck(res, lastPlay, IDfibs);
+			});
+			req.end();
+			req.on('error', (e) => { console.log('FIBS update error: ' + e) });
+			setTimeout(liveUpdate, 1000);
+		});
+	} catch (error) {
+		console.log('FIBS update error: ' + error);
+	}
+}
+
+function lastPlayCheck(res, lastPlay, IDfibs) {
+	try {
+		if (res.statusCode == 200) {
+			let chunks = '';
+			res.on('data', (data) => { chunks += data; });
+			res.on('end', () => {
+				const data_obj = JSON.parse(chunks);
+				if (data_obj != lastPlay) {
+					fs.writeFile('lastPlay.json', JSON.stringify(data_obj), (err) => {
+						if (err)
+							throw err;
+						console.log('lastPlay.json updated');
+					});
+					requestData(IDfibs, data_obj);
+				}
+			});
+		} else
+			console.log('FIBS update error: ' + res.statusCode);
+	} catch (error) { console.log('FIBS update error: ' + error) }
+}
+
+function requestData(IDfibs) {
+	const req_option = { hostname: 's3-eu-west-1.amazonaws.com', port: 443, path: '/game.wbsc.org/gamedata/mbc/' + IDfibs +'.json', method: 'GET' };
+	const req = https.request(req_option, (res) => {
+		let data = '';
+		if(res.statusCode == 200){
+			res.on('data', (data2) => { data += data2; });
+			res.on('end', () => {
+				updateDataByWBSC(data);
+			});
+		}else{ console.log('WBSC data update error: ' + res.statusCode); res.on('data', (data) => { data += data; }); res.on('end', () => { console.log(data); }); }
+	});
+	req.on('error', (e) => { console.log('WBSC data update error: ' + e); });
+	req.end();
+}
+
+exports.liveUpdate = liveUpdate;
+
+function updateDataByWBSC(data) {
+	try{
+		const data_obj = JSON.parse(data); // JSON object containing the data
+		const AwayRuns = data_obj?.awaytotals?.R; const HomeRuns = data_obj?.hometotals?.R; // Runs
+		const { awayruns, homeruns } = data_obj; // Runs by inning
+		const bases = { 1: data_obj.runner[1] ? true : false, 2: data_obj.runner[2] ? true : false, 3: data_obj.runner[3] ? true : false, }; // Bases
+		const inning = parseInt(data_obj.inning); // Inning
+		const arrow = data_obj.home == 0 ? 1 : 2; // Arrow (1 = away/TOP, 2 = home/BOT)
+		var int = {};
+		awayruns.forEach((run, i) => { if(i!==0&&run!=undefined) int[i] = { A: run, H: homeruns[i] != undefined ? homeruns[i] : 0 }; });
+		getAndUpdateJSON();
+		function getAndUpdateJSON() {
+			fs.readFile(__dirname + '/app/json/data.json', (err, data) => {
+				if (err) return console.log(err);
+				const oldData = JSON.parse(data);
+				const objToSend = { Teams: { Away: { Name: oldData.Teams.Away.Name, Score: AwayRuns !== undefined ? AwayRuns : oldData.Teams.Away.Score, Color: oldData.Teams.Away.Color, Short: oldData.Teams.Away.Short, }, Home: { Name: oldData.Teams.Home.Name, Score: HomeRuns !== undefined ? HomeRuns : oldData.Teams.Home.Score, Color: oldData.Teams.Home.Color, Short: oldData.Teams.Home.Short, } }, Ball: data_obj.balls !== undefined ? data_obj.balls : oldData.Ball, Strike: data_obj.strikes !== undefined ? data_obj.strikes : oldData.Strike, Out: data_obj.outs !== undefined ? data_obj.outs : oldData.Out, Bases: bases, Inning: inning ? inning : oldData.Inning, Arrow: arrow ? arrow : oldData.Arrow, Bases: bases, Int: Object.keys(int).length ? int : oldData.Int };
+				fs.writeFile(__dirname + '/app/json/data.json', JSON.stringify(objToSend, null, 4), (err) => {
+					if (err) return console.error("Error writing to data.json" + err);
+					io.emit('update', objToSend);
+				});
+			});
+		}
+	}catch(e){ console.log('Error updating data.json: ' + e); }
+}

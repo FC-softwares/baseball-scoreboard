@@ -1,19 +1,22 @@
 const fs = require('fs');
 
-function updateSettings(data, socket) {
+function updateSettings(data, socket, liveUpdate) {
 	fs.readFile(__dirname + '/app/json/settings.json', 'utf8', (err, data_old) => {
 		if (err)
 			throw err;
 		var json = JSON.parse(data);
 		var data_old_obj = JSON.parse(data_old);
 		Object.entries(json).forEach(entry => {
-			const [indx, element] = entry;
+			let [indx, element] = entry;
 			switch (element) {
 				default:
+					if(indx == "MaxInning" && element<1) element = 1;
 					data_old_obj[indx] = element;
 					break;
 			}
 		});
+		if(json?.fibsStreaming && data_old_obj?.fibsStreamingCode != "")
+			liveUpdate();
 		fs.writeFile(__dirname + '/app/json/settings.json', JSON.stringify(data_old_obj, null, 4), (err) => {
 			if (err)
 				throw err;

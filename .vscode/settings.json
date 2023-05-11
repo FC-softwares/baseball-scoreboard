@@ -26,6 +26,10 @@
         "scoreUpdating",
         "overlayStyles",
         "maintainability",
-        "changelog"
+        "changelog",
+        "teamLogo",
+        "settings",
+        "FIBSupdates",
+        "refactor"
     ]
 }

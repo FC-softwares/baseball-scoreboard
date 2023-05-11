@@ -1,7 +1,11 @@
 const https = require('https');
 const { shell } = require('electron');
 const crypto = require('crypto');
-const { app, CLIENT, API, reqOption, BrowserWindow, server, PORT, AppElectron } = require("./socket.js");
+const { app, CLIENT, API, reqOption, BrowserWindow, server, PORT, AppElectron, liveUpdate } = require("./socket.js");
+const fs  = require('fs');
+const { checkIDToken, requestActions, guestDeny, checkURL } = require("./checkFunctions.js");
+
+if(require('electron-squirrel-startup')) return AppElectron.quit();
 
 app.post('/login', (req, res) => {
 	const { username, password, remember } = req.body;
@@ -40,7 +44,7 @@ app.post('/checkstat', (req, res) => {
 	const { id, token } = req.body;
 	if (!checkIDToken(id, res, token)) return;
 	if (id == 'guest' && token == 'guest' && CLIENT == 'DEMO') {
-		res.status(200).json({ ok: true, message: 'guest', user: { email: 'guest@guest.com', name: 'guest', surname: "", isOwner: true } });
+		res.status(200).json({ ok: true, message: 'guest', user: { email: '', name: 'guest', surname: "", isOwner: true, team: "DEMO" } });
 		return;
 	} else if (CLIENT !== 'DEMO'&&id == 'guest' && token == 'guest') {
 		res.status(400).json({ ok: false, message: 'invalid token' });
@@ -86,7 +90,7 @@ app.post("/getAuthUsers", (req, res) => {
 	const { id, token } = req.body;
 	if (!checkIDToken(id, res, token)) return;
 	if (id == 'guest' && token == 'guest') {
-		res.status(200).json({ ok: true, message: 'guest', users: [{ id: '0', name: "guest", surname: "guest", email: "guest@guest.com" }] });
+		res.status(200).json({ ok: true, message: 'guest', users: [{ id: '0', name: "guest", surname: "guest", email: "", team: "DEMO"}] });
 		return;
 	}
 	const req_option = {
@@ -171,8 +175,8 @@ app.post('/openExternal', (req, res) => {
 	const { url } = req.body;
 	if (!checkURL(url, res))
 		return;
-	// Check that the URL is a pattern we expect
-	if (!url.match(/^https?:\/\/(www\.)?facchini-pu\.it/)) {
+	// Check that the URL is a pattern we expect (fc-software.it/{any}
+	if (!url.match(/^https?:\/\/(www\.)?fc-software\.it\/.*/)) {
 		res.status(400).json({ok:false,message:'invalid url'});
 		return;
 	}
@@ -205,7 +209,17 @@ app.get("/client", (req, res) => {
 });
 server.listen(PORT, '0.0.0.0', () => {
 	console.log('listening on http://localhost:' + PORT);
+	fs.readFile(__dirname + '/app/json/settings.json', (err, data) => {
+		if (err) {
+			console.log(err);
+			return;
+		}
+		const settings = JSON.parse(data);
+		if(settings.fibsStreaming&&settings.fibsStreamingCode != '')
+			liveUpdate();
+	});
 });
+
 const createWindow = () => {
 	const win = new BrowserWindow({
 		width: 800,
@@ -218,43 +232,3 @@ const createWindow = () => {
 	});
 };
 AppElectron.whenReady().then(createWindow);
-function guestDeny(id, token, res) {
-	if (id == 'guest' && token == 'guest') {
-		res.status(400).json({ ok: false, message: 'You can not change the authorized user on the DEMO version' });
-		return false;
-	}
-	return true;
-}
-function requestActions(res_post, res, req_post) {
-	res_post.on('data', (data) => {
-		const data_obj = JSON.parse(data);
-		if (data_obj.ok === true) {
-			res.status(200).send(data_obj);
-		} else {
-			res.status(res_post.statusCode).send(data_obj);
-		}
-	});
-	req_post.on('error', (e) => {
-		console.error(e);
-		res.status(500).json({ ok: false, message: 'internal server error, please try again later and check your internet connection' });
-	});
-}
-
-function checkIDToken(id, res, token) {
-	if (!id) {
-		res.status(400).json({ ok: false, message: 'missing ID or email' });
-		return false;
-	}
-	if (!token) {
-		res.status(400).json({ ok: false, message: 'missing token or password' });
-		return false;
-	}
-	return true;
-}
-function checkURL(url, res) {
-	if (!url) {
-		res.status(400).json({ ok: false, message: 'missing url' });
-		return false;
-	}
-	return true;
-}

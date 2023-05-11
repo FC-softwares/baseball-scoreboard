@@ -4,7 +4,10 @@ const { updateActive, updateOfficial, updateSettings, resetAllStaff } = require(
 function updateData(data,socket){
 	fs.readFile(__dirname + '/app/json/data.json', 'utf8', (err, data_old) => {
 		if (err) throw err;
-		var json = JSON.parse(data), data_old_obj = JSON.parse(data_old), toBeSent = {};
+		var json;
+		if (typeof data === 'string') json = JSON.parse(data)
+		else json = data
+		var data_old_obj = JSON.parse(data_old), toBeSent = {};
 		Object.entries(json).forEach(entry => {
 			const [indx, element] = entry;
 			switch (element) {
@@ -13,11 +16,9 @@ function updateData(data,socket){
 			case '0':zeroChanges(indx, data_old_obj, toBeSent);break;
 			case 'toggle':({ data_old_obj, toBeSent } = toggleChanges(indx, data_old_obj, toBeSent));break;
 			default:
-				if (indx.startsWith('Teams.') && (indx.endsWith('.Name')||indx.endsWith('.Color'))) ({ data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, indx.split('.')[1] + '.' + indx.split('.')[2]));
-				else {
-				data_old_obj[indx] = element;
-				toBeSent[indx] = element;
-				}
+				if (indx.startsWith('Teams.') && (indx.endsWith('.Name')||indx.endsWith('.Color')||indx.endsWith(".Short"))) ({ data_old_obj, toBeSent } = nameColorChange(data_old_obj, element, toBeSent, indx.split('.')[1] + '.' + indx.split('.')[2]));
+				else if (indx.startsWith('Teams.') && indx.endsWith('.Logo')) updateLogo(indx, element, data_old_obj, toBeSent)
+				else {data_old_obj[indx] = element;toBeSent[indx] = element;}
 			}
 		});
 		toBeSent = {...toBeSent,Teams: {...toBeSent?.Teams,Away: {...toBeSent?.Teams?.Away,Score: data_old_obj.Teams.Away.Score,},Home: {...toBeSent?.Teams?.Home,Score: data_old_obj.Teams.Home.Score,},},Int: data_old_obj.Int,Inning: data_old_obj.Inning,}
@@ -25,6 +26,16 @@ function updateData(data,socket){
 		socket.emit('update', toBeSent);
 		socket.broadcast.emit('update', toBeSent);
 	});
+}
+
+function updateLogo(indx, element, data_old_obj, toBeSent) {
+	fs.writeFile(__dirname + '/app/img/' + indx.split('.')[1] + 'Logo.json', JSON.stringify(element, null, 4), (err) => {
+		if (err)
+			throw err;
+		console.log('The file has been saved!');
+	});
+	data_old_obj.Teams[indx.split('.')[1]].Logo = element;
+	toBeSent.Teams = { ...toBeSent.Teams, [indx.split('.')[1]]: { ...toBeSent.Teams[indx.split('.')[1]], Logo: element, }, };
 }
 
 function nameColorChange(data_old_obj, element, toBeSent, mix) {
@@ -133,18 +144,14 @@ function zeroScore(data_old_obj, team, short) {
 }
 
 function toggleChanges(indx, data_old_obj, toBeSent) {
-	if (['1', '2', '3'].includes(indx) && toBeSent.Bases === undefined)
-		toBeSent.Bases = {};
+	if (['1', '2', '3'].includes(indx) && toBeSent.Bases === undefined) toBeSent.Bases = {};
 	switch (indx) {
-		case '1':
-		case '2':
-		case '3':
-			toggleBase(data_old_obj, toBeSent, indx);break;
+		case '1': case '2': case '3': toggleBase(data_old_obj, toBeSent, indx);break;
 		case 'Auto_Change_Inning':
 			data_old_obj = { ...data_old_obj, Bases: { 1: false, 2: false, 3: false }, Ball: 0, Strike: 0, Out: 0};
-			if (data_old_obj.Arrow === 1) {
+			if (data_old_obj.Arrow === 1)
 				data_old_obj.Arrow = 2;
-			} else {
+			else {
 				data_old_obj.Arrow = 1;
 				data_old_obj.Inning++;
 				data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 };
@@ -152,8 +159,10 @@ function toggleChanges(indx, data_old_obj, toBeSent) {
 			toBeSent = { ...toBeSent, Bases: { 1: false, 2: false, 3: false }, Ball: 0, Strike: 0, Out: 0, Arrow: data_old_obj.Arrow, Inning: data_old_obj.Inning, Int: data_old_obj.Int };
 		break;
 		case 'Reset_All':
-			data_old_obj = {Teams: {Away: { Name: 'AWAY', Score: 0, Color: '#000000' },Home: { Name: 'HOME', Score: 0, Color: '#000000' },},Ball: 0,Strike: 0,Out: 0,Inning: 1,Arrow: 1,Bases: { 1: false, 2: false, 3: false },Int: { 1: { A: 0, H: 0 } },};
-			toBeSent = data_old_obj;
+			data_old_obj = {Teams: {Away: { Name: 'AWAY', Score: 0, Color: '#000000', Short: "AWY" },Home: { Name: 'HOME', Score: 0, Color: '#000000', Short: "HME" },},Ball: 0,Strike: 0,Out: 0,Inning: 1,Arrow: 1,Bases: { 1: false, 2: false, 3: false },Int: { 1: { A: 0, H: 0 } },};
+			toBeSent = {Teams: {Away: { Name: 'AWAY', Score: 0, Color: '#000000', Short: "AWY", Logo: "" },Home: { Name: 'HOME', Score: 0, Color: '#000000', Short: "HME", Logo: "" },},Ball: 0,Strike: 0,Out: 0,Inning: 1,Arrow: 1,Bases: { 1: false, 2: false, 3: false },Int: { 1: { A: 0, H: 0 } },};
+			fs.writeFileSync(__dirname + '/app/img/AwayLogo.json', JSON.stringify(""));
+			fs.writeFileSync(__dirname + '/app/img/HomeLogo.json', JSON.stringify(""));
 		break;
 		default: break;
 	}

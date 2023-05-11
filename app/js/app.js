@@ -29,6 +29,8 @@ function update(obj) {
 		// Total score
 		updateInning(obj);
 	}
+	updateLogo(obj?.Teams?.Home?.Logo,".teamLogo#home>img");
+	updateLogo(obj?.Teams?.Away?.Logo,".teamLogo#away>img");
 }
 
 function updateTeamScorePostgame(data, team) {
@@ -37,8 +39,8 @@ function updateTeamScorePostgame(data, team) {
 }
 
 function updateTeams(data,team) {
-	if (data?.Name !== undefined)
-		try { document.querySelector("div.teamName#" + team + " > div > span").innerHTML = data.Name; } catch (error) { console.error(error); }
+	setName(data?.Name, team, ["pregame","postgame"]);
+	setName(data?.Short, team, ["scoreboard","inning"]);
 	if (data?.Color !== undefined) {
 		document.documentElement.style.setProperty('--c-' + team, data.Color);
 		if (brightnessByColor(data.Color) < 60)
@@ -52,6 +54,11 @@ function updateTeams(data,team) {
 				document.querySelector("div.teamName#" + team + " > div#bg").classList.remove("bg-dark");
 		} catch (error) { console.error(error); }
 	}
+}
+
+function setName(data, team, scoreboards) {
+	if (data !== undefined && scoreboards.includes(document.URL.split("/").pop().split(".")[0]))
+		try { document.querySelector("div.teamName#" + team + " > div > span").innerHTML = data; } catch (error) { console.error(error); }
 }
 
 function updateInning(obj) {
@@ -116,8 +123,8 @@ function maxInning(obj, extraInningScoreAway, extraInningScoreHome) {
 		document.documentElement.style.setProperty('--i-inning', localStorage.getItem("MaxInning"));
 		try{document.querySelector("div.container > div#iex").remove();}catch(error){console.log(error);}
 	}else if (obj.Inning > parseInt(localStorage.getItem("MaxInning")) + 1 || (obj.Arrow == 2&&obj.Inning == parseInt(localStorage.getItem("MaxInning")+1)) || extraInningScoreAway != 0 || extraInningScoreHome != 0) {
-		let inning = getComputedStyle(document.documentElement).getPropertyValue('--i-inning');
-		if (inning == parseInt(localStorage.getItem("MaxInning"))) {
+		let inning = getComputedStyle(document.documentElement).getPropertyValue('--i-inning');container
+		if (inning == parseInt(localStorage.getItem("MaxInning")) && document.querySelector("div. > div#iex") == null) {
 			document.documentElement.style.setProperty('--i-inning', inning);
 			let extraInning = `<div class="inning" id="iex">
 					<span class="number">EX</span>
@@ -153,9 +160,18 @@ function updateScoreboard(obj) {
 			try { document.querySelector(".inning > span#down").classList.remove("disabled"); } catch (error) { console.error(error); }
 		}
 	}
-	updateBase(obj?.Bases[1], "first");
-	updateBase(obj?.Bases[2], "second");
-	updateBase(obj?.Bases[3], "third");
+	try{updateBase(obj?.Bases[1], "first")}catch(error){console.error(error);}
+	try{updateBase(obj?.Bases[2], "second")}catch(error){console.error(error);}
+	try{updateBase(obj?.Bases[3], "third");}catch(error){console.error(error);}
+
+}
+function updateLogo(logo, id) {
+	try {
+		if (logo !== undefined)
+			document.querySelector(id).src = logo.replaceAll(/[\n'"]/g,'')
+		else if (logo !== undefined && logo == "")
+			document.querySelector(id).src = "img/baseball-ball.png";
+	} catch (error) { console.error(error); }
 }
 
 function updateBase(base,id) {
@@ -182,13 +198,15 @@ function updateSettings(obj){
 	// update the container of the innings
 	if(document.URL.includes("inning.html")){
 		if(obj.MaxInning>oldMaxInning){
+			// Try to remove the extra inning
+			try{document.querySelector("div.container").removeChild(document.querySelector("div.container > div#iex.inning"));}catch(error){console.error(error);}
 			for(let i=oldMaxInning+1;i<=obj.MaxInning;i++){
 				let inning = `<div class="inning" id="i${i}">
 				<span class="number">${i}</span>
 				<span class="score disabled" id="away">0</span>
 				<span class="score disabled" id="home">0</span>
 			</div>`;
-				try{document.querySelector("div.container").innerHTML += inning;}catch(error){console.error(error);}
+				try{document.querySelector("div.container").appendChild(document.createRange().createContextualFragment(inning));}catch(error){console.error(error);}
 			}
 		}else if(obj.MaxInning<oldMaxInning){
 			// TODO remove excess innings
@@ -196,6 +214,7 @@ function updateSettings(obj){
 				try{document.querySelector("div.container").removeChild(document.querySelector(`#i${i}.inning`));}catch(error){console.error(error);}
 			}
 		}
+		socket.emit("getData");
 	}
 }
 
@@ -241,16 +260,10 @@ function activeDeactiveScoreboard(data,url){
 	}
 }
 
-function brightnessByColor (color) {
-	var color = "" + color, isHEX = color.indexOf("#") == 0, isRGB = color.indexOf("rgb") == 0;
-	if (isHEX) {
-		const hasFullSpec = color.length == 7;
-		var m = color.substr(1).match(hasFullSpec ? /(\S{2})/g : /(\S{1})/g);
-		if (m) var r = parseInt(m[0] + (hasFullSpec ? '' : m[0]), 16), g = parseInt(m[1] + (hasFullSpec ? '' : m[1]), 16), b = parseInt(m[2] + (hasFullSpec ? '' : m[2]), 16);
-	}
-	if (isRGB) {
-		var m = color.match(/(\d+){3}/g);
-		if (m) var r = m[0], g = m[1], b = m[2];
-	}
-	if (typeof r != "undefined") return ((r*299)+(g*587)+(b*114))/1000;
-}
+function brightnessByColor(color) {
+	const match = color.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i) || color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+	if (!match)
+		return null;
+	const [r, g, b] = match.slice(1).map(val => parseInt(val, match[1] ? 16 : 10));
+	return (r * 299 + g * 587 + b * 114) / 1000;
+} 

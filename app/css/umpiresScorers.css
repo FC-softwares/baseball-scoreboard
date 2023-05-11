@@ -319,6 +319,7 @@ div {
     transition-delay: var(--d-standard) !important;
     transform: none;
     position: static;
+    border-radius: 0 0 7px 7px;
 }
 .scoreboard.disabled#commentator > .commentator{
     transition: transform cubic-bezier(0.67, 0, 0.82, 0.11) 1s !important;
