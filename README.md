@@ -37,7 +37,7 @@ Before installing the software from the source code, make sure you already have 
 
 ## Usage
 All scoreboards and dashboards are treated as web pages to add them to OBS or other streaming applications, simply add the web page and enter the URL of the scoreboard you want to use.
-### Added Scoreboard to OBS
+### Add Scoreboard to OBS
 1. Launch the OBS application or similar
 2. Start Baseball-Scoreboard
 3. Add a new web source and enter the name of your choice
