@@ -27,6 +27,16 @@ All of these changes - along with the new features, new style, and new code base
   * You now need to use your email and password to sign into the control panel. You can register an account by visiting our website at [https://www.fc-software.it/](https://www.fc-software.it/)
   * You can use the software with the demo version for evaluation purposes, but if you want to use it for a real game and stream/record it you need to buy a license for the software by purchasing it on our website.
   * From the page `settings.html` you can now add/remove authorized users to share access to the control panel. (If the user is not registered on our website, they will be invited to create an account).
+* Added support for team logos
+   * Team logos can be uploaded from the `control-center.html` page and they will be displayed in all overlays.
+   * Logos can be uploaded in any image format (PNG, JPG, SVG, etc.) and will automatically be resized and cropped to 1:1.
+* Introduced "Short Names" for teams
+   * You can set a short name for the teams, which will be displayed in the `scoreboard.html` and `inning.html` overlays instead of the full name.
+* Added the ability to synchronize the software with WBSC data (MyBallClub)
+   * It is possible to synchronize the software with the official WBSC (MyBallClub) data to get the game situation in real time without having to enter it manually.
+   * To synchronize the software with WBSC data, you need to enter the game code which consists of a 6-digit number starting with 1.
+     * You can find the match code in the last part of the match URL on MyBallClub. For example, if the match link is `https://www.wbsc.org/en/events/2023-u-23-mens-softball-world-cup/schedule-and-results/box-score/109254` , the match code is `109254`.
+     * Or alternatively the match code is also available on the match detail page on MyBallClub, in this case `https://www.myballclub.com/live/w106503` the match code is `106503`. Non-WBSC games (code like b####) are currently not supported.
 ### Known Bugs:
 * As usual, we haven't found any bugs yet. If you find any, please notify us or open an issue on GitHub!
 
@@ -146,6 +156,16 @@ Tutte queste modifiche - insieme alle nuove funzionalità, al nuovo stile e alla
   * Per accedere al pannello di controllo, o qualsiasi pagina di amministrazione, è necessario registrarsi sul nostro sito Web [https://www.fc-software.it/](https://www.fc-software.it/) ed accedere poi con le stesse credenziali
   * È possibile utilizzare il software con la versione demo a scopi di valutazione, ma se si desidera usarlo in una partita registrata o trasmessa in streaming è necessario acquistare una licenza per il software, disponibile sul nostro sito Web.
   * Dalla pagina `settings.html` è possibile condividere l'accesso al pannello di controllo, aggiungendo o rimuovendo gli utenti autorizzati tramite la loro email. Se l'utente non è registrato, riceverà un invito per registrarsi sul nostro sito web.
+* Aggiunto supporto per i loghi delle squadre
+  * È possibile caricare i loghi delle squadre dalla pagina `control-center.html` e verranno visualizzati in tutti gli overlay. 
+  * I loghi possono essere caricati in un qualsiasi formato di immagine (PNG, JPG, SVG, ecc.) e verranno automaticamente ridimensionati e tgliati a 1:1.
+* Introdotti gli "Short Name" per le squadre
+  * È possibile impostare un nome breve per le squadre, che verrà visualizzato nelle overlay `scoreboard.html` e `inning.html` al posto del nome completo.
+* Aggiunta la possibilità di sincronizzare il software con i dati WBSC (MyBallClub)
+  * È possibile sincronizzare il software con i dati ufficiali WBSC (MyBallClub) per ottenere la situazione di gioco in tempo reale senza doverla inserire manualmente.
+  * Per sincronizzare il software con i dati WBSC, è necessario inserire il codice della partita che consiste in un numero a 6 cifre che inizia per 1. 
+    * É possibile trovare il codice della partita nell'ultima parte del URL della partita su MyBallClub. Ad esempio, se il link della partita è `https://www.wbsc.org/en/events/2023-u-23-mens-softball-world-cup/schedule-and-results/box-score/109254`, il codice della partita è `109254`.
+    * Oppure in alternativa il codice della partita è disponibile anche nella pagina di dettaglio della partita su MyBallClub, in questo caso `https://www.myballclub.com/live/w106503` il codice della partita è `106503`. Al momento le partite non WBSC (codice del genere b####) non sono supportate.
 ### Bug noti:
 * Come al solito, non abbiamo ancora trovato alcun bug. Se ne trovi, avvisaci o apri una issue su GitHub!
 
