@@ -20,7 +20,26 @@ const io = new Server(server, {
 const PORT = process.argv[2]|| process.env.PORT || 2095;
 const API = process.env.API || 'api.facchini-pu.it';
 const CLIENT = process.env.CLIENT || 'DEMO';
-
+const MyBallOptions = {
+	"WBSC": {
+		hostname: 's3-eu-west-1.amazonaws.com',
+		port: 443,
+		pathLastPlayPre: '/game.wbsc.org/gamedata/mbc/',
+		pathLastPlayPost: 't.json',
+		pathDataPre: '/game.wbsc.org/gamedata/mbc/',
+		pathDataPost: '.json',
+		method: 'GET'
+	},
+	"myBallClub": {
+		hostname: 's3.amazonaws.com',
+		port: 443,
+		pathLastPlayPre: '/cdn1.myballclub.com/game/',
+		pathLastPlayPost: '.txt',
+		pathDataPre: '/cdn1.myballclub.com/game/',
+		pathDataPost: '.json',
+		method: 'GET'
+	}
+};
 
 // definitions of request options
 const reqOption = {
@@ -158,29 +177,66 @@ function liveUpdate() {
 			const obj = JSON.parse(json);
 			if(obj.fibsStreaming == false) return console.log('FIBS Streaming is disabled');
 			if(obj.fibsStreamingCode == '') return console.log('FIBS Streaming Code is empty');
-			const IDfibs = obj.fibsStreamingCode;
+			let IDfibs = obj.fibsStreamingCode;
 			let lastPlay = 1;
 			// Open the JSON file containing the last play
 			fs.readFile('lastPlay.json', (err, data) => {
-				if (err) return fs.writeFile('lastPlay.json', '0', (err) => { if (err) throw err; console.log('lastPlay.json created')}); // If the file doesn't exist create it and set the last play to 0
-				lastPlay = JSON.parse(data);
+				if (err) fs.writeFile('lastPlay.json', '0', (err) => { if (err) throw err; console.log('lastPlay.json created')}); // If the file doesn't exist create it and set the last play to 0
+				lastPlay = JSON.parse(data);	
+				// Check the type of the game (WBSC or myBallClub)
+				let type = 'myBallClub';
+				if ((IDfibs.length == 6 && IDfibs.match(/^[0-9]+$/i))  || IDfibs.startsWith('w')) {
+					// Make the request to the WBSC API
+					type = 'WBSC';
+					IDfibs = IDfibs.replace('w', '');
+					// Make the request to the FIBS API
+					reqAndUpdate(type, IDfibs, lastPlay);
+				}else{
+					// Make the request to get the ID and the play number of the game
+					const req_option1 = { hostname: "www.ballclubz.com", port: 443, path: "/live/" + IDfibs, method: "GET" };
+					const req1 = https.request(req_option1, async (res1) => {
+						if (res1.statusCode == 200) {
+							let chunks = '';
+							res1.on('data', (data) => { chunks += data; });
+							res1.on('end', () => {
+								const html = chunks;
+								const code = html.substring(html.indexOf("$(document).ready(function () {"), html.indexOf("});")).split('\n').join('').split('\t').join('');
+								IDfibs = code.substring(code.indexOf("LoadLiveGame('") + 14, code.indexOf("', '"));
+								evGamePlay = code.substring(code.indexOf("', '")+4, code.indexOf("');"));
+								// Make the request to the myBallClub API
+								reqAndUpdate(type, IDfibs, lastPlay, evGamePlay);
+							});
+						} else
+							console.log('BallClubZ update error: ' + res1.statusCode);
+					});
+					req1.end();
+					req1.on('error', (e) => { console.log('BallClubZ update error: ' + e) });
+				}
+				setTimeout(liveUpdate, 1000);
 			});
-			// Make the request to the FIBS API
-			const req_option = { hostname: 's3-eu-west-1.amazonaws.com', port: 443, path: '/game.wbsc.org/gamedata/mbc/' + IDfibs +'t.json', method: 'GET' };
-			const req = https.request(req_option, (res) => {
-				// If the request is successful update the last play (if it is different from the previous one) and request the new data
-				lastPlayCheck(res, lastPlay, IDfibs);
-			});
-			req.end();
-			req.on('error', (e) => { console.log('FIBS update error: ' + e) });
-			setTimeout(liveUpdate, 1000);
 		});
 	} catch (error) {
 		console.log('FIBS update error: ' + error);
 	}
 }
 
-function lastPlayCheck(res, lastPlay, IDfibs) {
+function reqAndUpdate(type, IDfibs, lastPlay, evGamePlay = null) {
+	console.log('Requesting ' + type + ' lastplay for game ' + IDfibs);
+	let path;
+	if(type == 'WBSC')
+		path = MyBallOptions[type].pathLastPlayPre + IDfibs + MyBallOptions[type].pathLastPlayPost;
+	else
+		path = MyBallOptions[type].pathLastPlayPre + IDfibs + '/' + IDfibs + MyBallOptions[type].pathLastPlayPost;
+	const req_option = { hostname: MyBallOptions[type].hostname, port: MyBallOptions[type].port, path: path, method: MyBallOptions[type].method };
+	const req = https.request(req_option, (res) => {
+		// If the request is successful update the last play (if it is different from the previous one) and request the new data
+		lastPlayCheck(res, lastPlay, IDfibs, type, evGamePlay);
+	});
+	req.end();
+	req.on('error', (e) => { console.log('FIBS update error: ' + e); });
+}
+
+function lastPlayCheck(res, lastPlay, IDfibs, type, evGamePlay = null) {
 	try {
 		if (res.statusCode == 200) {
 			let chunks = '';
@@ -193,16 +249,21 @@ function lastPlayCheck(res, lastPlay, IDfibs) {
 							throw err;
 						console.log('lastPlay.json updated');
 					});
-					requestData(IDfibs, data_obj);
+					requestData(IDfibs, type, evGamePlay);
 				}
 			});
 		} else
-			console.log('FIBS update error: ' + res.statusCode);
-	} catch (error) { console.log('FIBS update error: ' + error) }
+			console.log(type + ' update error: ' + res.statusCode);
+	} catch (error) { console.log(type + ' update error: ' + error) }
 }
 
-function requestData(IDfibs) {
-	const req_option = { hostname: 's3-eu-west-1.amazonaws.com', port: 443, path: '/game.wbsc.org/gamedata/mbc/' + IDfibs +'.json', method: 'GET' };
+function requestData(IDfibs, type, evGamePlay = null) {
+	let path;
+	if(type == 'WBSC') 
+		path = MyBallOptions[type].pathDataPre + IDfibs + MyBallOptions[type].pathDataPost;
+	else
+		path = MyBallOptions[type].pathDataPre +  IDfibs + '/' + evGamePlay + MyBallOptions[type].pathDataPost;
+	const req_option = { hostname: MyBallOptions[type].hostname, port: MyBallOptions[type].port, path: path, method: MyBallOptions[type].method };
 	const req = https.request(req_option, (res) => {
 		let data = '';
 		if(res.statusCode == 200){
@@ -210,9 +271,9 @@ function requestData(IDfibs) {
 			res.on('end', () => {
 				updateDataByWBSC(data);
 			});
-		}else{ console.log('WBSC data update error: ' + res.statusCode); res.on('data', (data) => { data += data; }); res.on('end', () => { console.log(data); }); }
+		}else{ console.log(type + ' data update error: ' + res.statusCode); res.on('data', (data) => { data += data; }); res.on('end', () => { console.log(data); }); }
 	});
-	req.on('error', (e) => { console.log('WBSC data update error: ' + e); });
+	req.on('error', (e) => { console.log(type + ' data update error: ' + e); });
 	req.end();
 }
 
