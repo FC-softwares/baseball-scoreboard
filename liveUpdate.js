@@ -47,50 +47,58 @@ function liveUpdate(io) {
 			let IDfibs = obj.fibsStreamingCode;
 			let lastPlay = 1;
 			// Open the JSON file containing the last play
-			fs.readFile('lastPlay.json', (err, data) => {
-				if (err)
-					fs.writeFile('lastPlay.json', '0', (err) => {
-						if (err)
-							throw err; console.log('lastPlay.json created');
-					}); // If the file doesn't exist create it and set the last play to 0
-				lastPlay = JSON.parse(data);
-				// Check the type of the game (WBSC or myBallClub)
-				let type = 'myBallClub';
-				if ((IDfibs.length == 6 && IDfibs.match(/^[0-9]+$/i)) || IDfibs.startsWith('w')) {
-					// Make the request to the WBSC API
-					type = 'WBSC';
-					IDfibs = IDfibs.replace('w', '');
-					// Make the request to the FIBS API
-					reqAndUpdate(type, {IDfibs, lastPlay}, io);
-				} else {
-					// Make the request to get the ID and the play number of the game
-					const req_option1 = { hostname: "www.ballclubz.com", port: 443, path: "/live/" + IDfibs, method: "GET" };
-					const req1 = https.request(req_option1, async (res1) => {
-						if (res1.statusCode == 200) {
-							let chunks = '';
-							res1.on('data', (data) => { chunks += data; });
-							res1.on('end', () => {
-								const html = chunks;
-								const code = html.substring(html.indexOf("$(document).ready(function () {"), html.indexOf("});")).split('\n').join('').split('\t').join('');
-								IDfibs = code.substring(code.indexOf("LoadLiveGame('") + 14, code.indexOf("', '"));
-								evGamePlay = code.substring(code.indexOf("', '") + 4, code.indexOf("');"));
-								// Make the request to the myBallClub API
-								reqAndUpdate(type, {IDfibs, lastPlay, evGamePlay}, io);
-							});
-						}
-						else
-							console.log('BallClubZ update error: ' + res1.statusCode);
-					});
-					req1.end();
-					req1.on('error', (e) => { console.log('BallClubZ update error: ' + e); });
-				}
-				setTimeout(()=>{liveUpdate(io)}, 1000);
-			});
+			({ lastPlay, IDfibs } = gameCodeRetrive(lastPlay, IDfibs, io));
 		});
-	} catch (error) {
-		console.log('FIBS update error: ' + error);
-	}
+	} catch (error) { console.log('FIBS update error: ' + error); }
 }
+function gameCodeRetrive(lastPlay, IDfibs, io) {
+	fs.readFile('lastPlay.json', (err, data) => {
+		if (err)
+			fs.writeFile('lastPlay.json', '0', (err) => {
+				if (err)
+					throw err; console.log('lastPlay.json created');
+			}); // If the file doesn't exist create it and set the last play to 0
+		lastPlay = JSON.parse(data);
+		// Check the type of the game (WBSC or myBallClub)
+		let type = 'myBallClub';
+		if ((IDfibs.length == 6 && IDfibs.match(/^[0-9]+$/i)) || IDfibs.startsWith('w')) {
+			// Make the request to the WBSC API
+			type = 'WBSC';
+			IDfibs = IDfibs.replace('w', '');
+			// Make the request to the FIBS API
+			reqAndUpdate(type, { IDfibs, lastPlay }, io);
+		} else {
+			// Make the request to get the ID and the play number of the game
+			IDfibs = socialGameRetrive(IDfibs, type, lastPlay, io);
+		}
+		setTimeout(() => { liveUpdate(io); }, 1000);
+	});
+	return { lastPlay, IDfibs };
+}
+
+function socialGameRetrive(IDfibs, type, lastPlay, io) {
+	const req_option1 = { hostname: "www.ballclubz.com", port: 443, path: "/live/" + IDfibs, method: "GET" };
+	const req1 = https.request(req_option1, async (res1) => {
+		if (res1.statusCode == 200) {
+			let chunks = '';
+			res1.on('data', (data) => { chunks += data; });
+			res1.on('end', () => {
+				const html = chunks;
+				const code = html.substring(html.indexOf("$(document).ready(function () {"), html.indexOf("});")).split('\n').join('').split('\t').join('');
+				IDfibs = code.substring(code.indexOf("LoadLiveGame('") + 14, code.indexOf("', '"));
+				evGamePlay = code.substring(code.indexOf("', '") + 4, code.indexOf("');"));
+				// Make the request to the myBallClub API
+				reqAndUpdate(type, { IDfibs, lastPlay, evGamePlay }, io);
+			});
+		}
+		else
+			console.log('BallClubZ update error: ' + res1.statusCode);
+	});
+	req1.end();
+	req1.on('error', (e) => { console.log('BallClubZ update error: ' + e); });
+	return IDfibs;
+}
+
 function reqAndUpdate(type, gameInfo, io) {
 	let { IDfibs, lastPlay, evGamePlay = null } = gameInfo;
 	let path = pathDefinition(type, IDfibs, "lastPlay", evGamePlay);
