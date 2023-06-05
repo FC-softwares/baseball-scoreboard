@@ -4,19 +4,31 @@ const MyBallOptions = {
 	"WBSC": {
 		hostname: 's3-eu-west-1.amazonaws.com',
 		port: 443,
-		pathLastPlayPre: '/game.wbsc.org/gamedata/mbc/',
-		pathLastPlayPost: 't.json',
-		pathDataPre: '/game.wbsc.org/gamedata/mbc/',
-		pathDataPost: '.json',
+		path:{
+			lastPlay: {
+				pre: '/game.wbsc.org/gamedata/mbc/',
+				post: 't.json'
+			},
+			data: {
+				pre: '/game.wbsc.org/gamedata/mbc/',
+				post: '.json'
+			}
+		},
 		method: 'GET'
 	},
 	"myBallClub": {
 		hostname: 's3.amazonaws.com',
 		port: 443,
-		pathLastPlayPre: '/cdn1.myballclub.com/game/',
-		pathLastPlayPost: '.txt',
-		pathDataPre: '/cdn1.myballclub.com/game/',
-		pathDataPost: '.json',
+		path:{
+			lastPlay: {
+				pre: '/cdn1.myballclub.com/game/',
+				post: '.txt'
+			},
+			data: {
+				pre: '/cdn1.myballclub.com/game/',
+				post: '.json'
+			}
+		},
 		method: 'GET'
 	}
 };
@@ -90,10 +102,7 @@ function reqAndUpdate(type, gameInfo, io) {
 	req.on('error', (e) => { console.log('FIBS update error: ' + e); });
 }
 function pathDefinition(type, IDfibs, getType = "lastPlay", evGamePlay = null) {
-	if (getType == "lastPlay")
-		return MyBallOptions[type].pathLastPlayPre + IDfibs + (type == 'WBSC' ? '' : '/' + IDfibs) + MyBallOptions[type].pathLastPlayPost;
-	else if (getType == "data")
-		return MyBallOptions[type].pathDataPre + IDfibs + (type == 'WBSC' ? '' : '/' + evGamePlay) + MyBallOptions[type].pathDataPost;
+	return MyBallOptions[type].path[getType].pre + IDfibs + (type == "WBSC" ? "" : "/" + (getType == "lastPlay" ? IDfibs : evGamePlay)) + MyBallOptions[type].path[getType].post;
 }
 
 function lastPlayCheck(res, gameInfo, io) {
