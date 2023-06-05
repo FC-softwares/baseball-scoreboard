@@ -81,11 +81,7 @@ function liveUpdate(io) {
 }
 function reqAndUpdate(type, gameInfo, io) {
 	let { IDfibs, lastPlay, evGamePlay = null } = gameInfo;
-	let path;
-	if (type == 'WBSC')
-		path = MyBallOptions[type].pathLastPlayPre + IDfibs + MyBallOptions[type].pathLastPlayPost;
-	else
-		path = MyBallOptions[type].pathLastPlayPre + IDfibs + '/' + IDfibs + MyBallOptions[type].pathLastPlayPost;
+	let path = pathDefinition(type, IDfibs, "lastPlay", evGamePlay);
 	const req = https.request({ hostname: MyBallOptions[type].hostname, port: MyBallOptions[type].port, path: path, method: MyBallOptions[type].method }, (res) => {
 		// If the request is successful update the last play (if it is different from the previous one) and request the new data
 		lastPlayCheck(res, {lastPlay, IDfibs, type, evGamePlay}, io);
@@ -93,6 +89,19 @@ function reqAndUpdate(type, gameInfo, io) {
 	req.end();
 	req.on('error', (e) => { console.log('FIBS update error: ' + e); });
 }
+function pathDefinition(type, IDfibs, getType = "lastPlay", evGamePlay = null) {
+	if (getType == "lastPlay")
+		if (type == 'WBSC')
+			return MyBallOptions[type].pathLastPlayPre + IDfibs + MyBallOptions[type].pathLastPlayPost;
+		else
+			return MyBallOptions[type].pathLastPlayPre + IDfibs + '/' + IDfibs + MyBallOptions[type].pathLastPlayPost;
+	else if (getType == "data")
+		if (type == 'WBSC')
+			return MyBallOptions[type].pathDataPre + IDfibs + MyBallOptions[type].pathDataPost;
+		else
+			return MyBallOptions[type].pathDataPre + IDfibs + '/' + evGamePlay + MyBallOptions[type].pathDataPost;
+}
+
 function lastPlayCheck(res, gameInfo, io) {
 	let { lastPlay, IDfibs, type, evGamePlay } = gameInfo;
 	try {
@@ -117,11 +126,7 @@ function lastPlayCheck(res, gameInfo, io) {
 }
 function requestData(gameInfo, io) {
 	let { IDfibs, evGamePlay = null , type} = gameInfo;
-	let path;
-	if (type == 'WBSC')
-		path = MyBallOptions[type].pathDataPre + IDfibs + MyBallOptions[type].pathDataPost;
-	else
-		path = MyBallOptions[type].pathDataPre + IDfibs + '/' + evGamePlay + MyBallOptions[type].pathDataPost;
+	let path = pathDefinition(type, IDfibs, "data", evGamePlay);
 	const req = https.request({ hostname: MyBallOptions[type].hostname, port: MyBallOptions[type].port, path: path, method: MyBallOptions[type].method }, (res) => {
 		let data = '';
 		if (res.statusCode == 200) {
