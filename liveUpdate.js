@@ -102,7 +102,7 @@ function socialGameRetrive(IDfibs, type, lastPlay, io) {
 function reqAndUpdate(type, gameInfo, io) {
 	let { IDfibs, lastPlay, evGamePlay = null } = gameInfo;
 	let path = pathDefinition(type, IDfibs, "lastPlay", evGamePlay);
-	const req = https.request({ hostname: MyBallOptions[type].hostname, port: MyBallOptions[type].port, path: path, method: MyBallOptions[type].method }, (res) => {
+	const req = https.request(requestOptionCreation(type, path), (res) => {
 		// If the request is successful update the last play (if it is different from the previous one) and request the new data
 		lastPlayCheck(res, {lastPlay, IDfibs, type, evGamePlay}, io);
 	});
@@ -111,6 +111,9 @@ function reqAndUpdate(type, gameInfo, io) {
 }
 function pathDefinition(type, IDfibs, getType = "lastPlay", evGamePlay = null) {
 	return MyBallOptions[type].path[getType].pre + IDfibs + (type == "WBSC" ? "" : "/" + (getType == "lastPlay" ? IDfibs : evGamePlay)) + MyBallOptions[type].path[getType].post;
+}
+function requestOptionCreation(type, path) {
+	return { hostname: MyBallOptions[type].hostname, port: MyBallOptions[type].port, path: path, method: MyBallOptions[type].method };
 }
 
 function lastPlayCheck(res, gameInfo, io) {
@@ -138,7 +141,7 @@ function lastPlayCheck(res, gameInfo, io) {
 function requestData(gameInfo, io) {
 	let { IDfibs, evGamePlay = null , type} = gameInfo;
 	let path = pathDefinition(type, IDfibs, "data", evGamePlay);
-	const req = https.request({ hostname: MyBallOptions[type].hostname, port: MyBallOptions[type].port, path: path, method: MyBallOptions[type].method }, (res) => {
+	const req = https.request(requestOptionCreation(type, path), (res) => {
 		let data = '';
 		if (res.statusCode == 200) {
 			res.on('data', (data2) => { data += data2; });
