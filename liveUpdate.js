@@ -91,15 +91,9 @@ function reqAndUpdate(type, gameInfo, io) {
 }
 function pathDefinition(type, IDfibs, getType = "lastPlay", evGamePlay = null) {
 	if (getType == "lastPlay")
-		if (type == 'WBSC')
-			return MyBallOptions[type].pathLastPlayPre + IDfibs + MyBallOptions[type].pathLastPlayPost;
-		else
-			return MyBallOptions[type].pathLastPlayPre + IDfibs + '/' + IDfibs + MyBallOptions[type].pathLastPlayPost;
+		return MyBallOptions[type].pathLastPlayPre + IDfibs + (type == 'WBSC' ? '' : '/' + IDfibs) + MyBallOptions[type].pathLastPlayPost;
 	else if (getType == "data")
-		if (type == 'WBSC')
-			return MyBallOptions[type].pathDataPre + IDfibs + MyBallOptions[type].pathDataPost;
-		else
-			return MyBallOptions[type].pathDataPre + IDfibs + '/' + evGamePlay + MyBallOptions[type].pathDataPost;
+		return MyBallOptions[type].pathDataPre + IDfibs + (type == 'WBSC' ? '' : '/' + evGamePlay) + MyBallOptions[type].pathDataPost;
 }
 
 function lastPlayCheck(res, gameInfo, io) {
