@@ -49,7 +49,7 @@ function liveUpdate(io) {
 					type = 'WBSC';
 					IDfibs = IDfibs.replace('w', '');
 					// Make the request to the FIBS API
-					reqAndUpdate(type, IDfibs, lastPlay, io);
+					reqAndUpdate(type, {IDfibs, lastPlay}, io);
 				} else {
 					// Make the request to get the ID and the play number of the game
 					const req_option1 = { hostname: "www.ballclubz.com", port: 443, path: "/live/" + IDfibs, method: "GET" };
@@ -63,7 +63,7 @@ function liveUpdate(io) {
 								IDfibs = code.substring(code.indexOf("LoadLiveGame('") + 14, code.indexOf("', '"));
 								evGamePlay = code.substring(code.indexOf("', '") + 4, code.indexOf("');"));
 								// Make the request to the myBallClub API
-								reqAndUpdate(type, IDfibs, lastPlay, evGamePlay, io);
+								reqAndUpdate(type, {IDfibs, lastPlay, evGamePlay}, io);
 							});
 						}
 						else
@@ -79,22 +79,22 @@ function liveUpdate(io) {
 		console.log('FIBS update error: ' + error);
 	}
 }
-function reqAndUpdate(type, IDfibs, lastPlay, evGamePlay = null, io) {
+function reqAndUpdate(type, gameInfo, io) {
+	let { IDfibs, lastPlay, evGamePlay = null } = gameInfo;
 	let path;
 	if (type == 'WBSC')
 		path = MyBallOptions[type].pathLastPlayPre + IDfibs + MyBallOptions[type].pathLastPlayPost;
-
 	else
 		path = MyBallOptions[type].pathLastPlayPre + IDfibs + '/' + IDfibs + MyBallOptions[type].pathLastPlayPost;
-	const req_option = { hostname: MyBallOptions[type].hostname, port: MyBallOptions[type].port, path: path, method: MyBallOptions[type].method };
-	const req = https.request(req_option, (res) => {
+	const req = https.request({ hostname: MyBallOptions[type].hostname, port: MyBallOptions[type].port, path: path, method: MyBallOptions[type].method }, (res) => {
 		// If the request is successful update the last play (if it is different from the previous one) and request the new data
-		lastPlayCheck(res, lastPlay, IDfibs, type, evGamePlay, io);
+		lastPlayCheck(res, {lastPlay, IDfibs, type, evGamePlay}, io);
 	});
 	req.end();
 	req.on('error', (e) => { console.log('FIBS update error: ' + e); });
 }
-function lastPlayCheck(res, lastPlay, IDfibs, type, evGamePlay = null, io) {
+function lastPlayCheck(res, gameInfo, io) {
+	let { lastPlay, IDfibs, type, evGamePlay } = gameInfo;
 	try {
 		if (res.statusCode == 200) {
 			let chunks = '';
@@ -107,7 +107,7 @@ function lastPlayCheck(res, lastPlay, IDfibs, type, evGamePlay = null, io) {
 							throw err;
 						console.log('lastPlay.json updated');
 					});
-					requestData(IDfibs, type, evGamePlay, io);
+					requestData({IDfibs, type, evGamePlay}, io);
 				}
 			});
 		}
@@ -115,15 +115,14 @@ function lastPlayCheck(res, lastPlay, IDfibs, type, evGamePlay = null, io) {
 			console.log(type + ' update error: ' + res.statusCode);
 	} catch (error) { console.log(type + ' update error: ' + error); }
 }
-function requestData(IDfibs, type, evGamePlay = null, io) {
+function requestData(gameInfo, io) {
+	let { IDfibs, evGamePlay = null , type} = gameInfo;
 	let path;
 	if (type == 'WBSC')
 		path = MyBallOptions[type].pathDataPre + IDfibs + MyBallOptions[type].pathDataPost;
-
 	else
 		path = MyBallOptions[type].pathDataPre + IDfibs + '/' + evGamePlay + MyBallOptions[type].pathDataPost;
-	const req_option = { hostname: MyBallOptions[type].hostname, port: MyBallOptions[type].port, path: path, method: MyBallOptions[type].method };
-	const req = https.request(req_option, (res) => {
+	const req = https.request({ hostname: MyBallOptions[type].hostname, port: MyBallOptions[type].port, path: path, method: MyBallOptions[type].method }, (res) => {
 		let data = '';
 		if (res.statusCode == 200) {
 			res.on('data', (data2) => { data += data2; });
