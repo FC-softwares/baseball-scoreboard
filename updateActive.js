@@ -16,7 +16,7 @@ function updateSettings(data, socket, liveUpdate) {
 			}
 		});
 		if(json?.fibsStreaming && data_old_obj?.fibsStreamingCode != "")
-			liveUpdate();
+			liveUpdate(socket);
 		fs.writeFile(__dirname + '/app/json/settings.json', JSON.stringify(data_old_obj, null, 4), (err) => {
 			if (err)
 				throw err;

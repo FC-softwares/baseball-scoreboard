@@ -1,7 +1,7 @@
 const https = require('https');
 const { shell } = require('electron');
 const crypto = require('crypto');
-const { app, CLIENT, API, reqOption, BrowserWindow, server, PORT, AppElectron, liveUpdate } = require("./socket.js");
+const { app, CLIENT, API, reqOption, BrowserWindow, server, PORT, AppElectron, liveUpdate, io } = require("./socket.js");
 const fs  = require('fs');
 const { checkIDToken, requestActions, guestDeny, checkURL } = require("./checkFunctions.js");
 
@@ -216,7 +216,7 @@ server.listen(PORT, '0.0.0.0', () => {
 		}
 		const settings = JSON.parse(data);
 		if(settings.fibsStreaming&&settings.fibsStreamingCode != '')
-			liveUpdate();
+			liveUpdate(io);
 	});
 });
 
