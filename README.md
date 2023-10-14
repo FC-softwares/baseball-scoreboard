@@ -85,6 +85,7 @@ If you wish to use the DEMO version for purposes allowed by the license, you mus
 }
 ```
 This will enable you to utilize the DEMO version of the software for testing and evaluation purposes, while using a licensed version will require entering the appropriate client ID.
+
 ---
 
 ## License
