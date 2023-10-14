@@ -34,6 +34,7 @@ Before installing the software from the source code, make sure you already have 
 2. Go into the newly created "baseball-scoreboard" folder (`cd baseball-scoreboard`)
 3. Run `npm i` and wait for all the dependencies to install
 4. Run `npm start` to execute the software
+5. Create the .env.json file in the installation folder of Baseball-Scoreboard (for more information, see the section [Temporary Documentation for the .env.json File](#temporary-documentation-for-the-envjson-file))
 
 ## Usage
 All scoreboards and dashboards are treated as web pages to add them to OBS or other streaming applications, simply add the web page and enter the URL of the scoreboard you want to use.
@@ -70,6 +71,20 @@ All scoreboards and dashboards are treated as web pages to add them to OBS or ot
 Probably these instructions weren't that clear. If that's the case, don't panic! You can read the docs [here](https://github.com/FC-softwares/baseball-scoreboard/tree/main/docs/en/) for more info!
 > **WARNING**: the docs are far from being completed, yet. Everything is still a WIP, but we'll try to write everything down as soon as possible.
 
+### Temporary Documentation for the .env.json File
+To use Baseball-Scoreboard with a pre-purchased license, you need to place a file named .env.json in the installation folder of Baseball-Scoreboard. This file should contain the following information:
+``` json
+{
+    "client": "Insert your client ID here",
+}
+```
+If you wish to use the DEMO version for purposes allowed by the license, you must insert the following .env.json file into the installation folder of Baseball-Scoreboard:
+```json
+{
+    "client": "DEMO",
+}
+```
+This will enable you to utilize the DEMO version of the software for testing and evaluation purposes, while using a licensed version will require entering the appropriate client ID.
 ---
 
 ## License

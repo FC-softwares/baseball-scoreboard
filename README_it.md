@@ -34,6 +34,7 @@ Se desideri installare l'applicazione dal codice sorgente, assicurati di aver gi
 2. Entra nella nuova cartella "baseball-scoreboard" (`cd baseball-scoreboard`)
 3. Esegui `npm i` ed attendi che tutte le dipendenze vengano installate
 4. Esegui `npm start` per avviare il software
+5. Creare il file `.env.json` nella cartella di installazione di Baseball-Scoreboard (per maggiori informazioni, consultare la sezione [Documentazione temporanea per file `.env.json`](#documentazione-temporanea-per-file-envjson))
 
 ## Uso
 Le scoreboard e il pannello di controllo sono delle pagine web fatte in modo tale da essere aggiunte a OBS o ad altre applicazioni di streaming come sorgente browser. È sufficiente aggiungere la pagina web e inserire l'URL della scoreboard che si desidera utilizzare.
@@ -66,11 +67,24 @@ Le scoreboard e il pannello di controllo sono delle pagine web fatte in modo tal
 6. Conferma premendo `Applica` e poi `Chiudi`
 7. Ora puoi trascinare il nuovo pannello nella posizione che preferisci, ridimensionarlo a piacimento e bloccarlo nella UI di OBS dove preferisci
 
-### Uso con licenza già acquistata
-Nel caso in cui si abbia già acquistato una licenza, è possibile utilizzare Baseball-Scoreboard liberamente ma bisognerà inseririre un file: `.env.json` nella
 ## Documentazione
 Probabilmente queste istruzioni non sono state molto esaustive, ma non c'è da preoccuparsi! Per maggiori informazioni, la documentazione è disponibile [qui](https://github.com/FC-softwares/baseball-scoreboard/tree/main/docs/it/)!
 > **ATTENZIONE**: la documentazione in italiano è ancora WIP! Nel mentre, si può consultare la documentazione in lingua inglese [qui](https://github.com/FC-softwares/baseball-scoreboard/tree/main/docs/en/)!
+
+### Documentazione temporanea per file `.env.json`
+Per utilizzare Baseball-Scoreboard con una licenza già acquistata, è necessario inserire un file denominato .env.json nella cartella di installazione di Baseball-Scoreboard. Questo file deve contenere le seguenti informazioni:
+```json
+{
+    "client": "Inserire qui il client ID",
+}
+```
+Se si desidera utilizzare la versione DEMO per scopi consentiti dalla licenza, è necessario inserire il seguente file .env.json nella cartella di installazione di Baseball-Scoreboard:
+```json
+{
+    "client": "DEMO",
+}
+```
+Questo ti permetterà di sfruttare la versione DEMO del software per scopi di testing e valutazione, mentre l'utilizzo con una licenza richiederà l'inserimento dell'ID cliente appropriato.
 
 ---
 
