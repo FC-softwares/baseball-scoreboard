@@ -58,23 +58,26 @@ function plusChanges(indx, data_old_obj, toBeSent) {
 				toBeSent.Strike = data_old_obj.Strike;
 			} else {
 				toBeSent.Strike = 0; data_old_obj.Strike = 0; toBeSent.Ball = 0; data_old_obj.Ball = 0;
-				if(data_old_obj.Out < 2){
-					data_old_obj.Out++;
-					toBeSent.Out = data_old_obj.Out;
-				}else
-					autoChangePlus(data_old_obj, toBeSent);
+				OutCheck(data_old_obj, toBeSent);
 			}
 			break;
 		case 'Out':
-			if (data_old_obj.Out < 2){ data_old_obj[indx]++; toBeSent.Out = data_old_obj.Out;
-			}else
-				autoChangePlus(data_old_obj, toBeSent);
+			OutCheck(data_old_obj, toBeSent);
 			break;
 		case 'Teams.Away.Score': var { i, ScoreATmp } = scorePlus(data_old_obj, 'Away','A'); break;
 		case 'Teams.Home.Score': var { i, ScoreHTmp } = scorePlus(data_old_obj, 'Home','H'); data_old_obj.Teams.Home.Score = ScoreHTmp; break;
 		case 'Inning': data_old_obj.Inning++, data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 }; break;
 	}
 	return { ScoreATmp, ScoreHTmp, i };
+}
+
+function OutCheck(data_old_obj, toBeSent) {
+	if (data_old_obj.Out < 2) {
+		data_old_obj.Out++;
+		toBeSent.Out = data_old_obj.Out;
+	}
+	else
+		autoChangePlus(data_old_obj, toBeSent);
 }
 
 function autoChangePlus(data_old_obj, toBeSent) {
@@ -86,13 +89,7 @@ function autoChangePlus(data_old_obj, toBeSent) {
 	toBeSent.Strike = 0;
 	toBeSent.Ball = 0;
 	toBeSent.Bases = { 1: false, 2: false, 3: false };
-	if (data_old_obj.Arrow === 1)
-		data_old_obj.Arrow = 2;
-	else {
-		data_old_obj.Arrow = 1;
-		data_old_obj.Inning++;
-		data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 };
-	}
+	ArrowCheck(data_old_obj);
 	toBeSent.Arrow = data_old_obj.Arrow;
 	toBeSent.Inning = data_old_obj.Inning;
 	toBeSent.Int = data_old_obj.Int;
@@ -173,13 +170,7 @@ function toggleChanges(indx, data_old_obj, toBeSent) {
 		case '1': case '2': case '3': toggleBase(data_old_obj, toBeSent, indx);break;
 		case 'Auto_Change_Inning':
 			data_old_obj = { ...data_old_obj, Bases: { 1: false, 2: false, 3: false }, Ball: 0, Strike: 0, Out: 0};
-			if (data_old_obj.Arrow === 1)
-				data_old_obj.Arrow = 2;
-			else {
-				data_old_obj.Arrow = 1;
-				data_old_obj.Inning++;
-				data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 };
-			}
+			ArrowCheck(data_old_obj);
 			toBeSent = { ...toBeSent, Bases: { 1: false, 2: false, 3: false }, Ball: 0, Strike: 0, Out: 0, Arrow: data_old_obj.Arrow, Inning: data_old_obj.Inning, Int: data_old_obj.Int };
 		break;
 		case 'Reset_All':
@@ -191,6 +182,16 @@ function toggleChanges(indx, data_old_obj, toBeSent) {
 		default: break;
 	}
 	return { data_old_obj, toBeSent };
+}
+
+function ArrowCheck(data_old_obj) {
+	if (data_old_obj.Arrow === 1)
+		data_old_obj.Arrow = 2;
+	else {
+		data_old_obj.Arrow = 1;
+		data_old_obj.Inning++;
+		data_old_obj.Int[data_old_obj.Inning] = { A: 0, H: 0 };
+	}
 }
 
 function toggleBase(data_old_obj, toBeSent, indx) {
