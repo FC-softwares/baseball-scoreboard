@@ -67,17 +67,13 @@ function updateInning(obj) {
 		if (i > localStorage.getItem("MaxInning")) {
 			extraInningScoreAway += obj.Int[i].A;
 			extraInningScoreHome += obj.Int[i].H;
-		} else {
-			if (i < obj.Inning || obj.Int[i].H != 0){
+		} else if (i < obj.Inning || obj.Int[i].H != 0){
+			activeDeactiveInning(i, 'home',true,obj.Int[i].H);
+			activeDeactiveInning(i, 'away',true,obj.Int[i].A);
+		} else if (obj.Arrow == 2 || obj.Int[i].A != 0) {
+			activeDeactiveInning(i, 'away',true,obj.Int[i].A);
+			if (obj.Int[i].H != 0)
 				activeDeactiveInning(i, 'home',true,obj.Int[i].H);
-				activeDeactiveInning(i, 'away',true,obj.Int[i].A);
-			} else if (obj.Arrow == 2) {
-				activeDeactiveInning(i, 'away',true,obj.Int[i].A);
-				if (obj.Int[i].H != 0)
-					activeDeactiveInning(i, 'home',true,obj.Int[i].H);
-			} else if (obj.Int[i].A != 0) {
-				activeDeactiveInning(i, 'away',true,obj.Int[i].A);
-			}
 		}
 	}
 	maxInning(obj, extraInningScoreAway, extraInningScoreHome);
@@ -122,9 +118,9 @@ function maxInning(obj, extraInningScoreAway, extraInningScoreHome) {
 	if( obj.Inning <= parseInt(localStorage.getItem("MaxInning"))){
 		document.documentElement.style.setProperty('--i-inning', localStorage.getItem("MaxInning"));
 		try{document.querySelector("div.container > div#iex").remove();}catch(error){console.log(error);}
-	}else if (obj.Inning > parseInt(localStorage.getItem("MaxInning")) + 1 || (obj.Arrow == 2&&obj.Inning == parseInt(localStorage.getItem("MaxInning")+1)) || extraInningScoreAway != 0 || extraInningScoreHome != 0) {
-		let inning = getComputedStyle(document.documentElement).getPropertyValue('--i-inning');container
-		if (inning == parseInt(localStorage.getItem("MaxInning")) && document.querySelector("div. > div#iex") == null) {
+	}else if (obj.Inning > parseInt(localStorage.getItem("MaxInning")) + 1 || (obj.Arrow == 2 && obj.Inning == parseInt(localStorage.getItem("MaxInning"))+1) || extraInningScoreAway != 0 || extraInningScoreHome != 0) {
+		let inning = getComputedStyle(document.documentElement).getPropertyValue('--i-inning');
+		if (inning == parseInt(localStorage.getItem("MaxInning")) && document.querySelector("div > div#iex") == null) {
 			document.documentElement.style.setProperty('--i-inning', inning);
 			let extraInning = `<div class="inning" id="iex">
 					<span class="number">EX</span>
@@ -209,7 +205,6 @@ function updateSettings(obj){
 				try{document.querySelector("div.container").appendChild(document.createRange().createContextualFragment(inning));}catch(error){console.error(error);}
 			}
 		}else if(obj.MaxInning<oldMaxInning){
-			// TODO remove excess innings
 			for(let i=obj.MaxInning+1;i<=oldMaxInning;i++){
 				try{document.querySelector("div.container").removeChild(document.querySelector(`#i${i}.inning`));}catch(error){console.error(error);}
 			}
