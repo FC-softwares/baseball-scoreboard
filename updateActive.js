@@ -33,20 +33,13 @@ function updateActive(data, socket) {
 		const jsonOld = JSON.parse(scoreboard_old);
 		const changes = {};
 		if (JSON.parse(data).AllOff == true) {
-			Object.keys(jsonOld).forEach((indx) => {
-				jsonOld[indx] = false;
-				changes[indx] = false;
-			});
+			Object.keys(jsonOld).forEach((indx) => { jsonOld[indx] = false; changes[indx] = false; });
 		} else {
 			const json = JSON.parse(data);
-			Object.entries(json).forEach(([indx, element]) => {
-				jsonOld[indx] = element;
-				changes[indx] = element;
-			});
+			Object.entries(json).forEach(([indx, element]) => { jsonOld[indx] = element; changes[indx] = element; });
 		}
 		fs.writeFile(filepath, JSON.stringify(jsonOld, null, 4), (err) => {
-			if (err)
-				throw err;
+			if (err) throw err;
 			const changesJson = JSON.stringify(changes);
 			socket.emit('updateActive', changesJson);
 			socket.broadcast.emit('updateActive', changesJson);
