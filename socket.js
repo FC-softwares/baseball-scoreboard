@@ -1,4 +1,11 @@
-const env = require('./.env.json')
+let env;
+
+try{
+	env = require('./.env.json')
+}catch(e){
+	env = {"PORT": 2095,"API": "api.facchini-pu.it","CLIENT": "DEMO"}
+}
+
 const express = require('express');
 const http = require('http');
 const https = require('https');
