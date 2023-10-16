@@ -1,4 +1,4 @@
-var socket = io("http://"+window.location.hostname+":"+location.port);
+const socket = io("http://"+window.location.hostname+":"+location.port);
 socket.emit('getActive');
 socket.emit('getOffices');
 
@@ -66,8 +66,8 @@ function updateUmpires(obj){
 }
 function updateUmpire(umpire, cssID, htmlID) {
 	if (umpire !== undefined) {
-		umpire.surname || umpire.surname == "" ? document.querySelector(".name#"+ htmlID +" > span#surname").innerHTML = umpire.surname : null;
-		umpire.name || umpire.name == "" ? document.querySelector(".name#" + htmlID + " > span#name").innerHTML = umpire.name : null;
+		changePropUMPSCR(umpire, htmlID, "surname");
+		changePropUMPSCR(umpire, htmlID, "name");
 		if (umpire.active) {
 			document.querySelector(".name#"+htmlID).classList.remove("notActive");
 			document.querySelector(".role#"+htmlID).classList.remove("notActive");
@@ -102,8 +102,8 @@ function updateScorer(obj){
 
 function updateSingleScorer(scorer,ID) {
 	if (scorer !== undefined) {
-		scorer.surname || scorer.surname == "" ? document.querySelector(".scorer#"+ID+" > span#surname").innerHTML = scorer.surname : null;
-		scorer.name || scorer.name == "" ? document.querySelector(".scorer#"+ID+" > span#name").innerHTML = scorer.name : null;
+		changePropUMPSCR(scorer, ID, "surname");
+		changePropUMPSCR(scorer, ID, "name");
 		if (scorer.active) {
 			document.querySelector(".scorer#"+ID).classList.remove("notActive");
 			document.documentElement.style.setProperty("--h-row-"+ID, "var(--h-row)");
@@ -116,6 +116,12 @@ function updateSingleScorer(scorer,ID) {
 			document.documentElement.style.setProperty("--d-d-"+ID, "0s");
 		}
 	}
+}
+
+function changePropUMPSCR(umpire, htmlID, prop="surname") {
+	if(umpire[prop] == "" || umpire[prop])
+		document.querySelector(".name#" + htmlID + " > span#" + prop ).innerHTML = umpire[prop];
+	
 }
 
 function updateCommentators(commentor){
