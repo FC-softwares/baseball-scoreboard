@@ -32,9 +32,9 @@
   },
   "homepage": "https://github.com/FC-Softwares/baseball-scoreboard#readme",
   "dependencies": {
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.5",
     "electron-squirrel-startup": "^1.0.0",
-    "express": "^4.19.2",
+    "express": "^4.21.0",
     "https": "^1.0.0",
     "socket.io": "^4.7.2"
   },
@@ -47,7 +47,7 @@
     "@electron-forge/maker-zip": "^7.3.1",
     "@electron-forge/maker-rpm": "^7.3.0",
     "@electron-forge/maker-squirrel": "^6.4.2",
-    "electron": "^27.0.0"
+    "electron": "^29.1.5"
   },
   "config": {
     "forge": {
