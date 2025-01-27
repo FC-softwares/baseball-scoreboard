@@ -33,7 +33,7 @@
   "homepage": "https://github.com/FC-Softwares/baseball-scoreboard#readme",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "electron-squirrel-startup": "^1.0.0",
+    "electron-squirrel-startup": "^1.0.1",
     "express": "^4.21.2",
     "https": "^1.0.0",
     "socket.io": "^4.8.1"
