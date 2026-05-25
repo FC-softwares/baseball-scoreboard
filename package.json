@@ -36,7 +36,7 @@
     "electron-squirrel-startup": "^1.0.1",
     "express": "^4.22.2",
     "https": "^1.0.0",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.3"
   },
   "pkg": {
     "assets": "app"
